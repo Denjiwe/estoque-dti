@@ -1,0 +1,7 @@
+192.168.208.1 - - [20/Oct/2022:01:21:42 +0000] "GET / HTTP/1.1" 200 75554 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.72" "-"
+192.168.208.1 - - [20/Oct/2022:01:21:52 +0000] "GET /db.php HTTP/1.1" 200 42 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.72" "-"
+192.168.208.1 - - [20/Oct/2022:01:21:54 +0000] "GET /db.php HTTP/1.1" 200 42 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.72" "-"
+172.18.0.1 - - [20/Oct/2022:15:27:42 +0000] "GET / HTTP/1.1" 200 75542 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.72" "-"
+172.18.0.1 - - [20/Oct/2022:15:27:42 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "http://localhost:8080/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.72" "-"
+172.18.0.1 - - [20/Oct/2022:15:27:48 +0000] "GET /db.php HTTP/1.1" 200 42 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.72" "-"
+172.18.0.1 - - [20/Oct/2022:15:27:49 +0000] "GET /db.php HTTP/1.1" 200 42 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.72" "-"
