@@ -1,0 +1,217 @@
+2022/10/21 16:45:51 [notice] 1#1: using the "epoll" event method
+2022/10/21 16:45:51 [notice] 1#1: nginx/1.23.2
+2022/10/21 16:45:51 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/10/21 16:45:51 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/10/21 16:45:51 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/10/21 16:45:51 [notice] 1#1: start worker processes
+2022/10/21 16:45:51 [notice] 1#1: start worker process 28
+2022/10/21 16:45:51 [notice] 1#1: start worker process 29
+2022/10/21 16:45:51 [notice] 1#1: start worker process 30
+2022/10/21 16:45:51 [notice] 1#1: start worker process 31
+2022/10/21 16:45:51 [notice] 1#1: start worker process 32
+2022/10/21 16:45:51 [notice] 1#1: start worker process 33
+2022/10/21 16:46:15 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/db.class.php"
+2022/10/21 21:30:10 [error] 30#30: *106 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /controller/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:31:46 [error] 30#30: *110 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /controller/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:31:51 [error] 30#30: *110 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /controller/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:32:08 [error] 30#30: *110 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /controller/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:32:41 [error] 30#30: *110 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /controller/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:33:05 [error] 30#30: *110 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /controller/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:34:02 [error] 30#30: *110 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:35:52 [error] 30#30: *126 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:37:02 [error] 30#30: *126 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:41:39 [error] 30#30: *134 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:43:14 [error] 30#30: *138 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:44:54 [error] 31#31: *142 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:48:39 [error] 31#31: *148 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:49:44 [error] 31#31: *154 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:50:20 [error] 31#31: *148 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:50:59 [error] 31#31: *148 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:52:32 [error] 31#31: *165 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:55:58 [error] 31#31: *170 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 21:56:59 [error] 31#31: *170 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:02:35 [error] 31#31: *177 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:04:12 [error] 31#31: *183 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:06:40 [error] 32#32: *187 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:28:41 [error] 32#32: *192 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:29:04 [error] 32#32: *194 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:29:14 [error] 32#32: *194 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:33:51 [error] 32#32: *197 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:34:13 [error] 32#32: *199 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:34:54 [error] 32#32: *199 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:35:01 [error] 32#32: *199 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:35:07 [error] 32#32: *199 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:58:45 [error] 32#32: *204 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 22:58:57 [error] 32#32: *206 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 23:05:27 [error] 32#32: *209 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 23:05:28 [error] 32#32: *211 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 23:05:30 [error] 32#32: *211 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 23:05:30 [error] 32#32: *209 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 23:14:58 [error] 32#32: *214 open() "/var/www/html/js/validaCampos.js" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /js/validaCampos.js HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 23:22:47 [error] 32#32: *231 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/21 23:33:56 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/10/21 23:33:56 [notice] 33#33: gracefully shutting down
+2022/10/21 23:33:56 [notice] 32#32: gracefully shutting down
+2022/10/21 23:33:56 [notice] 28#28: gracefully shutting down
+2022/10/21 23:33:56 [notice] 29#29: gracefully shutting down
+2022/10/21 23:33:56 [notice] 31#31: gracefully shutting down
+2022/10/21 23:33:56 [notice] 29#29: exiting
+2022/10/21 23:33:56 [notice] 30#30: gracefully shutting down
+2022/10/21 23:33:56 [notice] 32#32: exiting
+2022/10/21 23:33:56 [notice] 33#33: exiting
+2022/10/21 23:33:56 [notice] 28#28: exiting
+2022/10/21 23:33:56 [notice] 33#33: exit
+2022/10/21 23:33:56 [notice] 32#32: exit
+2022/10/21 23:33:56 [notice] 31#31: exiting
+2022/10/21 23:33:56 [notice] 29#29: exit
+2022/10/21 23:33:56 [notice] 30#30: exiting
+2022/10/21 23:33:56 [notice] 31#31: exit
+2022/10/21 23:33:56 [notice] 28#28: exit
+2022/10/21 23:33:56 [notice] 30#30: exit
+2022/10/21 23:33:57 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/10/21 23:33:57 [notice] 1#1: worker process 32 exited with code 0
+2022/10/21 23:33:57 [notice] 1#1: signal 29 (SIGIO) received
+2022/10/21 23:33:57 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/10/21 23:33:57 [notice] 1#1: worker process 29 exited with code 0
+2022/10/21 23:33:57 [notice] 1#1: worker process 31 exited with code 0
+2022/10/21 23:33:57 [notice] 1#1: worker process 33 exited with code 0
+2022/10/21 23:33:57 [notice] 1#1: signal 29 (SIGIO) received
+2022/10/21 23:33:57 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/10/21 23:33:57 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/10/21 23:33:57 [notice] 1#1: worker process 28 exited with code 0
+2022/10/21 23:33:57 [notice] 1#1: worker process 30 exited with code 0
+2022/10/21 23:33:57 [notice] 1#1: exit
+2022/10/22 14:52:57 [notice] 1#1: using the "epoll" event method
+2022/10/22 14:52:57 [notice] 1#1: nginx/1.23.2
+2022/10/22 14:52:57 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/10/22 14:52:57 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/10/22 14:52:57 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/10/22 14:52:57 [notice] 1#1: start worker processes
+2022/10/22 14:52:57 [notice] 1#1: start worker process 28
+2022/10/22 14:52:57 [notice] 1#1: start worker process 29
+2022/10/22 14:52:57 [notice] 1#1: start worker process 30
+2022/10/22 14:52:57 [notice] 1#1: start worker process 31
+2022/10/22 14:52:57 [notice] 1#1: start worker process 32
+2022/10/22 14:52:57 [notice] 1#1: start worker process 33
+2022/10/22 14:56:08 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/10/22 15:49:46 [error] 28#28: *51 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/22 15:51:12 [error] 28#28: *60 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/10/22 16:01:21 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/10/22 16:01:21 [notice] 28#28: gracefully shutting down
+2022/10/22 16:01:21 [notice] 29#29: gracefully shutting down
+2022/10/22 16:01:21 [notice] 31#31: gracefully shutting down
+2022/10/22 16:01:21 [notice] 32#32: gracefully shutting down
+2022/10/22 16:01:21 [notice] 30#30: gracefully shutting down
+2022/10/22 16:01:21 [notice] 33#33: gracefully shutting down
+2022/10/22 16:01:21 [notice] 29#29: exiting
+2022/10/22 16:01:21 [notice] 32#32: exiting
+2022/10/22 16:01:21 [notice] 33#33: exiting
+2022/10/22 16:01:21 [notice] 33#33: exit
+2022/10/22 16:01:21 [notice] 28#28: exiting
+2022/10/22 16:01:21 [notice] 31#31: exiting
+2022/10/22 16:01:21 [notice] 31#31: exit
+2022/10/22 16:01:21 [notice] 30#30: exiting
+2022/10/22 16:01:21 [notice] 28#28: exit
+2022/10/22 16:01:21 [notice] 32#32: exit
+2022/10/22 16:01:21 [notice] 29#29: exit
+2022/10/22 16:01:21 [notice] 30#30: exit
+2022/10/22 16:01:21 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/10/22 16:01:21 [notice] 1#1: worker process 28 exited with code 0
+2022/10/22 16:01:21 [notice] 1#1: worker process 30 exited with code 0
+2022/10/22 16:01:21 [notice] 1#1: worker process 31 exited with code 0
+2022/10/22 16:01:21 [notice] 1#1: worker process 32 exited with code 0
+2022/10/22 16:01:21 [notice] 1#1: worker process 33 exited with code 0
+2022/10/22 16:01:21 [notice] 1#1: signal 29 (SIGIO) received
+2022/10/22 16:01:21 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/10/22 16:01:21 [notice] 1#1: worker process 29 exited with code 0
+2022/10/22 16:01:21 [notice] 1#1: exit
+2022/10/22 20:13:19 [notice] 1#1: using the "epoll" event method
+2022/10/22 20:13:19 [notice] 1#1: nginx/1.23.2
+2022/10/22 20:13:19 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/10/22 20:13:19 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/10/22 20:13:19 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/10/22 20:13:19 [notice] 1#1: start worker processes
+2022/10/22 20:13:19 [notice] 1#1: start worker process 28
+2022/10/22 20:13:19 [notice] 1#1: start worker process 29
+2022/10/22 20:13:19 [notice] 1#1: start worker process 30
+2022/10/22 20:13:19 [notice] 1#1: start worker process 31
+2022/10/22 20:13:19 [notice] 1#1: start worker process 32
+2022/10/22 20:13:19 [notice] 1#1: start worker process 33
+2022/10/22 20:13:32 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/10/22 20:25:18 [error] 28#28: *23 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/?page=editar&id=8"
+2022/10/22 21:13:52 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/10/22 21:13:52 [notice] 29#29: gracefully shutting down
+2022/10/22 21:13:52 [notice] 29#29: exiting
+2022/10/22 21:13:52 [notice] 28#28: gracefully shutting down
+2022/10/22 21:13:52 [notice] 30#30: gracefully shutting down
+2022/10/22 21:13:52 [notice] 29#29: exit
+2022/10/22 21:13:52 [notice] 33#33: gracefully shutting down
+2022/10/22 21:13:52 [notice] 31#31: gracefully shutting down
+2022/10/22 21:13:52 [notice] 32#32: gracefully shutting down
+2022/10/22 21:13:52 [notice] 30#30: exiting
+2022/10/22 21:13:52 [notice] 28#28: exiting
+2022/10/22 21:13:52 [notice] 33#33: exiting
+2022/10/22 21:13:52 [notice] 31#31: exiting
+2022/10/22 21:13:52 [notice] 32#32: exiting
+2022/10/22 21:13:52 [notice] 30#30: exit
+2022/10/22 21:13:52 [notice] 28#28: exit
+2022/10/22 21:13:52 [notice] 33#33: exit
+2022/10/22 21:13:52 [notice] 31#31: exit
+2022/10/22 21:13:52 [notice] 32#32: exit
+2022/10/22 21:13:52 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/10/22 21:13:52 [notice] 1#1: worker process 29 exited with code 0
+2022/10/22 21:13:52 [notice] 1#1: worker process 30 exited with code 0
+2022/10/22 21:13:52 [notice] 1#1: worker process 31 exited with code 0
+2022/10/22 21:13:52 [notice] 1#1: worker process 33 exited with code 0
+2022/10/22 21:13:52 [notice] 1#1: signal 29 (SIGIO) received
+2022/10/22 21:13:52 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/10/22 21:13:52 [notice] 1#1: worker process 28 exited with code 0
+2022/10/22 21:13:52 [notice] 1#1: signal 29 (SIGIO) received
+2022/10/22 21:13:52 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/10/22 21:13:52 [notice] 1#1: worker process 32 exited with code 0
+2022/10/22 21:13:52 [notice] 1#1: exit
+2022/10/23 18:31:03 [notice] 1#1: using the "epoll" event method
+2022/10/23 18:31:03 [notice] 1#1: nginx/1.23.2
+2022/10/23 18:31:03 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/10/23 18:31:03 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/10/23 18:31:03 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/10/23 18:31:03 [notice] 1#1: start worker processes
+2022/10/23 18:31:03 [notice] 1#1: start worker process 28
+2022/10/23 18:31:03 [notice] 1#1: start worker process 29
+2022/10/23 18:31:03 [notice] 1#1: start worker process 30
+2022/10/23 18:31:03 [notice] 1#1: start worker process 31
+2022/10/23 18:31:03 [notice] 1#1: start worker process 32
+2022/10/23 18:31:03 [notice] 1#1: start worker process 33
+2022/10/23 18:46:33 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/10/23 18:48:49 [error] 30#30: *11 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=editar&id=3"
+2022/10/23 18:50:16 [error] 32#32: *15 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=editar&id=3"
+2022/10/23 19:10:39 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/10/23 19:10:39 [notice] 28#28: gracefully shutting down
+2022/10/23 19:10:39 [notice] 30#30: gracefully shutting down
+2022/10/23 19:10:39 [notice] 30#30: exiting
+2022/10/23 19:10:39 [notice] 33#33: gracefully shutting down
+2022/10/23 19:10:39 [notice] 33#33: exiting
+2022/10/23 19:10:39 [notice] 31#31: gracefully shutting down
+2022/10/23 19:10:39 [notice] 32#32: gracefully shutting down
+2022/10/23 19:10:39 [notice] 29#29: gracefully shutting down
+2022/10/23 19:10:39 [notice] 28#28: exiting
+2022/10/23 19:10:39 [notice] 30#30: exit
+2022/10/23 19:10:39 [notice] 33#33: exit
+2022/10/23 19:10:39 [notice] 31#31: exiting
+2022/10/23 19:10:39 [notice] 32#32: exiting
+2022/10/23 19:10:39 [notice] 29#29: exiting
+2022/10/23 19:10:39 [notice] 28#28: exit
+2022/10/23 19:10:39 [notice] 31#31: exit
+2022/10/23 19:10:39 [notice] 32#32: exit
+2022/10/23 19:10:39 [notice] 29#29: exit
+2022/10/23 19:10:39 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/10/23 19:10:39 [notice] 1#1: worker process 29 exited with code 0
+2022/10/23 19:10:39 [notice] 1#1: worker process 30 exited with code 0
+2022/10/23 19:10:39 [notice] 1#1: worker process 31 exited with code 0
+2022/10/23 19:10:39 [notice] 1#1: worker process 32 exited with code 0
+2022/10/23 19:10:39 [notice] 1#1: worker process 33 exited with code 0
+2022/10/23 19:10:39 [notice] 1#1: signal 29 (SIGIO) received
+2022/10/23 19:10:39 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/10/23 19:10:39 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/10/23 19:10:39 [notice] 1#1: worker process 28 exited with code 0
+2022/10/23 19:10:39 [notice] 1#1: exit
