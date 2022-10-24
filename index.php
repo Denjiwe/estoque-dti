@@ -1,3 +1,10 @@
+<?php
+ include_once ("./model/produto_model.php");
+ include_once ("./entity/produto.php");
+ $prod = new Produto();
+
+ $model = new ProdutoModel();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

@@ -215,3 +215,43 @@
 2022/10/23 19:10:39 [notice] 1#1: signal 17 (SIGCHLD) received from 28
 2022/10/23 19:10:39 [notice] 1#1: worker process 28 exited with code 0
 2022/10/23 19:10:39 [notice] 1#1: exit
+2022/10/24 16:39:29 [notice] 1#1: using the "epoll" event method
+2022/10/24 16:39:29 [notice] 1#1: nginx/1.23.2
+2022/10/24 16:39:29 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/10/24 16:39:29 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/10/24 16:39:29 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/10/24 16:39:29 [notice] 1#1: start worker processes
+2022/10/24 16:39:29 [notice] 1#1: start worker process 28
+2022/10/24 16:39:29 [notice] 1#1: start worker process 29
+2022/10/24 16:39:29 [notice] 1#1: start worker process 30
+2022/10/24 16:39:29 [notice] 1#1: start worker process 31
+2022/10/24 16:39:29 [notice] 1#1: start worker process 32
+2022/10/24 16:39:29 [notice] 1#1: start worker process 33
+2022/10/24 16:40:01 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/10/24 19:07:27 [error] 32#32: *17 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:08:59 [error] 28#28: *20 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:10:15 [error] 28#28: *23 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:10:56 [error] 28#28: *23 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:18:50 [error] 28#28: *27 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:40:01 [error] 28#28: *30 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:44:18 [error] 28#28: *33 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:44:19 [error] 28#28: *33 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:44:20 [error] 28#28: *33 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:45:45 [error] 28#28: *38 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:46:24 [error] 28#28: *38 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:46:45 [error] 28#28: *38 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:47:37 [error] 28#28: *38 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:48:46 [error] 28#28: *45 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:49:46 [error] 28#28: *45 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:49:47 [error] 28#28: *45 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:53:14 [error] 28#28: *51 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:54:16 [error] 28#28: *51 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:55:15 [error] 28#28: *51 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 19:56:25 [error] 29#29: *58 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 21:52:14 [error] 29#29: *61 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 22:00:12 [error] 29#29: *66 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 22:04:05 [error] 29#29: *74 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 22:13:36 [error] 29#29: *83 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 22:13:49 [error] 29#29: *83 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 22:14:30 [error] 29#29: *83 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
+2022/10/24 22:23:43 [error] 30#30: *93 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php?page=excluir&id=1"
