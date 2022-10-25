@@ -1,10 +1,3 @@
-<?php
- include_once ("./model/produto_model.php");
- include_once ("./entity/produto.php");
- $prod = new Produto();
-
- $model = new ProdutoModel();
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -34,6 +27,23 @@
     
 </head>
 <body>
+<?php
+ include_once ("./model/orgao_model.php");
+ include_once ("./entity/orgao.php");
+
+ $org = new Orgao;
+ /*$org->setNome("RH");
+ $org->setAtivo(1);
+ $org->setDataCriacao("2022-05-10");
+ $org->setDataDesativo(null);
+ 
+ $org->setId(2);
+
+ $model = new OrgaoModel(); 
+ $model->delete($org->getId());*/
+
+ return;
+?>
     <main class="container mt-5">
         <form action="./controller/insert.php" method="post" id="formInsert">
             <div class="form-group">

@@ -35,12 +35,41 @@
         }
 
         //select all
-        function select (Produto $produto) {
+        function select () {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM produto;");
             $con->execute();
-        }
+            $con->rowCount();
+            
+            $produtos = [];
 
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+            $produto = new Produto;
+            $produto->setId($linha['id'])."</td>";
+            $produto->setModelo($linha['modelo_produto'])."</td>";
+            $produto->setDescricao($linha['descricao'])."</td>";
+            $produto->setQntde($linha['qntde_estoque'])."</td>";
+            $produto->setAtivo($linha['ativo'])."</td>";
+            $produtos[] = $produto; 
+            
+            }
+            print "<table class=' container table table-hover table-striped table-bordered'>";
+            
+            //criar função que realiza a formatação dos prints 
+            foreach ($produtos as $obj) {
+                print "<tr>";
+                print "<td>".$obj->getId()."</td>";
+                print "<td>".$obj->getModelo()."</td>";
+                print "<td>".$obj->getDescricao()."</td>";
+                print "<td>".$obj->getQntde()."</td>";
+                print "<td>".$obj->getAtivo()."</td>";
+                print "</tr>";
+
+            }
+            print "</table>";
+            
+        }
         //findById
         function findById (Produto $produto) {
             $conexao = Conexao::getConexao();
@@ -49,4 +78,3 @@
             $con->execute();
         }
     }
-

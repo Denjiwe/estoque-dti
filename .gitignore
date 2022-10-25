@@ -4,6 +4,8 @@ npm-debug.log
 yarn-error.log
 *.log
 db/database/mysql.sock
+db/database/#innodb_temp/*
+
 
 # Laravel 4 specific
 bootstrap/compiled.php
