@@ -18,7 +18,7 @@
             $con->bindValue ("nome", $orgao->getNome(), PDO::PARAM_STR);
             $con->bindValue ("ativo", $orgao->getAtivo(), PDO::PARAM_INT);
             $con->bindValue ("data_criacao", $orgao->getDataCriacao(), PDO::PARAM_STR);
-            $con->bindValue ("data_desativado", $orgao->getDataDesativo(), PDO::PARAM_STR);
+            $con->bindValue ("data_desativado", $orgao?->getDataDesativo(), PDO::PARAM_STR);
             $con->execute();
         }
 
@@ -29,7 +29,7 @@
             $con->bindValue ("nome", $orgao->getNome(), PDO::PARAM_STR);
             $con->bindValue ("ativo", $orgao->getAtivo(), PDO::PARAM_INT);
             $con->bindValue ("data_criacao", $orgao->getDataCriacao(), PDO::PARAM_STR);
-            $con->bindValue ("data_desativado", $orgao->getDataDesativo(), PDO::PARAM_STR);
+            $con->bindValue ("data_desativado", $orgao?->getDataDesativo(), PDO::PARAM_STR);
             $con->bindValue ("id", $orgao->getId(), PDO::PARAM_INT);
             $con->execute();
         }
@@ -54,7 +54,7 @@
             $orgaos[] = $orgao; 
             
             }
-            print "<table class=' container table table-hover table-striped table-bordered'>";
+            /*print "<table class=' container table table-hover table-striped table-bordered'>";
             
             //criar função que realiza a formatação dos prints 
             foreach ($orgao as $obj) {
@@ -67,21 +67,66 @@
                 print "</tr>";
 
             }
-            print "</table>";
+            print "</table>";*/
             
+            return $orgaos;
         }
         //findById
-        function findById (Orgao $orgao) {
+        function findById (int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM orgao WHERE id = :id;");
-            $con->bindValue ("id", $orgao->getId(), PDO::PARAM_INT);
-            $con->execute();
+            $con->bindValue ("id", $id, PDO::PARAM_INT);
+            $resultado = $con->execute();
 
-            $orgao = new Orgao;
-            $orgao->setId('id');
-            $orgao->setNome('nome');
-            $orgao->setDataCriacao('data_criacao');
-            $orgao->setDataDesativo('data_desativado');
-            $orgao->setAtivo('ativo');
+            $orgao = null;
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+                $orgao = new Orgao;
+                $orgao->setId($linha['id'])."</td>";
+                $orgao->setNome($linha['nome'])."</td>";
+                $orgao->setAtivo($linha['ativo'])."</td>";
+                $orgao->setDataCriacao($linha['data_criacao'])."</td>";
+                $orgao->setDataDesativo($linha['data_desativado'])."</td>";
+                
+            }
+
+            return $orgao;
+
+
+            /*if ($resultado == 1) {
+                $orgao = new Orgao;
+                $orgao->setId('id');
+                $orgao->setNome('nome');
+                $orgao->setDataCriacao('data_criacao');
+                $orgao->setDataDesativo('data_desativado');
+                $orgao->setAtivo('ativo');
+
+                return $orgao;
+            } else echo "Nenhm valor encontrado para esse id!";*/
+            
         }
+
+        function findByName(string $nome) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT * FROM orgao WHERE nome = :nome;");
+            $con->bindValue ("nome", $nome, PDO::PARAM_INT);
+            $resultado = $con->execute();
+
+            $orgao = null;
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+                $orgao = new Orgao;
+                $orgao->setId($linha['id'])."</td>";
+                $orgao->setNome($linha['nome'])."</td>";
+                $orgao->setAtivo($linha['ativo'])."</td>";
+                $orgao->setDataCriacao($linha['data_criacao'])."</td>";
+                $orgao->setDataDesativo($linha['data_desativado'])."</td>";
+                
+            }
+
+            return $orgao;
+        }
+
     }

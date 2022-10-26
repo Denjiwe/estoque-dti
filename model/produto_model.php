@@ -16,7 +16,7 @@
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("INSERT INTO produto (modelo_produto, descricao, qntde_estoque, ativo) VALUES (:modelo, :descricao, :qntde, :ativo)");
             $con->bindValue ("modelo", $produto->getModelo(), PDO::PARAM_STR);
-            $con->bindValue ("descricao", $produto->getDescricao(), PDO::PARAM_STR);
+            $con->bindValue ("descricao", $produto?->getDescricao(), PDO::PARAM_STR);
             $con->bindValue ("qntde", $produto->getQntde(), PDO::PARAM_INT);
             $con->bindValue ("ativo", $produto->getAtivo(), PDO::PARAM_INT);
             $con->execute();
@@ -27,7 +27,7 @@
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("UPDATE produto SET modelo_produto = :modelo, descricao = :descricao, qntde_estoque = :qntde, ativo = :ativo WHERE id = :id");
             $con->bindValue ("modelo", $produto->getModelo(), PDO::PARAM_STR);
-            $con->bindValue ("descricao", $produto->getDescricao(), PDO::PARAM_STR);
+            $con->bindValue ("descricao", $produto?->getDescricao(), PDO::PARAM_STR);
             $con->bindValue ("qntde", $produto->getQntde(), PDO::PARAM_INT);
             $con->bindValue ("ativo", $produto->getAtivo(), PDO::PARAM_INT);
             $con->bindValue ("id", $produto->getId(), PDO::PARAM_INT);
@@ -57,7 +57,7 @@
             print "<table class=' container table table-hover table-striped table-bordered'>";
             
             //criar função que realiza a formatação dos prints 
-            foreach ($produtos as $obj) {
+            /*foreach ($produtos as $obj) {
                 print "<tr>";
                 print "<td>".$obj->getId()."</td>";
                 print "<td>".$obj->getModelo()."</td>";
@@ -67,7 +67,9 @@
                 print "</tr>";
 
             }
-            print "</table>";
+            print "</table>";*/
+
+            return $produtos;
             
         }
         //findById
@@ -76,5 +78,14 @@
             $con = $conexao->prepare("SELECT * FROM produto WHERE id = :id;");
             $con->bindValue ("id", $produto->getId(), PDO::PARAM_INT);
             $con->execute();
+
+            $produto = new Produto;
+            $produto->setId('id');
+            $produto->setModelo('modelo_produto');
+            $produto->setDescricao('descricao');
+            $produto->setQntde('qntde_estoque');
+            $produto->setAtivo('ativo');
+
+            return $produto;
         }
     }

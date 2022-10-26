@@ -31,16 +31,41 @@
  include_once ("./model/orgao_model.php");
  include_once ("./entity/orgao.php");
 
- $org = new Orgao;
- /*$org->setNome("RH");
+ //$org->setId(3);
+
+ $model = new OrgaoModel;
+
+ $orgao = $model->findById(2); 
+
+
+ 
+ 
+ if ($orgao == null ) {
+    echo "Nenhum orgão encontrado!";
+ } else {
+ print "<table class=' container table table-hover table-striped table-bordered'>";
+
+        print "<tr>";
+        print "<td>".$orgao->getId()."</td>";
+        print "<td>".$orgao->getNome()."</td>";
+        print "<td>".$orgao->getAtivo()."</td>";
+        print "<td>".$orgao->getDataCriacao()."</td>";
+        print "<td>".$orgao->getDataDesativo()."</td>";
+        print "</tr>";
+
+ print "</table>";}
+
+
+ /*//insert
+ $org->setNome("RH");
  $org->setAtivo(1);
  $org->setDataCriacao("2022-05-10");
  $org->setDataDesativo(null);
  
- $org->setId(2);
-
+ //$org->setId(2);
+ 
  $model = new OrgaoModel(); 
- $model->delete($org->getId());*/
+ $model->insert($org);*/
 
  return;
 ?>
