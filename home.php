@@ -13,14 +13,9 @@
 <body>
     <main class="container mt-5">
         <form action="home.php" method="get" id="formPesquisa">
-            <div class="form-group row">
-                <div class="col-10">
-                    <input type="text" class="form-control" name="pesquisa" id="pesquisa" placeholder="Pesquise o nome do órgão">
-                </div>
-
-                <div class="col-2">
-                    <button type="submit" class="btn btn-primary">Pesquisar</button> 
-                </div>
+            <div class="input-group">
+                <input type="text" class="form-control" name="pesquisa" id="pesquisa" placeholder="Pesquise o nome do órgão">
+                <button type="submit" class="btn btn-secondary">Pesquisar</button> 
             </div>
         </form>
 
@@ -43,7 +38,7 @@
                     if ($orgao == null ) {
                         echo "<h3>Nenhum órgão encontrado!</h3>";
                         print "<a class='btn btn-light' href='home.php'>Voltar para Home</a>";
-                        
+
                     } else {
                         print "<table class=' container table table-hover table-striped table-bordered'>";
 
