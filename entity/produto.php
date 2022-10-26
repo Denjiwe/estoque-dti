@@ -1,7 +1,7 @@
 <?php
 
 class Produto {
-    private string $id;
+    private int $id;
 
     private string $modelo;
 

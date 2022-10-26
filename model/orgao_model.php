@@ -76,7 +76,7 @@
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM orgao WHERE id = :id;");
             $con->bindValue ("id", $id, PDO::PARAM_INT);
-            $resultado = $con->execute();
+            $con->execute();
 
             $orgao = null;
 
@@ -110,8 +110,8 @@
         function findByName(string $nome) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM orgao WHERE nome = :nome;");
-            $con->bindValue ("nome", $nome, PDO::PARAM_INT);
-            $resultado = $con->execute();
+            $con->bindValue ("nome", $nome, PDO::PARAM_STR);
+            $con->execute();
 
             $orgao = null;
 

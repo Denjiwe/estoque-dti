@@ -1,7 +1,7 @@
 <?php
 
 class Orgao {
-    private string $id;
+    private int $id;
 
     private string $nome;
 

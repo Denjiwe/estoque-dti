@@ -589,3 +589,7 @@
 172.18.0.1 - - [26/Oct/2022:17:16:11 +0000] "GET / HTTP/1.1" 200 1478 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0" "-"
 172.18.0.1 - - [26/Oct/2022:17:16:11 +0000] "GET /css/index.css HTTP/1.1" 200 67 "http://localhost:8080/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0" "-"
 172.18.0.1 - - [26/Oct/2022:17:16:12 +0000] "POST /controller/select.php HTTP/1.1" 200 587 "http://localhost:8080/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0" "-"
+172.18.0.1 - - [26/Oct/2022:20:26:54 +0000] "GET / HTTP/1.1" 200 1422 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.95" "-"
+172.18.0.1 - - [26/Oct/2022:20:26:55 +0000] "GET /css/index.css HTTP/1.1" 304 0 "http://localhost:8080/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.95" "-"
+172.18.0.1 - - [26/Oct/2022:20:26:59 +0000] "GET /home.php HTTP/1.1" 200 1497 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.95" "-"
+172.18.0.1 - - [26/Oct/2022:20:26:59 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "http://localhost:8080/home.php" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.95" "-"

@@ -4,7 +4,7 @@ npm-debug.log
 yarn-error.log
 *.log
 db/database/mysql.sock
-db/database/#innodb_temp/*
+db/database/#innodb_temp/*ibt
 
 
 # Laravel 4 specific
