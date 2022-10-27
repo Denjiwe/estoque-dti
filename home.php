@@ -26,6 +26,16 @@
 
                 include ("./model/orgao_model.php");
 
+                if(@$_REQUEST['delete']) {
+                    try{
+                    $model = new OrgaoModel;
+                    $model ->delete($_REQUEST["delete"]);
+                    echo "<div class='alert alert-success'>Registro excluído com sucesso</div>";
+                    } catch (PDOException $e) {
+                        echo "Não foi possível excluir o registro: ". $e->getMessage();
+                    }
+                }
+
                 if (isset($_GET['pesquisa'])) {
                     $model = new OrgaoModel;
                     
@@ -33,7 +43,7 @@
 
                     $orgao = $model->findByName($pesquisa);
 
-                    print "<h1>Produtos cadastrados com nome: \"".$pesquisa."\"</h1>";
+                    print "<h1>Órgãos cadastrados com nome: \"".$pesquisa."\"</h1>";
 
                     if ($orgao == null ) {
                         echo "<h3>Nenhum órgão encontrado!</h3>";
@@ -54,8 +64,9 @@
                         print "<tr>";
                         print "<td style='display:none;'>".$orgao->getId()."</td>";
                         print "<td>".$orgao->getNome()."</td>";
-                        print "<td>".$orgao->getAtivo()."</td>";
-                        print "<td>".$orgao->getDataCriacao()."</td>";
+                        print "<td>".($orgao->getAtivo() ? 'Sim' : 'Não')."</td>";
+                        $dataCriacao = new DateTime($orgao->getDataCriacao());
+                        print "<td>".date_format($dataCriacao, "d/m/Y")."</td>";
                         print "<td>".$orgao->getDataDesativo()."</td>";
                         print "<td>
                          <button class='btn btn-success'>Editar</button>
@@ -69,7 +80,7 @@
                     }
                     
                 } else {
-                    print "<h1>Produtos cadastrados</h1>";
+                    print "<h1>Órgãos cadastrados</h1>";
 
                     print "<table class=' container table table-hover table-striped table-bordered'>";
 
@@ -90,12 +101,14 @@
                         print "<tr>";
                         print "<td style='display:none;'>".$obj->getId()."</td>";
                         print "<td>".$obj->getNome()."</td>";
-                        print "<td>".$obj->getAtivo()."</td>";
-                        print "<td>".$obj->getDataCriacao()."</td>";
+                        print "<td>".($obj->getAtivo() ? 'Sim' : 'Não')."</td>";
+                        $dataCriacao = new DateTime($obj->getDataCriacao());
+                        print "<td>".date_format($dataCriacao, "d/m/Y")."</td>";
                         print "<td>".$obj->getDataDesativo()."</td>";
+
                         print "<td>
                          <button class='btn btn-success'>Editar</button>
-                         <button class='btn btn-danger'>Excluir</button>
+                         <a href=\"home.php?delete=".$obj->getId()."\" class='btn btn-danger excluir'>Excluir</a>
                               </td>";
                         print "</tr>";
                     }
@@ -105,5 +118,14 @@
             ?>
         </div>
     </main>
+
+    <script>
+        $(".excluir").click(function (e) {
+            if(confirm("Tem certeza que quer excluir o registro?") == true) {
+            } else {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
