@@ -1,8 +1,8 @@
 <?php
 
-    include_once ("./database/config.php");
+    include_once ("../database/config.php");
 
-    include_once ("./entity/orgao.php");
+    include_once ("../entity/orgao.php");
     
     class OrgaoModel {
         function delete(int $id) {
@@ -25,7 +25,7 @@
         //update
         function update (Orgao $orgao){
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("UPDATE orgao SET nome = :nome, ativo, data_criacao = :data_criacao, data_desativado = :data_desativado = :ativo WHERE id = :id");
+            $con = $conexao->prepare("UPDATE orgao SET nome = :nome, ativo = :ativo, data_criacao = :data_criacao, data_desativado = :data_desativado WHERE id = :id");
             $con->bindValue ("nome", $orgao->getNome(), PDO::PARAM_STR);
             $con->bindValue ("ativo", $orgao->getAtivo(), PDO::PARAM_INT);
             $con->bindValue ("data_criacao", $orgao->getDataCriacao(), PDO::PARAM_STR);
