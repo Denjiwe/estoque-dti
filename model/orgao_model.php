@@ -1,8 +1,8 @@
 <?php
 
-    include_once ("../database/config.php");
+    include_once ("../../database/config.php");
 
-    include_once ("../entity/orgao.php");
+    include_once ("../../entity/orgao.php");
     
     class OrgaoModel {
         function delete(int $id) {
@@ -54,20 +54,6 @@
             $orgaos[] = $orgao; 
             
             }
-            /*print "<table class=' container table table-hover table-striped table-bordered'>";
-            
-            //criar função que realiza a formatação dos prints 
-            foreach ($orgao as $obj) {
-                print "<tr>";
-                print "<td>".$obj->getId()."</td>";
-                print "<td>".$obj->getNome()."</td>";
-                print "<td>".$obj->getAtivo()."</td>";
-                print "<td>".$obj->getDataCriacao()."</td>";
-                print "<td>".$obj->getDataDesativo()."</td>";
-                print "</tr>";
-
-            }
-            print "</table>";*/
             
             return $orgaos;
         }
@@ -83,11 +69,11 @@
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
 
                 $orgao = new Orgao;
-                $orgao->setId($linha['id'])."</td>";
-                $orgao->setNome($linha['nome'])."</td>";
-                $orgao->setAtivo($linha['ativo'])."</td>";
-                $orgao->setDataCriacao($linha['data_criacao'])."</td>";
-                $orgao->setDataDesativo($linha['data_desativado'])."</td>";
+                $orgao->setId($linha['id']);
+                $orgao->setNome($linha['nome']);
+                $orgao->setAtivo($linha['ativo']);
+                $orgao->setDataCriacao($linha['data_criacao']);
+                $orgao->setDataDesativo($linha['data_desativado']);
                 
             }
 
@@ -107,6 +93,7 @@
             
         }
 
+        //findByname
         function findByName(string $nome) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM orgao WHERE nome = :nome;");

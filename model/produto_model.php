@@ -1,8 +1,8 @@
 <?php
 
-    include_once ("./database/config.php");
+    include_once ("../../database/config.php");
 
-    include_once ("./entity/produto.php");
+    include_once ("../../entity/produto.php");
     
     class ProdutoModel {
         function delete(int $id) {
@@ -54,37 +54,51 @@
             $produtos[] = $produto; 
             
             }
-            print "<table class=' container table table-hover table-striped table-bordered'>";
-            
-            //criar função que realiza a formatação dos prints 
-            /*foreach ($produtos as $obj) {
-                print "<tr>";
-                print "<td>".$obj->getId()."</td>";
-                print "<td>".$obj->getModelo()."</td>";
-                print "<td>".$obj->getDescricao()."</td>";
-                print "<td>".$obj->getQntde()."</td>";
-                print "<td>".$obj->getAtivo()."</td>";
-                print "</tr>";
-
-            }
-            print "</table>";*/
 
             return $produtos;
             
         }
         //findById
-        function findById (Produto $produto) {
+        function findById (int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM produto WHERE id = :id;");
-            $con->bindValue ("id", $produto->getId(), PDO::PARAM_INT);
+            $con->bindValue ("id", $id, PDO::PARAM_INT);
             $con->execute();
 
-            $produto = new Produto;
-            $produto->setId('id');
-            $produto->setModelo('modelo_produto');
-            $produto->setDescricao('descricao');
-            $produto->setQntde('qntde_estoque');
-            $produto->setAtivo('ativo');
+            $produto = null;
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+                $produto = new Produto;
+                $produto->setId($linha['id']);
+                $produto->setModelo($linha['modelo_produto']);
+                $produto->setDescricao($linha['descricao']);
+                $produto->setQntde($linha['qntde_estoque']);
+                $produto->setAtivo($linha['ativo']);
+
+            }
+
+            return $produto;
+        }
+
+        function findByName(string $modelo) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT * FROM produto WHERE modelo_produto = :modelo;");
+            $con->bindValue ("modelo", $modelo, PDO::PARAM_STR);
+            $con->execute();
+
+            $produto = null;
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+                $produto = new Produto;
+                $produto->setId($linha['id'])."</td>";
+                $produto->setModelo($linha['modelo_produto'])."</td>";
+                $produto->setDescricao($linha['descricao'])."</td>";
+                $produto->setQntde($linha['qntde_estoque'])."</td>";
+                $produto->setAtivo($linha['ativo'])."</td>";
+                
+            }
 
             return $produto;
         }
