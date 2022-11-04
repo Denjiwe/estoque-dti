@@ -1,7 +1,7 @@
-<link rel="stylesheet" href="./css/menu.css">
+<link rel="stylesheet" href="../../../css/menu.css">
 <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container">
-    <a class="navbar-brand text-white" href="#">
+    <a class="navbar-brand text-white" href="../../../index.php">
       Estoque DTI
     </a>
   
@@ -12,9 +12,9 @@
                     Cadastros
                 </a>
                 <ul class="dropdown-menu bg-dark">
-                    <li><a class="dropdown-item text-white" href="../produto/pesquisar.php">Produto</a></li>
-                    <li><a class="dropdown-item text-white" href="../orgao/pesquisar.php">Órgãos</a></li>
-                    <li><a class="dropdown-item text-white" href="../usuario/pesquisar.php">Usuário</a></li>
+                    <li><a class="dropdown-item text-white" href="../../../content/produto/pesquisar.php">Produto</a></li>
+                    <li><a class="dropdown-item text-white" href="../../../content/orgao/pesquisar.php">Órgãos</a></li>
+                    <li><a class="dropdown-item text-white" href="../../../content/usuario/pesquisar.php">Usuário</a></li>
                 </ul>
             </li>
         </ul>    

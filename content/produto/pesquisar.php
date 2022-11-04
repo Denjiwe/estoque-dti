@@ -45,7 +45,7 @@
                     $model ->delete($_REQUEST["delete"]);
                     echo "<div class='alert alert-success'>Registro excluído com sucesso</div>";
                     } catch (PDOException $e) {
-                        echo "Não foi possível excluir o registro: ". $e->getMessage();
+                        echo "<div class='alert alert-danger'>Não foi possível excluir o registro: ". $e->getMessage()."</div>";
                     }
                 }
 

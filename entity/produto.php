@@ -12,6 +12,8 @@ class Produto
 
         private bool $ativo;
 
+        private array $itens;
+
         public function getId() : int {
             return $this-> id;
         }
@@ -26,6 +28,9 @@ class Produto
         }
         public function getAtivo() : bool {
             return $this-> ativo;
+        }
+        public function getItens() : array {
+            return $this-> itens;
         }
 
         public function setId(int $id) {
@@ -42,5 +47,8 @@ class Produto
         }
         public function setAtivo(int $ativo) {
             $this->ativo = $ativo;
+        }
+        public function setItens(array $itens) {
+            $this->itens = $itens;
         }
     }

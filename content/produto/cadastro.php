@@ -11,10 +11,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
+
 <?php
         include ("../../entity/produto.php");
 
         include ("../../model/produto_model.php");
+
+        include_once ("../../menu.php");
 
         if(@$_REQUEST['id']) {
             try {
@@ -33,7 +36,7 @@
             }
         }
 
-        
+        //atualizar produto
         if (isset($_POST['modelo'])){
             if(@$_REQUEST['id'] != null) {
                 $new_model = new ProdutoModel;
@@ -63,6 +66,7 @@
                     echo "Não foi possível atualizar o registro: ". $e->getMessage();
                 }    
             } else {
+                //cadastrar produto
                 $new_model = new ProdutoModel;
 
                 $new_produto = new Produto;
@@ -75,23 +79,34 @@
                 $new_ativo = $ativook;
                 $new_descricao = $_POST['descricao'];
                 $new_qntde = $_POST['qntde'];
+                $itens = $_POST['produtosVinculados'];
+
 
                 $new_produto->setModelo($new_modelo);
                 $new_produto->setAtivo($new_ativo);
                 $new_produto->setDescricao($new_descricao);
                 $new_produto->setQntde($new_qntde);
+                $new_produto?->setItens(explode(",",$itens));
 
                 try {
                     $new_model->insert($new_produto);
-                    echo "<div class='alert alert-success'>Registro criado com sucesso!</div>";
+                    echo "<div class=' container alert alert-success'>Registro criado com sucesso!</div>";
                 } catch (PDOException $e) {
-                    echo "Não foi possível cadastrar o registro: ". $e->getMessage();
+                    if (str_contains($e->getMessage(), "UC_Suprimentos")) {
+                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois os suprimentos estão em duplicidade!</div>";
+                    } elseif (str_contains($e->getMessage(), "UC_Modelo")) {
+                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois o modelo do produto já foi cadastrado</div>";
+                    } else {
+                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro!</div>";
+                    }
                 }  
             }
         }
     ?>
     <main class="container mt-5">
         <form action="cadastro.php" method="post" id="formCadastro">
+
+            <h2>Cadastro de Produto</h2>
             
             <input type="hidden" name="id" 
                 <?php 
@@ -103,14 +118,14 @@
                 ?>
             >
 
-            <div class="form-group">
+            <div class="form-group mt-5">
                 <label for="modelo">Modelo <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="modelo" id="modelo" 
                     <?php if(isset($produto)) {
                         echo "value=\"".$modelo."\"";
                         }
                     ?>
-                placeholder="insira o modelo do produto" required>
+                placeholder="insira o modelo do produto">
             </div>
 
             <div class="form-group mt-5">
@@ -132,7 +147,7 @@
                         echo "value=\"".$descricao."\"";
                         }
                     ?>
-                id="descricao" required>
+                id="descricao">
             </div>
 
             <div class="form-group mt-5">
@@ -145,9 +160,84 @@
                 id="qntde">
             </div>
 
-            <button type="submit" class="btn btn-primary mt-5">Salvar</button>
-            <a href="pesquisar.php" type="button" class="btn btn-light mt-5">Cancelar</a>
+            <hr class="mt-5">
+
+            <h2 class="mt-5" >Vinculação de Produtos</h2>
+
+            <div class="row mt-5">
+                <div class="col-10">
+                    <select class="form-select" name="selectProduto" id="selectProduto" aria-label="Default select example">
+                        <option selected>Selecione o produto a ser vinculado</option>
+                        <?php 
+                            $model = new ProdutoModel;
+
+                            $select_produto = $model->select();
+                            
+                            foreach ($select_produto as $obj) {
+                                print "<option value=\"".$obj->getId()."\">".$obj->getModelo()."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-2">
+                    <button type="button" id="addProduto" class="btn btn-primary">Vincular</button>
+                </div>
+            </div>
+            
+            <script>
+                $("#addProduto").click(function () {
+                    var selectProduto = document.getElementById('selectProduto');
+                    var valor = selectProduto.options[selectProduto.selectedIndex].value; 
+                    valor = parseInt(valor);  
+                    var texto = selectProduto.options[selectProduto.selectedIndex].text;
+                    if(Number.isInteger(valor)) {
+                        $("#content").append(
+                        '<tr>\
+                            <td>'+valor+'</td>\
+                            <td>'+texto+'</td>\
+                            <td><button type="button" class="btn btn-danger">Excluir</button></td>\
+                            </tr>'
+                        ); 
+                    }
+
+                    $("table").on("click", "button", function () {
+                        $(this).parent().parent().remove();
+                    });
+                });               
+            </script>
+
+            <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
+                <tr>
+                    <th class="col-6">Código</th>
+                    <th class="col-6">Produto</th>
+                    <th class="col-2">Ações</th>
+                </tr>
+            </table>
+
+            <input type="text" class="form-control" id="produtosVinculados" name="produtosVinculados" value="">
+            
+            <button type="submit" id="submit" class="btn btn-primary mt-5">Salvar</button>
+            <a href="pesquisar.php" type="button" class="btn btn-danger mt-5">Cancelar</a>
         </form>
+        
+        <script>
+            $("#submit").click(function () {
+                 var itens = "";
+                $("tr td:first-child").each(function (t){
+                   if (t == 0){ 
+                   var valor = $(this).text();
+                   itens += valor;
+                   } else {
+                   var valor = $(this).text();
+                   itens += "," + valor;
+                   }
+                });
+                $("#produtosVinculados").val(itens);
+                
+            })
+        </script>
+        
     </main>
 
 </body>

@@ -623,3 +623,293 @@
 2022/10/31 20:34:40 [notice] 1#1: worker process 29 exited with code 0
 2022/10/31 20:34:40 [notice] 1#1: worker process 32 exited with code 0
 2022/10/31 20:34:40 [notice] 1#1: exit
+2022/11/01 16:38:26 [notice] 1#1: using the "epoll" event method
+2022/11/01 16:38:26 [notice] 1#1: nginx/1.23.2
+2022/11/01 16:38:26 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/01 16:38:26 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/01 16:38:26 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/01 16:38:26 [notice] 1#1: start worker processes
+2022/11/01 16:38:26 [notice] 1#1: start worker process 28
+2022/11/01 16:38:26 [notice] 1#1: start worker process 29
+2022/11/01 16:38:26 [notice] 1#1: start worker process 30
+2022/11/01 16:38:26 [notice] 1#1: start worker process 31
+2022/11/01 16:38:26 [notice] 1#1: start worker process 32
+2022/11/01 16:38:26 [notice] 1#1: start worker process 33
+2022/11/01 16:40:41 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:42:39 [error] 30#30: *4 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /produto/pesquisar.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:44:03 [error] 32#32: *8 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /produto/pesquisar.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:44:24 [error] 32#32: *8 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:45:42 [error] 28#28: *12 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:45:48 [error] 28#28: *12 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /~/content/produto/pesquisar.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:46:11 [error] 28#28: *12 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:46:13 [error] 28#28: *12 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /~./content/produto/pesquisar.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:47:18 [error] 28#28: *12 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/01 16:47:20 [error] 28#28: *12 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 16:47:31 [error] 28#28: *12 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /content/produto/content/orgao/pesquisar.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 16:48:46 [error] 28#28: *24 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 16:48:46 [error] 28#28: *24 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 16:49:33 [error] 28#28: *22 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 16:49:33 [error] 28#28: *22 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 16:50:16 [error] 28#28: *22 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 16:50:22 [error] 28#28: *22 open() "/var/www/html/content/orgao/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/orgao/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/orgao/pesquisar.php"
+2022/11/01 16:50:24 [error] 28#28: *22 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 17:31:35 [error] 28#28: *33 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 17:31:49 [error] 28#28: *33 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 17:31:50 [error] 28#28: *33 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 17:52:20 [error] 29#29: *74 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 18:07:10 [error] 29#29: *89 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 18:07:56 [error] 29#29: *89 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 18:09:06 [error] 29#29: *95 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 18:09:29 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/01 18:09:29 [notice] 28#28: gracefully shutting down
+2022/11/01 18:09:29 [notice] 29#29: gracefully shutting down
+2022/11/01 18:09:29 [notice] 32#32: gracefully shutting down
+2022/11/01 18:09:29 [notice] 30#30: gracefully shutting down
+2022/11/01 18:09:29 [notice] 33#33: gracefully shutting down
+2022/11/01 18:09:29 [notice] 31#31: gracefully shutting down
+2022/11/01 18:09:29 [notice] 28#28: exiting
+2022/11/01 18:09:29 [notice] 32#32: exiting
+2022/11/01 18:09:29 [notice] 31#31: exiting
+2022/11/01 18:09:29 [notice] 28#28: exit
+2022/11/01 18:09:29 [notice] 32#32: exit
+2022/11/01 18:09:29 [notice] 33#33: exiting
+2022/11/01 18:09:29 [notice] 30#30: exiting
+2022/11/01 18:09:29 [notice] 31#31: exit
+2022/11/01 18:09:29 [notice] 33#33: exit
+2022/11/01 18:09:29 [notice] 30#30: exit
+2022/11/01 18:09:29 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/11/01 18:09:29 [notice] 1#1: worker process 32 exited with code 0
+2022/11/01 18:09:29 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 18:09:29 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/11/01 18:09:29 [notice] 1#1: worker process 30 exited with code 0
+2022/11/01 18:09:29 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 18:09:29 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/11/01 18:09:29 [notice] 1#1: worker process 28 exited with code 0
+2022/11/01 18:09:29 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 18:09:29 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/11/01 18:09:29 [notice] 1#1: worker process 33 exited with code 0
+2022/11/01 18:09:29 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 18:09:29 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/01 18:09:29 [notice] 1#1: worker process 31 exited with code 0
+2022/11/01 18:09:29 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 18:09:58 [notice] 1#1: using the "epoll" event method
+2022/11/01 18:09:58 [notice] 1#1: nginx/1.23.2
+2022/11/01 18:09:58 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/01 18:09:58 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/01 18:09:58 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/01 18:09:58 [notice] 1#1: start worker processes
+2022/11/01 18:09:58 [notice] 1#1: start worker process 28
+2022/11/01 18:09:58 [notice] 1#1: start worker process 29
+2022/11/01 18:09:58 [notice] 1#1: start worker process 30
+2022/11/01 18:09:58 [notice] 1#1: start worker process 31
+2022/11/01 18:09:58 [notice] 1#1: start worker process 32
+2022/11/01 18:09:58 [notice] 1#1: start worker process 33
+2022/11/01 18:21:55 [error] 28#28: *20 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 18:43:54 [error] 28#28: *34 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 18:43:55 [error] 28#28: *34 open() "/var/www/html/content/orgao/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/orgao/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/orgao/pesquisar.php"
+2022/11/01 18:43:59 [error] 28#28: *34 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/01 21:26:20 [error] 29#29: *61 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:39:24 [error] 30#30: *82 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:48:20 [error] 30#30: *85 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:48:30 [error] 30#30: *85 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:49:12 [error] 30#30: *85 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:49:31 [error] 30#30: *85 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:49:31 [error] 30#30: *85 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:49:52 [error] 30#30: *85 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:49:52 [error] 30#30: *85 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:50:43 [error] 30#30: *85 open() "/var/www/html/content/produto/css/menu.css" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /content/produto/css/menu.css HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:50:43 [error] 30#30: *85 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:55:39 [error] 30#30: *99 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:56:40 [error] 30#30: *99 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:56:51 [error] 30#30: *99 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:57:38 [error] 30#30: *99 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:58:50 [error] 30#30: *108 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 21:59:55 [error] 30#30: *108 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 22:05:08 [error] 30#30: *113 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 22:11:43 [error] 31#31: *119 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 23:20:18 [error] 31#31: *122 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 23:21:52 [error] 31#31: *125 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 23:29:12 [error] 31#31: *128 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/01 23:38:26 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/01 23:38:26 [notice] 28#28: gracefully shutting down
+2022/11/01 23:38:26 [notice] 33#33: gracefully shutting down
+2022/11/01 23:38:26 [notice] 32#32: gracefully shutting down
+2022/11/01 23:38:26 [notice] 33#33: exiting
+2022/11/01 23:38:26 [notice] 29#29: gracefully shutting down
+2022/11/01 23:38:26 [notice] 31#31: gracefully shutting down
+2022/11/01 23:38:26 [notice] 30#30: gracefully shutting down
+2022/11/01 23:38:26 [notice] 32#32: exiting
+2022/11/01 23:38:26 [notice] 28#28: exiting
+2022/11/01 23:38:26 [notice] 33#33: exit
+2022/11/01 23:38:26 [notice] 31#31: exiting
+2022/11/01 23:38:26 [notice] 30#30: exiting
+2022/11/01 23:38:26 [notice] 28#28: exit
+2022/11/01 23:38:26 [notice] 32#32: exit
+2022/11/01 23:38:26 [notice] 31#31: exit
+2022/11/01 23:38:26 [notice] 30#30: exit
+2022/11/01 23:38:26 [notice] 29#29: exiting
+2022/11/01 23:38:26 [notice] 29#29: exit
+2022/11/01 23:38:26 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/11/01 23:38:26 [notice] 1#1: worker process 32 exited with code 0
+2022/11/01 23:38:26 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 23:38:26 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/11/01 23:38:26 [notice] 1#1: worker process 28 exited with code 0
+2022/11/01 23:38:26 [notice] 1#1: worker process 31 exited with code 0
+2022/11/01 23:38:26 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 23:38:26 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/01 23:38:26 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/11/01 23:38:26 [notice] 1#1: worker process 30 exited with code 0
+2022/11/01 23:38:26 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/01 23:38:26 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/11/01 23:38:26 [notice] 1#1: worker process 33 exited with code 0
+2022/11/01 23:38:26 [notice] 1#1: worker process 29 exited with code 0
+2022/11/01 23:38:26 [notice] 1#1: exit
+2022/11/02 23:47:32 [notice] 1#1: using the "epoll" event method
+2022/11/02 23:47:32 [notice] 1#1: nginx/1.23.2
+2022/11/02 23:47:32 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/02 23:47:32 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/02 23:47:32 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/02 23:47:32 [notice] 1#1: start worker processes
+2022/11/02 23:47:32 [notice] 1#1: start worker process 28
+2022/11/02 23:47:32 [notice] 1#1: start worker process 29
+2022/11/02 23:47:32 [notice] 1#1: start worker process 30
+2022/11/02 23:47:32 [notice] 1#1: start worker process 31
+2022/11/02 23:47:32 [notice] 1#1: start worker process 32
+2022/11/02 23:47:32 [notice] 1#1: start worker process 33
+2022/11/02 23:47:37 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/02 23:55:31 [error] 28#28: *14 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/02 23:58:43 [error] 28#28: *17 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 00:00:25 [error] 28#28: *20 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 00:00:52 [error] 28#28: *20 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 00:03:59 [error] 28#28: *28 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 00:04:58 [error] 28#28: *28 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 00:05:15 [error] 28#28: *28 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 00:06:04 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/03 00:06:04 [notice] 29#29: gracefully shutting down
+2022/11/03 00:06:04 [notice] 29#29: exiting
+2022/11/03 00:06:04 [notice] 30#30: gracefully shutting down
+2022/11/03 00:06:04 [notice] 30#30: exiting
+2022/11/03 00:06:04 [notice] 32#32: gracefully shutting down
+2022/11/03 00:06:04 [notice] 31#31: gracefully shutting down
+2022/11/03 00:06:04 [notice] 33#33: gracefully shutting down
+2022/11/03 00:06:04 [notice] 28#28: gracefully shutting down
+2022/11/03 00:06:04 [notice] 29#29: exit
+2022/11/03 00:06:04 [notice] 30#30: exit
+2022/11/03 00:06:04 [notice] 32#32: exiting
+2022/11/03 00:06:04 [notice] 31#31: exiting
+2022/11/03 00:06:04 [notice] 33#33: exiting
+2022/11/03 00:06:04 [notice] 32#32: exit
+2022/11/03 00:06:04 [notice] 31#31: exit
+2022/11/03 00:06:04 [notice] 33#33: exit
+2022/11/03 00:06:04 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/11/03 00:06:04 [notice] 1#1: worker process 29 exited with code 0
+2022/11/03 00:06:04 [notice] 1#1: worker process 31 exited with code 0
+2022/11/03 00:06:04 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/03 00:06:04 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/11/03 00:06:04 [notice] 1#1: worker process 32 exited with code 0
+2022/11/03 00:06:04 [notice] 1#1: worker process 33 exited with code 0
+2022/11/03 00:06:04 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/03 00:06:04 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/11/03 00:06:04 [notice] 1#1: worker process 30 exited with code 0
+2022/11/03 00:06:04 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/03 00:06:14 [notice] 28#28: exiting
+2022/11/03 00:06:14 [notice] 28#28: exit
+2022/11/03 00:06:14 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/11/03 00:06:14 [notice] 1#1: worker process 28 exited with code 0
+2022/11/03 00:06:14 [notice] 1#1: exit
+2022/11/03 16:37:54 [notice] 1#1: using the "epoll" event method
+2022/11/03 16:37:54 [notice] 1#1: nginx/1.23.2
+2022/11/03 16:37:54 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/03 16:37:54 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/03 16:37:54 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/03 16:37:54 [notice] 1#1: start worker processes
+2022/11/03 16:37:54 [notice] 1#1: start worker process 28
+2022/11/03 16:37:54 [notice] 1#1: start worker process 29
+2022/11/03 16:37:54 [notice] 1#1: start worker process 30
+2022/11/03 16:37:54 [notice] 1#1: start worker process 31
+2022/11/03 16:37:54 [notice] 1#1: start worker process 32
+2022/11/03 16:37:54 [notice] 1#1: start worker process 33
+2022/11/03 16:38:49 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/03 16:45:08 [error] 30#30: *6 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:45:57 [error] 30#30: *6 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:46:32 [error] 30#30: *6 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:47:17 [error] 30#30: *6 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:48:21 [error] 30#30: *6 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:48:49 [error] 30#30: *6 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:50:12 [error] 28#28: *16 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:52:51 [error] 28#28: *19 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 16:55:27 [error] 28#28: *22 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:00:10 [error] 28#28: *25 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:00:26 [error] 28#28: *25 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:00:40 [error] 28#28: *25 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:01:14 [error] 28#28: *25 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:01:59 [error] 28#28: *25 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:03:11 [error] 28#28: *33 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:03:37 [error] 28#28: *33 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:04:27 [error] 28#28: *33 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:06:07 [error] 28#28: *39 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:24:57 [error] 28#28: *42 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:28:36 [error] 29#29: *45 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:30:36 [error] 29#29: *48 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:31:14 [error] 29#29: *48 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:31:40 [error] 29#29: *48 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:33:04 [error] 29#29: *56 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:34:34 [error] 29#29: *59 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:44:18 [error] 29#29: *62 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:45:31 [error] 29#29: *65 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:46:01 [error] 29#29: *65 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:48:14 [error] 29#29: *69 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:49:30 [error] 29#29: *72 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:50:31 [error] 29#29: *72 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:55:32 [error] 30#30: *77 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:56:46 [error] 30#30: *80 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:57:29 [error] 30#30: *80 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:58:40 [error] 30#30: *84 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 17:59:09 [error] 30#30: *84 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:04:36 [error] 30#30: *88 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:22:16 [error] 30#30: *91 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:27:40 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:28:50 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:29:43 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:30:55 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:31:06 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:31:18 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:31:30 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:31:55 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 18:33:19 [error] 30#30: *94 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 19:17:25 [error] 31#31: *138 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 19:17:43 [error] 31#31: *138 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/03 20:50:54 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/03 20:50:54 [notice] 28#28: gracefully shutting down
+2022/11/03 20:50:54 [notice] 32#32: gracefully shutting down
+2022/11/03 20:50:54 [notice] 33#33: gracefully shutting down
+2022/11/03 20:50:54 [notice] 30#30: gracefully shutting down
+2022/11/03 20:50:54 [notice] 28#28: exiting
+2022/11/03 20:50:54 [notice] 31#31: gracefully shutting down
+2022/11/03 20:50:54 [notice] 29#29: gracefully shutting down
+2022/11/03 20:50:54 [notice] 28#28: exit
+2022/11/03 20:50:54 [notice] 33#33: exiting
+2022/11/03 20:50:54 [notice] 30#30: exiting
+2022/11/03 20:50:54 [notice] 32#32: exiting
+2022/11/03 20:50:54 [notice] 29#29: exiting
+2022/11/03 20:50:54 [notice] 31#31: exiting
+2022/11/03 20:50:54 [notice] 31#31: exit
+2022/11/03 20:50:54 [notice] 33#33: exit
+2022/11/03 20:50:54 [notice] 32#32: exit
+2022/11/03 20:50:54 [notice] 30#30: exit
+2022/11/03 20:50:54 [notice] 29#29: exit
+2022/11/03 20:50:54 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/03 20:50:54 [notice] 1#1: worker process 30 exited with code 0
+2022/11/03 20:50:54 [notice] 1#1: worker process 31 exited with code 0
+2022/11/03 20:50:54 [notice] 1#1: worker process 33 exited with code 0
+2022/11/03 20:50:54 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/03 20:50:54 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/11/03 20:50:54 [notice] 1#1: worker process 28 exited with code 0
+2022/11/03 20:50:54 [notice] 1#1: worker process 29 exited with code 0
+2022/11/03 20:50:54 [notice] 1#1: worker process 32 exited with code 0
+2022/11/03 20:50:54 [notice] 1#1: exit
+2022/11/04 16:37:20 [notice] 1#1: using the "epoll" event method
+2022/11/04 16:37:20 [notice] 1#1: nginx/1.23.2
+2022/11/04 16:37:20 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/04 16:37:20 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/04 16:37:20 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576

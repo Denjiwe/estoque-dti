@@ -13,13 +13,39 @@
         }
 
         function insert (Produto $produto) {
+
+            //abrir transação, fazer prepare do insert, depois armazenar o lastinserid, depois criar foreach do array de itens o insert do itens produto, 
+            //usando o lastinsertid para o produto proprietario e o item do array para o produto vinculado
             $conexao = Conexao::getConexao();
+
+            try {
+            $conexao->beginTransaction();
             $con = $conexao->prepare("INSERT INTO produto (modelo_produto, descricao, qntde_estoque, ativo) VALUES (:modelo, :descricao, :qntde, :ativo)");
             $con->bindValue ("modelo", $produto->getModelo(), PDO::PARAM_STR);
             $con->bindValue ("descricao", $produto?->getDescricao(), PDO::PARAM_STR);
             $con->bindValue ("qntde", $produto->getQntde(), PDO::PARAM_INT);
             $con->bindValue ("ativo", $produto->getAtivo(), PDO::PARAM_INT);
             $con->execute();
+            $lastId = $conexao->lastInsertId();
+            $itens = $produto->getItens();
+
+            foreach ($itens as $item) {
+                //mudar produto_vinculado_id para sprimento
+                $vinculados = $conexao->prepare("INSERT INTO itens_produto (produto_id, produto_vinculado_id) VALUES (:produto_id, :produto_vinculado_id)");
+                $vinculados->bindValue("produto_id", $lastId, PDO::PARAM_INT);
+                $vinculados->bindValue("produto_vinculado_id", $item, PDO::PARAM_INT);
+                $vinculados->execute();
+            }
+
+            $conexao->commit();
+
+            } catch (PDOException $e) {
+                $conexao->rollBack();
+                throw $e;
+                
+            }
+
+            
         }
 
         //update
