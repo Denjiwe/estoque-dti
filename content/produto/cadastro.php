@@ -27,12 +27,15 @@
                 $produto = $model->findById($_REQUEST['id']);
                 $id = $produto->getId();
                 $modelo = $produto->getModelo();
-                $ativo = $produto->getAtivo();
+                $ativo = $produto->getAtivo();  
                 $descricao = $produto->getDescricao();
                 $qntde = $produto->getQntde();
 
+                $suprimentos = $model->getSuprimentos($_REQUEST['id']);
+                var_dump($suprimentos);
+
             } catch (PDOException $e) {
-                echo "Não foi possível excluir o registro: ". $e->getMessage();
+                echo "<div class='alert alert-danger'>Não foi possível encontrar o registro! </div>". $e->getMessage();
             }
         }
 
@@ -186,25 +189,27 @@
             </div>
             
             <script>
-                $("#addProduto").click(function () {
-                    var selectProduto = document.getElementById('selectProduto');
-                    var valor = selectProduto.options[selectProduto.selectedIndex].value; 
-                    valor = parseInt(valor);  
-                    var texto = selectProduto.options[selectProduto.selectedIndex].text;
-                    if(Number.isInteger(valor)) {
-                        $("#content").append(
-                        '<tr>\
-                            <td>'+valor+'</td>\
-                            <td>'+texto+'</td>\
-                            <td><button type="button" class="btn btn-danger">Excluir</button></td>\
-                            </tr>'
-                        ); 
-                    }
-
-                    $("table").on("click", "button", function () {
-                        $(this).parent().parent().remove();
+                $(document).ready(function(){
+                    $("#addProduto").click(function () {
+                        var selectProduto = document.getElementById('selectProduto');
+                        var valor = selectProduto.options[selectProduto.selectedIndex].value; 
+                        valor = parseInt(valor);  
+                        var texto = selectProduto.options[selectProduto.selectedIndex].text;
+                        if(Number.isInteger(valor)) {
+                            $("#content").append(
+                            '<tr>\
+                                <td>'+valor+'</td>\
+                                <td>'+texto+'</td>\
+                                <td><button type="button" class="btn btn-danger">Excluir</button></td>\
+                                </tr>'
+                            ); 
+                        }
                     });
-                });               
+                    
+                    $("table").on("click", "button", function () {
+                            $(this).parent().parent().remove();
+                    });
+                });                
             </script>
 
             <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
@@ -213,9 +218,22 @@
                     <th class="col-6">Produto</th>
                     <th class="col-2">Ações</th>
                 </tr>
+
+                    <?php
+                        if(@$_REQUEST['id']) {
+                            foreach ($suprimentos as $suprimento) {
+                                print 
+                                "<tr>
+                                    <td>".$suprimento['id']."</td>
+                                    <td>".$suprimento['modelo_produto']."</td>
+                                    <td><button type=\"button\" class=\"btn btn-danger\">Excluir</button></td>
+                                </tr>";
+                            } 
+                        }
+                    ?>
             </table>
 
-            <input type="text" class="form-control" id="produtosVinculados" name="produtosVinculados" value="">
+            <input type="hidden" class="form-control" id="produtosVinculados" name="produtosVinculados" value="">
             
             <button type="submit" id="submit" class="btn btn-primary mt-5">Salvar</button>
             <a href="pesquisar.php" type="button" class="btn btn-danger mt-5">Cancelar</a>

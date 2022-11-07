@@ -65,14 +65,15 @@
                     } else {
                         print "<table class=' container table table-hover table-striped table-bordered'>";
 
-                        print "<tr>";
-                        print "<th style='display:none;'>id</th>";
-                        print "<th>Modelo</th>";
-                        print "<th>Ativo</th>";
-                        print "<th>Descrição</th>";
-                        print "<th>Quantidade</th>";
-                        print "<th>Ações</th>";
-                        print "</tr>";
+                        print 
+                        "<tr>
+                            <th style='display:none;'>id</th>
+                            <th>Modelo</th>
+                            <th>Ativo</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Ações</th>
+                        </tr>";
                     
                         print "<tr>";
                         print "<td style='display:none;'>".$produto->getId()."</td>";
@@ -96,14 +97,16 @@
 
                     print "<table class=' container table table-hover table-striped table-bordered'>";
 
-                    print "<tr>";
-                    print "<th style='display:none;'>#</th>";
-                    print "<th>Modelo</th>";
-                    print "<th>Ativo</th>";
-                    print "<th>Descrição</th>";
-                    print "<th>Quantidade</th>";
-                    print "<th>Ações</th>";
-                    print "</tr>";
+                    
+                    print 
+                    "<tr>
+                        <th style='display:none;'>#</th>
+                        <th>Modelo</th>
+                        <th>Ativo</th>
+                        <th>Descrição</th>
+                        <th>Quantidade</th>
+                        <th>Ações</th>
+                    </tr>";
 
                     $model = new ProdutoModel;
 

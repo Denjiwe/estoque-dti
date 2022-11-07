@@ -42,7 +42,7 @@
             } catch (PDOException $e) {
                 $conexao->rollBack();
                 throw $e;
-                
+
             }
 
             
@@ -65,7 +65,6 @@
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM produto;");
             $con->execute();
-            $con->rowCount();
             
             $produtos = [];
 
@@ -127,5 +126,17 @@
             }
 
             return $produto;
+        }
+
+        function getSuprimentos(int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto.id = itens_produto.produto_vinculado_id where itens_produto.produto_id = :id");
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+            $stmt = $con->fetchAll();
+
+
+            return $stmt;
+
         }
     }
