@@ -19,6 +19,7 @@
 
         include_once ("../../menu.php");
 
+
         if(@$_REQUEST['id']) {
             try {
                 $model = new ProdutoModel;
@@ -32,7 +33,6 @@
                 $qntde = $produto->getQntde();
 
                 $suprimentos = $model->getSuprimentos($_REQUEST['id']);
-                var_dump($suprimentos);
 
             } catch (PDOException $e) {
                 echo "<div class='alert alert-danger'>Não foi possível encontrar o registro! </div>". $e->getMessage();
@@ -55,16 +55,24 @@
                 $new_descricao = $_POST['descricao'];
                 $new_qntde = $_POST['qntde'];
                 $new_id = $_REQUEST['id'];
+                $itens = $_POST['produtosVinculados'];
 
                 $new_produto->setModelo($new_modelo);
                 $new_produto->setAtivo($new_ativo);
                 $new_produto->setDescricao($new_descricao);
                 $new_produto->setQntde($new_qntde);
-                $new_produto->setId($new_id);          
+                $new_produto->setId($new_id);  
+
+                if (strlen(trim($itens)) != 0 ){
+                    $new_produto?->setItens(explode(",",trim($itens)));        
+                } else {
+                    $null = [];
+                    $new_produto?->setItens($null);        
+                }
 
                 try {
                     $new_model->update($new_produto);
-                    echo "<div class='alert alert-success'>Registro atualizado com sucesso!</div>";
+                    echo "<div class='container alert alert-success'>Registro atualizado com sucesso!</div>";
                 } catch (PDOException $e) {
                     echo "Não foi possível atualizar o registro: ". $e->getMessage();
                 }    
@@ -144,7 +152,7 @@
             </div>
 
             <div class="form-group mt-5">
-                <label for="descricao">Descrição <span class="text-danger">*</span></label>
+                <label for="descricao">Descrição</label>
                 <input type="text" class="form-control" name="descricao"
                     <?php if(isset($produto)) {
                         echo "value=\"".$descricao."\"";
@@ -235,8 +243,8 @@
 
             <input type="hidden" class="form-control" id="produtosVinculados" name="produtosVinculados" value="">
             
-            <button type="submit" id="submit" class="btn btn-primary mt-5">Salvar</button>
-            <a href="pesquisar.php" type="button" class="btn btn-danger mt-5">Cancelar</a>
+            <button type="submit" id="submit" class="btn btn-primary mt-5 mb-5">Salvar</button>
+            <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
         </form>
         
         <script>

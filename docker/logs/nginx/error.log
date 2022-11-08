@@ -997,3 +997,18 @@
 2022/11/07 21:02:27 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
 2022/11/07 21:02:27 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
 2022/11/07 21:02:27 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/08 12:17:08 [notice] 1#1: using the "epoll" event method
+2022/11/08 12:17:08 [notice] 1#1: nginx/1.23.2
+2022/11/08 12:17:08 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/08 12:17:08 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/11/08 12:17:08 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/08 12:17:08 [notice] 1#1: start worker processes
+2022/11/08 12:17:08 [notice] 1#1: start worker process 29
+2022/11/08 12:17:08 [notice] 1#1: start worker process 30
+2022/11/08 12:17:08 [notice] 1#1: start worker process 31
+2022/11/08 12:17:08 [notice] 1#1: start worker process 32
+2022/11/08 12:18:42 [error] 29#29: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/08 12:18:44 [error] 30#30: *3 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/11/08 12:19:39 [error] 31#31: *5 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php?id=29"
+2022/11/08 12:23:47 [error] 29#29: *13 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"
+2022/11/08 12:24:41 [error] 29#29: *15 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/cadastro.php"

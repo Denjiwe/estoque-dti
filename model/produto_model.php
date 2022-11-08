@@ -5,6 +5,7 @@
     include_once ("../../entity/produto.php");
     
     class ProdutoModel {
+
         function delete(int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("DELETE FROM produto WHERE id = :id");
@@ -31,9 +32,9 @@
 
             foreach ($itens as $item) {
                 //mudar produto_vinculado_id para sprimento
-                $vinculados = $conexao->prepare("INSERT INTO itens_produto (produto_id, produto_vinculado_id) VALUES (:produto_id, :produto_vinculado_id)");
-                $vinculados->bindValue("produto_id", $lastId, PDO::PARAM_INT);
-                $vinculados->bindValue("produto_vinculado_id", $item, PDO::PARAM_INT);
+                $vinculados = $conexao->prepare("INSERT INTO itens_produto (produto_id, produto_vinculado_id) VALUES (:proprietario, :suprimento)");
+                $vinculados->bindValue("proprietario", $lastId, PDO::PARAM_INT);
+                $vinculados->bindValue("suprimento", $item, PDO::PARAM_INT);
                 $vinculados->execute();
             }
 
@@ -51,13 +52,58 @@
         //update
         function update (Produto $produto){
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("UPDATE produto SET modelo_produto = :modelo, descricao = :descricao, qntde_estoque = :qntde, ativo = :ativo WHERE id = :id");
-            $con->bindValue ("modelo", $produto->getModelo(), PDO::PARAM_STR);
-            $con->bindValue ("descricao", $produto?->getDescricao(), PDO::PARAM_STR);
-            $con->bindValue ("qntde", $produto->getQntde(), PDO::PARAM_INT);
-            $con->bindValue ("ativo", $produto->getAtivo(), PDO::PARAM_INT);
-            $con->bindValue ("id", $produto->getId(), PDO::PARAM_INT);
-            $con->execute();
+            $itensForm = $produto->getItens();
+            
+            $getItensDb = $conexao->prepare("SELECT produto_vinculado_id FROM itens_produto WHERE produto_id=:id");
+            $getItensDb->bindValue("id", $produto->getId(), PDO::PARAM_INT);
+            $getItensDb->execute();
+            $itensDb= [];
+            
+            while ($linha = $getItensDb->fetch(PDO::FETCH_ASSOC)) {
+                $item = $linha['produto_vinculado_id'];
+                $itensDb[] = $item;
+            }
+
+            try {
+                $conexao->beginTransaction();
+                $con = $conexao->prepare("UPDATE produto SET modelo_produto = :modelo, descricao = :descricao, qntde_estoque = :qntde, ativo = :ativo WHERE id = :id");
+                $con->bindValue ("modelo", $produto->getModelo(), PDO::PARAM_STR);
+                $con->bindValue ("descricao", $produto?->getDescricao(), PDO::PARAM_STR);
+                $con->bindValue ("qntde", $produto->getQntde(), PDO::PARAM_INT);
+                $con->bindValue ("ativo", $produto->getAtivo(), PDO::PARAM_INT);
+                $con->bindValue ("id", $produto->getId(), PDO::PARAM_INT);
+                $con->execute();
+
+                
+                
+                $itensInsert = array_diff($itensForm, $itensDb);
+                if ($itensInsert!= null) {
+                    foreach ($itensInsert as $item) {
+                        $insert = $conexao->prepare("INSERT INTO itens_produto (produto_id, produto_vinculado_id) VALUES (:proprietario , :suprimento)");
+                        $insert->bindValue("proprietario", $produto->getId(), PDO::PARAM_INT);
+                        $insert->bindValue("suprimento",$item, PDO::PARAM_INT);
+                        $insert->execute();
+                    }
+                }
+
+                $itensDelete = array_diff($itensDb, $itensForm);
+                if ($itensDelete!= null) {
+                    foreach ($itensDelete as $item) {
+                        $delete = $conexao->prepare("delete from itens_produto where produto_id = :proprietario and produto_vinculado_id = :suprimento");
+                        $delete->bindValue("proprietario", $produto->getId(), PDO::PARAM_INT);
+                        $delete->bindValue("suprimento",$item, PDO::PARAM_INT);
+                        $delete->execute();
+                    }
+                }
+
+                $conexao->commit();
+
+
+            } catch (PDOException $e) {
+                $conexao->rollback();
+                throw $e;
+            }
+
         }
 
         //select all
@@ -134,7 +180,6 @@
             $con->bindValue("id", $id, PDO::PARAM_INT);
             $con->execute();
             $stmt = $con->fetchAll();
-
 
             return $stmt;
 
