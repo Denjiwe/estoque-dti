@@ -17,6 +17,10 @@
                     <li><a class="dropdown-item text-white" href="../../../content/usuario/pesquisar.php">Usuário</a></li>
                 </ul>
             </li>
+
+            <a class="nav-link text-white" href="../../../content/solicitacao/pesquisar.php" role="button">
+                Solicitar
+            </a>
         </ul>    
     </div> 
   </div>

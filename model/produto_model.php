@@ -30,12 +30,14 @@
             $lastId = $conexao->lastInsertId();
             $itens = $produto->getItens();
 
-            foreach ($itens as $item) {
-                //mudar produto_vinculado_id para sprimento
-                $vinculados = $conexao->prepare("INSERT INTO itens_produto (produto_id, produto_vinculado_id) VALUES (:proprietario, :suprimento)");
-                $vinculados->bindValue("proprietario", $lastId, PDO::PARAM_INT);
-                $vinculados->bindValue("suprimento", $item, PDO::PARAM_INT);
-                $vinculados->execute();
+            if (count($itens) > 0) {
+                foreach ($itens as $item) {
+                    //mudar produto_vinculado_id para sprimento
+                    $vinculados = $conexao->prepare("INSERT INTO itens_produto (produto_id, produto_vinculado_id) VALUES (:proprietario, :suprimento)");
+                    $vinculados->bindValue("proprietario", $lastId, PDO::PARAM_INT);
+                    $vinculados->bindValue("suprimento", $item, PDO::PARAM_INT);
+                    $vinculados->execute();
+                }
             }
 
             $conexao->commit();

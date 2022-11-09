@@ -20,7 +20,7 @@ class Produto
         public function getModelo() : string {
             return $this-> modelo;
         }
-        public function getDescricao() : string {
+        public function getDescricao() : ?string {
             return $this-> descricao;
         }
         public function getQntde() : int {

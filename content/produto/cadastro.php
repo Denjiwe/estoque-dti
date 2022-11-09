@@ -66,8 +66,7 @@
                 if (strlen(trim($itens)) != 0 ){
                     $new_produto?->setItens(explode(",",trim($itens)));        
                 } else {
-                    $null = [];
-                    $new_produto?->setItens($null);        
+                    $new_produto->setItens([]);
                 }
 
                 try {
@@ -97,7 +96,11 @@
                 $new_produto->setAtivo($new_ativo);
                 $new_produto->setDescricao($new_descricao);
                 $new_produto->setQntde($new_qntde);
-                $new_produto?->setItens(explode(",",$itens));
+                if (strlen(trim($itens)) != 0 ){
+                    $new_produto?->setItens(explode(",",trim($itens)));        
+                } else {
+                    $new_produto->setItens([]);
+                }
 
                 try {
                     $new_model->insert($new_produto);
@@ -108,7 +111,7 @@
                     } elseif (str_contains($e->getMessage(), "UC_Modelo")) {
                         echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois o modelo do produto já foi cadastrado</div>";
                     } else {
-                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro!</div>";
+                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro!".$e->getMessage()."</div>";
                     }
                 }  
             }
