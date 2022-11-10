@@ -170,7 +170,7 @@
             return $solicitacao;
         }
 
-        /*function getSuprimentos(int $id) {
+        function selectItemSolicitacao(int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("select solicitacao.id, solicitacao.estado_solicitacao from solicitacao inner join itens_solicitacao on solicitacao.id = itens_solicitacao.solicitacao_vinculado_id where itens_solicitacao.solicitacao_id = :id");
             $con->bindValue("id", $id, PDO::PARAM_INT);
@@ -179,5 +179,5 @@
 
             return $stmt;
 
-        }*/
+        }
     }

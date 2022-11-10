@@ -131,6 +131,7 @@
             return $produtos;
             
         }
+
         //findById
         function findById (int $id) {
             $conexao = Conexao::getConexao();
@@ -184,6 +185,15 @@
             $stmt = $con->fetchAll();
 
             return $stmt;
-
         }
+
+        function selectImpressora() {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("select id, modelo_produto from produto where LOCATE('impressora', modelo_produto)");
+            $con->execute();
+            $impressoras = $con->fetchAll();
+
+            return $impressoras;
+        }
+
     }
