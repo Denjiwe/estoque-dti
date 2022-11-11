@@ -155,6 +155,7 @@
             return $produto;
         }
 
+        //findByName
         function findByName(string $modelo) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM produto WHERE modelo_produto = :modelo;");
@@ -177,6 +178,7 @@
             return $produto;
         }
 
+        //getSuprimentos
         function getSuprimentos(int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto.id = itens_produto.produto_vinculado_id where itens_produto.produto_id = :id");
@@ -187,6 +189,7 @@
             return $stmt;
         }
 
+        //selectImpressora
         function selectImpressora() {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("select id, modelo_produto from produto where LOCATE('impressora', modelo_produto)");
@@ -194,6 +197,40 @@
             $impressoras = $con->fetchAll();
 
             return $impressoras;
+        }
+
+        //getToner
+        function getToner(int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto_id = produto.id where LOCATE('Toner', modelo_produto) and produto_vinculado_id = :id");
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+                $toner = new Produto;
+                $toner->setId($linha['id']);
+                $toner->setModelo($linha['modelo_produto']);
+            }
+
+            return $toner;
+        }
+
+        //getCilíndro
+        function getCilíndro(int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto_id = produto.id where LOCATE('Cilíndro', modelo_produto) and produto_vinculado_id = :id");
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+                $cilindro = new Produto;
+                $cilindro->setId($linha['id']);
+                $cilindro->setModelo($linha['modelo_produto']);
+            }
+
+            return $cilindro;
         }
 
     }

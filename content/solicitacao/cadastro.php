@@ -21,20 +21,30 @@
 
         include ("../../model/produto_model.php");
 
-
         include_once ("../../menu.php");
 
+        $model = new ProdutoModel;
 
-        /*$model = new ProdutoModel;
+        if($_REQUEST['adicionar']) {
 
-        $produto = new Produto;
+            switch ($_POST['selectImpressora']) {
+                case "toner":
+                    $toner = new Produto;
+                    $toner->getToner();
+                    break;
+                case "cilindro":
+                    $cilindro = new Produto;
+                    $cilindro->getCilindro();
+                    break;
+                case "conjunto":
+                    $toner = new Produto;
+                    $toner->getToner();
+                    $cilindro = new Produto;
+                    $cilindro->getCilindro();
+                    break;
+            }
 
-        $new_modelo = $_POST['modelo'];
-        $new_ativo = $ativook;
-        $new_descricao = $_POST['descricao'];
-        $new_qntde = $_POST['qntde'];
-        $itens = $_POST['produtosVinculados'];
-
+        }
 
         $new_produto->setModelo($new_modelo);
         $new_produto->setAtivo($new_ativo);
@@ -57,15 +67,14 @@
             } else {
                 echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro!".$e->getMessage()."</div>";
             }
-        }*/
+        }
 
-    ?>
+?>
     <main class="container mt-5">
-        <form action="cadastro.php" method="post" id="formCadastro">
+        <form action="cadastro.php?adicionar" method="post" id="formCadastro">
 
             <h2>Solicitar Toner/Cilíndro</h2>
 
-            <input type="hidden" class="form-control" name="Estado" id="Estado" value="Aberto" placeholder="insira o Estado do produto">
 
             <div class="row mt-5">
                 <div class="col-lg-4 col-10">
@@ -79,7 +88,7 @@
                             
                             foreach ($select_impressora as $impressora) {
                                 print "<option value=\"".$impressora['id']."\">".$impressora['modelo_produto']."</option>";
-                            }
+                            };
                         ?>
                     </select>
                 </div>
@@ -104,8 +113,11 @@
 
             <input type="hidden" class="form-control" id="produtosVinculados" name="produtosVinculados" value="">
             
-            <button type="button" id="adicionar" class="btn btn-primary mt-5">Adicionar</button>
+            <button type="submit" id="adicionar" class="btn btn-primary mt-5">Adicionar</button>
 
+        </form>
+
+        <form>
             <script>
                 $(document).ready(function(){
                     $("#adicionar").click(function () {
@@ -121,7 +133,8 @@
                                 <td hidden>'+valor+'</td>\
                                 <td>'+texto+'</td>\
                                 <td>'+qntde+'</td>\
-                                <td>*modelo do toner*</td>\
+                                <td><?php
+                                    ?></td>\
                                 <td><button type="button" class="btn btn-danger">Excluir</button></td>\
                                 </tr>'
                             );
@@ -130,7 +143,7 @@
                     $("table").on("click", "button", function () {
                             $(this).parent().parent().remove();
                     });
-                });                
+                });               
             </script>
 
             <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
@@ -141,18 +154,6 @@
                     <th class="col-2">Ações</th>
                 </tr>
 
-                    <?php
-                        if(@$_REQUEST['id']) {
-                            foreach ($suprimentos as $suprimento) {
-                                print 
-                                "<tr>
-                                    <td>".$suprimento['id']."</td>
-                                    <td>".$suprimento['modelo_produto']."</td>
-                                    <td><button type=\"button\" class=\"btn btn-danger\">Excluir</button></td>
-                                </tr>";
-                            } 
-                        }
-                    ?>
             </table>
 
             <div class="form-group mt-5">
@@ -160,27 +161,28 @@
                 <input type="text" class="form-control" name="descricao" id="observacao">
             </div>
 
+            <input type="hidden" class="form-control" name="Estado" id="Estado" value="Aberto" placeholder="insira o Estado do produto">
+
             <button type="button" id="finalizar" class="btn btn-primary mt-5 mb-5">Finalizar</button>
             <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
-        </form>
-        
-        <script>
-            $("#submit").click(function () {
-                 var itens = "";
-                $("tr td:first-child").each(function (t){
-                   if (t == 0){ 
-                   var valor = $(this).text();
-                   itens += valor;
-                   } else {
-                   var valor = $(this).text();
-                   itens += "," + valor;
-                   }
+            
+            <script>
+                $("#submit").click(function () {
+                    var itens = "";
+                    $("tr td:first-child").each(function (t){
+                    if (t == 0){ 
+                    var valor = $(this).text();
+                    itens += valor;
+                    } else {
+                    var valor = $(this).text();
+                    itens += "," + valor;
+                    }
+                    });
+                    $("#produtosVinculados").val(itens);
+                    
                 });
-                $("#produtosVinculados").val(itens);
-                
-            })
-        </script>
-        
+            </script>
+        </form>
     </main>
 
 </body>
