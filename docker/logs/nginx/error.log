@@ -1211,3 +1211,287 @@
 2022/11/11 18:59:53 [notice] 1#1: signal 17 (SIGCHLD) received from 31
 2022/11/11 18:59:53 [notice] 1#1: worker process 31 exited with code 0
 2022/11/11 18:59:53 [notice] 1#1: exit
+2022/11/13 14:28:51 [notice] 1#1: using the "epoll" event method
+2022/11/13 14:28:51 [notice] 1#1: nginx/1.23.2
+2022/11/13 14:28:51 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/13 14:28:51 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/13 14:28:51 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/13 14:28:51 [notice] 1#1: start worker processes
+2022/11/13 14:28:51 [notice] 1#1: start worker process 28
+2022/11/13 14:28:51 [notice] 1#1: start worker process 29
+2022/11/13 14:28:51 [notice] 1#1: start worker process 30
+2022/11/13 14:28:51 [notice] 1#1: start worker process 31
+2022/11/13 14:28:51 [notice] 1#1: start worker process 32
+2022/11/13 14:28:51 [notice] 1#1: start worker process 33
+2022/11/13 14:45:01 [error] 28#28: *22 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/13 14:45:25 [error] 28#28: *22 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/13 14:45:39 [error] 28#28: *22 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/13 14:56:28 [error] 28#28: *28 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/13 14:59:59 [error] 28#28: *32 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2022/11/13 15:01:58 [error] 28#28: *35 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar=5"
+2022/11/13 15:54:10 [error] 29#29: *67 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/13 15:54:11 [error] 29#29: *67 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/13 15:55:30 [error] 29#29: *67 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/13 16:03:55 [error] 29#29: *93 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2022/11/13 16:07:22 [error] 29#29: *96 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2022/11/14 00:27:24 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/14 00:27:24 [notice] 31#31: gracefully shutting down
+2022/11/14 00:27:24 [notice] 29#29: gracefully shutting down
+2022/11/14 00:27:24 [notice] 30#30: gracefully shutting down
+2022/11/14 00:27:24 [notice] 32#32: gracefully shutting down
+2022/11/14 00:27:24 [notice] 28#28: gracefully shutting down
+2022/11/14 00:27:24 [notice] 33#33: gracefully shutting down
+2022/11/14 00:27:24 [notice] 29#29: exiting
+2022/11/14 00:27:24 [notice] 31#31: exiting
+2022/11/14 00:27:24 [notice] 32#32: exiting
+2022/11/14 00:27:24 [notice] 30#30: exiting
+2022/11/14 00:27:24 [notice] 28#28: exiting
+2022/11/14 00:27:24 [notice] 33#33: exiting
+2022/11/14 00:27:24 [notice] 31#31: exit
+2022/11/14 00:27:24 [notice] 29#29: exit
+2022/11/14 00:27:24 [notice] 32#32: exit
+2022/11/14 00:27:24 [notice] 30#30: exit
+2022/11/14 00:27:24 [notice] 28#28: exit
+2022/11/14 00:27:24 [notice] 33#33: exit
+2022/11/14 00:27:25 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/11/14 00:27:25 [notice] 1#1: worker process 32 exited with code 0
+2022/11/14 00:27:25 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 00:27:25 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/11/14 00:27:25 [notice] 1#1: worker process 33 exited with code 0
+2022/11/14 00:27:25 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 00:27:25 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/14 00:27:25 [notice] 1#1: worker process 30 exited with code 0
+2022/11/14 00:27:25 [notice] 1#1: worker process 31 exited with code 0
+2022/11/14 00:27:25 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 00:27:25 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/11/14 00:27:25 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/11/14 00:27:25 [notice] 1#1: worker process 28 exited with code 0
+2022/11/14 00:27:25 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 00:27:25 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/11/14 00:27:25 [notice] 1#1: worker process 29 exited with code 0
+2022/11/14 00:27:25 [notice] 1#1: exit
+2022/11/14 05:31:19 [notice] 1#1: using the "epoll" event method
+2022/11/14 05:31:19 [notice] 1#1: nginx/1.23.2
+2022/11/14 05:31:19 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/14 05:31:19 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/14 05:31:19 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/14 05:31:19 [notice] 1#1: start worker processes
+2022/11/14 05:31:19 [notice] 1#1: start worker process 28
+2022/11/14 05:31:19 [notice] 1#1: start worker process 29
+2022/11/14 05:31:19 [notice] 1#1: start worker process 30
+2022/11/14 05:31:19 [notice] 1#1: start worker process 31
+2022/11/14 05:31:19 [notice] 1#1: start worker process 32
+2022/11/14 05:31:19 [notice] 1#1: start worker process 33
+2022/11/14 05:31:42 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.20.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/14 07:00:57 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/14 07:00:57 [notice] 28#28: gracefully shutting down
+2022/11/14 07:00:57 [notice] 31#31: gracefully shutting down
+2022/11/14 07:00:57 [notice] 30#30: gracefully shutting down
+2022/11/14 07:00:57 [notice] 31#31: exiting
+2022/11/14 07:00:57 [notice] 29#29: gracefully shutting down
+2022/11/14 07:00:57 [notice] 28#28: exiting
+2022/11/14 07:00:57 [notice] 31#31: exit
+2022/11/14 07:00:57 [notice] 32#32: gracefully shutting down
+2022/11/14 07:00:57 [notice] 33#33: gracefully shutting down
+2022/11/14 07:00:57 [notice] 30#30: exiting
+2022/11/14 07:00:57 [notice] 28#28: exit
+2022/11/14 07:00:57 [notice] 29#29: exiting
+2022/11/14 07:00:57 [notice] 30#30: exit
+2022/11/14 07:00:57 [notice] 32#32: exiting
+2022/11/14 07:00:57 [notice] 29#29: exit
+2022/11/14 07:00:57 [notice] 33#33: exiting
+2022/11/14 07:00:57 [notice] 32#32: exit
+2022/11/14 07:00:57 [notice] 33#33: exit
+2022/11/14 07:00:57 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/11/14 07:00:57 [notice] 1#1: worker process 29 exited with code 0
+2022/11/14 07:00:57 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 07:00:57 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/11/14 07:00:57 [notice] 1#1: worker process 30 exited with code 0
+2022/11/14 07:00:57 [notice] 1#1: worker process 32 exited with code 0
+2022/11/14 07:00:57 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 07:00:57 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/11/14 07:00:57 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/14 07:00:57 [notice] 1#1: worker process 28 exited with code 0
+2022/11/14 07:00:57 [notice] 1#1: worker process 31 exited with code 0
+2022/11/14 07:00:57 [notice] 1#1: worker process 33 exited with code 0
+2022/11/14 07:00:57 [notice] 1#1: exit
+2022/11/14 16:34:21 [notice] 1#1: using the "epoll" event method
+2022/11/14 16:34:21 [notice] 1#1: nginx/1.23.2
+2022/11/14 16:34:21 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/14 16:34:21 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/14 16:34:21 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/14 16:34:21 [notice] 1#1: start worker processes
+2022/11/14 16:34:21 [notice] 1#1: start worker process 28
+2022/11/14 16:34:21 [notice] 1#1: start worker process 29
+2022/11/14 16:34:21 [notice] 1#1: start worker process 30
+2022/11/14 16:34:21 [notice] 1#1: start worker process 31
+2022/11/14 16:34:21 [notice] 1#1: start worker process 32
+2022/11/14 16:34:21 [notice] 1#1: start worker process 33
+2022/11/14 16:34:22 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/14 16:44:01 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/14 16:44:01 [notice] 28#28: gracefully shutting down
+2022/11/14 16:44:01 [notice] 29#29: gracefully shutting down
+2022/11/14 16:44:01 [notice] 30#30: gracefully shutting down
+2022/11/14 16:44:01 [notice] 30#30: exiting
+2022/11/14 16:44:01 [notice] 31#31: gracefully shutting down
+2022/11/14 16:44:01 [notice] 32#32: gracefully shutting down
+2022/11/14 16:44:01 [notice] 33#33: gracefully shutting down
+2022/11/14 16:44:01 [notice] 28#28: exiting
+2022/11/14 16:44:01 [notice] 29#29: exiting
+2022/11/14 16:44:01 [notice] 30#30: exit
+2022/11/14 16:44:01 [notice] 31#31: exiting
+2022/11/14 16:44:01 [notice] 32#32: exiting
+2022/11/14 16:44:01 [notice] 33#33: exiting
+2022/11/14 16:44:01 [notice] 28#28: exit
+2022/11/14 16:44:01 [notice] 29#29: exit
+2022/11/14 16:44:01 [notice] 31#31: exit
+2022/11/14 16:44:01 [notice] 32#32: exit
+2022/11/14 16:44:01 [notice] 33#33: exit
+2022/11/14 16:44:01 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/11/14 16:44:01 [notice] 1#1: worker process 30 exited with code 0
+2022/11/14 16:44:01 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 16:44:01 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/11/14 16:44:01 [notice] 1#1: worker process 29 exited with code 0
+2022/11/14 16:44:01 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 16:44:01 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/14 16:44:01 [notice] 1#1: worker process 28 exited with code 0
+2022/11/14 16:44:01 [notice] 1#1: worker process 31 exited with code 0
+2022/11/14 16:44:01 [notice] 1#1: worker process 32 exited with code 0
+2022/11/14 16:44:01 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 16:44:01 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/11/14 16:44:01 [notice] 1#1: worker process 33 exited with code 0
+2022/11/14 16:44:01 [notice] 1#1: exit
+2022/11/14 21:16:09 [notice] 1#1: using the "epoll" event method
+2022/11/14 21:16:09 [notice] 1#1: nginx/1.23.2
+2022/11/14 21:16:09 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/14 21:16:09 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/14 21:16:09 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/14 21:16:09 [notice] 1#1: start worker processes
+2022/11/14 21:16:09 [notice] 1#1: start worker process 29
+2022/11/14 21:16:09 [notice] 1#1: start worker process 30
+2022/11/14 21:16:09 [notice] 1#1: start worker process 31
+2022/11/14 21:16:09 [notice] 1#1: start worker process 32
+2022/11/14 21:16:09 [notice] 1#1: start worker process 33
+2022/11/14 21:16:09 [notice] 1#1: start worker process 34
+2022/11/14 21:17:01 [error] 29#29: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/14 21:26:18 [error] 32#32: *13 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?finalizar"
+2022/11/14 21:26:20 [error] 32#32: *13 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?finalizar"
+2022/11/14 21:26:21 [error] 32#32: *13 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?finalizar"
+2022/11/14 21:26:22 [error] 32#32: *13 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?finalizar"
+2022/11/14 21:26:22 [error] 32#32: *13 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?finalizar"
+2022/11/14 21:26:23 [error] 32#32: *13 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?finalizar"
+2022/11/14 21:48:37 [error] 29#29: *68 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/14 23:50:46 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/14 23:50:46 [notice] 31#31: gracefully shutting down
+2022/11/14 23:50:46 [notice] 33#33: gracefully shutting down
+2022/11/14 23:50:46 [notice] 32#32: gracefully shutting down
+2022/11/14 23:50:46 [notice] 31#31: exiting
+2022/11/14 23:50:46 [notice] 33#33: exiting
+2022/11/14 23:50:46 [notice] 34#34: gracefully shutting down
+2022/11/14 23:50:46 [notice] 30#30: gracefully shutting down
+2022/11/14 23:50:46 [notice] 29#29: gracefully shutting down
+2022/11/14 23:50:46 [notice] 32#32: exiting
+2022/11/14 23:50:46 [notice] 30#30: exiting
+2022/11/14 23:50:46 [notice] 32#32: exit
+2022/11/14 23:50:46 [notice] 31#31: exit
+2022/11/14 23:50:46 [notice] 33#33: exit
+2022/11/14 23:50:46 [notice] 34#34: exiting
+2022/11/14 23:50:46 [notice] 29#29: exiting
+2022/11/14 23:50:46 [notice] 30#30: exit
+2022/11/14 23:50:46 [notice] 29#29: exit
+2022/11/14 23:50:46 [notice] 34#34: exit
+2022/11/14 23:50:46 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/14 23:50:46 [notice] 1#1: worker process 29 exited with code 0
+2022/11/14 23:50:46 [notice] 1#1: worker process 31 exited with code 0
+2022/11/14 23:50:46 [notice] 1#1: worker process 32 exited with code 0
+2022/11/14 23:50:46 [notice] 1#1: worker process 34 exited with code 0
+2022/11/14 23:50:46 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 23:50:46 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/11/14 23:50:46 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/11/14 23:50:46 [notice] 1#1: worker process 33 exited with code 0
+2022/11/14 23:50:46 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/14 23:50:46 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/11/14 23:50:46 [notice] 1#1: worker process 30 exited with code 0
+2022/11/14 23:50:46 [notice] 1#1: exit
+2022/11/15 18:11:03 [notice] 1#1: using the "epoll" event method
+2022/11/15 18:11:03 [notice] 1#1: nginx/1.23.2
+2022/11/15 18:11:03 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/15 18:11:03 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/15 18:11:03 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/15 18:11:03 [notice] 1#1: start worker processes
+2022/11/15 18:11:03 [notice] 1#1: start worker process 28
+2022/11/15 18:11:03 [notice] 1#1: start worker process 29
+2022/11/15 18:11:03 [notice] 1#1: start worker process 30
+2022/11/15 18:11:03 [notice] 1#1: start worker process 31
+2022/11/15 18:11:03 [notice] 1#1: start worker process 32
+2022/11/15 18:11:03 [notice] 1#1: start worker process 33
+2022/11/15 18:12:09 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/15 18:14:07 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/11/15 18:49:40 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/15 18:49:40 [notice] 31#31: gracefully shutting down
+2022/11/15 18:49:40 [notice] 30#30: gracefully shutting down
+2022/11/15 18:49:40 [notice] 28#28: gracefully shutting down
+2022/11/15 18:49:40 [notice] 29#29: gracefully shutting down
+2022/11/15 18:49:40 [notice] 33#33: gracefully shutting down
+2022/11/15 18:49:40 [notice] 32#32: gracefully shutting down
+2022/11/15 18:49:40 [notice] 31#31: exiting
+2022/11/15 18:49:40 [notice] 30#30: exiting
+2022/11/15 18:49:40 [notice] 28#28: exiting
+2022/11/15 18:49:40 [notice] 31#31: exit
+2022/11/15 18:49:40 [notice] 33#33: exiting
+2022/11/15 18:49:40 [notice] 30#30: exit
+2022/11/15 18:49:40 [notice] 28#28: exit
+2022/11/15 18:49:40 [notice] 32#32: exiting
+2022/11/15 18:49:40 [notice] 33#33: exit
+2022/11/15 18:49:40 [notice] 32#32: exit
+2022/11/15 18:49:40 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/11/15 18:49:40 [notice] 1#1: worker process 28 exited with code 0
+2022/11/15 18:49:40 [notice] 1#1: worker process 30 exited with code 0
+2022/11/15 18:49:40 [notice] 1#1: worker process 32 exited with code 0
+2022/11/15 18:49:40 [notice] 1#1: worker process 33 exited with code 0
+2022/11/15 18:49:40 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/15 18:49:40 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/11/15 18:49:40 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/11/15 18:49:40 [notice] 1#1: worker process 31 exited with code 0
+2022/11/15 18:49:40 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/15 20:41:36 [notice] 1#1: using the "epoll" event method
+2022/11/15 20:41:36 [notice] 1#1: nginx/1.23.2
+2022/11/15 20:41:36 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/11/15 20:41:36 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/11/15 20:41:36 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/11/15 20:41:36 [notice] 1#1: start worker processes
+2022/11/15 20:41:36 [notice] 1#1: start worker process 28
+2022/11/15 20:41:36 [notice] 1#1: start worker process 29
+2022/11/15 20:41:36 [notice] 1#1: start worker process 30
+2022/11/15 20:41:36 [notice] 1#1: start worker process 31
+2022/11/15 20:41:36 [notice] 1#1: start worker process 32
+2022/11/15 20:41:36 [notice] 1#1: start worker process 33
+2022/11/15 22:44:28 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/11/15 22:44:28 [notice] 30#30: gracefully shutting down
+2022/11/15 22:44:28 [notice] 28#28: gracefully shutting down
+2022/11/15 22:44:28 [notice] 29#29: gracefully shutting down
+2022/11/15 22:44:28 [notice] 33#33: gracefully shutting down
+2022/11/15 22:44:28 [notice] 32#32: gracefully shutting down
+2022/11/15 22:44:28 [notice] 31#31: gracefully shutting down
+2022/11/15 22:44:28 [notice] 28#28: exiting
+2022/11/15 22:44:28 [notice] 29#29: exiting
+2022/11/15 22:44:28 [notice] 31#31: exiting
+2022/11/15 22:44:28 [notice] 32#32: exiting
+2022/11/15 22:44:28 [notice] 33#33: exiting
+2022/11/15 22:44:28 [notice] 31#31: exit
+2022/11/15 22:44:28 [notice] 29#29: exit
+2022/11/15 22:44:28 [notice] 32#32: exit
+2022/11/15 22:44:28 [notice] 28#28: exit
+2022/11/15 22:44:28 [notice] 33#33: exit
+2022/11/15 22:44:28 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/11/15 22:44:28 [notice] 1#1: worker process 29 exited with code 0
+2022/11/15 22:44:28 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/15 22:44:28 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/11/15 22:44:28 [notice] 1#1: worker process 28 exited with code 0
+2022/11/15 22:44:28 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/15 22:44:28 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2022/11/15 22:44:28 [notice] 1#1: worker process 32 exited with code 0
+2022/11/15 22:44:28 [notice] 1#1: worker process 31 exited with code 0
+2022/11/15 22:44:28 [notice] 1#1: worker process 33 exited with code 0
+2022/11/15 22:44:28 [notice] 1#1: signal 29 (SIGIO) received
+2022/11/15 22:44:28 [notice] 1#1: signal 17 (SIGCHLD) received from 31

@@ -11,75 +11,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
+    <?php
+                    include ("../../entity/solicitacao.php");
 
-<?php
-        include ("../../entity/solicitacao.php");
+                    include ("../../model/solicitacao_model.php");
 
-        include ("../../model/solicitacao_model.php");
+                    include ("../../entity/produto.php");
 
-        include ("../../entity/produto.php");
+                    include ("../../model/produto_model.php");
 
-        include ("../../model/produto_model.php");
+                    include_once ("../../menu.php");
 
-        include_once ("../../menu.php");
-
-        $model = new ProdutoModel;
-
-        if($_REQUEST['adicionar']) {
-
-            switch ($_POST['selectImpressora']) {
-                case "toner":
-                    $toner = new Produto;
-                    $toner->getToner();
-                    break;
-                case "cilindro":
-                    $cilindro = new Produto;
-                    $cilindro->getCilindro();
-                    break;
-                case "conjunto":
-                    $toner = new Produto;
-                    $toner->getToner();
-                    $cilindro = new Produto;
-                    $cilindro->getCilindro();
-                    break;
-            }
-
-        }
-
-        $new_produto->setModelo($new_modelo);
-        $new_produto->setAtivo($new_ativo);
-        $new_produto->setDescricao($new_descricao);
-        $new_produto->setQntde($new_qntde);
-        if (strlen(trim($itens)) != 0 ){
-            $new_produto?->setItens(explode(",",trim($itens)));        
-        } else {
-            $new_produto->setItens([]);
-        }
-
-        try {
-            $new_model->insert($new_produto);
-            echo "<div class=' container alert alert-success'>Registro criado com sucesso!</div>";
-        } catch (PDOException $e) {
-            if (str_contains($e->getMessage(), "UC_Suprimentos")) {
-                echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois os suprimentos estão em duplicidade!</div>";
-            } elseif (str_contains($e->getMessage(), "UC_Modelo")) {
-                echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois o modelo do produto já foi cadastrado</div>";
-            } else {
-                echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro!".$e->getMessage()."</div>";
-            }
-        }
-
-?>
+    ?>
     <main class="container mt-5">
         <form action="cadastro.php?adicionar" method="post" id="formCadastro">
 
             <h2>Solicitar Toner/Cilíndro</h2>
 
+            <input type="hidden" class="form-control" id="nomeImpressora" name="nomeImpressora" value="">
 
             <div class="row mt-5">
                 <div class="col-lg-4 col-10">
                     <label for="selectImpressora">Selecione a sua impressora</label>
-                    <select class="form-select" name="selectImpressora" id="selectImpressora">
+                    <select class="form-select" name="selectImpressora" id="selectImpressora" required>
                         <option selected hidden></option>
                         <?php 
                             $model = new ProdutoModel;
@@ -97,7 +51,7 @@
             <div class="mt-5 row">
                 <div class="form-group col-lg-2 col-5">
                     <label for="selectTC">Toner ou Cilíndro?</label>
-                    <select class="form-select" name="selectTC" id="selectTC"> <!-- select Toner Cilindro -->
+                    <select class="form-select" name="selectTC" id="selectTC" required> <!-- select Toner Cilindro -->
                         <option value="" selected hidden></option>                             
                         <option value="toner">Toner</option>            
                         <option value="cilindro">Cilíndro</option>            
@@ -107,81 +61,175 @@
 
                 <div class="col-lg-1 col-3">
                     <label for="qntde">Quantidade</label>
-                    <input type="number" class="form-control" name="qntde" id="qntde" min="1" max="2">
+                    <input type="number" class="form-control" name="qntde" id="qntde" min="1" max="2" required>
                 </div>
             </div>
-
-            <input type="hidden" class="form-control" id="produtosVinculados" name="produtosVinculados" value="">
             
             <button type="submit" id="adicionar" class="btn btn-primary mt-5">Adicionar</button>
+            
+            <input type="hidden" class="form-control" name="impressoras" id="impressoras" value="">
 
         </form>
+                <script>
+                    $(document).ready(function(){
+                        $('#selectImpressora').on('change', function(){
+                            var selectImpressora = document.getElementById('selectImpressora');
+                            var texto = selectImpressora.options[selectImpressora.selectedIndex].text;
+                            document.getElementById('nomeImpressora').value = texto;
+                        });
+                        
+                        $("table").on("click", "button", function () {
+                                $(this).parent().parent().remove();
+                        });
 
-        <form>
-            <script>
-                $(document).ready(function(){
-                    $("#adicionar").click(function () {
-                        var selectImpressora = document.getElementById('selectImpressora');
-                        var valor = selectImpressora.options[selectImpressora.selectedIndex].value; 
-                        valor = parseInt(valor);  
-                        var texto = selectImpressora.options[selectImpressora.selectedIndex].text;
-                        var qntde = document.getElementById('qntde').value;
-                        qntde = parseInt(qntde);
-
-                            $("#content").append(
-                            '<tr>\
-                                <td hidden>'+valor+'</td>\
-                                <td>'+texto+'</td>\
-                                <td>'+qntde+'</td>\
-                                <td><?php
-                                    ?></td>\
-                                <td><button type="button" class="btn btn-danger">Excluir</button></td>\
-                                </tr>'
-                            );
-                    });
-                    
-                    $("table").on("click", "button", function () {
-                            $(this).parent().parent().remove();
-                    });
-                });               
-            </script>
+                        $("#finalizar").click(function () {
+                            var itens = "";
+                            $("tr td:nth-child(3)").each(function (t){
+                            var valor = $(this).text();
+                            itens += valor;
+                            });
+                            $("#qntdeItem").val(itens);
+                
+                        });
+                    });               
+                </script>
+        <form action="cadastro.php?finalizar" method="post" id="formCadastro">
+            
 
             <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
                 <tr>
                     <th class="col-4">Modelo da Impressora</th>
                     <th class="col-1">Quantidade</th>
-                    <th class="col-5">Produto(s)</th>  
+                    <th class="col-5" colspan="2">Produto(s)</th>  
                     <th class="col-2">Ações</th>
                 </tr>
+                <?php
+                    if(isset($_GET['adicionar'])) {
+
+                        $model = new SolicitacaoModel;
+
+                        $solicitacao = new Solicitacao;
+
+                        $nomeImpressora = $_POST['nomeImpressora'];
+                        $idImpressora = $_POST['selectImpressora'];
+                        $qntde = $_POST['qntde'];    
+
+                        switch ($_POST['selectTC']) {
+                            case "toner":
+                                $model = new ProdutoModel;
+                                $toner = new Produto;
+                                $toner = $model->getToner($idImpressora);
+                                print 
+                                '<tr>
+                                    <td hidden>'.$idImpressora.'</td>
+                                    <td>'.$nomeImpressora.'</td>
+                                    <td>'.$qntde.'</td>
+                                    <td>'.$toner->getModelo().'</td>
+                                    <td style="padding: 0px; margin: 0px;"></td>
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                </tr>';
+
+                                print "<input type='hidden' name='tonerId' value=".$toner->getId()."/>";
+                                break;
+                            case "cilindro":
+                                $model = new ProdutoModel;
+                                $cilindro = new Produto;
+                                @$cilindro = $model?->getCilindro($idImpressora);
+                                if ($cilindro != null) {
+                                    print 
+                                    '<tr>
+                                        <td hidden>'.$idImpressora.'</td>
+                                        <td>'.$nomeImpressora.'</td>
+                                        <td>'.$qntde.'</td>
+                                        <td>'.$cilindro?->getModelo().'</td>
+                                        <td style="padding: 0px; margin: 0px;"></td>
+                                        <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                    </tr>';
+
+                                    print "<input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>";
+                                } else {
+                                    print "<div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>";
+                                }
+                                break;
+                            case "conjunto":
+                                $model = new ProdutoModel;
+                                $toner = new Produto;
+                                $toner= $model->getToner($idImpressora);
+                                $cilindro = new Produto;
+                                @$cilindro = $model?->getCilindro($idImpressora);
+                                if ($cilindro != null) {
+                                    print 
+                                    '<tr>
+                                        <td hidden>'.$idImpressora.'</td>
+                                        <td>'.$nomeImpressora.'</td>
+                                        <td>'.$qntde.'</td>
+                                        <td>'.$toner?->getModelo().'</td>
+                                        <td>'.$cilindro?->getModelo().'</td>
+                                        <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                    </tr>';
+                                    
+                                    print "<input type='hidden' name='tonerId' value=".$toner->getId()."/>";
+                                    print "<input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>";
+                                } else {
+                                    print "<div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>";
+                                }
+                                break;
+                        }
+  
+                    }
+
+                    if(isset($_GET['finalizar'])) {
+                        $model = new SolicitacaoModel;
+
+                        $solicitacao = new Solicitacao;
+
+                        $estado = $_POST['estado'];
+                        $solicitacao->setEstadoSolicitacao($estado);
+
+                        $observacao = $_POST['observacao'];
+                        $solicitacao?->setDescricao($observacao);
+
+                        $solicitacao->setDataSolicitacao(date("Y-m-d"));
+
+                        $qntdeItem = $_POST['qntdeItem'];
+                        $solicitacao->setQntdeItem($qntdeItem);
+
+                        @$tonerId = $_POST['tonerId'];
+                        @$cilindroId = $_POST['cilindroId'];
+
+                        if($tonerId != null && $cilindroId == null){
+                            $produtos = [$tonerId];
+                        } elseif($tonerId == null && $cilindroId != null){
+                            $produtos = [$cilindroId];
+                        } elseif($tonerId != null && $cilindroId != null){
+                            $produtos = [$tonerId, $cilindroId];
+                        }
+
+                        $solicitacao->setItemSolicitacao($produtos);
+
+                        try {
+                            $model->insert($solicitacao);
+                            echo "<div class=' container alert alert-success'>Solicitação criada com sucesso!</div>";
+                        } catch (PDOException $e){
+                            echo "<div class=' container alert alert-danger'>Não foi possível cirar a solicitação! ".$e->getMessage()."</div>";
+                        }
+                    }
+                ?>
 
             </table>
 
             <div class="form-group mt-5">
                 <label for="observacao">Observação</label>
-                <input type="text" class="form-control" name="descricao" id="observacao">
+                <input type="text" class="form-control" name="observacao" id="observacao">
             </div>
 
-            <input type="hidden" class="form-control" name="Estado" id="Estado" value="Aberto" placeholder="insira o Estado do produto">
+            <input type="hidden" class="form-control" name="estado" id="estado" value="Aberto">
 
-            <button type="button" id="finalizar" class="btn btn-primary mt-5 mb-5">Finalizar</button>
+            <input type="hidden" class="form-control" name="qntdeItem" id="qntdeItem" value="">
+
+            <button type="submit" id="finalizar" class="btn btn-primary mt-5 mb-5">Finalizar</button>
             <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
-            
-            <script>
-                $("#submit").click(function () {
-                    var itens = "";
-                    $("tr td:first-child").each(function (t){
-                    if (t == 0){ 
-                    var valor = $(this).text();
-                    itens += valor;
-                    } else {
-                    var valor = $(this).text();
-                    itens += "," + valor;
-                    }
-                    });
-                    $("#produtosVinculados").val(itens);
-                    
-                });
-            </script>
+           
         </form>
     </main>
 

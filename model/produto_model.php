@@ -217,7 +217,7 @@
         }
 
         //getCilíndro
-        function getCilíndro(int $id) {
+        function getCilindro(int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto_id = produto.id where LOCATE('Cilíndro', modelo_produto) and produto_vinculado_id = :id");
             $con->bindValue("id", $id, PDO::PARAM_INT);

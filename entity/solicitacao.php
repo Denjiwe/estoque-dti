@@ -31,6 +31,9 @@ class Solicitacao
         public function getUsuarioId() : int {
             return $this-> usuarioId;
         }
+        public function getUsuarioNome() : string {
+            return $this-> usuarioNome;
+        }
         public function getItemSolicitacao() : array {
             return $this-> itemSolicitacao;
         }
@@ -53,6 +56,9 @@ class Solicitacao
         }
         public function setUsuarioId(int $usuarioId) {
             $this->usuarioId = $usuarioId;
+        }
+        public function setUsuarioNome(string $usuarioNome) {
+            $this->usuarioNome = $usuarioNome;
         }
         public function setItemSolicitacao(array $itemSolicitacao) {
             $this->itemSolicitacao = $itemSolicitacao;

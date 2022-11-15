@@ -35,7 +35,7 @@
                 $suprimentos = $model->getSuprimentos($_REQUEST['id']);
 
             } catch (PDOException $e) {
-                echo "<div class='alert alert-danger'>Não foi possível encontrar o registro! </div>". $e->getMessage();
+                echo "<div class='container alert alert-danger'>Não foi possível encontrar o registro! </div>". $e->getMessage();
             }
         }
 

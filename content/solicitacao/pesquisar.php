@@ -19,7 +19,7 @@
             <div class="col-10">
                 <form action="pesquisar.php" method="get" id="formPesquisa">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="pesquisa" id="pesquisa" placeholder="Pesquise o nome do órgão">
+                        <input type="text" class="form-control" name="pesquisa" id="pesquisa" placeholder="Pesquise a solicitação">
                         <button type="submit" class="btn btn-secondary">Pesquisar</button> 
                     </div>
                 </form>
@@ -32,6 +32,8 @@
         </div>
         
         <div class="mt-5">
+
+            <h1 class="mb-4">Solicitações Cadastradas</h1>
             
             <?php
 
@@ -49,86 +51,50 @@
                     }
                 }
 
-                if (isset($_GET['pesquisa'])) {
-                    $model = new SolicitacaoModel;
+                $model = new SolicitacaoModel;
+
+                $solicitacao = new Solicitacao;
+
+                $solicitacao = $model->select();
+
+                
+                foreach ($solicitacao as $obj) {
+
+                    $itens = $model->selectItemSolicitacao($obj->getId());
+                    $data =  new DateTime($obj->getDataSolicitacao());
                     
-                    $pesquisa = $_GET['pesquisa'];
 
-                    $solicitacao = $model->findByName($pesquisa);
-
-                    print "<h1>Solicitações cadastrados com nome: \"".$pesquisa."\"</h1>";
-
-                    if ($solicitacao == null ) {
-                        echo "<h3>Nenhum órgão encontrado!</h3>";
-                        print "<a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>";
-
-                    } else {
-                        print "<table class=' container table table-hover table-striped table-bordered'>";
-
-                        print 
-                        "<tr>
-                            <th style='display:none;'>id</th>
-                            <th>Estado da Solicitação</th>
-                            <th>Descrição</th>
-                            <th>Data de Solicitação</th>
-                            <thCódigo do Usuário</th>
-                            <th>Ações</th>
-                        </tr>";
-                    
-                        print "<tr>";
-                        print "<td style='display:none;'>".$solicitacao->getId()."</td>";
-                        print "<td>".$solicitacao->getEstadoSolicitacao()."</td>";
-                        print "<td>".$solicitacao-getDescricao()."</td>";
-                        print "<td>".$solicitacao->getDataSolicitacao()."</td>";
-                        print "<td>".$solicitacao->getUsarioId()."</td>";
-                        print "<td>
-                         <a href=\"cadastro.php?id=".$solicitacao->getId()."\"class='btn btn-success'>Editar</a>
-                         <a href=\"pesquisar.php?delete=".$solicitacao->getId()."\" class='btn btn-danger excluir'>Excluir</a>
-                              </td>";
-                        print "</tr>";
-                    
-                        print "</table>";
-
-                        print "<a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>";
-                    }
-                    
-                } else {
-                    print "<h1>Solicitações Cadastradas</h1>";
-
-                    print "<table class='mt-5 container table table-hover table-striped table-bordered'>";
-
-                    
                     print 
-                    "<tr>
-                        <th style='display:none;'>#</th>
-                        <th>Estado da Solicitação</th>
-                        <th>Descrição</th>
-                        <th>Data de Solicitação</th>
-                        <th>Código do Usuário</th>
-                        <th>Ações</th>
-                    </tr>";
-
-                    $model = new SolicitacaoModel;
-
-                    $solicitacao = $model->select();
-                    
-                    foreach ($solicitacao as $obj) {
-                        print "<tr>";
-                        print "<td style='display:none;'>".$obj->getId()."</td>";
-                        print "<td>".$obj->getEstadoSolicitacao()."</td>";
-                        print "<td>".$obj->getDescricao()."</td>";
-                        print "<td>".$obj->getDataSolicitacao()."</td>";
-                        print "<td>".$obj->getUsuarioId()."</td>";
-
-                        print "<td>
-                         <a href=\"pesquisar.php?delete=".$obj->getId()."\" class='btn btn-danger excluir'>Excluir</a>
-                              </td>";
-                        print "</tr>";
-                    }
-                    print "</table>";
+                    "<div class='accordion'>
+                        <div class='accordion-item'>
+                            <h2 class='accordion-header'>
+                            <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse".$obj->getId()."' aria-expanded='false'>
+                                Pedido ".$obj->getEstadoSolicitacao()." &nbsp<strong> #". $obj->getId() ."</strong>&nbsp de ".$obj->getUsuarioNome()." feito em ".date_format($data, "d/m/Y")."
+                            </button>
+                            </h2>
+                            <div id='collapse".$obj->getId()."' class='accordion-collapse collapse'>
+                            <div class='accordion-body'>
+                                <table class='table table-bordered'>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Quantidade</th>
+                                    </tr>";
+                                foreach ($itens as $item){
+                                    print 
+                                   "<tr>
+                                        <td>".$item['modelo_produto']."</td>
+                                        <td>".$item['qntde_item']."</td>
+                                    </tr>";
+                                }
+                    print               
+                                "</table>
+                            </div>
+                        </div>
+                    </div>";
                 }
 
             ?>
+            </table>
         </div>
     </main>
 
