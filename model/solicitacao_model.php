@@ -120,7 +120,7 @@
 
         function selectItemSolicitacao(int $id) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select produto.modelo_produto, itens_solicitacao.qntde_item from produto inner join itens_solicitacao on itens_solicitacao.produto_id = produto.id where itens_solicitacao.solicitacao_id = :id");
+            $con = $conexao->prepare("select produto.id, produto.modelo_produto, itens_solicitacao.qntde_item from produto inner join itens_solicitacao on itens_solicitacao.produto_id = produto.id where itens_solicitacao.solicitacao_id = :id");
             $con->bindValue("id", $id, PDO::PARAM_INT);
             $con->execute();
             $stmt = $con->fetchAll();
