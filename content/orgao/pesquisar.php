@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD 2.0 - Pesquisar</title>
+    <title>CRUD 2.0 - Órgãos</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -41,9 +41,9 @@
 
                 if(@$_REQUEST['delete']) {
                     try{
-                    $model = new OrgaoModel;
-                    $model ->delete($_REQUEST["delete"]);
-                    echo "<div class='alert alert-success'>Registro excluído com sucesso</div>";
+                        $model = new OrgaoModel;
+                        $model ->delete($_REQUEST["delete"]);
+                        echo "<div class='alert alert-success'>Registro excluído com sucesso</div>";
                     } catch (PDOException $e) {
                         echo "Não foi possível excluir o registro: ". $e->getMessage();
                     }
@@ -59,71 +59,79 @@
                     print "<h1>Órgãos cadastrados com nome: \"".$pesquisa."\"</h1>";
 
                     if ($orgao == null ) {
-                        echo "<h3>Nenhum órgão encontrado!</h3>";
-                        print "<a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>";
-
+            ?>            
+                        <h3>Nenhum órgão encontrado!</h3>
+                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
+            <?php            
                     } else {
-                        print "<table class=' container table table-hover table-striped table-bordered'>";
-
-                        print "<tr>";
-                        print "<th style='display:none;'>id</th>";
-                        print "<th>Nome</th>";
-                        print "<th>Ativo</th>";
-                        print "<th>Data de Criação</th>";
-                        print "<th>Data de Desativação</th>";
-                        print "<th>Ações</th>";
-                        print "</tr>";
-                    
-                        print "<tr>";
-                        print "<td style='display:none;'>".$orgao->getId()."</td>";
-                        print "<td>".$orgao->getNome()."</td>";
-                        print "<td>".($orgao->getAtivo() ? 'Sim' : 'Não')."</td>";
                         $dataCriacao = new DateTime($orgao->getDataCriacao());
-                        print "<td>".date_format($dataCriacao, "d/m/Y")."</td>";
-                        print "<td>".$orgao->getDataDesativo()."</td>";
-                        print "<td>
-                         <a href=\"cadastro.php?id=".$orgao->getId()."\"class='btn btn-success'>Editar</a>
-                         <a href=\"pesquisar.php?delete=".$orgao->getId()."\" class='btn btn-danger excluir'>Excluir</a>
-                              </td>";
-                        print "</tr>";
-                    
-                        print "</table>";
+            ?>            
+                        <table class=' container table table-hover table-striped table-bordered'>
 
-                        print "<a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>";
+                        <tr>
+                        <th style='display:none;'>id</th>
+                        <th>Nome</th>
+                        <th>Ativo</th>
+                        <th>Data de Criação</th>
+                        <th>Data de Desativação</th>
+                        <th>Ações</th>
+                        </tr>
+                    
+                        <tr>
+                        <td style='display:none;'><?=$orgao->getId()?></td>
+                        <td><?=$orgao->getNome()?></td>
+                        <td><?=($orgao->getAtivo() ? 'Sim' : 'Não')?></td>
+                        <td><?=date_format($dataCriacao, "d/m/Y")?></td>
+                        <td><?=$orgao->getDataDesativo()?></td>
+                        <td>
+                         <a href="cadastro.php?id=<?=$orgao->getId()?>" class='btn btn-success'>Editar</a>
+                         <a href="pesquisar.php?delete=<?=$orgao->getId()?>" class='btn btn-danger excluir'>Excluir</a>
+                              </td>
+                        </tr>
+                    
+                        </table>
+
+                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
+            <?php            
                     }
                     
                 } else {
-                    print "<h1>Órgãos cadastrados</h1>";
+            ?>        
+                    <h1>Órgãos cadastrados</h1>
 
-                    print "<table class=' container table table-hover table-striped table-bordered'>";
+                    <table class=' container table table-hover table-striped table-bordered'>
 
-                    print "<tr>";
-                    print "<th style='display:none;'>#</th>";
-                    print "<th>Nome</th>";
-                    print "<th>Ativo</th>";
-                    print "<th>Data de Criação</th>";
-                    print "<th>Data de Desativação</th>";
-                    print "<th>Ações</th>";
-                    print "</tr>";
+                    <tr>
+                    <th style='display:none;'>#</th>
+                    <th>Nome</th>
+                    <th>Ativo</th>
+                    <th>Data de Criação</th>
+                    <th>Data de Desativação</th>
+                    <th>Ações</th>
+                    </tr>
+            <?php        
 
                     $model = new OrgaoModel;
 
                     $orgao = $model->select();
                     
                     foreach ($orgao as $obj) {
-                        print "<tr>";
-                        print "<td style='display:none;'>".$obj->getId()."</td>";
-                        print "<td>".$obj->getNome()."</td>";
-                        print "<td>".($obj->getAtivo() ? 'Sim' : 'Não')."</td>";
                         $dataCriacao = new DateTime($obj->getDataCriacao());
-                        print "<td>".date_format($dataCriacao, "d/m/Y")."</td>";
-                        print "<td>".$obj->getDataDesativo()."</td>";
+            ?>            
+                        <tr>
+                        <td style='display:none;'><?=$obj->getId()?></td>
+                        <td><?=$obj->getNome()?></td>
+                        <td><?=($obj->getAtivo() ? 'Sim' : 'Não')?></td>
+                        
+                        <td><?=date_format($dataCriacao, "d/m/Y")?></td>
+                        <td><?=$obj->getDataDesativo()?></td>
 
-                        print "<td>
-                         <a href=\"cadastro.php?id=".$obj->getId()."\"class='btn btn-success'>Editar</a>
-                         <a href=\"pesquisar.php?delete=".$obj->getId()."\" class='btn btn-danger excluir'>Excluir</a>
-                              </td>";
-                        print "</tr>";
+                        <td>
+                         <a href="cadastro.php?id=<?=$obj->getId()?>" class='btn btn-success'>Editar</a>
+                         <a href="pesquisar.php?delete=<?=$obj->getId()?>" class='btn btn-danger excluir'>Excluir</a>
+                              </td>
+                        </tr>
+            <?php            
                     }
                     print "</table>";
                 }

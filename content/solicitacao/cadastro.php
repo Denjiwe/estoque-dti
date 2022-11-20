@@ -118,37 +118,41 @@
                             case "toner":
                                 $model = new ProdutoModel;
                                 $toner = new Produto;
-                                $toner = $model->getToner($idImpressora);
-                                print 
-                                '<tr>
-                                    <td hidden>'.$idImpressora.'</td>
-                                    <td>'.$nomeImpressora.'</td>
-                                    <td>'.$qntde.'</td>
-                                    <td>'.$toner->getModelo().'</td>
+                                $toner = $model->getToner($idImpressora); 
+                            ?>
+                                <tr>
+                                    <td hidden><?=$idImpressora?></td>
+                                    <td><?=$nomeImpressora?></td>
+                                    <td><?=$qntde?></td>
+                                    <td><?=$toner->getModelo()?></td>
                                     <td style="padding: 0px; margin: 0px;"></td>
                                     <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                </tr>';
+                                </tr>;
 
-                                print "<input type='hidden' name='tonerId' value=".$toner->getId()."/>";
+                                <input type='hidden' name='tonerId' value=".$toner->getId()."/>
+                            <?php    
                                 break;
                             case "cilindro":
                                 $model = new ProdutoModel;
                                 $cilindro = new Produto;
                                 @$cilindro = $model?->getCilindro($idImpressora);
                                 if ($cilindro != null) {
-                                    print 
-                                    '<tr>
-                                        <td hidden>'.$idImpressora.'</td>
-                                        <td>'.$nomeImpressora.'</td>
-                                        <td>'.$qntde.'</td>
-                                        <td>'.$cilindro?->getModelo().'</td>
-                                        <td style="padding: 0px; margin: 0px;"></td>
-                                        <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                    </tr>';
+                            ?>        
+                                <tr>
+                                    <td hidden><?=$idImpressora?></td>
+                                    <td><?=$nomeImpressora?></td>
+                                    <td><?=$qntde?></td>
+                                    <td><?=$cilindro?->getModelo()?></td>
+                                    <td style="padding: 0px; margin: 0px;"></td>
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                </tr>
 
-                                    print "<input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>";
+                                        <input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>
+                            <?php        
                                 } else {
-                                    print "<div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>";
+                            ?>        
+                                    <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
+                            <?php        
                                 }
                                 break;
                             case "conjunto":
@@ -158,20 +162,23 @@
                                 $cilindro = new Produto;
                                 @$cilindro = $model?->getCilindro($idImpressora);
                                 if ($cilindro != null) {
-                                    print 
-                                    '<tr>
-                                        <td hidden>'.$idImpressora.'</td>
-                                        <td>'.$nomeImpressora.'</td>
-                                        <td>'.$qntde.'</td>
-                                        <td>'.$toner?->getModelo().'</td>
-                                        <td>'.$cilindro?->getModelo().'</td>
-                                        <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                    </tr>';
-                                    
-                                    print "<input type='hidden' name='tonerId' value=".$toner->getId()."/>";
-                                    print "<input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>";
+                            ?>        
+                                <tr>
+                                    <td hidden><?=$idImpressora?></td>
+                                    <td><?=$nomeImpressora?></td>
+                                    <td><?=$qntde?></td>
+                                    <td><?=$toner?->getModelo()?></td>
+                                    <td><?=$cilindro?->getModelo()?></td>
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                </tr>
+                            
+                                <input type='hidden' name='tonerId' value=".$toner->getId()."/>
+                                <input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>
+                            <?php        
                                 } else {
-                                    print "<div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>";
+                            ?>        
+                                    <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>";
+                            <?php        
                                 }
                                 break;
                         }

@@ -233,12 +233,13 @@
                     <?php
                         if(@$_REQUEST['id']) {
                             foreach ($suprimentos as $suprimento) {
-                                print 
-                                "<tr>
-                                    <td>".$suprimento['id']."</td>
-                                    <td>".$suprimento['modelo_produto']."</td>
-                                    <td><button type=\"button\" class=\"btn btn-danger\">Excluir</button></td>
-                                </tr>";
+                    ?>
+                                <tr>
+                                    <td><?=$suprimento['id']?></td>
+                                    <td><?=$suprimento['modelo_produto']?></td>
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                </tr>
+                    <?php            
                             } 
                         }
                     ?>
