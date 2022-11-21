@@ -49,7 +49,7 @@
         //select all
         function select () {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id order by solicitacao.id desc");
+            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id order by estado_solicitacao asc, id desc");
             $con->execute();
             
             $solicitacoes = [];
@@ -126,5 +126,13 @@
             $stmt = $con->fetchAll();
 
             return $stmt;
+        }
+
+        function updateEstado(string $estado, int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("update solicitacao set estado_solicitacao = :estado where id = :id");
+            $con->bindValue("estado", $estado, PDO::PARAM_STR);
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
         }
     }

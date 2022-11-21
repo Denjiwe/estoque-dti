@@ -12,7 +12,11 @@
     <link rel="stylesheet" href="../../css/menu.css">
 </head>
 <body>
-    <?php include("../../menu.php"); ?>
+    <?php include("../../menu.php"); 
+        if(@$_REQUEST['entregue']){
+            print "<div class='container alert alert-success mt-5'>Solicitação #".$_REQUEST['entregue']." alterada com sucesso!</div>";
+        }
+    ?>
     <main class="container mt-5">
         <div class="row">
             
@@ -69,7 +73,7 @@
                         <div class='accordion-item'>
                             <h2 class='accordion-header'>
                             <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse<?=$obj->getId()?>' aria-expanded='false'>
-                                Pedido <?=$obj->getEstadoSolicitacao()?> <strong> #<?=$obj->getId()?> </strong> de <?=$obj->getUsuarioNome()?> feito em <?=date_format($data, "d/m/Y")?>
+                                Pedido <?=$obj->getEstadoSolicitacao()?> <strong>&nbsp #<?=$obj->getId()?> &nbsp</strong> de <?=$obj->getUsuarioNome()?> feito em <?=date_format($data, "d/m/Y")?>
                             </button>
                             </h2>
                             <div id='collapse<?=$obj->getId()?>' class='accordion-collapse collapse'>
@@ -107,15 +111,15 @@
                                     <div class='modal-body'>
                                         <form action='entrega.php?solicitacao=<?=$obj->getId()?>' method='post'>
                                             <div class='row'>
-                                                <ul class='list-group col-lg-10 col-7'>
+                                                <ul class='list-group col-10'>
             <?php                    
                                 foreach ($itens as $item) {
             ?>    
                                                     <li class='list-group-item ms-3'>
                                                         <label class='form-check-label' for='checkbox<?=$item['id']?>'><?=$item['modelo_produto']?></label>
-                                                        <input class='form-check-input ms-3' type='checkbox' name='id' value='<?=$item['id']?>' id='checkbox<?=$item['id']?>'>
+                                                        <input class='form-check-input ms-3' type='checkbox' name='id[]' value='<?=$item['id']?>' id='checkbox<?=$item['id']?>'>
 
-                                                        <input type='number' class='form-input ms-3 col-2 rounded border border-1 float-end' name='qntde' id='qntde' min='1' max='2' required>
+                                                        <input type='number' class='form-input ms-3 col-2 rounded border border-1 float-end' name='qntde[]' id='qntde' min='1' max='<?=$item['qntde_item']?>' required>
                                                         <label for='qntde' class=' float-end'>Quantidade</label>
                                                     </li>
             <?php                                    
@@ -130,9 +134,9 @@
                                                 <label for='estado'>Estado da Solicitação</label>
                                                 <select class='form-select' name='estado' id='estado' required>
                                                     <option value='' selected hidden></option>                             
-                                                    <option value='aberto'>Aberto</option>            
-                                                    <option value='aguardando'>Aguardando</option>            
-                                                    <option value='atendido'>Atendido</option>            
+                                                    <option value='Aberto'>Aberto</option>            
+                                                    <option value='Aguardando'>Aguardando</option>            
+                                                    <option value='Atendido'>Atendido</option>            
                                                 </select>
                                             </div>
                                     </div>
@@ -154,8 +158,6 @@
             </table>
         </div>
     </main>
-    
-    <!-- fazer request enviando id da solicitação, pegar itens cadastrados na solicitação e fazer a baixa conforme os itens selecionados e suas quantidades -->
    
 </body>
 </html>

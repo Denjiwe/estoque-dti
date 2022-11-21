@@ -8,6 +8,49 @@
 
     include ("../../model/produto_model.php");
 
-    $ids = $_POST['ids'];
+    $id = $_REQUEST['solicitacao'];
 
-    print_r($ids);
+    $produtos[] = $_POST['id'];
+    $qntdes[] = $_POST['qntde'];
+    $estado = $_POST['estado'];
+
+    $solicitacao_model = new SolicitacaoModel;
+
+    $produto_model = new ProdutoModel;
+
+    $solicitacao_itens = $solicitacao_model->selectItemSolicitacao($id);
+
+    try {
+        $novo_estado = $solicitacao_model->updateEstado($estado, $id);
+    } catch (PDOException $e) {
+        print "Não foi possível atualizar o estado da solicitação: ". $e->getMessage();
+        die();
+    }
+    foreach ($produtos as $produto) {
+        $cont = 0;
+        foreach ($solicitacao_itens as $item){
+            $id_item = $item['id'];
+            $qntde = $qntdes[0][$cont];
+
+            if (@$produto[$cont] == $id_item){
+
+                if ($qntde <= $item['qntde_item']){
+
+                    $qntde_estoque = $produto_model->updateEstoque($id_item);
+
+                    $nova_qntde = $qntde_estoque->getQntde() - $qntde;
+
+                    try {
+                        $produto_model->setEstoque($nova_qntde, $id);
+                    } catch (PDOException $e) {
+                        print "Não foi possível atualizar quantidade de itens no estoque: ". $e->getMessage();
+                        die();
+                    }
+
+                }
+            }    
+            $cont++;
+        }   
+    }
+
+    header("Location: ./pesquisar.php?entregue=".$id);

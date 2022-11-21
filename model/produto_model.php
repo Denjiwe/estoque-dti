@@ -233,4 +233,28 @@
             return $cilindro;
         }
 
+        //updateEstoque
+        function updateEstoque(int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("select qntde_estoque from produto where id = :id");
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $qntde = new Produto;
+                $qntde ->setQntde($linha['qntde_estoque']);
+            }
+
+            return $qntde;
+        }
+
+        //setEstoque
+        function setEstoque(int $qntde, int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("update produto set qntde_estoque = :qntde where id = :id");
+            $con->bindValue("qntde", $qntde, PDO::PARAM_INT);
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+
+        }
     }
