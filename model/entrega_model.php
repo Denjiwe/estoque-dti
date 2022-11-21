@@ -37,6 +37,7 @@
             $con->bindValue("qntde", $entrega->getQntde(), PDO::PARAM_INT);
             $con->bindValue("usuario_id", $entrega->getUsuarioId(), PDO::PARAM_INT);
             $con->bindValue("itens_id", $entrega->getItensId(), PDO::PARAM_INT);
+            $con->execute();
            }
 
         }

@@ -140,7 +140,8 @@
                                                 </select>
                                             </div>
                                     </div>
-                                    <div class='modal-footer'>
+                                    <input type="hidden" name="usuario" value="<?=$obj->getUsuarioId() ?>"/>
+                                    <div class='modal-footer'> 
                                         <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancelar</button>
                                         <button type='submit' class='btn btn-primary'>Confirmar</button>
                                     </div>

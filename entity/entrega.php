@@ -21,7 +21,7 @@ class Entrega
             return $this->qntde;
         }
         public function getDataEntrega() {
-            return $this->id;
+            return $this->dataEntrega;
         }
         public function geObservacao() : string {
             return $this->observacao;
