@@ -8,6 +8,10 @@
 
     include ("../../model/produto_model.php");
 
+    include ("../../entity/entrega.php");
+
+    include ("../../model/entrega_model.php");
+
     $id = $_REQUEST['solicitacao'];
 
     $produtos[] = $_POST['id'];
@@ -17,6 +21,8 @@
     $solicitacao_model = new SolicitacaoModel;
 
     $produto_model = new ProdutoModel;
+
+    $entrega_model = new EntregaModel;
 
     $solicitacao_itens = $solicitacao_model->selectItemSolicitacao($id);
 
@@ -36,12 +42,14 @@
 
                 if ($qntde <= $item['qntde_item']){
 
-                    $qntde_estoque = $produto_model->updateEstoque($id_item);
+                    $qntde_estoque = $produto_model->getEstoque($id_item);
 
                     $nova_qntde = $qntde_estoque->getQntde() - $qntde;
 
                     try {
-                        $produto_model->setEstoque($nova_qntde, $id);
+                        $produto_model->updateEstoque($nova_qntde, $id_item);
+
+
                     } catch (PDOException $e) {
                         print "Não foi possível atualizar quantidade de itens no estoque: ". $e->getMessage();
                         die();
