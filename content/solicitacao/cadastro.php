@@ -1,3 +1,8 @@
+<?php 
+    if( empty(session_id()) && !headers_sent()){
+        session_start();
+    }
+?>    
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -21,6 +26,7 @@
                     include ("../../model/produto_model.php");
 
                     include_once ("../../menu.php");
+                    
 
     ?>
     <main class="container mt-5">
@@ -118,42 +124,20 @@
                             case "toner":
                                 $model = new ProdutoModel;
                                 $toner = new Produto;
-                                $toner = $model->getToner($idImpressora); 
-                            ?>
-                                <tr>
-                                    <td hidden><?=$idImpressora?></td>
-                                    <td><?=$nomeImpressora?></td>
-                                    <td><?=$qntde?></td>
-                                    <td><?=$toner->getModelo()?></td>
-                                    <td style="padding: 0px; margin: 0px;"></td>
-                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                </tr>;
-
-                                <input type='hidden' name='tonerId' value=".$toner->getId()."/>
-                            <?php    
+                                $toner = $model->getToner($idImpressora);
+                                $cilindro = null;
+                                   
                                 break;
                             case "cilindro":
                                 $model = new ProdutoModel;
                                 $cilindro = new Produto;
                                 @$cilindro = $model?->getCilindro($idImpressora);
-                                if ($cilindro != null) {
-                            ?>        
-                                <tr>
-                                    <td hidden><?=$idImpressora?></td>
-                                    <td><?=$nomeImpressora?></td>
-                                    <td><?=$qntde?></td>
-                                    <td><?=$cilindro?->getModelo()?></td>
-                                    <td style="padding: 0px; margin: 0px;"></td>
-                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                </tr>
-
-                                        <input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>
-                            <?php        
-                                } else {
+                                if ($cilindro == null) {
                             ?>        
                                     <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
                             <?php        
                                 }
+                                $toner = null;
                                 break;
                             case "conjunto":
                                 $model = new ProdutoModel;
@@ -161,34 +145,100 @@
                                 $toner= $model->getToner($idImpressora);
                                 $cilindro = new Produto;
                                 @$cilindro = $model?->getCilindro($idImpressora);
-                                if ($cilindro != null) {
+                                if ($cilindro == null) {
                             ?>        
-                                <tr>
-                                    <td hidden><?=$idImpressora?></td>
-                                    <td><?=$nomeImpressora?></td>
-                                    <td><?=$qntde?></td>
-                                    <td><?=$toner?->getModelo()?></td>
-                                    <td><?=$cilindro?->getModelo()?></td>
-                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                </tr>
-                            
-                                <input type='hidden' name='tonerId' value=".$toner->getId()."/>
-                                <input type='hidden' name='cilindroId' value=".$cilindro->getId()."/>
-                            <?php        
-                                } else {
-                            ?>        
-                                    <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>";
+                                    <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
                             <?php        
                                 }
                                 break;
                         }
-  
+
+                        if (!isset($_SESSION['nomeImpressora'])){
+                            $_SESSION['nomeImpressora'] = [];
+                        }
+                        array_push($_SESSION['nomeImpressora'], $nomeImpressora);
+                        
+                        if (!isset($_SESSION['idImpressora'])){
+                            $_SESSION['idImpressora'] = [];
+                        }
+                        array_push($_SESSION['idImpressora'], $idImpressora);
+                        
+                        if (!isset($_SESSION['qntde'])){
+                            $_SESSION['qntde'] = [];
+                        }
+                        array_push($_SESSION['qntde'], $qntde);
+                        
+                        if ($toner != null) {
+                            if (!isset($_SESSION['toner'])){
+                                $_SESSION['toner'] = [];
+                            }
+                            array_push($_SESSION['toner'],$toner?->getModelo());
+                            
+                        }
+                        if ($cilindro != null) {
+                            if (!isset($_SESSION['cilindro'])){
+                                $_SESSION['cilindro'] = [];
+                            }
+                            array_push($_SESSION['cilindro'],$cilindro?->getModelo());
+                        }
+                        if ($cilindro != null) {
+                            if (!isset($_SESSION['cilindroId'])){
+                                $_SESSION['cilindroId'] = [];
+                            }
+                            array_push($_SESSION['cilindroId'], $cilindro?->getId());
+                        }
+                        if ($toner != null) {
+                            if (!isset($_SESSION['tonerId'])){
+                                $_SESSION['tonerId'] = [];
+                            }
+                            array_push($_SESSION['tonerId'], $toner?->getId());
+                        }
+                        
+                       
+                        for ($i=0; $i<count($_SESSION['nomeImpressora']);$i++) {
+                        ?>
+                                <tr>
+                                    <td hidden><?=$_SESSION['idImpressora'][$i]?></td>
+                                    <td><?=$_SESSION['nomeImpressora'][$i]?></td>
+                                    <td><?=$_SESSION['qntde'][$i]?></td>
+                        <?php
+                                if (isset($_SESSION['toner'][$i]) && !isset($_SESSION['cilindro'][$i])){
+
+                                    print "<td>".$_SESSION['toner'][$i]."</td>";
+                                    print '<td style="padding: 0px; margin: 0px;"></td>';
+                                    $_SESSION['cilindro'][$i] = null;
+
+                                } elseif (!isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
+
+                                    print "<td>".$_SESSION['cilindro'][$i]."</td>";
+                                    print '<td style="padding: 0px; margin: 0px;"></td>';
+                                    $_SESSION['toner'][$i] = null;
+                                    
+
+                                } elseif (isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
+
+                                    print "<td>".$_SESSION['toner'][$i]."</td>";
+                                    print "<td>".$_SESSION['cilindro'][$i]."</td>";
+
+                                }             
+                        ?>            
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                </tr>
+                            
+                                <input type='hidden' name='tonerId' value="<?=$toner?->getId()?>"/>
+                                <input type='hidden' name='cilindroId' value="<?=$cilindro?->getId()?>"/>
+                        <?php        
+                        }
                     }
 
+                    //remover elementos da sessão quando o usuário clicar no botão de excluir, descobrir como passar os vários produtos informados para o insert da solicitação
                     if(isset($_GET['finalizar'])) {
                         $model = new SolicitacaoModel;
 
                         $solicitacao = new Solicitacao;
+
+                        session_destroy();
+                        exit();
 
                         $estado = $_POST['estado'];
                         $solicitacao->setEstadoSolicitacao($estado);
