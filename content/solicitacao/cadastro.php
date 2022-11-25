@@ -236,11 +236,8 @@
 
                                 }             
                         ?>            
-                                    <td class='text-center'><button type="button" class="btn btn-danger">Excluir</button></td>
+                                    <td class='text-center'><a href="cadastro.php?excluir=<?=$i?>" type="button" class="btn btn-danger">Excluir</a></td>
                                 </tr>
-                            
-                                <input type='hidden' name='tonerId' value="<?=$toner?->getId()?>"/>
-                                <input type='hidden' name='cilindroId' value="<?=$cilindro?->getId()?>"/>
                         <?php        
                         }
                     }
@@ -276,10 +273,6 @@
 
                         $qntdeItem = $_SESSION['qntde'];
                         $solicitacao->setQntdeItem($qntdeItem);
-
-                        @$tonerId = $_SESSION['tonerId'];
-
-                        @$cilindroId = $_SESSION['cilindroId'];
 
                         $produtos = $_SESSION['produtos'];
 

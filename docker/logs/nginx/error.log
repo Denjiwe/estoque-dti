@@ -1740,3 +1740,17 @@
 2022/11/25 16:35:25 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
 2022/11/25 16:35:25 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
 2022/11/25 16:35:25 [notice] 1#1: start worker processes
+2022/11/25 16:35:25 [notice] 1#1: start worker process 28
+2022/11/25 16:35:25 [notice] 1#1: start worker process 29
+2022/11/25 16:35:25 [notice] 1#1: start worker process 30
+2022/11/25 16:35:25 [notice] 1#1: start worker process 31
+2022/11/25 16:47:27 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/11/25 16:47:29 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/11/25 16:47:38 [error] 29#29: *4 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/25 16:47:42 [error] 30#30: *7 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/25 16:48:32 [error] 31#31: *9 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/25 16:48:37 [error] 28#28: *12 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/25 16:48:59 [error] 28#28: *16 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?finalizar"
+2022/11/25 16:49:08 [error] 28#28: *19 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php?adicionar"
+2022/11/25 16:56:27 [error] 28#28: *24 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/11/25 17:11:02 [error] 28#28: *33 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
