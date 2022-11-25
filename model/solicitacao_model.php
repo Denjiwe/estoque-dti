@@ -19,22 +19,25 @@
 
             try {
             $conexao->beginTransaction();
-            $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, diretoria_id) VALUES (:estado, :descricao, :data_solicitacao, :usuario_id, :diretoria)");
+            $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, diretoria_id) VALUES (:estado, :descricao, now(), :usuario_id, :diretoria)");
             $con->bindValue ("estado", $solicitacao->getEstadoSolicitacao(), PDO::PARAM_STR);
             $con->bindValue ("descricao", $solicitacao?->getDescricao(), PDO::PARAM_STR);
-            $con->bindValue ("data_solicitacao", $solicitacao->getDataSolicitacao());
             $con->bindValue ("usuario_id", 1 /*$solicitacao->getUsuarioId()*/, PDO::PARAM_INT);
             $con->bindValue ("diretoria", 1, PDO::PARAM_INT);
             $con->execute();
             $lastId = $conexao->lastInsertId();
             $itens = $solicitacao->getItemSolicitacao();
-
+            $qntde = $solicitacao->getQntdeItem();
+            
+            $cont = 0;
             foreach ($itens as $item) {
                 $solicitados = $conexao->prepare("INSERT INTO itens_solicitacao (solicitacao_id, produto_id, qntde_item) VALUES (:solicitacao, :produto, :qntde)");
                 $solicitados->bindValue("solicitacao", $lastId, PDO::PARAM_INT);
                 $solicitados->bindValue("produto", $item, PDO::PARAM_INT);
-                $solicitados->bindValue("qntde", $solicitacao->getQntdeItem(), PDO::PARAM_INT);
+                $solicitados->bindValue("qntde", $qntde[$cont], PDO::PARAM_INT);
                 $solicitados->execute();
+
+                $cont++;
             }
 
             $conexao->commit();

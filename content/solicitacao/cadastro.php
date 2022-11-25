@@ -104,10 +104,10 @@
 
             <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
                 <tr>
-                    <th class="col-4">Modelo da Impressora</th>
-                    <th class="col-1">Quantidade</th>
-                    <th class="col-5" colspan="2">Produto(s)</th>  
-                    <th class="col-2">Ações</th>
+                    <th class="col-4 text-center">Modelo da Impressora</th>
+                    <th class="col-1 text-center">Quantidade</th>
+                    <th class="col-5 text-center" colspan="2">Produto(s)</th>  
+                    <th class="col-2 text-center">Ações</th>
                 </tr>
                 <?php
                     if(isset($_GET['adicionar'])) {
@@ -126,7 +126,10 @@
                                 $toner = new Produto;
                                 $toner = $model->getToner($idImpressora);
                                 $cilindro = null;
-                                   
+                                if (!isset($_SESSION['qntde'])){
+                                    $_SESSION['qntde'] = [];
+                                }
+                                array_push($_SESSION['qntde'], $qntde);
                                 break;
                             case "cilindro":
                                 $model = new ProdutoModel;
@@ -137,6 +140,10 @@
                                     <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
                             <?php        
                                 }
+                                if (!isset($_SESSION['qntde'])){
+                                    $_SESSION['qntde'] = [];
+                                }
+                                array_push($_SESSION['qntde'], $qntde);
                                 $toner = null;
                                 break;
                             case "conjunto":
@@ -145,12 +152,22 @@
                                 $toner= $model->getToner($idImpressora);
                                 $cilindro = new Produto;
                                 @$cilindro = $model?->getCilindro($idImpressora);
+                                for ($i = 0; $i <= 1; $i++){
+                                    if (!isset($_SESSION['qntde'])){
+                                        $_SESSION['qntde'] = [];
+                                    }
+                                    array_push($_SESSION['qntde'], $qntde);
+                                }
+
                                 if ($cilindro == null) {
                             ?>        
                                     <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
                             <?php        
                                 }
                                 break;
+                        }
+                        if (!isset($_SESSION['produtos'])) {
+                            $_SESSION['produtos'] = [];
                         }
 
                         if (!isset($_SESSION['nomeImpressora'])){
@@ -162,11 +179,6 @@
                             $_SESSION['idImpressora'] = [];
                         }
                         array_push($_SESSION['idImpressora'], $idImpressora);
-                        
-                        if (!isset($_SESSION['qntde'])){
-                            $_SESSION['qntde'] = [];
-                        }
-                        array_push($_SESSION['qntde'], $qntde);
                         
                         if ($toner != null) {
                             if (!isset($_SESSION['toner'])){
@@ -186,12 +198,14 @@
                                 $_SESSION['cilindroId'] = [];
                             }
                             array_push($_SESSION['cilindroId'], $cilindro?->getId());
+                            array_push($_SESSION['produtos'], $cilindro?->getId());
                         }
                         if ($toner != null) {
                             if (!isset($_SESSION['tonerId'])){
                                 $_SESSION['tonerId'] = [];
                             }
                             array_push($_SESSION['tonerId'], $toner?->getId());
+                            array_push($_SESSION['produtos'], $toner?->getId());
                         }
                         
                        
@@ -199,76 +213,35 @@
                         ?>
                                 <tr>
                                     <td hidden><?=$_SESSION['idImpressora'][$i]?></td>
-                                    <td><?=$_SESSION['nomeImpressora'][$i]?></td>
-                                    <td><?=$_SESSION['qntde'][$i]?></td>
+                                    <td class="text-center"><?=$_SESSION['nomeImpressora'][$i]?></td>
+                                    <td class="text-center"><?=$_SESSION['qntde'][$i]?></td>
                         <?php
                                 if (isset($_SESSION['toner'][$i]) && !isset($_SESSION['cilindro'][$i])){
 
-                                    print "<td>".$_SESSION['toner'][$i]."</td>";
+                                    print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
                                     print '<td style="padding: 0px; margin: 0px;"></td>';
                                     $_SESSION['cilindro'][$i] = null;
 
                                 } elseif (!isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
 
-                                    print "<td>".$_SESSION['cilindro'][$i]."</td>";
+                                    print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
                                     print '<td style="padding: 0px; margin: 0px;"></td>';
                                     $_SESSION['toner'][$i] = null;
                                     
 
                                 } elseif (isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
 
-                                    print "<td>".$_SESSION['toner'][$i]."</td>";
-                                    print "<td>".$_SESSION['cilindro'][$i]."</td>";
+                                    print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
+                                    print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
 
                                 }             
                         ?>            
-                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                                    <td class='text-center'><button type="button" class="btn btn-danger">Excluir</button></td>
                                 </tr>
                             
                                 <input type='hidden' name='tonerId' value="<?=$toner?->getId()?>"/>
                                 <input type='hidden' name='cilindroId' value="<?=$cilindro?->getId()?>"/>
                         <?php        
-                        }
-                    }
-
-                    //remover elementos da sessão quando o usuário clicar no botão de excluir, descobrir como passar os vários produtos informados para o insert da solicitação
-                    if(isset($_GET['finalizar'])) {
-                        $model = new SolicitacaoModel;
-
-                        $solicitacao = new Solicitacao;
-
-                        session_destroy();
-                        exit();
-
-                        $estado = $_POST['estado'];
-                        $solicitacao->setEstadoSolicitacao($estado);
-
-                        $observacao = $_POST['observacao'];
-                        $solicitacao?->setDescricao($observacao);
-
-                        $solicitacao->setDataSolicitacao(date("Y-m-d"));
-
-                        $qntdeItem = $_POST['qntdeItem'];
-                        $solicitacao->setQntdeItem($qntdeItem);
-
-                        @$tonerId = $_POST['tonerId'];
-                        @$cilindroId = $_POST['cilindroId'];
-
-                        if($tonerId != null && $cilindroId == null){
-                            $produtos = [$tonerId];
-                        } elseif($tonerId == null && $cilindroId != null){
-                            $produtos = [$cilindroId];
-                        } elseif($tonerId != null && $cilindroId != null){
-                            $produtos = [$tonerId, $cilindroId];
-                        }
-
-                        $solicitacao->setItemSolicitacao($produtos);
-
-                        try {
-                            $model->insert($solicitacao);
-                            echo "<div class=' container alert alert-success'>Solicitação criada com sucesso!</div>";
-                        } catch (PDOException $e){
-                            echo "<div class=' container alert alert-danger'>Não foi possível cirar a solicitação! ".$e->getMessage()."</div>";
                         }
                     }
                 ?>
@@ -288,6 +261,40 @@
             <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
            
         </form>
+               <?php 
+                    //remover elementos da sessão quando o usuário clicar no botão de excluir, descobrir como passar os vários produtos informados para o insert da solicitação
+                    if(isset($_GET['finalizar'])) {
+                        $model = new SolicitacaoModel;
+
+                        $solicitacao = new Solicitacao;
+
+                        $estado = $_POST['estado'];
+                        $solicitacao->setEstadoSolicitacao($estado);
+
+                        $observacao = $_POST['observacao'];
+                        $solicitacao?->setDescricao($observacao);
+
+                        $qntdeItem = $_SESSION['qntde'];
+                        $solicitacao->setQntdeItem($qntdeItem);
+
+                        @$tonerId = $_SESSION['tonerId'];
+
+                        @$cilindroId = $_SESSION['cilindroId'];
+
+                        $produtos = $_SESSION['produtos'];
+
+                        $solicitacao->setItemSolicitacao($produtos); 
+
+                        try {
+                            $model->insert($solicitacao);
+                            echo "<div class=' container alert alert-success'>Solicitação criada com sucesso!</div>";
+                        } catch (PDOException $e){
+                            echo "<div class=' container alert alert-danger'>Não foi possível cirar a solicitação! ".$e->getMessage()."</div>";
+                        }
+
+                        session_destroy();
+                    }
+               ?>
     </main>
 
 </body>

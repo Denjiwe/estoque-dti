@@ -14,7 +14,7 @@ class Solicitacao
 
         private array $itemSolicitacao;
 
-        private int $qntdeItem;
+        private array $qntdeItem;
 
         public function getId() : int {
             return $this-> id;
@@ -37,7 +37,7 @@ class Solicitacao
         public function getItemSolicitacao() : array {
             return $this-> itemSolicitacao;
         }
-        public function getQntdeItem() : int {
+        public function getQntdeItem() : array {
             return $this-> qntdeItem;
         }
         
@@ -63,7 +63,7 @@ class Solicitacao
         public function setItemSolicitacao(array $itemSolicitacao) {
             $this->itemSolicitacao = $itemSolicitacao;
         }
-        public function setQntdeItem(int $qntdeItem) {
+        public function setQntdeItem(array $qntdeItem) {
             $this->qntdeItem = $qntdeItem;
         }
     }
