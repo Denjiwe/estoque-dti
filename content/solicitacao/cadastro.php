@@ -179,6 +179,11 @@
                             $_SESSION['idImpressora'] = [];
                         }
                         array_push($_SESSION['idImpressora'], $idImpressora);
+                       
+                        if (!isset($_SESSION['qntdeExibicao'])){
+                            $_SESSION['qntdeExibicao'] = [];
+                        }
+                        array_push($_SESSION['qntdeExibicao'], $qntde);
                         
                         if ($toner != null) {
                             if (!isset($_SESSION['toner'])){
@@ -194,51 +199,45 @@
                             array_push($_SESSION['cilindro'],$cilindro?->getModelo());
                         }
                         if ($cilindro != null) {
-                            if (!isset($_SESSION['cilindroId'])){
-                                $_SESSION['cilindroId'] = [];
-                            }
-                            array_push($_SESSION['cilindroId'], $cilindro?->getId());
                             array_push($_SESSION['produtos'], $cilindro?->getId());
                         }
                         if ($toner != null) {
-                            if (!isset($_SESSION['tonerId'])){
-                                $_SESSION['tonerId'] = [];
-                            }
-                            array_push($_SESSION['tonerId'], $toner?->getId());
                             array_push($_SESSION['produtos'], $toner?->getId());
                         }
                         
-                       
+                    }
+
+                    if (isset($_SESSION['nomeImpressora'])){
                         for ($i=0; $i<count($_SESSION['nomeImpressora']);$i++) {
-                        ?>
-                                <tr>
-                                    <td hidden><?=$_SESSION['idImpressora'][$i]?></td>
-                                    <td class="text-center"><?=$_SESSION['nomeImpressora'][$i]?></td>
-                                    <td class="text-center"><?=$_SESSION['qntde'][$i]?></td>
-                        <?php
-                                if (isset($_SESSION['toner'][$i]) && !isset($_SESSION['cilindro'][$i])){
+                            ?>
+                                    <tr>
+                                        <td hidden><?=$_SESSION['idImpressora'][$i]?></td>
+                                        <td class="text-center"><?=$_SESSION['nomeImpressora'][$i]?></td>
+                                        <td class="text-center"><?=$_SESSION['qntdeExibicao'][$i]?></td>
+                            <?php
+                                    if (isset($_SESSION['toner'][$i]) && !isset($_SESSION['cilindro'][$i])){
 
-                                    print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
-                                    print '<td style="padding: 0px; margin: 0px;"></td>';
-                                    $_SESSION['cilindro'][$i] = null;
+                                        print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
+                                        print '<td style="padding: 0px; margin: 0px;"></td>';
+                                        $_SESSION['cilindro'][$i] = null;
 
-                                } elseif (!isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
+                                    } elseif (!isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
 
-                                    print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
-                                    print '<td style="padding: 0px; margin: 0px;"></td>';
-                                    $_SESSION['toner'][$i] = null;
-                                    
+                                        print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
+                                        print '<td style="padding: 0px; margin: 0px;"></td>';
+                                        $_SESSION['toner'][$i] = null;
+                                        
 
-                                } elseif (isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
+                                    } elseif (isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
 
-                                    print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
-                                    print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
+                                        print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
+                                        print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
 
-                                }             
-                        ?>            
-                                    <td class='text-center'><a href="cadastro.php?excluir=<?=$i?>" type="button" class="btn btn-danger">Excluir</a></td>
-                                </tr>
-                        <?php        
+                                    }             
+                            ?>            
+                                        <td class='text-center'><a href="cadastro.php?excluir=<?=$i?>" type="button" class="btn btn-danger">Excluir</a></td>
+                                    </tr>
+                            <?php        
                         }
                     }
                 ?>
@@ -252,18 +251,66 @@
 
             <input type="hidden" class="form-control" name="estado" id="estado" value="Aberto">
 
-            <input type="hidden" class="form-control" name="qntdeItem" id="qntdeItem" value="">
-
             <button type="submit" id="finalizar" class="btn btn-primary mt-5 mb-5">Finalizar</button>
             <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
            
         </form>
                <?php 
-                    //remover elementos da sessão quando o usuário clicar no botão de excluir, descobrir como passar os vários produtos informados para o insert da solicitação
+                    //remover elementos da sessão quando o usuário clicar no botão de excluir
+                    if(isset($_GET['excluir'])) {
+                        $model = new ProdutoModel;
+                        $toner = new Produto;
+                        $cilindro = new Produto;
+
+                        $indexImpressora = $_GET['excluir'];
+
+                        array_splice($_SESSION['nomeImpressora'], $indexImpressora, 1);
+
+                        array_splice($_SESSION['qntdeExibicao'], $indexImpressora, 1);
+
+                        $idImpressora = $_SESSION['idImpressora'][$indexImpressora];
+
+                        $toner = $model?->getToner($idImpressora);
+
+                        $cilindro = $model?->getCilindro($idImpressora);
+
+                        $chaveToner = array_search($toner?->getModelo(), $_SESSION['toner']);     
+
+                        $chaveIdToner = array_search($toner?->getId(), $_SESSION['produtos']);
+
+                        $chaveCilindro = array_search($cilindro?->getModelo(), $_SESSION['cilindro']);
+
+                        $chaveIdCilindro = array_search($cilindro?->getId(), $_SESSION['produtos']);
+
+                        if ($chaveToner !==false || $chaveCilindro !==false){
+                            array_splice($_SESSION['toner'], $chaveToner, 1);
+                            array_splice($_SESSION['cilindro'], $chaveToner, 1);
+                        }
+
+                        if ($chaveIdToner !==false){
+                            array_splice($_SESSION['produtos'], $chaveIdToner, 1);
+                            array_splice($_SESSION['qntde'], $chaveIdToner, 1);
+                        }
+                        
+                        if ($chaveIdCilindro !==false){
+                            array_splice($_SESSION['produtos'], $chaveIdCilindro, 1);
+                            array_splice($_SESSION['qntde'], $chaveIdCilindro, 1);
+                        }
+
+                        array_splice($_SESSION['idImpressora'], $indexImpressora, 1);
+                        
+
+                        header("Location: ./cadastro.php");
+                    }
+
+
                     if(isset($_GET['finalizar'])) {
                         $model = new SolicitacaoModel;
 
                         $solicitacao = new Solicitacao;
+
+                        session_destroy();
+                        exit();
 
                         $estado = $_POST['estado'];
                         $solicitacao->setEstadoSolicitacao($estado);
