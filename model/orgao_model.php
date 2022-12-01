@@ -1,8 +1,12 @@
 <?php
 
-    include_once ("../../database/config.php");
+$databasePath = $_SERVER['DOCUMENT_ROOT'] . "/database//";
 
-    include_once ("../../entity/orgao.php");
+$entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+
+include_once ($databasePath . "config.php");
+
+include_once ($entityPath . "orgao.php");
     
     class OrgaoModel {
         function delete(int $id) {

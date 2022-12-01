@@ -43,7 +43,7 @@
             $qntde = $qntdes[0][$cont];
             //$idItemSolicitacao se refere ao id da tabela itens_solicitacao em si, que é necessario para ser realizada 
             //a inserção na tabela de entregas
-            $idItemSolicitacao = $solicitacao_itens[$cont]['id'];
+            $idItemSolicitacao = $solicitacao_itens[$cont]['is_id'];
 
             if (@$produto[$cont] == $id_item){
 

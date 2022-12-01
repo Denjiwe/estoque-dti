@@ -1,8 +1,12 @@
 <?php
 
-    include_once ("../../database/config.php");
+    $databasePath = $_SERVER['DOCUMENT_ROOT'] . "/database//";
 
-    include_once ("../../entity/entrega.php");
+    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+
+    include_once ($databasePath . "config.php");
+
+    include_once ($entityPath . "entrega.php");
 
     class EntregaModel 
         {

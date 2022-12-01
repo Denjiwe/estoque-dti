@@ -17,15 +17,21 @@
 </head>
 <body>
     <?php
-                    include ("../../entity/solicitacao.php");
+                    $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+                    
+                    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
-                    include ("../../model/solicitacao_model.php");
+                    $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+                    
+                    include_once ($entityPath . "solicitacao.php");
 
-                    include ("../../entity/produto.php");
+                    include_once ($modelPath . "solicitacao_model.php");
 
-                    include ("../../model/produto_model.php");
+                    include_once ($entityPath . "produto.php");
 
-                    include_once ("../../menu.php");
+                    include_once ($modelPath . "produto_model.php");
+
+                    include_once ($path . "menu.php"); 
                     
 
     ?>
@@ -100,15 +106,7 @@
                     });               
                 </script>
         <form action="cadastro.php?finalizar" method="post" id="formCadastro">
-            
 
-            <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
-                <tr>
-                    <th class="col-4 text-center">Modelo da Impressora</th>
-                    <th class="col-1 text-center">Quantidade</th>
-                    <th class="col-5 text-center" colspan="2">Produto(s)</th>  
-                    <th class="col-2 text-center">Ações</th>
-                </tr>
                 <?php
                     if(isset($_GET['adicionar'])) {
 
@@ -208,6 +206,15 @@
                     }
 
                     if (isset($_SESSION['nomeImpressora'])){
+                            ?>
+                        <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
+                            <tr>
+                                <th class="col-4 text-center">Modelo da Impressora</th>
+                                <th class="col-1 text-center">Quantidade</th>
+                                <th class="col-5 text-center" colspan="2">Produto(s)</th>  
+                                <th class="col-2 text-center">Ações</th>
+                            </tr>
+                            <?php
                         for ($i=0; $i<count($_SESSION['nomeImpressora']);$i++) {
                             ?>
                                     <tr>
@@ -239,10 +246,13 @@
                                     </tr>
                             <?php        
                         }
+                            ?>
+                        </table>
+                            <?php
                     }
                 ?>
 
-            </table>
+           
 
             <div class="form-group mt-5">
                 <label for="observacao">Observação</label>
@@ -308,9 +318,6 @@
                         $model = new SolicitacaoModel;
 
                         $solicitacao = new Solicitacao;
-
-                        session_destroy();
-                        exit();
 
                         $estado = $_POST['estado'];
                         $solicitacao->setEstadoSolicitacao($estado);

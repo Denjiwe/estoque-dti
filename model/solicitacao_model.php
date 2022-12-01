@@ -1,8 +1,12 @@
 <?php
 
-    include_once ("../../database/config.php");
+    $databasePath = $_SERVER['DOCUMENT_ROOT'] . "/database//";
 
-    include_once ("../../entity/solicitacao.php");
+    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+
+    include_once ($databasePath . "config.php");
+
+    include_once ($entityPath . "solicitacao.php");
     
     class SolicitacaoModel {
 
@@ -123,11 +127,18 @@
 
         function selectItemSolicitacao(int $id) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select produto.id, produto.modelo_produto, itens_solicitacao.qntde_item, itens_solicitacao.id from produto inner join itens_solicitacao on itens_solicitacao.produto_id = produto.id where itens_solicitacao.solicitacao_id = :id");
+            $con = $conexao->prepare("select produto.id, produto.modelo_produto, itens_solicitacao.id as is_id, itens_solicitacao.qntde_item from produto inner join itens_solicitacao on itens_solicitacao.produto_id = produto.id where itens_solicitacao.solicitacao_id = :id");
             $con->bindValue("id", $id, PDO::PARAM_INT);
             $con->execute();
-            $stmt = $con->fetchAll();
 
+            $stmt = $con->fetchAll();
+            /*while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $stmt['id'] = $linha['id'];
+                $stmt['modelo_produto'] = $linha['modelo_produto'];
+                $stmt['qntde_item'] = $linha['qntde_item'];
+                $stmt['is_id'] = $linha['is_id'];
+            }*/
+            
             return $stmt;
         }
 
