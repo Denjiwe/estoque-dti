@@ -25,11 +25,5 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
-db/database/binlog.000048
-db/database/mysql.ibd
-db/database/undo_002
-db/database/undo_001
-.gitignore
 docker/logs/nginx/error.log
 docker/logs/nginx/access.log
-db/database/#innodb_redo/#ib_redo10

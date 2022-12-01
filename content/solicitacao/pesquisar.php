@@ -94,9 +94,16 @@
                                 }
             ?>     
                                 </table>
-
+            <?php
+                            if ($obj->getDescricao() != null) {
+            ?>
+                                <label for='observacao<?=$obj->getId()?>'>Observação</label>
+                                <input disabled id='observacao<?=$obj->getId()?>' class="form-control bg-white" value="<?=$obj->getDescricao()?>">
+            <?php
+                            }
+            ?>                    
                                 <!-- Button trigger modal -->
-                                <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#modal<?=$obj->getId()?>'>
+                                <button type='button' class='btn btn-primary mt-4' data-bs-toggle='modal' data-bs-target='#modal<?=$obj->getId()?>'>
                                 Entrega
                                 </button>
 
