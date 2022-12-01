@@ -93,16 +93,6 @@
                         $("table").on("click", "button", function () {
                                 $(this).parent().parent().remove();
                         });
-
-                        $("#finalizar").click(function () {
-                            var itens = "";
-                            $("tr td:nth-child(3)").each(function (t){
-                            var valor = $(this).text();
-                            itens += valor;
-                            });
-                            $("#qntdeItem").val(itens);
-                
-                        });
                     });               
                 </script>
         <form action="cadastro.php?finalizar" method="post" id="formCadastro">

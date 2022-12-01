@@ -12,6 +12,10 @@
 </head>
 <body>
 <?php
+        $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+
+        include ($path . "menu.php");
+
         include ("../../entity/orgao.php");
 
         include ("../../model/orgao_model.php");
@@ -40,21 +44,21 @@
 
                 $new_orgao = new Orgao;
 
-                $ativook = 0;
+                $ativoOk = 0;
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativook = 1;
+                    $ativoOk = 1;
                 }
                 $new_nome = $_POST['nome'];
-                $new_ativo = $ativook;
+                $new_ativo = $ativoOk;
                 $new_dataCriacao = $_POST['dataCricao'];
                 $new_dataDesativo = $_POST['dataDesativado'];
-                $new_dataDesativook = strlen($new_dataDesativo) > 0 ? $new_dataDesativo : null;
+                $new_dataDesativoOk = strlen($new_dataDesativo) > 0 ? $new_dataDesativo : null;
                 $new_id = $_REQUEST['id'];
 
                 $new_orgao->setNome($new_nome);
                 $new_orgao->setAtivo($new_ativo);
                 $new_orgao->setDataCriacao($new_dataCriacao);
-                $new_orgao->setDataDesativo($new_dataDesativook);
+                $new_orgao->setDataDesativo($new_dataDesativoOk);
                 $new_orgao->setId($new_id);          
 
                 try {
@@ -68,20 +72,20 @@
 
                 $new_orgao = new Orgao;
 
-                $ativook = 0;
+                $ativoOk = 0;
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativook = 1;
+                    $ativoOk = 1;
                 }
                 $new_nome = $_POST['nome'];
-                $new_ativo = $ativook;
+                $new_ativo = $ativoOk;
                 $new_dataCriacao = $_POST['dataCricao'];
                 $new_dataDesativo = $_POST['dataDesativado'];
-                $new_dataDesativook = strlen($new_dataDesativo) > 0 ? $new_dataDesativo : null;
+                $new_dataDesativoOk = strlen($new_dataDesativo) > 0 ? $new_dataDesativo : null;
 
                 $new_orgao->setNome($new_nome);
                 $new_orgao->setAtivo($new_ativo);
                 $new_orgao->setDataCriacao($new_dataCriacao);
-                $new_orgao->setDataDesativo($new_dataDesativook);
+                $new_orgao->setDataDesativo($new_dataDesativoOk);
 
                 try {
                     $new_model->insert($new_orgao);

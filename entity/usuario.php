@@ -6,6 +6,8 @@ class Solicitacao
         
         private int $cpf;
 
+        private string $nome;
+
         private string $email;
 
         private string $senha;
@@ -21,6 +23,9 @@ class Solicitacao
         }
         public function getCpf() : int {
             return $this-> cpf;
+        }
+        public function getNome() : string {
+            return $this-> nome;
         }
         public function getEmail() : string {
             return $this-> email;
@@ -43,6 +48,9 @@ class Solicitacao
         }
         public function setCpf(int $cpf) {
             $this->cpf = $cpf;
+        }
+        public function setNome(string $nome) {
+            $this->nome = $nome;
         }
         public function setEmail(string $email) {
             $this->email = $email;

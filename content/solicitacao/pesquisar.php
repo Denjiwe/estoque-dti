@@ -13,6 +13,7 @@
 </head>
 <body>
     <?php include("../../menu.php"); 
+    
         if(@$_REQUEST['entregue']){
             print "<div class='container alert alert-success mt-5'>Solicitação #".$_REQUEST['entregue']." alterada com sucesso!</div>";
         }
