@@ -1824,3 +1824,8 @@
 2022/11/29 16:38:11 [notice] 1#1: start worker process 30
 2022/11/29 16:38:11 [notice] 1#1: start worker process 31
 2022/11/29 16:38:23 [error] 29#29: *3 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/02 14:14:58 [notice] 1#1: using the "epoll" event method
+2022/12/02 14:14:58 [notice] 1#1: nginx/1.23.2
+2022/12/02 14:14:58 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/02 14:14:58 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/12/02 14:14:58 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576

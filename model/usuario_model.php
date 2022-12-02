@@ -122,24 +122,27 @@
         //findById
         function findById (int $id) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT * FROM produto WHERE id = :id;");
+            $con = $conexao->prepare("SELECT * FROM usuario WHERE id = :id;");
             $con->bindValue ("id", $id, PDO::PARAM_INT);
             $con->execute();
 
-            $produto = null;
+            $usuario = null;
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
 
-                $produto = new Produto;
-                $produto->setId($linha['id']);
-                $produto->setModelo($linha['modelo_produto']);
-                $produto->setDescricao($linha['descricao']);
-                $produto->setQntde($linha['qntde_estoque']);
-                $produto->setAtivo($linha['ativo']);
+                $usuario = new Usuario;
+                $usuario->setId($linha['id']);
+                $usuario->setNome($linha['nome']);
+                $usuario->setCpf($linha['cpf']);
+                $usuario->setEmail($linha['email']);
+                $usuario->setSenha($linha['senha']);
+                $usuario->setAtivo($linha['ativo']);
+                $usuario?->setDivisao($linha['divisao_id']);
+                $usuario->setDiretoria($linha['diretoria_id']);
 
             }
 
-            return $produto;
+            return $usuario;
         }
 
         //findByName
@@ -164,22 +167,12 @@
 
             return $produto;
         }
+    
 
-        //getSuprimentos
-        function getSuprimentos(int $id) {
+        //selectDiretoria
+        function selectDiretoria() {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto.id = itens_produto.produto_vinculado_id where itens_produto.produto_id = :id");
-            $con->bindValue("id", $id, PDO::PARAM_INT);
-            $con->execute();
-            $stmt = $con->fetchAll();
-
-            return $stmt;
-        }
-
-        //selectImpressora
-        function selectImpressora() {
-            $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select id, modelo_produto from produto where LOCATE('impressora', modelo_produto)");
+            $con = $conexao->prepare("select diretoria.id as dir_id, diretoria.nome as dir_nome from diretoria");
             $con->execute();
             $impressoras = $con->fetchAll();
 
@@ -203,45 +196,4 @@
             return $toner;
         }
 
-        //getCilíndro
-        function getCilindro(int $id) {
-            $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto_id = produto.id where LOCATE('Cilíndro', modelo_produto) and produto_vinculado_id = :id");
-            $con->bindValue("id", $id, PDO::PARAM_INT);
-            $con->execute();
-
-            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
-
-                $cilindro = new Produto;
-                $cilindro->setId($linha['id']);
-                $cilindro->setModelo($linha['modelo_produto']);
-            }
-
-            return $cilindro;
-        }
-
-        //getEstoque
-        function getEstoque (int $id) {
-            $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select qntde_estoque from produto where id = :id");
-            $con->bindValue("id", $id, PDO::PARAM_INT);
-            $con->execute();
-
-            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
-                $qntde = new Produto;
-                $qntde ->setQntde($linha['qntde_estoque']);
-            }
-
-            return $qntde;
-        }
-
-        //updateEstoque
-        function updateEstoque(int $qntde, int $id) {
-            $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("update produto set qntde_estoque = :qntde where id = :id");
-            $con->bindValue("qntde", $qntde, PDO::PARAM_INT);
-            $con->bindValue("id", $id, PDO::PARAM_INT);
-            $con->execute();
-
-        }
     }

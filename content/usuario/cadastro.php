@@ -24,7 +24,7 @@
 
         include ($modelPath . "usuario_model.php");
 
-        if(isset($_POST['nome'])) {
+        if(isset($_POST)) {
             $model = new UsuarioModel;
 
             $usuario = new Usuario;
@@ -38,16 +38,25 @@
             $newEmail = $_POST['email'];
             $newSenha = $_POST['senha'];
             $newAtivo = $ativoOk;
-            $newIdLocal = $_POST['selectLocal']; //divisão ou diretoria
-            $newNomeLocal = $_POST['nomeLocal']; //divisão ou diretoria
+            @$newDivisao = $_POST['selectDivisao'];
+            $newDiretoria = $_POST['selectDiretoria'];
 
             $newUsuario = $usuario->setNome($newNome);
             $newUsuario = $usuario->setCpf($newCpf);
             $newUsuario = $usuario->setEmail($newEmail);
             $newUsuario = $usuario->setSenha($newSenha);
             $newUsuario = $usuario->setAtivo($newAtivo);
+            $newUsuario = $usuario->setDiretoria($newDiretoria);
 
-            
+            if (isset($newDivisao)) {
+                $newUsuario = $usuario->setDivisao($newDivisao);
+            }
+        }
+
+        if (isset($_GET)){
+            $model = new UsuarioModel;
+
+            $usuario = new Usuario;
         }
     ?>
     <main class="container mt-5">
@@ -88,14 +97,24 @@
                     <input type="number" class="form-control" name="cpf" id="cpf" placeholder="insira seu CPF" required>
                 </div>
 
-                <div class="col-6">
-                    <label for="selectLocal">Selecione sa divisão ou diretoria <span class="text-danger">*</span></label>
-                    <select class="form-select" name="selectLocal" id="selectLocal" required>
+                <div class="col-3">
+                    <label for="selectDiretoria">Selecione a diretoria <span class="text-danger">*</span></label>
+                    <select class="form-select" name="selectDiretoria" id="selectDiretoria" required>
                         <option selected hidden></option>
                         <?php 
                         ?>
                     </select>
                 </div>
+
+                <div class="col-3">
+                    <label for="selectDivisao">Selecione a divisão</label>
+                    <select class="form-select" name="selectDivisao" id="selectDivisao">
+                        <option selected hidden></option>
+                        <?php 
+                        ?>
+                    </select>
+                </div>
+
             </div>
             
             <div class="form-group mt-5 col-3">
