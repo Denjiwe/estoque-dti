@@ -24,10 +24,10 @@
 
         include ($modelPath . "usuario_model.php");
 
-        if(isset($_POST)) {
+        if(isset($_POST['nome'])) {
             $model = new UsuarioModel;
 
-            $usuario = new Usuario;
+            $newUsuario = new Usuario;
 
             $ativoOk = 0;
             if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
@@ -38,22 +38,34 @@
             $newEmail = $_POST['email'];
             $newSenha = $_POST['senha'];
             $newAtivo = $ativoOk;
-            @$newDivisao = $_POST['selectDivisao'];
-            $newDiretoria = $_POST['selectDiretoria'];
 
-            $newUsuario = $usuario->setNome($newNome);
-            $newUsuario = $usuario->setCpf($newCpf);
-            $newUsuario = $usuario->setEmail($newEmail);
-            $newUsuario = $usuario->setSenha($newSenha);
-            $newUsuario = $usuario->setAtivo($newAtivo);
-            $newUsuario = $usuario->setDiretoria($newDiretoria);
-
-            if (isset($newDivisao)) {
-                $newUsuario = $usuario->setDivisao($newDivisao);
+            if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
+                $newDivisao = $_POST['selectDivisao'];
+                $newUsuario->setDivisaoId($newDivisao);
+            } elseif ($_POST['selectDiretoria'] >= 1) {
+                $newDiretoria = $_POST['selectDiretoria'];
+                $newUsuario->setDiretoriaId($newDiretoria);
+            } elseif ($_POST['selectDivisao'] >= 1) {
+                $newDivisao = $_POST['selectDivisao'];
+                $newUsuario->setDivisaoId($newDivisao);
             }
-        }
 
-        if (isset($_GET)){
+            $newUsuario->setNome($newNome);
+            $newUsuario->setCpf($newCpf);
+            $newUsuario->setEmail($newEmail);
+            $newUsuario->setSenha($newSenha);
+            $newUsuario->setAtivo($newAtivo);
+
+            try {
+                $model->insert($newUsuario);
+
+                print "<div class=' container alert alert-success'>Usuário criado com sucesso!</div>";
+            } catch (PDOException $e) {
+                print "<div class=' container alert alert-danger'>Não foi possível cirar o usuário! ".$e->getMessage()."</div>";
+            }
+        }    
+
+        if (isset($_GET['id'])){
             $model = new UsuarioModel;
 
             $usuario = new Usuario;
@@ -77,7 +89,7 @@
             <div class="row">
                 <div class="form-group col-5">
                     <label for="nome">Nome do Usuário<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="nome" id="nome" placeholder="insira seu nome" required>
+                    <input type="text" class="form-control" name="nome" id="nome" placeholder="insira o nome" required>
                 </div>
 
                 <div class="form-group col-6">
@@ -87,21 +99,28 @@
                             echo "value=\"".$dataCricacao."\"";
                             }
                         ?>
-                    id="email" placeholder="insira seu email" required>
+                    id="email" placeholder="insira o email" required>
                 </div>
             </div>
 
             <div class="row mt-5">
                 <div class="form-group col-5">
                     <label for="cpf">CPF <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" name="cpf" id="cpf" placeholder="insira seu CPF" required>
+                    <input type="number" class="form-control" name="cpf" id="cpf" placeholder="insira o CPF" required>
                 </div>
 
                 <div class="col-3">
-                    <label for="selectDiretoria">Selecione a diretoria <span class="text-danger">*</span></label>
+                    <label for="selectDiretoria">Selecione a diretoria</label>
                     <select class="form-select" name="selectDiretoria" id="selectDiretoria" required>
-                        <option selected hidden></option>
+                        <option selected></option>
                         <?php 
+                            $model = new UsuarioModel;
+
+                            $diretorias  = $model->selectDiretoria();
+
+                            foreach ($diretorias as $diretoria) {
+                                print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
+                            }
                         ?>
                     </select>
                 </div>
@@ -109,8 +128,15 @@
                 <div class="col-3">
                     <label for="selectDivisao">Selecione a divisão</label>
                     <select class="form-select" name="selectDivisao" id="selectDivisao">
-                        <option selected hidden></option>
+                        <option selected></option>
                         <?php 
+                            /*$model = new UsuarioModel;
+                                
+                            $divisoes  = $model->selectDivisao();
+
+                            foreach ($divisoes as $divisao) {
+                                print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
+                            }*/
                         ?>
                     </select>
                 </div>
@@ -119,7 +145,7 @@
             
             <div class="form-group mt-5 col-3">
                 <label for="senha">Senha <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" name="senha" id="senha" placeholder="insira sua senha" required>
+                <input type="password" class="form-control" name="senha" id="senha" placeholder="insira a senha" required>
             </div>
             
 

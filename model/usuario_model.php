@@ -18,19 +18,22 @@
         }
 
         function insert (Usuario $usuario) {
-
-            //abrir transação, fazer prepare do insert, depois armazenar o lastinserid, depois criar foreach do array de itens o insert do itens produto, 
-            //usando o lastinsertid para o produto proprietario e o item do array para o produto vinculado
             $conexao = Conexao::getConexao();
 
             try {
-            $con = $conexao->prepare("INSERT INTO usuario (nome, cpf, email, senha, ativo, divisao_id, diretoria_id) VALUES (:nome, :cpf, :senha, :ativo, divisao, diretoria)");
+            $con = $conexao->prepare("INSERT INTO usuario (nome, cpf, email, senha, ativo, divisao_id, diretoria_id) VALUES (:nome, :cpf, :email, :senha, :ativo, :divisao, :diretoria)");
             $con->bindValue ("nome", $usuario->getNome(), PDO::PARAM_STR);
-            $con->bindValue ("cpf", $usuario?->getCpf(), PDO::PARAM_STR);
+            $con->bindValue ("cpf", $usuario->getCpf(), PDO::PARAM_INT);
             $con->bindValue ("email", $usuario->getEmail(), PDO::PARAM_STR);
+            $con->bindValue ("senha", $usuario->getSenha(), PDO::PARAM_STR);
             $con->bindValue ("ativo", $usuario->getAtivo(), PDO::PARAM_INT);
-            $con->bindValue ("divisao", $usuario->getDivisao(), PDO::PARAM_INT);
-            $con->bindValue ("diretoria", $usuario->getDiretoria(), PDO::PARAM_INT);
+            if ($usuario->getDiretoriaId() >= 1){
+                $con->bindValue ("diretoria", $usuario->getDiretoriaId(), PDO::PARAM_INT);
+                $con->bindValue ("divisao", null, PDO::PARAM_NULL);
+            } else {
+                $con->bindValue ("divisao", $usuario->getDivisaoId(), PDO::PARAM_INT);
+                $con->bindValue ("diretoria", null, PDO::PARAM_NULL);
+            }
             $con->execute();
 
             } catch (PDOException $e) {
@@ -98,28 +101,55 @@
         //select all
         function select () {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT * FROM produto;");
+            $con = $conexao->prepare("SELECT * FROM usuario;");
             $con->execute();
             
-            $produtos = [];
+            $usuarios = [];
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
 
-            $produto = new Produto;
-            $produto->setId($linha['id'])."</td>";
-            $produto->setModelo($linha['modelo_produto'])."</td>";
-            $produto->setDescricao($linha['descricao'])."</td>";
-            $produto->setQntde($linha['qntde_estoque'])."</td>";
-            $produto->setAtivo($linha['ativo'])."</td>";
-            $produtos[] = $produto; 
-            
+            $usuario = new Usuario;
+            $usuario->setId($linha['id']);
+            $usuario->setCpf($linha['cpf']);
+            $usuario->setNome($linha['nome']);
+            $usuario->setEmail($linha['email']);
+            $usuario->setAtivo($linha['ativo']);
+
+            if ($linha['divisao_id'] != null){
+                $usuario->setDivisaoId($linha['divisao_id']);
+                $conn = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
+                $conn->bindValue("id", $linha['divisao_id'], PDO::PARAM_INT);
+                $conn->execute();
+
+                while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
+                    $divisao = $linha['nome'];
+                }
+
+                $usuario->setDivisaoNome($divisao);
             }
 
-            return $produtos;
+            if ($linha['diretoria_id'] != null){ 
+                $usuario->setDiretoriaId($linha['diretoria_id']);
+                $conn = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
+                $conn->bindValue("id", $linha['diretoria_id'], PDO::PARAM_INT);
+                $conn->execute();
+
+                while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
+                    $diretoria = $linha['nome'];
+                }
+
+                $usuario->setDiretoriaNome($diretoria);
+            }
+
+            $usuarios[] = $usuario; 
+            }
+
+            return $usuarios;
             
         }
 
         //findById
+        /*
         function findById (int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM usuario WHERE id = :id;");
@@ -143,57 +173,77 @@
             }
 
             return $usuario;
-        }
+        }*/
 
         //findByName
-        function findByName(string $modelo) {
+        function findByName(string $nome) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT * FROM produto WHERE modelo_produto = :modelo;");
-            $con->bindValue ("modelo", $modelo, PDO::PARAM_STR);
+            $con = $conexao->prepare("SELECT * FROM usuario WHERE nome = :nome;");
+            $con->bindValue ("nome", $nome, PDO::PARAM_STR);
             $con->execute();
 
-            $produto = null;
+            $usuario = null;
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
 
-                $produto = new Produto;
-                $produto->setId($linha['id'])."</td>";
-                $produto->setModelo($linha['modelo_produto'])."</td>";
-                $produto->setDescricao($linha['descricao'])."</td>";
-                $produto->setQntde($linha['qntde_estoque'])."</td>";
-                $produto->setAtivo($linha['ativo'])."</td>";
+                $usuario = new Usuario;
+                $usuario->setId($linha['id']);
+                $usuario->setCpf($linha['cpf']);
+                $usuario->setNome($linha['nome']);
+                $usuario->setEmail($linha['email']);
+                $usuario->setAtivo($linha['ativo']);
                 
+                if ($linha['divisao_id'] != null){
+                    $usuario->setDivisaoId($linha['divisao_id']);
+                    $con = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
+                    $con->bindValue("id", $linha['divisao_id'], PDO::PARAM_INT);
+                    $con->execute();
+    
+                    while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
+                        $divisao = $linha['nome'];
+                    }
+    
+                    $usuario->setDivisaoNome($divisao);
+                }
+                
+                if ($linha['diretoria_id'] != null){ 
+                    $usuario->setDiretoriaId($linha['diretoria_id']);
+                    $con = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
+                    $con->bindValue("id", $linha['diretoria_id'], PDO::PARAM_INT);
+                    $con->execute();
+    
+                    while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
+                        $diretoria = $linha['nome'];
+                    }
+    
+                    $usuario->setDiretoriaNome($diretoria);
+                }       
             }
 
-            return $produto;
+            return $usuario;
         }
     
 
         //selectDiretoria
         function selectDiretoria() {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select diretoria.id as dir_id, diretoria.nome as dir_nome from diretoria");
+            $con = $conexao->prepare("select diretoria.id, diretoria.nome from diretoria");
             $con->execute();
-            $impressoras = $con->fetchAll();
+            $diretorias = $con->fetchAll();
 
-            return $impressoras;
+            return $diretorias;
         }
 
-        //getToner
-        function getToner(int $id) {
+        //selectDivisao
+        function selectDivisao(int $id) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select produto.id, produto.modelo_produto from produto inner join itens_produto on produto_id = produto.id where LOCATE('Toner', modelo_produto) and produto_vinculado_id = :id");
+            $con = $conexao->prepare("select divisao.id, divisao.nome from divisao");
             $con->bindValue("id", $id, PDO::PARAM_INT);
             $con->execute();
+            $divisoes = $con->fetchAll();
 
-            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
-
-                $toner = new Produto;
-                $toner->setId($linha['id']);
-                $toner->setModelo($linha['modelo_produto']);
-            }
-
-            return $toner;
+            return $divisoes;
+        
         }
 
     }

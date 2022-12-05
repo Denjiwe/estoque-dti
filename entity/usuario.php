@@ -1,6 +1,6 @@
 <?php 
 
-class Solicitacao 
+class Usuario 
     {
         private int $id;
         
@@ -14,9 +14,13 @@ class Solicitacao
 
         private bool $ativo;
 
-        private int $divisao;
+        private int $divisaoId;
 
-        private int $diretoria;
+        private string $divisaoNome;
+
+        private int $diretoriaId;
+        
+        private string $diretoriaNome;
 
         public function getId() : int {
             return $this-> id;
@@ -36,11 +40,17 @@ class Solicitacao
         public function getAtivo() : bool {
             return $this-> ativo;
         }
-        public function getDivisao() : int {
-            return $this-> divisao;
+        public function getDivisaoId() : ?int {
+            return $this-> divisaoId;
         }
-        public function getDiretoria() : int {
-            return $this-> diretoria;
+        public function getDivisaoNome() : ?string {
+            return $this-> divisaoNome;
+        }
+        public function getDiretoriaId() : ?int {
+            return $this-> diretoriaId;
+        }
+        public function getDiretoriaNome() : ?string {
+            return $this-> diretoriaNome;
         }
 
         public function setId(int $id) {
@@ -61,11 +71,17 @@ class Solicitacao
         public function setAtivo(bool $ativo) {
             $this->ativo = $ativo;
         }
-        public function setDivisao(int $divisao) {
-            $this->divisao = $divisao;
+        public function setDivisaoId(int $divisaoId) {
+            $this->divisaoId = $divisaoId;
         }
-        public function setDiretoria(int $diretoria) {
-            $this->diretoria = $diretoria;
+        public function setDivisaoNome(string $divisaoNome) {
+            $this->divisaoNome = $divisaoNome;
+        }
+        public function setDiretoriaId(int $diretoriaId) {
+            $this->diretoriaId = $diretoriaId;
+        }
+        public function setDiretoriaNome(string $diretoriaNome) {
+            $this->diretoriaNome = $diretoriaNome;
         }
     }
 
