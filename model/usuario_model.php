@@ -27,13 +27,15 @@
             $con->bindValue ("email", $usuario->getEmail(), PDO::PARAM_STR);
             $con->bindValue ("senha", $usuario->getSenha(), PDO::PARAM_STR);
             $con->bindValue ("ativo", $usuario->getAtivo(), PDO::PARAM_INT);
+            
             if ($usuario->getDiretoriaId() >= 1){
                 $con->bindValue ("diretoria", $usuario->getDiretoriaId(), PDO::PARAM_INT);
                 $con->bindValue ("divisao", null, PDO::PARAM_NULL);
-            } else {
+            } elseif ($usuario->getDivisaoId() >= 1) {
                 $con->bindValue ("divisao", $usuario->getDivisaoId(), PDO::PARAM_INT);
                 $con->bindValue ("diretoria", null, PDO::PARAM_NULL);
             }
+            
             $con->execute();
 
             } catch (PDOException $e) {
@@ -115,8 +117,9 @@
             $usuario->setEmail($linha['email']);
             $usuario->setAtivo($linha['ativo']);
 
-            if ($linha['divisao_id'] != null){
+            if (@$linha['divisao_id'] >= 1){
                 $usuario->setDivisaoId($linha['divisao_id']);
+                $usuario->setDiretoriaId(0);
                 $conn = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
                 $conn->bindValue("id", $linha['divisao_id'], PDO::PARAM_INT);
                 $conn->execute();
@@ -128,8 +131,9 @@
                 $usuario->setDivisaoNome($divisao);
             }
 
-            if ($linha['diretoria_id'] != null){ 
+            if (@$linha['diretoria_id'] >= 1){ 
                 $usuario->setDiretoriaId($linha['diretoria_id']);
+                $usuario->setDivisaoId(0);
                 $conn = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
                 $conn->bindValue("id", $linha['diretoria_id'], PDO::PARAM_INT);
                 $conn->execute();
@@ -149,7 +153,6 @@
         }
 
         //findById
-        /*
         function findById (int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("SELECT * FROM usuario WHERE id = :id;");
@@ -167,13 +170,38 @@
                 $usuario->setEmail($linha['email']);
                 $usuario->setSenha($linha['senha']);
                 $usuario->setAtivo($linha['ativo']);
-                $usuario?->setDivisao($linha['divisao_id']);
-                $usuario->setDiretoria($linha['diretoria_id']);
+                
+                if (@$linha['divisao_id'] >= 1){
+                    $usuario->setDivisaoId($linha['divisao_id']);
+                    $usuario->setDiretoriaId(0);
+                    $conn = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
+                    $conn->bindValue("id", $linha['divisao_id'], PDO::PARAM_INT);
+                    $conn->execute();
+    
+                    while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
+                        $divisao = $linha['nome'];
+                    }
+    
+                    $usuario->setDivisaoNome($divisao);
+                }
 
+                if (@$linha['diretoria_id'] >= 1){ 
+                    $usuario->setDiretoriaId($linha['diretoria_id']);
+                    $usuario->setDivisaoId(0);
+                    $conn = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
+                    $conn->bindValue("id", $linha['diretoria_id'], PDO::PARAM_INT);
+                    $conn->execute();
+    
+                    while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
+                        $diretoria = $linha['nome'];
+                    }
+    
+                    $usuario->setDiretoriaNome($diretoria);
+                }
             }
 
             return $usuario;
-        }*/
+        }
 
         //findByName
         function findByName(string $nome) {
@@ -235,10 +263,9 @@
         }
 
         //selectDivisao
-        function selectDivisao(int $id) {
+        function selectDivisao() {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("select divisao.id, divisao.nome from divisao");
-            $con->bindValue("id", $id, PDO::PARAM_INT);
             $con->execute();
             $divisoes = $con->fetchAll();
 

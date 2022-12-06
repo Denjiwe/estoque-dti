@@ -130,7 +130,7 @@
                             <td class="text-center"><?=$obj->getNome()?></td>
                             <td class="text-center"><?=$obj->getCpf()?></td>
                             <td class="text-center"><?=$obj->getEmail()?></td>
-                            <td class="text-center"><?=($obj->getDiretoriaNome()? $obj->getDiretoriaNome(): $obj->getDivisaoNome())?></td>
+                            <td class="text-center"><?=($obj->getDiretoriaId() >= 1? $obj->getDiretoriaNome(): $obj->getDivisaoNome())?></td>
                             <td class="text-center"><?=($obj->getAtivo() ? 'Sim' : 'Não')?></td>
                             <td class="text-center">
                                 <a href="cadastro.php?id=<?=$obj->getId()?>" class='btn btn-success'>Editar</a>

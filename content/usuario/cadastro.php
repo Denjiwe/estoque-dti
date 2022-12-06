@@ -42,12 +42,15 @@
             if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
                 $newDivisao = $_POST['selectDivisao'];
                 $newUsuario->setDivisaoId($newDivisao);
+                $newUsuario->setDiretoriaId(0);
             } elseif ($_POST['selectDiretoria'] >= 1) {
                 $newDiretoria = $_POST['selectDiretoria'];
                 $newUsuario->setDiretoriaId($newDiretoria);
+                $newUsuario->setDivisaoId(0);
             } elseif ($_POST['selectDivisao'] >= 1) {
                 $newDivisao = $_POST['selectDivisao'];
                 $newUsuario->setDivisaoId($newDivisao);
+                $newUsuario->setDiretoriaId(0);
             }
 
             $newUsuario->setNome($newNome);
@@ -59,7 +62,7 @@
             try {
                 $model->insert($newUsuario);
 
-                print "<div class=' container alert alert-success'>Usuário criado com sucesso!</div>";
+                print "<div class=' container alert alert-success mt-05'>Usuário criado com sucesso!</div>";
             } catch (PDOException $e) {
                 print "<div class=' container alert alert-danger'>Não foi possível cirar o usuário! ".$e->getMessage()."</div>";
             }
@@ -69,6 +72,10 @@
             $model = new UsuarioModel;
 
             $usuario = new Usuario;
+
+            $id = $_GET['id'];
+
+            $usuario = $model->findById($id);
         }
     ?>
     <main class="container mt-5">
@@ -89,14 +96,19 @@
             <div class="row">
                 <div class="form-group col-5">
                     <label for="nome">Nome do Usuário<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="nome" id="nome" placeholder="insira o nome" required>
+                    <input type="text" class="form-control" name="nome" 
+                        <?php if(isset($usuario)) {
+                                echo "value=\"".$usuario->getNome()."\"";
+                                }
+                        ?>
+                    id="nome" placeholder="insira o nome" required>
                 </div>
 
                 <div class="form-group col-6">
                     <label for="email">Email <span class="text-danger">*</span></label>
                     <input type="email" class="form-control" name="email"
-                        <?php if(isset($orgao)) {
-                            echo "value=\"".$dataCricacao."\"";
+                        <?php if(isset($usuario)) {
+                            echo "value=\"".$usuario->getEmail()."\"";
                             }
                         ?>
                     id="email" placeholder="insira o email" required>
@@ -106,20 +118,43 @@
             <div class="row mt-5">
                 <div class="form-group col-5">
                     <label for="cpf">CPF <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" name="cpf" id="cpf" placeholder="insira o CPF" required>
+                    <input type="number" class="form-control" name="cpf" 
+                        <?php if(isset($usuario)) {
+                            echo "value=\"".$usuario->getCpf()."\"";
+                            }
+                        ?>
+                    id="cpf" placeholder="insira o CPF" required>
                 </div>
 
                 <div class="col-3">
                     <label for="selectDiretoria">Selecione a diretoria</label>
                     <select class="form-select" name="selectDiretoria" id="selectDiretoria" required>
-                        <option selected></option>
                         <?php 
                             $model = new UsuarioModel;
 
                             $diretorias  = $model->selectDiretoria();
 
+                            if (isset($usuario)){
+                                if ($usuario->getDiretoriaId() !== 0){
+                                    print "<option value=\"".$usuario->getDiretoriaId()."\" checked>".$usuario->getDiretoriaNome()."</option>";
+                                    print "<option value='0'></option>";
+                                } else {
+                                    print "<option value='0' selected></option>";
+                                }
+                            } else {
+                               print "<option value='0' selected></option>";
+                            }
+
                             foreach ($diretorias as $diretoria) {
-                                print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
+                                if (isset($usuario)){
+                                    if ($usuario->getDiretoriaId() !== 0){
+                                        while ($diretoria['id'] !== $usuario->getDiretoriaId()){
+                                            print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
+                                        } 
+                                    }
+                                } else {
+                                    print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
+                                }
                             }
                         ?>
                     </select>
@@ -128,15 +163,31 @@
                 <div class="col-3">
                     <label for="selectDivisao">Selecione a divisão</label>
                     <select class="form-select" name="selectDivisao" id="selectDivisao">
-                        <option selected></option>
                         <?php 
-                            /*$model = new UsuarioModel;
+                            $model = new UsuarioModel;
                                 
                             $divisoes  = $model->selectDivisao();
 
+                            if (isset($usuario)){
+                                if ($usuario->getDivisaoId() !== 0){
+                                    print "<option value=\"".$usuario->getDivisaoId()."\" checked>".$usuario->getDivisaoNome()."</option>";
+                                    print "<option value='0'></option>";
+                                }
+                            } else {
+                               print "<option value='0' selected></option>";
+                            }
+
                             foreach ($divisoes as $divisao) {
-                                print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
-                            }*/
+                                if (isset($usuario)){
+                                    if ($usuario->getDivisaoId() !== 0){
+                                        while ($divisao['id'] !== $usuario->getDivisaoId()){
+                                            print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
+                                        }
+                                    }
+                                } else {
+                                    print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
+                                }
+                            }
                         ?>
                     </select>
                 </div>
@@ -145,15 +196,20 @@
             
             <div class="form-group mt-5 col-3">
                 <label for="senha">Senha <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" name="senha" id="senha" placeholder="insira a senha" required>
+                <input type="password" class="form-control" name="senha" 
+                    <?php if(isset($usuario)) {
+                            echo "value=\"".$usuario->getSenha()."\"";
+                            }
+                    ?>
+                id="senha" placeholder="insira a senha" required>
             </div>
             
 
             <div class="form-group mt-5">
                 <label for="ativo">Ativo?</label> 
                 <input type="checkbox" id="ativo" name="ativo" class="form-check-input" 
-                    <?php if (isset($ativo)){
-                        if ($ativo ==  1) {
+                    <?php if (isset($usuario)){
+                        if ($usuario->getAtivo() ==  1) {
                             echo "checked";
                         }
                     }
