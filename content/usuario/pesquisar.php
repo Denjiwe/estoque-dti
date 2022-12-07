@@ -30,7 +30,7 @@
             <div class="col-10">
                 <form action="pesquisar.php" method="get" id="formPesquisa">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="pesquisa" id="pesquisa" placeholder="Pesquise o nome do órgão">
+                        <input type="text" class="form-control" name="pesquisa" id="pesquisa" placeholder="Pesquise o nome do usuário" required>
                         <button type="submit" class="btn btn-secondary">Pesquisar</button> 
                     </div>
                 </form>
@@ -62,11 +62,11 @@
 
                     $usuario = $model->findByName($pesquisa);
 
-                    print "<h1>Órgãos cadastrados com nome: \"".$pesquisa."\"</h1>";
+                    print "<h1>Usuários cadastrados com nome: \"".$pesquisa."\"</h1>";
 
                     if ($usuario == null ) {
             ?>            
-                        <h3>Nenhum órgão encontrado!</h3>
+                        <h3>Nenhum usuário encontrado!</h3>
                         <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
             <?php            
                     } else {
@@ -74,13 +74,13 @@
                         <table class=' container table table-hover table-striped table-bordered'>
 
                         <tr>
-                        <th style='display:none;'>id</th>
-                        <th class="text-center">Nome</th>
-                        <th class="text-center">CPF</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Locação</th>
-                        <th class="text-center">Ativo</th>
-                        <th class="text-center">Ações</th>
+                            <th style='display:none;'>id</th>
+                            <th class="text-center">Nome</th>
+                            <th class="text-center">CPF</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Locação</th>
+                            <th class="text-center">Ativo</th>
+                            <th class="text-center">Ações</th>
                         </tr>
                     
                         <tr>
@@ -88,7 +88,7 @@
                             <td class="text-center"><?=$usuario->getNome()?></td>
                             <td class="text-center"><?=$usuario->getCpf()?></td>
                             <td class="text-center"><?=$usuario->getEmail()?></td>
-                            <td class="text-center"><?=($usuario->getDiretoriaNome()? $usuario->getDiretoriaNome(): $usuario->getDivisaoNome())?></td>
+                            <td class="text-center"><?=($usuario->getDivisaoId() !== 0? $usuario->getDivisaoNome() : $usuario->getDiretoriaNome())?></td>
                             <td class="text-center"><?=($usuario->getAtivo() ? 'Sim' : 'Não')?></td>
                             <td class="text-center">
                                 <a href="cadastro.php?id=<?=$usuario->getId()?>" class='btn btn-success'>Editar</a>
@@ -130,7 +130,7 @@
                             <td class="text-center"><?=$obj->getNome()?></td>
                             <td class="text-center"><?=$obj->getCpf()?></td>
                             <td class="text-center"><?=$obj->getEmail()?></td>
-                            <td class="text-center"><?=($obj->getDiretoriaId() >= 1? $obj->getDiretoriaNome(): $obj->getDivisaoNome())?></td>
+                            <td class="text-center"><?=($obj->getDiretoriaId() !== 0? $obj->getDiretoriaNome(): $obj->getDivisaoNome())?></td>
                             <td class="text-center"><?=($obj->getAtivo() ? 'Sim' : 'Não')?></td>
                             <td class="text-center">
                                 <a href="cadastro.php?id=<?=$obj->getId()?>" class='btn btn-success'>Editar</a>

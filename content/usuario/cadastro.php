@@ -24,74 +24,121 @@
 
         include ($modelPath . "usuario_model.php");
 
-        if(isset($_POST['nome'])) {
-            $model = new UsuarioModel;
-
-            $newUsuario = new Usuario;
-
-            $ativoOk = 0;
-            if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                $ativoOk = 1;
-            }
-            $newNome = $_POST['nome'];
-            $newCpf = $_POST['cpf'];
-            $newEmail = $_POST['email'];
-            $newSenha = $_POST['senha'];
-            $newAtivo = $ativoOk;
-
-            if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
-                $newDivisao = $_POST['selectDivisao'];
-                $newUsuario->setDivisaoId($newDivisao);
-                $newUsuario->setDiretoriaId(0);
-            } elseif ($_POST['selectDiretoria'] >= 1) {
-                $newDiretoria = $_POST['selectDiretoria'];
-                $newUsuario->setDiretoriaId($newDiretoria);
-                $newUsuario->setDivisaoId(0);
-            } elseif ($_POST['selectDivisao'] >= 1) {
-                $newDivisao = $_POST['selectDivisao'];
-                $newUsuario->setDivisaoId($newDivisao);
-                $newUsuario->setDiretoriaId(0);
-            }
-
-            $newUsuario->setNome($newNome);
-            $newUsuario->setCpf($newCpf);
-            $newUsuario->setEmail($newEmail);
-            $newUsuario->setSenha($newSenha);
-            $newUsuario->setAtivo($newAtivo);
-
-            try {
-                $model->insert($newUsuario);
-
-                print "<div class=' container alert alert-success mt-05'>Usuário criado com sucesso!</div>";
-            } catch (PDOException $e) {
-                print "<div class=' container alert alert-danger'>Não foi possível cirar o usuário! ".$e->getMessage()."</div>";
-            }
-        }    
-
         if (isset($_GET['id'])){
             $model = new UsuarioModel;
 
-            $usuario = new Usuario;
+            $newUsuario = new Usuario;
 
             $id = $_GET['id'];
 
             $usuario = $model->findById($id);
         }
+
+        if(isset($_POST['nome'])) {
+            if (!isset($_GET['id'])){
+                $model = new UsuarioModel;
+
+                $usuario = new Usuario;
+
+                $id = $_POST['id'];
+                $ativoOk = 0;
+                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
+                    $ativoOk = 1;
+                }
+                $nome = $_POST['nome'];
+                $cpf = $_POST['cpf'];
+                $email = $_POST['email'];
+                $senha = $_POST['senha'];
+                $ativo = $ativoOk;
+
+                if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
+                    $divisao = $_POST['selectDivisao'];
+                    $usuario->setDivisaoId($divisao);
+                    $usuario->setDiretoriaId(0);
+                } elseif ($_POST['selectDiretoria'] >= 1) {
+                    $diretoria = $_POST['selectDiretoria'];
+                    $usuario->setDiretoriaId($diretoria);
+                    $usuario->setDivisaoId(0);
+                } elseif ($_POST['selectDivisao'] >= 1) {
+                    $divisao = $_POST['selectDivisao'];
+                    $usuario->setDivisaoId($divisao);
+                    $usuario->setDiretoriaId(0);
+                }
+
+                $usuario->setNome($nome);
+                $usuario->setCpf($cpf);
+                $usuario->setEmail($email);
+                $usuario->setSenha($senha);
+                $usuario->setAtivo($ativo);
+                $usuario->setId($id);
+
+                try {
+                    $model->update($usuario);
+
+                    print "<div class=' container alert alert-success mt-5'>Usuário alterado com sucesso!</div>";
+                } catch (PDOException $e) {
+                    print "<div class=' container alert alert-danger mt-5'>Não foi possível alterar o usuário! ".$e->getMessage()."</div>";
+                }
+            } else {
+                $model = new UsuarioModel;
+
+                $newUsuario = new Usuario;
+
+                $ativoOk = 0;
+                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
+                    $ativoOk = 1;
+                }
+                $newNome = $_POST['nome'];
+                $newCpf = $_POST['cpf'];
+                $newEmail = $_POST['email'];
+                $newSenha = $_POST['senha'];
+                $newAtivo = $ativoOk;
+
+                if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
+                    $newDivisao = $_POST['selectDivisao'];
+                    $newUsuario->setDivisaoId($newDivisao);
+                    $newUsuario->setDiretoriaId(0);
+                } elseif ($_POST['selectDiretoria'] >= 1) {
+                    $newDiretoria = $_POST['selectDiretoria'];
+                    $newUsuario->setDiretoriaId($newDiretoria);
+                    $newUsuario->setDivisaoId(0);
+                } elseif ($_POST['selectDivisao'] >= 1) {
+                    $newDivisao = $_POST['selectDivisao'];
+                    $newUsuario->setDivisaoId($newDivisao);
+                    $newUsuario->setDiretoriaId(0);
+                }
+
+                $newUsuario->setNome($newNome);
+                $newUsuario->setCpf($newCpf);
+                $newUsuario->setEmail($newEmail);
+                $newUsuario->setSenha($newSenha);
+                $newUsuario->setAtivo($newAtivo);
+
+                try {
+                    $model->insert($newUsuario);
+
+                    print "<div class=' container alert alert-success mt-5'>Usuário criado com sucesso!</div>";
+                } catch (PDOException $e) {
+                    print "<div class=' container alert alert-danger mt-5'>Não foi possível criar o usuário! ".$e->getMessage()."</div>";
+                }
+            }
+        }
     ?>
     <main class="container mt-5">
+
+        <p>nota: após conversa com Henrique, também cadastrar a diretoria do usuário mesmo em caso em que o mesmo esteja locado em uma divisão, pois facilita o processo de busca e evita confusão
+        do funcionário ao editar</p>
         <form action="cadastro.php" method="post" id="formCadastro">
             
             <input type="hidden" name="id" 
                 <?php 
-                    if(@$_REQUEST['id']) {
-                        echo "value=\"".$_REQUEST['id']."\"";
+                    if(@$_GET['id']) {
+                        echo "value=\"".$_GET['id']."\"";
                     } else {
                         echo "value=\"".null."\"";
                     }
                 ?>
             >
-
-            <input type="hidden" class="form-control" id="nomeLocal" name="nomeLocal" value="">
             
             <div class="row">
                 <div class="form-group col-5">
@@ -135,8 +182,10 @@
                             $diretorias  = $model->selectDiretoria();
 
                             if (isset($usuario)){
-                                if ($usuario->getDiretoriaId() !== 0){
-                                    print "<option value=\"".$usuario->getDiretoriaId()."\" checked>".$usuario->getDiretoriaNome()."</option>";
+                                if ($usuario->getDiretoriaId() > 0){
+                                    $id = $usuario->getDiretoriaId();
+                                    $diretoria= $model->findDiretoriaNome($id);
+                                    $usuario->setDiretoriaNome($diretoria);
                                     print "<option value='0'></option>";
                                 } else {
                                     print "<option value='0' selected></option>";
@@ -147,10 +196,14 @@
 
                             foreach ($diretorias as $diretoria) {
                                 if (isset($usuario)){
-                                    if ($usuario->getDiretoriaId() !== 0){
-                                        while ($diretoria['id'] !== $usuario->getDiretoriaId()){
+                                    if ($usuario->getDiretoriaId() >= 1){
+                                        if ($diretoria['id'] !== $usuario->getDiretoriaId()){
                                             print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
-                                        } 
+                                        } else {
+                                            print "<option value=\"".$usuario->getDiretoriaId()."\" selected>".$usuario->getDiretoriaNome()."</option>";
+                                        }
+                                    } else {
+                                        print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
                                     }
                                 } else {
                                     print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
@@ -169,20 +222,30 @@
                             $divisoes  = $model->selectDivisao();
 
                             if (isset($usuario)){
-                                if ($usuario->getDivisaoId() !== 0){
-                                    print "<option value=\"".$usuario->getDivisaoId()."\" checked>".$usuario->getDivisaoNome()."</option>";
-                                    print "<option value='0'></option>";
+                                if ($usuario->getDivisaoId() > 0){
+                                    $id = $usuario->getDivisaoId();
+                                    $divisao = $model->findDivisaoNome($id);
+                                    $usuario->setDivisaoNome($divisao);
+                                    print "<option value='0'>Nenhuma divisão</option>";
+                                } else {
+                                    print "<option value='0' selected>Nenhuma divisão</option>";
                                 }
                             } else {
-                               print "<option value='0' selected></option>";
+                               print "<option value='0' selected>Nenhuma divisão</option>";
                             }
 
                             foreach ($divisoes as $divisao) {
                                 if (isset($usuario)){
-                                    if ($usuario->getDivisaoId() !== 0){
-                                        while ($divisao['id'] !== $usuario->getDivisaoId()){
+                                    
+
+                                    if ($usuario->getDivisaoId() > 0){
+                                        if ($divisao['id'] !== $usuario->getDivisaoId()){
                                             print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
+                                        } else {
+                                            print "<option value=\"".$usuario->getDivisaoId()."\" selected>".$usuario->getDivisaoNome()."</option>";
                                         }
+                                    } else {
+                                        print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
                                     }
                                 } else {
                                     print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
@@ -196,7 +259,7 @@
             
             <div class="form-group mt-5 col-3">
                 <label for="senha">Senha <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" name="senha" 
+                <input type="password" class="form-control" name="senha" min="6" max="16"
                     <?php if(isset($usuario)) {
                             echo "value=\"".$usuario->getSenha()."\"";
                             }
@@ -221,19 +284,5 @@
             <a href="pesquisar.php" type="button" class="btn btn-light mt-5">Cancelar</a>
         </form>
     </main>
-
-    <script>
-        $(document).ready(function(){
-            $('#selectLocal').on('change', function(){
-                var selectLocal = document.getElementById('selectLocal');
-                var texto = selectLocal.options[selectLocal.selectedIndex].text;
-                document.getElementById('nomeLocal').value = texto;
-            });
-            
-            $("table").on("click", "button", function () {
-                    $(this).parent().parent().remove();
-            });
-        });               
-    </script>
 </body>
 </html>

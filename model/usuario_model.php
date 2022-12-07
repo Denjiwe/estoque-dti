@@ -28,10 +28,10 @@
             $con->bindValue ("senha", $usuario->getSenha(), PDO::PARAM_STR);
             $con->bindValue ("ativo", $usuario->getAtivo(), PDO::PARAM_INT);
             
-            if ($usuario->getDiretoriaId() >= 1){
+            if ($usuario->getDiretoriaId() !== 0){
                 $con->bindValue ("diretoria", $usuario->getDiretoriaId(), PDO::PARAM_INT);
                 $con->bindValue ("divisao", null, PDO::PARAM_NULL);
-            } elseif ($usuario->getDivisaoId() >= 1) {
+            } elseif ($usuario->getDivisaoId() !== 0) {
                 $con->bindValue ("divisao", $usuario->getDivisaoId(), PDO::PARAM_INT);
                 $con->bindValue ("diretoria", null, PDO::PARAM_NULL);
             }
@@ -44,57 +44,28 @@
         }
 
         //update
-        function update (Usario $usuario){
+        function update (Usuario $usuario){
             $conexao = Conexao::getConexao();
-            $itensForm = $produto->getItens();
-            
-            $getItensDb = $conexao->prepare("SELECT produto_vinculado_id FROM itens_produto WHERE produto_id=:id");
-            $getItensDb->bindValue("id", $produto->getId(), PDO::PARAM_INT);
-            $getItensDb->execute();
-            $itensDb= [];
-            
-            while ($linha = $getItensDb->fetch(PDO::FETCH_ASSOC)) {
-                $item = $linha['produto_vinculado_id'];
-                $itensDb[] = $item;
-            }
 
             try {
-                $conexao->beginTransaction();
-                $con = $conexao->prepare("UPDATE produto SET modelo_produto = :modelo, descricao = :descricao, qntde_estoque = :qntde, ativo = :ativo WHERE id = :id");
-                $con->bindValue ("modelo", $produto->getModelo(), PDO::PARAM_STR);
-                $con->bindValue ("descricao", $produto?->getDescricao(), PDO::PARAM_STR);
-                $con->bindValue ("qntde", $produto->getQntde(), PDO::PARAM_INT);
-                $con->bindValue ("ativo", $produto->getAtivo(), PDO::PARAM_INT);
-                $con->bindValue ("id", $produto->getId(), PDO::PARAM_INT);
+                $con = $conexao->prepare("UPDATE usuario SET nome = :nome, email = :email, senha = :senha, ativo = :ativo, diretoria_id = :diretoria, divisao_id = :divisao WHERE id = :id");
+                $con->bindValue ("nome", $usuario->getNome(), PDO::PARAM_STR);
+                $con->bindValue ("email", $usuario?->getEmail(), PDO::PARAM_STR);
+                $con->bindValue ("senha", $usuario->getSenha(), PDO::PARAM_INT);
+                $con->bindValue ("ativo", $usuario->getAtivo(), PDO::PARAM_INT);
+                $con->bindValue ("id", $usuario->getId(), PDO::PARAM_INT);
+
+                if ($usuario->getDiretoriaId() !== 0){
+                    $con->bindValue ("diretoria", $usuario->getDiretoriaId(), PDO::PARAM_INT);
+                    $con->bindValue ("divisao", null, PDO::PARAM_NULL);
+                } elseif ($usuario->getDivisaoId() !== 0) {
+                    $con->bindValue ("divisao", $usuario->getDivisaoId(), PDO::PARAM_INT);
+                    $con->bindValue ("diretoria", null, PDO::PARAM_NULL);
+                }
+
                 $con->execute();
 
-                
-                
-                $itensInsert = array_diff($itensForm, $itensDb);
-                if ($itensInsert!= null) {
-                    foreach ($itensInsert as $item) {
-                        $insert = $conexao->prepare("INSERT INTO itens_produto (produto_id, produto_vinculado_id) VALUES (:proprietario , :suprimento)");
-                        $insert->bindValue("proprietario", $produto->getId(), PDO::PARAM_INT);
-                        $insert->bindValue("suprimento",$item, PDO::PARAM_INT);
-                        $insert->execute();
-                    }
-                }
-
-                $itensDelete = array_diff($itensDb, $itensForm);
-                if ($itensDelete!= null) {
-                    foreach ($itensDelete as $item) {
-                        $delete = $conexao->prepare("delete from itens_produto where produto_id = :proprietario and produto_vinculado_id = :suprimento");
-                        $delete->bindValue("proprietario", $produto->getId(), PDO::PARAM_INT);
-                        $delete->bindValue("suprimento",$item, PDO::PARAM_INT);
-                        $delete->execute();
-                    }
-                }
-
-                $conexao->commit();
-
-
             } catch (PDOException $e) {
-                $conexao->rollback();
                 throw $e;
             }
 
@@ -117,30 +88,18 @@
             $usuario->setEmail($linha['email']);
             $usuario->setAtivo($linha['ativo']);
 
-            if (@$linha['divisao_id'] >= 1){
+            if (@$linha['divisao_id'] !== null){
                 $usuario->setDivisaoId($linha['divisao_id']);
                 $usuario->setDiretoriaId(0);
-                $conn = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
-                $conn->bindValue("id", $linha['divisao_id'], PDO::PARAM_INT);
-                $conn->execute();
-
-                while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
-                    $divisao = $linha['nome'];
-                }
+                $divisao = $this->findDivisaoNome($linha['divisao_id']);
 
                 $usuario->setDivisaoNome($divisao);
             }
 
-            if (@$linha['diretoria_id'] >= 1){ 
+            if (@$linha['diretoria_id'] !== null){ 
                 $usuario->setDiretoriaId($linha['diretoria_id']);
                 $usuario->setDivisaoId(0);
-                $conn = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
-                $conn->bindValue("id", $linha['diretoria_id'], PDO::PARAM_INT);
-                $conn->execute();
-
-                while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
-                    $diretoria = $linha['nome'];
-                }
+                $diretoria = $this->findDiretoriaNome($linha['diretoria_id']);
 
                 $usuario->setDiretoriaNome($diretoria);
             }
@@ -171,30 +130,18 @@
                 $usuario->setSenha($linha['senha']);
                 $usuario->setAtivo($linha['ativo']);
                 
-                if (@$linha['divisao_id'] >= 1){
+                if (@$linha['divisao_id'] !== null){
                     $usuario->setDivisaoId($linha['divisao_id']);
                     $usuario->setDiretoriaId(0);
-                    $conn = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
-                    $conn->bindValue("id", $linha['divisao_id'], PDO::PARAM_INT);
-                    $conn->execute();
-    
-                    while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
-                        $divisao = $linha['nome'];
-                    }
+                    $divisao = $this->findDivisaoNome($linha['divisao_id']);
     
                     $usuario->setDivisaoNome($divisao);
                 }
 
-                if (@$linha['diretoria_id'] >= 1){ 
+                if (@$linha['diretoria_id'] !== null){ 
                     $usuario->setDiretoriaId($linha['diretoria_id']);
                     $usuario->setDivisaoId(0);
-                    $conn = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
-                    $conn->bindValue("id", $linha['diretoria_id'], PDO::PARAM_INT);
-                    $conn->execute();
-    
-                    while ($linha = $conn->fetch(PDO::FETCH_ASSOC)){
-                        $diretoria = $linha['nome'];
-                    }
+                    $diretoria = $this->findDiretoriaNome($linha['diretoria_id']);
     
                     $usuario->setDiretoriaNome($diretoria);
                 }
@@ -221,29 +168,19 @@
                 $usuario->setEmail($linha['email']);
                 $usuario->setAtivo($linha['ativo']);
                 
-                if ($linha['divisao_id'] != null){
+                if (@$linha['divisao_id'] !== null){
                     $usuario->setDivisaoId($linha['divisao_id']);
-                    $con = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
-                    $con->bindValue("id", $linha['divisao_id'], PDO::PARAM_INT);
-                    $con->execute();
-    
-                    while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
-                        $divisao = $linha['nome'];
-                    }
+                    $usuario->setDiretoriaId(0);
+                    $divisao = $this->findDivisaoNome($linha['divisao_id']);
     
                     $usuario->setDivisaoNome($divisao);
                 }
                 
-                if ($linha['diretoria_id'] != null){ 
+                if (@$linha['diretoria_id'] !== null){ 
                     $usuario->setDiretoriaId($linha['diretoria_id']);
-                    $con = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
-                    $con->bindValue("id", $linha['diretoria_id'], PDO::PARAM_INT);
-                    $con->execute();
-    
-                    while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
-                        $diretoria = $linha['nome'];
-                    }
-    
+                    $usuario->setDivisaoId(0);
+                    $diretoria = $this->findDiretoriaNome($linha['diretoria_id']);
+
                     $usuario->setDiretoriaNome($diretoria);
                 }       
             }
@@ -271,6 +208,34 @@
 
             return $divisoes;
         
+        }
+
+        //findDivisaoNome
+        function findDivisaoNome(int $id){
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+            
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
+                $divisao = $linha['nome'];
+            }
+
+            return $divisao;
+        } 
+
+        //findDiretoriaNome
+        function findDiretoriaNome(int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
+                $diretoria = $linha['nome'];
+            }
+
+            return $diretoria;
         }
 
     }
