@@ -10,6 +10,7 @@
     
     class ProdutoModel {
 
+        //delete
         function delete(int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("DELETE FROM produto WHERE id = :id");
@@ -17,10 +18,8 @@
             $con->execute();
         }
 
+        //insert
         function insert (Produto $produto) {
-
-            //abrir transação, fazer prepare do insert, depois armazenar o lastinserid, depois criar foreach do array de itens o insert do itens produto, 
-            //usando o lastinsertid para o produto proprietario e o item do array para o produto vinculado
             $conexao = Conexao::getConexao();
 
             try {
