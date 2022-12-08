@@ -11,7 +11,9 @@ class Diretoria {
     
     private $dataDesativo;
 
-    private $orgaoId;
+    private int $orgaoId;
+
+    private string $orgaoNome;
 
     public function getId() : int {
         return $this-> id;
@@ -31,6 +33,9 @@ class Diretoria {
     public function getOrgaoId() : int {
         return $this-> orgaoId;
     }
+    public function getOrgaoNome() : string {
+        return $this-> orgaoNome;
+    }
 
     public function setId(int $id) {
         $this->id = $id;
@@ -49,5 +54,8 @@ class Diretoria {
     }
     public function setOrgaoId(int $orgaoId) {
         $this->orgaoId = $orgaoId;
+    }
+    public function setOrgaoNome(string $orgaoNome) {
+        $this->orgaoNome = $orgaoNome;
     }
 }

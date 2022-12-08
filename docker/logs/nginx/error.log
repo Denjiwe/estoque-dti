@@ -1948,3 +1948,8 @@
 2022/12/08 12:50:50 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
 2022/12/08 12:50:50 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
 2022/12/08 12:50:50 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/08 12:50:50 [notice] 1#1: start worker processes
+2022/12/08 12:50:50 [notice] 1#1: start worker process 28
+2022/12/08 12:50:50 [notice] 1#1: start worker process 29
+2022/12/08 12:50:50 [notice] 1#1: start worker process 30
+2022/12/08 12:50:50 [notice] 1#1: start worker process 31

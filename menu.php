@@ -14,6 +14,7 @@
                 <ul class="dropdown-menu bg-dark">
                     <li><a class="dropdown-item text-white" href="../../../content/produto/pesquisar.php">Produto</a></li>
                     <li><a class="dropdown-item text-white" href="../../../content/orgao/pesquisar.php">Órgãos</a></li>
+                    <li><a class="dropdown-item text-white" href="../../../content/diretoria/pesquisar.php">Diretorias</a></li>
                     <li><a class="dropdown-item text-white" href="../../../content/usuario/pesquisar.php">Usuário</a></li>
                 </ul>
             </li>
