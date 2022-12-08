@@ -46,7 +46,7 @@
 
         
         if (isset($_POST['nome'])){
-            if (isset($_REQUEST['id'])) {
+            if(@$_REQUEST['id'] != null) {
                 $model = new DiretoriaModel;
 
                 $diretoria = new Diretoria;
@@ -100,9 +100,9 @@
 
                 try {
                     $model->insert($newDiretoria);
-                    echo "<div class='container alert alert-success'>Registro criado com sucesso!</div>";
+                    echo "<div class='container alert alert-success mt-5'>Registro criado com sucesso!</div>";
                 } catch (PDOException $e) {
-                    echo "<div class='container alert alert-danger'>Não foi possível cadastrar o registro: ". $e->getMessage()."</div>";
+                    echo "<div class='container alert alert-danger mt-5'>Não foi possível cadastrar o registro: ". $e->getMessage()."</div>";
                 }  
             }
         }

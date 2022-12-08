@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-2">
-            <a href="cadastro.php" class="btn btn-primary">Novo</a>
+                <a href="cadastro.php" class="btn btn-primary">Novo</a>
             </div>
 
         </div>

@@ -116,7 +116,7 @@
                     <th>Ativo</th>
                     <th>Data de Criação</th>
                     <th>Data de Desativação</th>
-                    <th>Órgao</th>
+                    <th>Órgão</th>
                     <th>Ações</th>
                     </tr>
             <?php        

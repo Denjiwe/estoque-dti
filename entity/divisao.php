@@ -14,6 +14,8 @@ class Divisao
 
         private $diretoriaId;
 
+        private $diretoriaNome;
+
         public function getId() : int {
             return $this-> id;
         }
@@ -31,6 +33,9 @@ class Divisao
         }
         public function getDiretoriaId() : int {
             return $this-> diretoriaId;
+        }
+        public function getDiretoriaNome() : string {
+            return $this-> diretoriaNome;
         }
 
         public function setId(int $id) {
@@ -50,5 +55,8 @@ class Divisao
         }
         public function setDiretoriaId(int $diretoriaId) {
             $this->diretoriaId = $diretoriaId;
+        }
+        public function setDiretoriaNome(string $diretoriaNome) {
+            $this->diretoriaNome = $diretoriaNome;
         }
     }
