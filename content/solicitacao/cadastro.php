@@ -17,21 +17,21 @@
 </head>
 <body>
     <?php
-                    $path = $_SERVER['DOCUMENT_ROOT'] . '/';
-                    
-                    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+        $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+        
+        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
-                    $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
-                    
-                    include_once ($entityPath . "solicitacao.php");
+        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        
+        include_once ($entityPath . "solicitacao.php");
 
-                    include_once ($modelPath . "solicitacao_model.php");
+        include_once ($modelPath . "solicitacao_model.php");
 
-                    include_once ($entityPath . "produto.php");
+        include_once ($entityPath . "produto.php");
 
-                    include_once ($modelPath . "produto_model.php");
+        include_once ($modelPath . "produto_model.php");
 
-                    include_once ($path . "menu.php"); 
+        include_once ($path . "menu.php"); 
                     
 
     ?>

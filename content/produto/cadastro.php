@@ -13,11 +13,18 @@
 <body>
 
 <?php
-        include ("../../entity/produto.php");
 
-        include ("../../model/produto_model.php");
+        $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+                    
+        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
-        include_once ("../../menu.php");
+        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+
+        include ($entityPath . "produto.php");
+
+        include ($modelPath . "produto_model.php");
+
+        include_once ($path . "menu.php");
 
 
         if(@$_REQUEST['id']) {

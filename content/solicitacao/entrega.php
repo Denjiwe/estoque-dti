@@ -1,16 +1,16 @@
 <?php
 
-    include ("../../entity/solicitacao.php");   
+    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
-    include ("../../model/solicitacao_model.php");
+    $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
 
-    include ("../../entity/produto.php");
+    include ($entityPath . "solicitacao.php"); 
+    include ($entityPath . "produto.php");  
+    include ($entityPath . "entrega.php");
 
-    include ("../../model/produto_model.php");
-
-    include ("../../entity/entrega.php");
-
-    include ("../../model/entrega_model.php");
+    include ($modelPath . "solicitacao_model.php");
+    include ($modelPath . "produto_model.php");
+    include ($modelPath . "entrega_model.php");
 
     $id = $_REQUEST['solicitacao'];
 

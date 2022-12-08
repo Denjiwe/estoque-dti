@@ -12,7 +12,21 @@
     <link rel="stylesheet" href="../../css/menu.css">
 </head>
 <body>
-    <?php include("../../menu.php"); ?>
+    <?php 
+
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+                    
+    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+
+    $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+    
+    include($path . "menu.php"); 
+
+    include_once ($entityPath . "produto.php");
+
+    include_once ($modelPath . "produto_model.php");
+    
+    ?>
     <main class="container mt-5">
         <div class="row">
             
@@ -34,10 +48,6 @@
         <div class="mt-5">
             
             <?php
-
-                include_once ("../../entity/produto.php");
-
-                include_once ("../../model/produto_model.php");
 
                 if(@$_REQUEST['delete']) {
                     try{

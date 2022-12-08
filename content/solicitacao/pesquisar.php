@@ -12,7 +12,17 @@
     <link rel="stylesheet" href="../../css/menu.css">
 </head>
 <body>
-    <?php include("../../menu.php"); 
+    <?php 
+
+        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+
+        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+
+        include("../../menu.php"); 
+        
+        include_once ($entityPath . "solicitacao.php");
+
+        include_once ($modelPath . "solicitacao_model.php");
     
         if(@$_REQUEST['entregue']){
             print "<div class='container alert alert-success mt-5'>Solicitação #".$_REQUEST['entregue']." alterada com sucesso!</div>";
@@ -42,10 +52,6 @@
 
             <div class='accordion' id='content'>
             <?php
-
-                include_once ("../../entity/solicitacao.php");
-
-                include_once ("../../model/solicitacao_model.php");
 
                 if(@$_REQUEST['delete']) {
                     try{
