@@ -7,8 +7,6 @@
     <title>CRUD 2.0 - Cadastro</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
@@ -42,7 +40,7 @@
                 $suprimentos = $model->getSuprimentos($_REQUEST['id']);
 
             } catch (PDOException $e) {
-                echo "<div class='container alert alert-danger'>Não foi possível encontrar o registro! </div>". $e->getMessage();
+                echo "<div class='container alert alert-danger mt-5'>Não foi possível recuperar o registro! Erro de banco de dados.</div>";
             }
         }
 
@@ -78,9 +76,13 @@
 
                 try {
                     $new_model->update($new_produto);
-                    echo "<div class='container alert alert-success'>Registro atualizado com sucesso!</div>";
+                    echo "<div class='container alert alert-success mt-5'>Registro atualizado com sucesso!</div>";
                 } catch (PDOException $e) {
-                    echo "Não foi possível atualizar o registro: ". $e->getMessage();
+                    if (str_contains($e->getMessage(), "UC_Modelo")) {
+                        echo "<div class=' container alert alert-danger'>Não foi possível atualizar o registro, pois o modelo do produto já foi cadastrado</div>";
+                    } else {
+                        echo "Não foi possível atualizar o registro! Erro de banco de dados";
+                    }
                 }    
             } else {
                 //cadastrar produto
@@ -118,7 +120,7 @@
                     } elseif (str_contains($e->getMessage(), "UC_Modelo")) {
                         echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois o modelo do produto já foi cadastrado</div>";
                     } else {
-                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro!".$e->getMessage()."</div>";
+                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro! Erro de banco de dados.</div>";
                     }
                 }  
             }
@@ -207,27 +209,7 @@
             </div>
             
             <script>
-                $(document).ready(function(){
-                    $("#addProduto").click(function () {
-                        var selectProduto = document.getElementById('selectProduto');
-                        var valor = selectProduto.options[selectProduto.selectedIndex].value; 
-                        valor = parseInt(valor);  
-                        var texto = selectProduto.options[selectProduto.selectedIndex].text;
-                        if(Number.isInteger(valor)) {
-                            $("#content").append(
-                            '<tr>\
-                                <td>'+valor+'</td>\
-                                <td>'+texto+'</td>\
-                                <td><button type="button" class="btn btn-danger">Excluir</button></td>\
-                                </tr>'
-                            ); 
-                        }
-                    });
-                    
-                    $("table").on("click", "button", function () {
-                            $(this).parent().parent().remove();
-                    });
-                });                
+                            
             </script>
 
             <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
@@ -258,24 +240,47 @@
             <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
         </form>
         
-        <script>
-            $("#submit").click(function () {
-                 var itens = "";
-                $("tr td:first-child").each(function (t){
-                   if (t == 0){ 
-                   var valor = $(this).text();
-                   itens += valor;
-                   } else {
-                   var valor = $(this).text();
-                   itens += "," + valor;
-                   }
-                });
-                $("#produtosVinculados").val(itens);
-                
-            })
-        </script>
-        
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+            $(document).ready(function(){
+                $("#addProduto").click(function () {
+                    var selectProduto = document.getElementById('selectProduto');
+                    var valor = selectProduto.options[selectProduto.selectedIndex].value; 
+                    valor = parseInt(valor);  
+                    var texto = selectProduto.options[selectProduto.selectedIndex].text;
+                    if(Number.isInteger(valor)) {
+                        $("#content").append(
+                        '<tr>\
+                            <td>'+valor+'</td>\
+                            <td>'+texto+'</td>\
+                            <td><button type="button" class="btn btn-danger">Excluir</button></td>\
+                        </tr>'
+                        ); 
+                    }
+                });
+                
+                $("table").on("click", "button", function () {
+                        $(this).parent().parent().remove();
+                });
+                    
+                $("#submit").click(function () {
+                    var itens = "";
+                    $("tr td:first-child").each(function (t){
+                    if (t == 0){ 
+                        var valor = $(this).text();
+                        itens += valor;
+                    } else {
+                        var valor = $(this).text();
+                        itens += "," + valor;
+                    }
+                    });
+                    $("#produtosVinculados").val(itens);
+                    
+                });
+            });
+        </script>                        
 
 </body>
 </html>

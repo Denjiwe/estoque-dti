@@ -7,8 +7,6 @@
     <title>CRUD 2.0 - Cadastro</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <?php
@@ -40,7 +38,7 @@
                 $orgaoNome = $diretoria->getOrgaoNome();
 
             } catch (PDOException $e) {
-                echo "Não foi possível excluir o registro: ". $e->getMessage();
+                echo "<div class='container alert alert-danger mt-5'>Não foi possível recuperar o registro! Erro de banco de dados.</div>";
             }
         }
 
@@ -74,7 +72,11 @@
                     $model->update($diretoria);
                     echo "<div class='container alert alert-success mt-5'>Registro atualizado com sucesso!</div>";
                 } catch (PDOException $e) {
-                    echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar o registro: ". $e->getMessage()."</div>";
+                    if (str_contains($e->getMessage(), "UC_Nome")) {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a diretoria, pois uma de mesmo nome já existe!</div>";
+                    } else {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a diretoria! Erro de banco de dados.</div>";
+                    }
                 }    
             } else {
                 $model = new DiretoriaModel;
@@ -102,7 +104,11 @@
                     $model->insert($newDiretoria);
                     echo "<div class='container alert alert-success mt-5'>Registro criado com sucesso!</div>";
                 } catch (PDOException $e) {
-                    echo "<div class='container alert alert-danger mt-5'>Não foi possível cadastrar o registro: ". $e->getMessage()."</div>";
+                    if (str_contains($e->getMessage(), "UC_Nome")) {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a diretoria, pois uma de mesmo nome já existe!</div>";
+                    } else {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a diretoria! Erro de banco de dados.</div>";
+                    }
                 }  
             }
         }
@@ -204,6 +210,6 @@
             <a href="pesquisar.php" type="button" class="btn btn-light mt-5">Cancelar</a>
         </form>
     </main>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

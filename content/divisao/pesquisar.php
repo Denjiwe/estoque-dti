@@ -73,7 +73,7 @@
                         $dataCriacao = new DateTime($divisao->getDataCriacao());
                         @$dataDesativo = new DateTime($divisao->getDataDesativo());
             ?>            
-                        <table class=' container table table-hover table-striped table-bordered'>
+                        <table class=' container table table-hover table-striped table-bordered text-center'>
 
                         <tr>
                         <th style='display:none;'>id</th>

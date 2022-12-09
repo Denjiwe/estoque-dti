@@ -7,8 +7,6 @@
     <title>CRUD 2.0 - Cadastro</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <?php
@@ -33,65 +31,73 @@
                 $dataDesativo = $orgao->getDataDesativo();
 
             } catch (PDOException $e) {
-                echo "Não foi possível excluir o registro: ". $e->getMessage();
+                echo "<div class='container alert alert-danger mt-5'>Não foi possível recuperar o registro! Erro de banco de dados.</div>";
             }
         }
 
         
         if (isset($_POST['nome'])){
             if(@$_REQUEST['id'] != null) {
-                $new_model = new OrgaoModel;
+                $model = new OrgaoModel;
 
-                $new_orgao = new Orgao;
+                $orgao = new Orgao;
 
                 $ativoOk = 0;
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
                     $ativoOk = 1;
                 }
-                $new_nome = $_POST['nome'];
-                $new_ativo = $ativoOk;
-                $new_dataCriacao = $_POST['dataCricao'];
-                $new_dataDesativo = $_POST['dataDesativado'];
-                $new_dataDesativoOk = strlen($new_dataDesativo) > 0 ? $new_dataDesativo : null;
-                $new_id = $_REQUEST['id'];
+                $nome = $_POST['nome'];
+                $ativo = $ativoOk;
+                $dataCriacao = $_POST['dataCricao'];
+                $dataDesativo = $_POST['dataDesativado'];
+                $dataDesativoOk = strlen($dataDesativo) > 0 ? $dataDesativo : null;
+                $id = $_REQUEST['id'];
 
-                $new_orgao->setNome($new_nome);
-                $new_orgao->setAtivo($new_ativo);
-                $new_orgao->setDataCriacao($new_dataCriacao);
-                $new_orgao->setDataDesativo($new_dataDesativoOk);
-                $new_orgao->setId($new_id);          
+                $orgao->setNome($nome);
+                $orgao->setAtivo($ativo);
+                $orgao->setDataCriacao($dataCriacao);
+                $orgao->setDataDesativo($dataDesativoOk);
+                $orgao->setId($id);          
 
                 try {
-                    $new_model->update($new_orgao);
-                    echo "<div class='alert alert-success'>Registro atualizado com sucesso!</div>";
+                    $model->update($orgao);
+                    echo "<div class='container alert alert-success mt-5'>Registro atualizado com sucesso!</div>";
                 } catch (PDOException $e) {
-                    echo "Não foi possível atualizar o registro: ". $e->getMessage();
+                    if (str_contains($e->getMessage(), "UC_Nome")) {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar o órgão, pois um de mesmo nome já existe!</div>";
+                    } else {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar o órgão! Erro de banco de dados.</div>";
+                    }
                 }    
             } else {
-                $new_model = new OrgaoModel;
+                $newModel = new OrgaoModel;
 
-                $new_orgao = new Orgao;
+                $newOrgao = new Orgao;
 
                 $ativoOk = 0;
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
                     $ativoOk = 1;
                 }
-                $new_nome = $_POST['nome'];
-                $new_ativo = $ativoOk;
-                $new_dataCriacao = $_POST['dataCricao'];
-                $new_dataDesativo = $_POST['dataDesativado'];
-                $new_dataDesativoOk = strlen($new_dataDesativo) > 0 ? $new_dataDesativo : null;
+                $newNome = $_POST['nome'];
+                $newAtivo = $ativoOk;
+                $newDataCriacao = $_POST['dataCricao'];
+                $newDataDesativo = $_POST['dataDesativado'];
+                $newDataDesativoOk = strlen($newDataDesativo) > 0 ? $newDataDesativo : null;
 
-                $new_orgao->setNome($new_nome);
-                $new_orgao->setAtivo($new_ativo);
-                $new_orgao->setDataCriacao($new_dataCriacao);
-                $new_orgao->setDataDesativo($new_dataDesativoOk);
+                $newOrgao->setNome($newNome);
+                $newOrgao->setAtivo($newAtivo);
+                $newOrgao->setDataCriacao($newDataCriacao);
+                $newOrgao->setDataDesativo($newDataDesativoOk);
 
                 try {
-                    $new_model->insert($new_orgao);
-                    echo "<div class='alert alert-success'>Registro criado com sucesso!</div>";
+                    $newModel->insert($newOrgao);
+                    echo "<div class='container alert alert-success mt-5'>Registro criado com sucesso!</div>";
                 } catch (PDOException $e) {
-                    echo "Não foi possível cadastrar o registro: ". $e->getMessage();
+                    if (str_contains($e->getMessage(), "UC_Nome")) {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar o ógão, pois um de mesmo nome já existe!</div>";
+                    } else {
+                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar o ógão! Erro de banco de dados.</div>";
+                    }
                 }  
             }
         }
@@ -155,6 +161,6 @@
             <a href="pesquisar.php" type="button" class="btn btn-light mt-5">Cancelar</a>
         </form>
     </main>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
