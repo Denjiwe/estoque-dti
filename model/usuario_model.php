@@ -238,4 +238,25 @@
             return $diretoria;
         }
 
+        //verificaLogin
+        function verificaLogin(string $login, string $senha) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT * FROM usuario WHERE cpf = :cpf and senha = :senha");
+            $con->bindValue("cpf", $login, PDO::PARAM_STR);
+            $con->bindValue("senha", $senha, PDO::PARAM_STR);
+            $con->execute();
+
+            $count = $con->rowCount();
+
+            if ($count > 0){
+                $_SESSION['usuario'] = $login;
+                header ('Location: home.php');
+                exit();
+            } else {
+                $_SESSION['nao_autenticado'] = true;
+                header('Location: index.php');
+                exit();
+            }
+        }
+
     }

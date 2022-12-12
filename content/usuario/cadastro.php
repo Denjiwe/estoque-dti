@@ -50,7 +50,7 @@
                 $nome = $_POST['nome'];
                 $cpf = $_POST['cpf'];
                 $email = $_POST['email'];
-                $senha = $_POST['senha'];
+                $senha = MD5($_POST['senha']);
                 $ativo = $ativoOk;
 
                 if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
@@ -99,7 +99,7 @@
                 $newNome = $_POST['nome'];
                 $newCpf = $_POST['cpf'];
                 $newEmail = $_POST['email'];
-                $newSenha = $_POST['senha'];
+                $newSenha = MD5($_POST['senha']);
                 $newAtivo = $ativoOk;
 
                 if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
@@ -179,12 +179,12 @@
             <div class="row mt-5">
                 <div class="form-group col-5">
                     <label for="cpf">CPF <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" name="cpf" 
+                    <input type="tel" class="form-control" name="cpf" 
                         <?php if(isset($usuario)) {
                             echo "value=\"".$usuario->getCpf()."\"";
                             }
                         ?>
-                    id="cpf" placeholder="insira o CPF" required>
+                    id="cpf" placeholder="insira o CPF" minlenght="11" maxlength="11" required>
                 </div>
 
                 <div class="col-3">
