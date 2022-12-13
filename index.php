@@ -32,11 +32,15 @@
                             }
                         ?>
                         <form action="login.php" method="post" class="">
-                            <label for="cpf" class="card-title">CPF</label>
-                            <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Insira seu CPF">
+                            <div class="input-group">
+                                <span for="cpf" class="input-group-text">&nbsp CPF &nbsp</span>
+                                <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Insira seu CPF" required>
+                            </div>
 
-                            <label for="senha" class="card-title mt-3">Senha</label>
-                            <input type="password" id="senha" name="senha" class="form-control" placeholder="Insira sua senha">
+                            <div class="input-group mt-3">
+                                <label for="senha" class="input-group-text ">Senha</label>
+                                <input type="password" id="senha" name="senha" class="form-control" placeholder="Insira sua senha" required>
+                            </div>
 
                             <button type="submit" class="btn btn-secondary mt-3">Acessar</button>
                         </form>

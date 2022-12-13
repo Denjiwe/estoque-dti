@@ -2092,3 +2092,98 @@
 2022/12/12 17:23:17 [error] 28#28: *174 open() "/var/www/html/esqueceu.html" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /esqueceu.html HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
 2022/12/12 17:23:17 [error] 28#28: *174 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/esqueceu.html"
 2022/12/12 17:23:19 [error] 28#28: *175 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/12 18:03:48 [error] 28#28: *181 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/12 18:04:43 [error] 28#28: *185 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/12 18:06:52 [error] 28#28: *190 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/login.php"
+2022/12/12 18:08:56 [error] 28#28: *190 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/login.php"
+2022/12/12 18:13:28 [error] 29#29: *207 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:31:47 [error] 29#29: *214 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:32:18 [error] 29#29: *216 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:32:23 [error] 29#29: *216 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:32:39 [error] 29#29: *219 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:33:00 [error] 29#29: *219 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:33:13 [error] 29#29: *222 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:34:55 [error] 29#29: *224 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /home.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:34:55 [error] 29#29: *224 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/12 18:35:37 [error] 29#29: *227 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /home.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:35:53 [error] 29#29: *227 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /home.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:36:28 [error] 29#29: *227 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /home.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:36:44 [error] 29#29: *227 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /home.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.html"
+2022/12/12 18:49:30 [error] 29#29: *238 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php?id=2"
+2022/12/12 18:49:36 [error] 29#29: *240 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 18:50:17 [error] 30#30: *244 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 18:50:37 [error] 30#30: *246 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 18:51:13 [error] 30#30: *248 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 18:53:16 [error] 30#30: *251 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 18:53:55 [error] 30#30: *253 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 18:54:14 [error] 30#30: *253 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 18:54:28 [error] 30#30: *256 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/usuario/cadastro.php"
+2022/12/12 19:01:42 [error] 30#30: *258 open() "/var/www/html/index.html" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /index.html HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/12 19:06:13 [error] 30#30: *271 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/12/12 19:06:39 [error] 30#30: *271 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /home.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/12/12 19:08:24 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/12/12 19:08:24 [notice] 30#30: gracefully shutting down
+2022/12/12 19:08:24 [notice] 28#28: gracefully shutting down
+2022/12/12 19:08:24 [notice] 30#30: exiting
+2022/12/12 19:08:24 [notice] 29#29: gracefully shutting down
+2022/12/12 19:08:24 [notice] 31#31: gracefully shutting down
+2022/12/12 19:08:24 [notice] 29#29: exiting
+2022/12/12 19:08:24 [notice] 28#28: exiting
+2022/12/12 19:08:24 [notice] 31#31: exiting
+2022/12/12 19:08:24 [notice] 30#30: exit
+2022/12/12 19:08:24 [notice] 29#29: exit
+2022/12/12 19:08:24 [notice] 31#31: exit
+2022/12/12 19:08:24 [notice] 28#28: exit
+2022/12/12 19:08:24 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/12/12 19:08:24 [notice] 1#1: worker process 28 exited with code 0
+2022/12/12 19:08:24 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/12 19:08:24 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/12/12 19:08:24 [notice] 1#1: worker process 29 exited with code 0
+2022/12/12 19:08:24 [notice] 1#1: worker process 31 exited with code 0
+2022/12/12 19:08:24 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/12 19:08:24 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/12/12 19:08:24 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/12/12 19:08:24 [notice] 1#1: worker process 30 exited with code 0
+2022/12/12 19:08:24 [notice] 1#1: exit
+2022/12/13 13:31:16 [notice] 1#1: using the "epoll" event method
+2022/12/13 13:31:16 [notice] 1#1: nginx/1.23.2
+2022/12/13 13:31:16 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/13 13:31:16 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/12/13 13:31:16 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/13 13:31:16 [notice] 1#1: start worker processes
+2022/12/13 13:31:16 [notice] 1#1: start worker process 28
+2022/12/13 13:31:16 [notice] 1#1: start worker process 29
+2022/12/13 13:31:16 [notice] 1#1: start worker process 30
+2022/12/13 13:31:16 [notice] 1#1: start worker process 31
+2022/12/13 13:41:16 [error] 30#30: *6 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:42:55 [error] 28#28: *16 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:42:56 [error] 28#28: *18 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:44:03 [error] 28#28: *22 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:44:17 [error] 28#28: *22 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:44:20 [error] 28#28: *26 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:44:48 [error] 28#28: *28 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:47:29 [error] 28#28: *30 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:51:19 [error] 28#28: *38 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/13 13:53:26 [error] 28#28: *46 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:53:47 [error] 28#28: *46 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:54:23 [error] 28#28: *54 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:54:25 [error] 28#28: *56 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:55:32 [error] 28#28: *56 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:55:36 [error] 28#28: *60 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 13:56:07 [error] 28#28: *60 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/13 14:11:17 [error] 29#29: *84 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 14:11:29 [error] 29#29: *91 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/sair.php"
+2022/12/13 14:11:46 [error] 29#29: *93 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /ihome.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080"
+2022/12/13 14:11:47 [error] 29#29: *93 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/ihome.php"
+2022/12/13 14:12:19 [error] 29#29: *98 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/13 14:15:35 [error] 29#29: *102 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /ihome.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080"
+2022/12/13 14:17:26 [error] 29#29: *123 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/12/13 14:29:28 [error] 30#30: *128 open() "/var/www/html/home" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /home?sair.php HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/home.php"
+2022/12/13 14:32:44 [error] 30#30: *139 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /content/diretoria/home.php?sair HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/content/diretoria/pesquisar.php"
+2022/12/13 16:33:27 [error] 30#30: *142 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /var/www/html/home.php?sair HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/content/diretoria/pesquisar.php"
+2022/12/13 16:40:06 [error] 30#30: *159 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/12/13 16:40:26 [error] 30#30: *161 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/12/13 16:42:31 [error] 30#30: *165 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/12/13 16:42:48 [error] 30#30: *165 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/index.php"
+2022/12/13 16:45:28 [error] 30#30: *168 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /var/www/html/home.php?sair HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/content/diretoria/pesquisar.php"
+2022/12/13 16:47:02 [error] 30#30: *181 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /var/www/html/home.php?sair HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/content/diretoria/pesquisar.php"

@@ -238,6 +238,20 @@
             return $diretoria;
         }
 
+        //getNome
+        function getNome(string $cpf) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT nome FROM usuario WHERE cpf = :cpf");
+            $con->bindValue("cpf", $cpf, PDO::PARAM_STR);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
+                $nome = $linha['nome'];
+            }
+
+            return $nome;
+        }
+
         //verificaLogin
         function verificaLogin(string $login, string $senha) {
             $conexao = Conexao::getConexao();
@@ -249,7 +263,8 @@
             $count = $con->rowCount();
 
             if ($count > 0){
-                $_SESSION['usuario'] = $login;
+                $nome = $this->getNome($login);
+                $_SESSION['usuario'] = $nome;
                 header ('Location: home.php');
                 exit();
             } else {

@@ -1,7 +1,6 @@
 
-
- .container {
-   width: 18rem;
+  .container {
+   width: 23rem;
    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
