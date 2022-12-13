@@ -1,3 +1,11 @@
+<?php
+    session_start();
+
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+
+    include($path . "verificaLogin.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -42,14 +50,22 @@
         <div class="mt-5">
             
             <?php
-
                 if(@$_REQUEST['delete']) {
-                    try{
-                        $model = new UsuarioModel;
-                        $model ->delete($_REQUEST["delete"]);
-                        echo "<div class='alert alert-success'>Usuário excluído com sucesso</div>";
-                    } catch (PDOException $e) {
-                        echo "Não foi possível excluir o registro: ". $e->getMessage();
+                    $model = new UsuarioModel;
+                    $usuario = new Usuario;
+                    $usuario = $model->findById($_GET['delete']);
+                    $cpf = $usuario ->getCpf();
+
+                    if ($_SESSION['cpf'] == $cpf){
+                        echo "<div class='alert alert-danger'>Não pode excluir o usuário em que está logado!</div>";
+                    } else {
+                        try{
+                            
+                            $model ->delete($_REQUEST["delete"]);
+                            echo "<div class='alert alert-success'>Usuário excluído com sucesso</div>";
+                        } catch (PDOException $e) {
+                            echo "<div class='alert alert-danger'>Não foi possível excluir o registro: ". $e->getMessage() ."</div>";
+                        }
                     }
                 }
 

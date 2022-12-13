@@ -1,8 +1,68 @@
-<?php 
-    if( empty(session_id()) && !headers_sent()){
-        session_start();
+<?php
+    session_start();
+
+    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+
+    $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+
+    include($path . "verificaLogin.php");
+
+    include_once ($entityPath . "solicitacao.php");
+
+    include_once ($modelPath . "solicitacao_model.php");
+
+    include_once ($entityPath . "produto.php");
+
+    include_once ($modelPath . "produto_model.php");
+
+    //remover elementos da sessão quando o usuário clicar no botão de excluir
+    if(isset($_GET['excluir'])) {
+        $model = new ProdutoModel;
+        $toner = new Produto;
+        $cilindro = new Produto;
+
+        $indexImpressora = $_GET['excluir'];
+
+        array_splice($_SESSION['nomeImpressora'], $indexImpressora, 1);
+
+        array_splice($_SESSION['qntdeExibicao'], $indexImpressora, 1);
+
+        $idImpressora = $_SESSION['idImpressora'][$indexImpressora];
+
+        $toner = $model?->getToner($idImpressora);
+
+        $cilindro = $model?->getCilindro($idImpressora);
+
+        $chaveToner = array_search($toner?->getModelo(), $_SESSION['toner']);     
+
+        $chaveIdToner = array_search($toner?->getId(), $_SESSION['produtos']);
+
+        $chaveCilindro = array_search($cilindro?->getModelo(), $_SESSION['cilindro']);
+
+        $chaveIdCilindro = array_search($cilindro?->getId(), $_SESSION['produtos']);
+
+        if ($chaveToner !==false || $chaveCilindro !==false){
+            array_splice($_SESSION['toner'], $chaveToner, 1);
+            array_splice($_SESSION['cilindro'], $chaveToner, 1);
+        }
+
+        if ($chaveIdToner !==false){
+            array_splice($_SESSION['produtos'], $chaveIdToner, 1);
+            array_splice($_SESSION['qntde'], $chaveIdToner, 1);
+        }
+        
+        if ($chaveIdCilindro !==false){
+            array_splice($_SESSION['produtos'], $chaveIdCilindro, 1);
+            array_splice($_SESSION['qntde'], $chaveIdCilindro, 1);
+        }
+
+        array_splice($_SESSION['idImpressora'], $indexImpressora, 1);
+        
+        header("Location: ./cadastro.php");
     }
-?>    
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,20 +76,42 @@
 <body>
     <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
-        
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
-
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
-        
-        include_once ($entityPath . "solicitacao.php");
-
-        include_once ($modelPath . "solicitacao_model.php");
-
-        include_once ($entityPath . "produto.php");
-
-        include_once ($modelPath . "produto_model.php");
 
         include_once ($path . "menu.php"); 
+
+        if(isset($_GET['finalizar'])) {
+            $model = new SolicitacaoModel;
+
+            $solicitacao = new Solicitacao;
+
+            $estado = $_POST['estado'];
+            $solicitacao->setEstadoSolicitacao($estado);
+
+            $observacao = $_POST['observacao'];
+            $solicitacao?->setDescricao($observacao);
+
+            $qntdeItem = $_SESSION['qntde'];
+            $solicitacao->setQntdeItem($qntdeItem);
+
+            $produtos = $_SESSION['produtos'];
+
+            $solicitacao->setItemSolicitacao($produtos); 
+
+            try {
+                $model->insert($solicitacao);
+                echo "<div class=' container alert alert-success'>Solicitação criada com sucesso!</div>";
+
+                unset($_SESSION['qntde']);
+                unset($_SESSION['produtos']);
+                unset($_SESSION['idImpressora']);
+                unset($_SESSION['toner']);
+                unset($_SESSION['cilindro']);
+                unset($_SESSION['qntdeExibicao']);
+                unset($_SESSION['nomeImpressora']);
+            } catch (PDOException $e){
+                echo "<div class=' container alert alert-danger'>Não foi possível cirar a solicitação! Erro de banco de dados.</div>";
+            }
+        }
                     
 
     ?>
@@ -241,83 +323,6 @@
             <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
            
         </form>
-               <?php 
-                    //remover elementos da sessão quando o usuário clicar no botão de excluir
-                    if(isset($_GET['excluir'])) {
-                        $model = new ProdutoModel;
-                        $toner = new Produto;
-                        $cilindro = new Produto;
-
-                        $indexImpressora = $_GET['excluir'];
-
-                        array_splice($_SESSION['nomeImpressora'], $indexImpressora, 1);
-
-                        array_splice($_SESSION['qntdeExibicao'], $indexImpressora, 1);
-
-                        $idImpressora = $_SESSION['idImpressora'][$indexImpressora];
-
-                        $toner = $model?->getToner($idImpressora);
-
-                        $cilindro = $model?->getCilindro($idImpressora);
-
-                        $chaveToner = array_search($toner?->getModelo(), $_SESSION['toner']);     
-
-                        $chaveIdToner = array_search($toner?->getId(), $_SESSION['produtos']);
-
-                        $chaveCilindro = array_search($cilindro?->getModelo(), $_SESSION['cilindro']);
-
-                        $chaveIdCilindro = array_search($cilindro?->getId(), $_SESSION['produtos']);
-
-                        if ($chaveToner !==false || $chaveCilindro !==false){
-                            array_splice($_SESSION['toner'], $chaveToner, 1);
-                            array_splice($_SESSION['cilindro'], $chaveToner, 1);
-                        }
-
-                        if ($chaveIdToner !==false){
-                            array_splice($_SESSION['produtos'], $chaveIdToner, 1);
-                            array_splice($_SESSION['qntde'], $chaveIdToner, 1);
-                        }
-                        
-                        if ($chaveIdCilindro !==false){
-                            array_splice($_SESSION['produtos'], $chaveIdCilindro, 1);
-                            array_splice($_SESSION['qntde'], $chaveIdCilindro, 1);
-                        }
-
-                        array_splice($_SESSION['idImpressora'], $indexImpressora, 1);
-                        
-
-                        header("Location: ./cadastro.php");
-                    }
-
-
-                    if(isset($_GET['finalizar'])) {
-                        $model = new SolicitacaoModel;
-
-                        $solicitacao = new Solicitacao;
-
-                        $estado = $_POST['estado'];
-                        $solicitacao->setEstadoSolicitacao($estado);
-
-                        $observacao = $_POST['observacao'];
-                        $solicitacao?->setDescricao($observacao);
-
-                        $qntdeItem = $_SESSION['qntde'];
-                        $solicitacao->setQntdeItem($qntdeItem);
-
-                        $produtos = $_SESSION['produtos'];
-
-                        $solicitacao->setItemSolicitacao($produtos); 
-
-                        try {
-                            $model->insert($solicitacao);
-                            echo "<div class=' container alert alert-success'>Solicitação criada com sucesso!</div>";
-                        } catch (PDOException $e){
-                            echo "<div class=' container alert alert-danger'>Não foi possível cirar a solicitação! Erro de banco de dados.</div>";
-                        }
-
-                        session_destroy();
-                    }
-               ?>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -1,4 +1,9 @@
 <?php
+session_start();
+
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+
+    include($path . "verificaLogin.php");
 
     $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 

@@ -9,6 +9,6 @@ $model = new UsuarioModel;
 
 $login = $_POST['cpf'];
 
-$senha = $_POST['senha'];
+$senha = MD5($_POST['senha']);
 
 $verificacao = $model->verificaLogin($login, $senha);

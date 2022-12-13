@@ -264,6 +264,7 @@
 
             if ($count > 0){
                 $nome = $this->getNome($login);
+                $_SESSION['cpf'] = $login;
                 $_SESSION['usuario'] = $nome;
                 header ('Location: home.php');
                 exit();
