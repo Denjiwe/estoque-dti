@@ -26,11 +26,15 @@
 
         $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
 
+        include_once ($path . "menu.php");
+
+        include($path . "verificaDti.php");
+        
         include ($entityPath . "produto.php");
 
         include ($modelPath . "produto_model.php");
 
-        include_once ($path . "menu.php");
+        
 
 
         if(@$_REQUEST['id']) {

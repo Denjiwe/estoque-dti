@@ -263,7 +263,7 @@
                         
                     }
 
-                    if (isset($_SESSION['nomeImpressora'])){
+                    if (isset($_SESSION['nomeImpressora']) && $_SESSION['nomeImpressora'] != null){
                             ?>
                         <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
                             <tr>
@@ -320,7 +320,7 @@
             <input type="hidden" class="form-control" name="estado" id="estado" value="Aberto">
 
             <button type="submit" id="finalizar" class="btn btn-primary mt-5 mb-5">Finalizar</button>
-            <a href="pesquisar.php" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
+            <a href="<?= $_SESSION['dti'] ? 'pesquisar.php' : 'home.php'?>" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
            
         </form>
     </main>

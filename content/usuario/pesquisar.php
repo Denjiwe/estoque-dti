@@ -26,6 +26,8 @@
 
         include ($path . "menu.php");
 
+        include($path . "verificaDti.php");
+
         include ($entityPath . "usuario.php");
 
         include ($modelPath . "usuario_model.php");
@@ -94,6 +96,7 @@
                             <th class="text-center">Email</th>
                             <th class="text-center">Locação</th>
                             <th class="text-center">Ativo</th>
+                            <th class="text-center">Acesso DTI</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     
@@ -104,6 +107,7 @@
                             <td class="text-center"><?=$usuario->getEmail()?></td>
                             <td class="text-center"><?=($usuario->getDivisaoId() !== 0? $usuario->getDivisaoNome() : $usuario->getDiretoriaNome())?></td>
                             <td class="text-center"><?=($usuario->getAtivo() ? 'Sim' : 'Não')?></td>
+                            <td class="text-center"><?=($usuario->getUsuarioDti() ? 'Sim' : 'Não')?></td>
                             <td class="text-center">
                                 <a href="cadastro.php?id=<?=$usuario->getId()?>" class='btn btn-success'>Editar</a>
                                 <a href="pesquisar.php?delete=<?=$usuario->getId()?>" class='btn btn-danger excluir'>Excluir</a>
@@ -129,6 +133,7 @@
                         <th class="text-center">Email</th>
                         <th class="text-center">Locação</th>
                         <th class="text-center">Ativo</th>
+                        <th class="text-center">Acesso DTI</th>
                         <th class="text-center">Ações</th>
                     </tr>
             <?php        
@@ -146,6 +151,7 @@
                             <td class="text-center"><?=$obj->getEmail()?></td>
                             <td class="text-center"><?=($obj->getDiretoriaId() !== 0? $obj->getDiretoriaNome(): $obj->getDivisaoNome())?></td>
                             <td class="text-center"><?=($obj->getAtivo() ? 'Sim' : 'Não')?></td>
+                            <td class="text-center"><?=($obj->getUsuarioDti() ? 'Sim' : 'Não')?></td>
                             <td class="text-center">
                                 <a href="cadastro.php?id=<?=$obj->getId()?>" class='btn btn-success'>Editar</a>
                                 <a href="pesquisar.php?delete=<?=$obj->getId()?>" class='btn btn-danger excluir'>Excluir</a>

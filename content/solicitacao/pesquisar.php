@@ -20,11 +20,15 @@
 <body>
     <?php 
 
+        $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+
         $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
         $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
 
-        include("../../menu.php"); 
+        include($path . "menu.php");
+        
+        include($path . "verificaDti.php");
         
         include_once ($entityPath . "solicitacao.php");
 
@@ -58,16 +62,6 @@
 
             <div class='accordion' id='content'>
             <?php
-
-                if(@$_REQUEST['delete']) {
-                    try{
-                        $model = new SolicitacaoModel;
-                        $model ->delete($_REQUEST["delete"]);
-                        echo "<div class='alert alert-success'>Registro excluído com sucesso</div>";
-                    } catch (PDOException $e) {
-                        echo "<div class='alert alert-danger'>Não foi possível excluir o registro: ". $e->getMessage()."</div>";
-                    }
-                }
 
                 $model = new SolicitacaoModel;
 

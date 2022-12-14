@@ -14,6 +14,8 @@ class Usuario
 
         private bool $ativo;
 
+        private bool $usuarioDti;
+
         private int $divisaoId;
 
         private string $divisaoNome;
@@ -39,6 +41,9 @@ class Usuario
         }
         public function getAtivo() : bool {
             return $this-> ativo;
+        }
+        public function getUsuarioDti() : bool {
+            return $this-> usuarioDti;
         }
         public function getDivisaoId() : ?int {
             return $this-> divisaoId;
@@ -70,6 +75,9 @@ class Usuario
         }
         public function setAtivo(bool $ativo) {
             $this->ativo = $ativo;
+        }
+        public function setUsuarioDti(bool $usuarioDti) {
+            $this->usuarioDti = $usuarioDti;
         }
         public function setDivisaoId(int $divisaoId) {
             $this->divisaoId = $divisaoId;

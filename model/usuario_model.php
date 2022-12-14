@@ -21,12 +21,13 @@
             $conexao = Conexao::getConexao();
 
             try {
-            $con = $conexao->prepare("INSERT INTO usuario (nome, cpf, email, senha, ativo, divisao_id, diretoria_id) VALUES (:nome, :cpf, :email, :senha, :ativo, :divisao, :diretoria)");
+            $con = $conexao->prepare("INSERT INTO usuario (nome, cpf, email, senha, ativo, divisao_id, diretoria_id, usuario_dti) VALUES (:nome, :cpf, :email, :senha, :ativo, :divisao, :diretoria, :usuarioDti)");
             $con->bindValue ("nome", $usuario->getNome(), PDO::PARAM_STR);
             $con->bindValue ("cpf", $usuario->getCpf(), PDO::PARAM_INT);
             $con->bindValue ("email", $usuario->getEmail(), PDO::PARAM_STR);
             $con->bindValue ("senha", $usuario->getSenha(), PDO::PARAM_STR);
             $con->bindValue ("ativo", $usuario->getAtivo(), PDO::PARAM_INT);
+            $con->bindValue ("usuarioDti", $usuario->getUsuarioDti(), PDO::PARAM_INT);
             
             if ($usuario->getDiretoriaId() !== 0){
                 $con->bindValue ("diretoria", $usuario->getDiretoriaId(), PDO::PARAM_INT);
@@ -43,16 +44,45 @@
             } 
         }
 
-        //update
-        function update (Usuario $usuario){
+        //updateComSenha
+        function updateComSenha (Usuario $usuario){
             $conexao = Conexao::getConexao();
 
             try {
-                $con = $conexao->prepare("UPDATE usuario SET nome = :nome, email = :email, senha = :senha, ativo = :ativo, diretoria_id = :diretoria, divisao_id = :divisao WHERE id = :id");
+                $con = $conexao->prepare("UPDATE usuario SET nome = :nome, email = :email, senha = :senha, ativo = :ativo, diretoria_id = :diretoria, divisao_id = :divisao, usuario_dti = :usuarioDti WHERE id = :id");
                 $con->bindValue ("nome", $usuario->getNome(), PDO::PARAM_STR);
                 $con->bindValue ("email", $usuario?->getEmail(), PDO::PARAM_STR);
                 $con->bindValue ("senha", $usuario->getSenha(), PDO::PARAM_INT);
                 $con->bindValue ("ativo", $usuario->getAtivo(), PDO::PARAM_INT);
+                $con->bindValue ("usuarioDti", $usuario->getUsuarioDti(), PDO::PARAM_INT);
+                $con->bindValue ("id", $usuario->getId(), PDO::PARAM_INT);
+
+                if ($usuario->getDiretoriaId() !== 0){
+                    $con->bindValue ("diretoria", $usuario->getDiretoriaId(), PDO::PARAM_INT);
+                    $con->bindValue ("divisao", null, PDO::PARAM_NULL);
+                } elseif ($usuario->getDivisaoId() !== 0) {
+                    $con->bindValue ("divisao", $usuario->getDivisaoId(), PDO::PARAM_INT);
+                    $con->bindValue ("diretoria", null, PDO::PARAM_NULL);
+                }
+
+                $con->execute();
+
+            } catch (PDOException $e) {
+                throw $e;
+            }
+
+        }
+
+        //updateSemSenha
+        function updateSemSenha (Usuario $usuario){
+            $conexao = Conexao::getConexao();
+
+            try {
+                $con = $conexao->prepare("UPDATE usuario SET nome = :nome, email = :email, ativo = :ativo, diretoria_id = :diretoria, divisao_id = :divisao, usuario_dti = :usuarioDti WHERE id = :id");
+                $con->bindValue ("nome", $usuario->getNome(), PDO::PARAM_STR);
+                $con->bindValue ("email", $usuario?->getEmail(), PDO::PARAM_STR);
+                $con->bindValue ("ativo", $usuario->getAtivo(), PDO::PARAM_INT);
+                $con->bindValue ("usuarioDti", $usuario->getUsuarioDti(), PDO::PARAM_INT);
                 $con->bindValue ("id", $usuario->getId(), PDO::PARAM_INT);
 
                 if ($usuario->getDiretoriaId() !== 0){
@@ -87,6 +117,7 @@
             $usuario->setNome($linha['nome']);
             $usuario->setEmail($linha['email']);
             $usuario->setAtivo($linha['ativo']);
+            $usuario->setUsuarioDti($linha['usuario_dti']);
 
             if (@$linha['divisao_id'] !== null){
                 $usuario->setDivisaoId($linha['divisao_id']);
@@ -129,6 +160,7 @@
                 $usuario->setEmail($linha['email']);
                 $usuario->setSenha($linha['senha']);
                 $usuario->setAtivo($linha['ativo']);
+                $usuario->setUsuarioDti($linha['usuario_dti']);
                 
                 if (@$linha['divisao_id'] !== null){
                     $usuario->setDivisaoId($linha['divisao_id']);
@@ -167,6 +199,8 @@
                 $usuario->setNome($linha['nome']);
                 $usuario->setEmail($linha['email']);
                 $usuario->setAtivo($linha['ativo']);
+                $usuario->setUsuarioDti($linha['usuario_dti']);
+
                 
                 if (@$linha['divisao_id'] !== null){
                     $usuario->setDivisaoId($linha['divisao_id']);
@@ -238,18 +272,34 @@
             return $diretoria;
         }
 
-        //getNome
-        function getNome(string $cpf) {
+        //findNomeId
+        function findNomeId(string $cpf) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT nome FROM usuario WHERE cpf = :cpf");
+            $con = $conexao->prepare("SELECT nome, id FROM usuario WHERE cpf = :cpf");
             $con->bindValue("cpf", $cpf, PDO::PARAM_STR);
             $con->execute();
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
                 $nome = $linha['nome'];
+                $id = $linha['id'];
+                $nomeId = [$nome, $id];
             }
 
-            return $nome;
+            return $nomeId;
+        }
+
+        //verificaDti
+        function verificaDti(string $cpf) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT usuario_dti FROM usuario WHERE cpf = :cpf");
+            $con->bindValue("cpf", $cpf, PDO::PARAM_STR);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)){
+                $usuarioDti = $linha['usuario_dti'];
+            }
+
+            return $usuarioDti;
         }
 
         //verificaLogin
@@ -263,9 +313,15 @@
             $count = $con->rowCount();
 
             if ($count > 0){
-                $nome = $this->getNome($login);
+                $nomeId = $this->findNomeId($login);
+                if ($this->verificaDti($login) == 1) {
+                    $_SESSION['dti'] = true;
+                } else {
+                    $_SESSION['dti'] = false;
+                }
                 $_SESSION['cpf'] = $login;
-                $_SESSION['usuario'] = $nome;
+                $_SESSION['usuario'] = $nomeId[0];
+                $_SESSION['usuarioId'] = $nomeId[1];
                 header ('Location: home.php');
                 exit();
             } else {

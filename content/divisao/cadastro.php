@@ -26,6 +26,8 @@
 
         include ($path . "menu.php");
 
+        include($path . "verificaDti.php");
+
         include ($entityPath . "divisao.php");
 
         include ($modelPath . "divisao_model.php");

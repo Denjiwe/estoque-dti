@@ -20,11 +20,17 @@
 <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
+        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+
+        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+
         include ($path . "menu.php");
 
-        include ("../../entity/orgao.php");
+        include($path . "verificaDti.php");
 
-        include ("../../model/orgao_model.php");
+        include ($entityPath . "orgao.php");
+
+        include ($modelPath . "orgao_model.php");
 
         if(@$_REQUEST['id']) {
             try {

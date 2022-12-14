@@ -24,12 +24,16 @@
         $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
         $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+
+        include_once ($path . "menu.php");
+
+        include($path . "verificaDti.php");
         
         include_once ($entityPath . "divisao.php");
 
         include_once ($modelPath . "divisao_model.php");
 
-        include_once ($path . "menu.php");
+        
      ?>
     <main class="container mt-5">
         <div class="row">

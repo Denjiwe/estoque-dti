@@ -27,6 +27,8 @@
     
         include($path . "menu.php"); 
 
+        include($path . "verificaDti.php");
+
         include_once ($entityPath . "orgao.php");
 
         include_once ($modelPath . "orgao_model.php");

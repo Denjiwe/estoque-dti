@@ -26,6 +26,8 @@
 
         include ($path . "menu.php");
 
+        include($path . "verificaDti.php");
+
         include ($entityPath . "diretoria.php");
 
         include ($modelPath . "diretoria_model.php");

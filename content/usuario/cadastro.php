@@ -26,6 +26,8 @@
 
         include ($path . "menu.php");
 
+        include($path . "verificaDti.php");
+
         include ($entityPath . "usuario.php");
 
         include ($modelPath . "usuario_model.php");
@@ -55,11 +57,21 @@
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
                     $ativoOk = 1;
                 }
+                $usuarioDti = 0;
+                if (isset($_POST['usuarioDti']) && strtolower($_POST['usuarioDti']) == 'on'){
+                    $usuarioDtiOk = 1;
+                }
+                $senha = null;
+                if (isset($_POST['senha']) && strlen($_POST['senha']) > 0){
+                    $senha = MD5($_POST['senha']);
+                }    
+
                 $nome = $_POST['nome'];
                 $cpf = $_POST['cpf'];
                 $email = $_POST['email'];
-                $senha = MD5($_POST['senha']);
+                
                 $ativo = $ativoOk;
+                $usuarioDti = $usuarioDtiOk;
 
                 if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
                     $divisao = $_POST['selectDivisao'];
@@ -78,12 +90,19 @@
                 $usuario->setNome($nome);
                 $usuario->setCpf($cpf);
                 $usuario->setEmail($email);
-                $usuario->setSenha($senha);
                 $usuario->setAtivo($ativo);
                 $usuario->setId($id);
+                $usuario->setUsuarioDti($usuarioDtiOk);
+                if ($senha != null) {
+                    $usuario->setSenha($senha);
+                }
 
                 try {
-                    $model->update($usuario);
+                    if ($senha != null) {
+                        $model->updateComSenha($usuario);
+                    } else {
+                        $model->updateSemSenha($usuario);
+                    }
 
                     print "<div class='container alert alert-success mt-5'>Usuário alterado com sucesso!</div>";
                 } catch (PDOException $e) {
@@ -104,11 +123,16 @@
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
                     $ativoOk = 1;
                 }
+                $usuarioDti = 0;
+                if (isset($_POST['usuarioDti']) && strtolower($_POST['usuarioDti']) == 'on'){
+                    $usuarioDtiOk = 1;
+                }
                 $newNome = $_POST['nome'];
                 $newCpf = $_POST['cpf'];
                 $newEmail = $_POST['email'];
                 $newSenha = MD5($_POST['senha']);
                 $newAtivo = $ativoOk;
+                $newUsuarioDti = $usuarioDti;
 
                 if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
                     $newDivisao = $_POST['selectDivisao'];
@@ -129,6 +153,7 @@
                 $newUsuario->setEmail($newEmail);
                 $newUsuario->setSenha($newSenha);
                 $newUsuario->setAtivo($newAtivo);
+                $newUsuario->setUsuarioDti($newUsuarioDti);
 
                 try {
                     $model->insert($newUsuario);
@@ -148,8 +173,8 @@
     ?>
     <main class="container mt-5">
 
-        <p>nota: após conversa com Henrique, também cadastrar a diretoria do usuário mesmo em caso em que o mesmo esteja locado em uma divisão, pois facilita o processo de busca e evita confusão
-        do funcionário ao editar</p>
+        <!-- nota: após conversa com Henrique, também cadastrar a diretoria do usuário mesmo em caso em que o mesmo esteja locado em uma divisão, -->
+        <!-- pois facilita o processo de busca e evita confusão do funcionário ao editar -->
         <form action="cadastro.php" method="post" id="formCadastro">
             
             <input type="hidden" name="id" 
@@ -278,28 +303,41 @@
                 </div>
 
             </div>
-            
-            <div class="form-group mt-5 col-3">
-                <label for="senha">Senha <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" name="senha" min="6" max="16"
-                    <?php if(isset($usuario)) {
-                            echo "value=\"".$usuario->getSenha()."\"";
-                            }
-                    ?>
-                id="senha" placeholder="insira a senha" required>
-            </div>
-            
 
-            <div class="form-group mt-5">
-                <label for="ativo">Ativo?</label> 
-                <input type="checkbox" id="ativo" name="ativo" class="form-check-input" 
-                    <?php if (isset($usuario)){
-                        if ($usuario->getAtivo() ==  1) {
-                            echo "checked";
+            <div class="row">
+                <div class="form-group mt-5 col-3">
+                    <label for="senha">Senha <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" name="senha" min="6" max="16"
+                        <?php if(!isset($_GET['id'])) {
+                                    echo "required";
+                                }
+                        ?>
+                    id="senha" placeholder="insira a senha">
+                </div>
+                                
+                <div class="form-group col-auto mt-4 pt-5">
+                    <label for="ativo">Ativo?</label> 
+                    <input type="checkbox" id="ativo" name="ativo" class="form-check-input" 
+                        <?php if (isset($usuario)){
+                            if ($usuario->getAtivo() ==  1) {
+                                echo "checked";
+                            }
                         }
-                    }
-                    ?>
-                >
+                        ?>
+                    >
+                </div>
+
+                <div class="form-group col-auto mt-4 pt-5">
+                    <label for="usuarioDti">Tem permissão Dti?</label> 
+                    <input type="checkbox" id="usuarioDti" name="usuarioDti" class="form-check-input" 
+                        <?php if (isset($usuario)){
+                            if ($usuario->getUsuarioDti() ==  1) {
+                                echo "checked";
+                            }
+                        }
+                        ?>
+                    >
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary mt-5">Salvar</button>

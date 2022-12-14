@@ -10,6 +10,7 @@
     
     class SolicitacaoModel {
 
+        //delete
         function delete(int $id) {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("DELETE FROM solicitacao WHERE id = :id");
@@ -17,6 +18,7 @@
             $con->execute();
         }
 
+        //insert
         function insert (Solicitacao $solicitacao) {
 
             $conexao = Conexao::getConexao();
@@ -26,7 +28,7 @@
             $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, diretoria_id) VALUES (:estado, :descricao, now(), :usuario_id, :diretoria)");
             $con->bindValue ("estado", $solicitacao->getEstadoSolicitacao(), PDO::PARAM_STR);
             $con->bindValue ("descricao", $solicitacao?->getDescricao(), PDO::PARAM_STR);
-            $con->bindValue ("usuario_id", 1 /*$solicitacao->getUsuarioId()*/, PDO::PARAM_INT);
+            $con->bindValue ("usuario_id", $_SESSION['usuarioId'], PDO::PARAM_INT);
             $con->bindValue ("diretoria", 1, PDO::PARAM_INT);
             $con->execute();
             $lastId = $conexao->lastInsertId();
@@ -57,6 +59,33 @@
         function select () {
             $conexao = Conexao::getConexao();
             $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id order by estado_solicitacao asc, id desc");
+            $con->execute();
+            
+            $solicitacoes = [];
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+
+            $solicitacao = new Solicitacao;
+            $solicitacao->setId($linha['id']);
+            $solicitacao->setEstadoSolicitacao($linha['estado_solicitacao']);
+            $solicitacao->setDescricao($linha['descricao']);
+            $solicitacao->setDataSolicitacao($linha['data_solicitacao']);
+            $solicitacao->setUsuarioId($linha['usuario_id']);
+            $solicitacao->setUsuarioNome($linha['nome']);
+
+            $solicitacoes[] = $solicitacao; 
+            
+            }
+
+            return $solicitacoes;
+            
+        }
+
+        //selectUsuario
+        function selectUsuario () {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id where usuario_id = :usuario order by estado_solicitacao asc, id desc");
+            $con->bindValue("usuario", $_SESSION['usuarioId'], PDO::PARAM_INT);
             $con->execute();
             
             $solicitacoes = [];

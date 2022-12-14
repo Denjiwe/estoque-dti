@@ -28,6 +28,8 @@
     
     include($path . "menu.php"); 
 
+    include($path . "verificaDti.php");
+
     include_once ($entityPath . "produto.php");
 
     include_once ($modelPath . "produto_model.php");
