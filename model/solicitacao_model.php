@@ -24,13 +24,31 @@
             $conexao = Conexao::getConexao();
 
             try {
-            $conexao->beginTransaction();
-            $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, diretoria_id) VALUES (:estado, :descricao, now(), :usuario_id, :diretoria)");
-            $con->bindValue ("estado", $solicitacao->getEstadoSolicitacao(), PDO::PARAM_STR);
-            $con->bindValue ("descricao", $solicitacao?->getDescricao(), PDO::PARAM_STR);
-            $con->bindValue ("usuario_id", $_SESSION['usuarioId'], PDO::PARAM_INT);
-            $con->bindValue ("diretoria", 1, PDO::PARAM_INT);
-            $con->execute();
+            $local = $this->findLocalUsuario($_SESSION['usuarioId']);
+
+            if ($local['divisao_id'] == null) {
+
+                $conexao->beginTransaction();
+                $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, diretoria_id) VALUES (:estado, :descricao, now(), :usuario_id, :diretoria)");
+                $con->bindValue ("estado", $solicitacao->getEstadoSolicitacao(), PDO::PARAM_STR);
+                $con->bindValue ("descricao", $solicitacao?->getDescricao(), PDO::PARAM_STR);
+                $con->bindValue ("usuario_id", $_SESSION['usuarioId'], PDO::PARAM_INT);
+                $con->bindValue ("diretoria", $local['diretoria_id'], PDO::PARAM_INT);
+                $con->execute();
+
+            } else {
+
+                $conexao->beginTransaction();
+                $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, divisao_id) VALUES (:estado, :descricao, now(), :usuario_id, :divisao)");
+                $con->bindValue ("estado", $solicitacao->getEstadoSolicitacao(), PDO::PARAM_STR);
+                $con->bindValue ("descricao", $solicitacao?->getDescricao(), PDO::PARAM_STR);
+                $con->bindValue ("usuario_id", $_SESSION['usuarioId'], PDO::PARAM_INT);
+                $con->bindValue ("divisao", $local['divisao_id'], PDO::PARAM_INT);
+                $con->execute();
+
+            }
+            
+            
             $lastId = $conexao->lastInsertId();
             $itens = $solicitacao->getItemSolicitacao();
             $qntde = $solicitacao->getQntdeItem();
@@ -65,6 +83,7 @@
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
 
+
             $solicitacao = new Solicitacao;
             $solicitacao->setId($linha['id']);
             $solicitacao->setEstadoSolicitacao($linha['estado_solicitacao']);
@@ -72,6 +91,12 @@
             $solicitacao->setDataSolicitacao($linha['data_solicitacao']);
             $solicitacao->setUsuarioId($linha['usuario_id']);
             $solicitacao->setUsuarioNome($linha['nome']);
+
+            if ($linha['divisao_id'] == null) {
+                $solicitacao->setUsuarioDiretoria($linha['diretoria_id']);
+            } else {
+                $solicitacao->setUsuarioDivisao($linha['divisao_id']);
+            }
 
             $solicitacoes[] = $solicitacao; 
             
@@ -108,11 +133,24 @@
             
         }
 
-        /*
+        //findLocalUsuario 
+        function findLocalUsuario(int $usuarioId) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT divisao_id ,diretoria_id FROM usuario WHERE id = :id");
+            $con->bindValue("id", $usuarioId, PDO::PARAM_INT);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $local = $linha;
+            }
+
+            return $local;
+        }
+        
         //findById
         function findById (int $id) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT * FROM solicitacao WHERE id = :id;");
+            $con = $conexao->prepare("SELECT *,usuario.nome FROM solicitacao inner join usuario on usuario_id = usuario.id WHERE solicitacao.id = :id");
             $con->bindValue ("id", $id, PDO::PARAM_INT);
             $con->execute();
 
@@ -126,33 +164,18 @@
                 $solicitacao->setDescricao($linha['descricao']);
                 $solicitacao->setDataSolicitacao($linha['data_solicitacao']);
                 $solicitacao->setUsuarioId($linha['usuario_id']);
+                $solicitacao->setUsuarioNome($linha['nome']);
+
+                if ($linha['divisao_id'] == null) {
+                    $solicitacao->setUsuarioDiretoria($linha['diretoria_id']);
+                } else {
+                    $solicitacao->setUsuarioDivisao($linha['divisao_id']);
+                }
 
             }
 
             return $solicitacao;
         }
-
-        function findByName(string $estado) {
-            $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT * FROM solicitacao WHERE estado_solicitacao = :estado;");
-            $con->bindValue ("estado", $estado, PDO::PARAM_STR);
-            $con->execute();
-
-            $solicitacao = null;
-
-            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
-
-                $solicitacao = new Solicitacao;
-                $solicitacao->setId($linha['id']);
-                $solicitacao->setEstadoSolicitacao($linha['estado_solicitacao']);
-                $solicitacao->setDescricao($linha['descricao']);
-                $solicitacao->setDataSolicitacao($linha['data_solicitacao']);
-                $solicitacao->setUsuarioId($linha['usuario_id']);
-                
-            }
-
-            return $solicitacao;
-        }*/
 
         function selectItemSolicitacao(int $id) {
             $conexao = Conexao::getConexao();
@@ -161,12 +184,6 @@
             $con->execute();
 
             $stmt = $con->fetchAll();
-            /*while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
-                $stmt['id'] = $linha['id'];
-                $stmt['modelo_produto'] = $linha['modelo_produto'];
-                $stmt['qntde_item'] = $linha['qntde_item'];
-                $stmt['is_id'] = $linha['is_id'];
-            }*/
             
             return $stmt;
         }

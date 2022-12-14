@@ -12,6 +12,12 @@ class Solicitacao
 
         private int $usuarioId;
 
+        private string $usuarioNome;
+
+        private int $usuarioDivisao;
+
+        private int $usuarioDiretoria;
+
         private array $itemSolicitacao;
 
         private array $qntdeItem;
@@ -33,6 +39,12 @@ class Solicitacao
         }
         public function getUsuarioNome() : string {
             return $this-> usuarioNome;
+        }
+        public function getUsuarioDivisao() : string {
+            return $this-> usuarioDivisao;
+        }
+        public function getUsuarioDiretoria() : string {
+            return $this-> usuarioDiretoria;
         }
         public function getItemSolicitacao() : array {
             return $this-> itemSolicitacao;
@@ -59,6 +71,12 @@ class Solicitacao
         }
         public function setUsuarioNome(string $usuarioNome) {
             $this->usuarioNome = $usuarioNome;
+        }
+        public function setUsuarioDivisao(string $usuarioDivisao) {
+            $this->usuarioDivisao = $usuarioDivisao;
+        }
+        public function setUsuarioDiretoria(string $usuarioDiretoria) {
+            $this->usuarioDiretoria = $usuarioDiretoria;
         }
         public function setItemSolicitacao(array $itemSolicitacao) {
             $this->itemSolicitacao = $itemSolicitacao;

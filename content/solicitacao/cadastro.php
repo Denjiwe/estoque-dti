@@ -65,14 +65,17 @@
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD 2.0 - Cadastro</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
+
 <body>
     <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
@@ -93,13 +96,24 @@
             $qntdeItem = $_SESSION['qntde'];
             $solicitacao->setQntdeItem($qntdeItem);
 
+            $usuarioId = $_SESSION['usuarioId'];
+            $solicitacao->setUsuarioId($usuarioId);
+
+            $local = $model->findLocalUsuario($usuarioId);
+
+            if ($local['divisao_id'] == null) {
+                $solicitacao->setUsuarioDiretoria($local['diretoria_id']);
+            } else {
+                $solicitacao->setUsuarioDivisao($local['divisao_id']);
+            }
+
             $produtos = $_SESSION['produtos'];
 
             $solicitacao->setItemSolicitacao($produtos); 
 
             try {
                 $model->insert($solicitacao);
-                echo "<div class=' container alert alert-success'>Solicitação criada com sucesso!</div>";
+                echo "<div class=' container alert alert-success mt-5'>Solicitação criada com sucesso!</div>";
 
                 unset($_SESSION['qntde']);
                 unset($_SESSION['produtos']);
@@ -109,7 +123,7 @@
                 unset($_SESSION['qntdeExibicao']);
                 unset($_SESSION['nomeImpressora']);
             } catch (PDOException $e){
-                echo "<div class=' container alert alert-danger'>Não foi possível cirar a solicitação! Erro de banco de dados.</div>";
+                echo "<div class=' container alert alert-danger mt-5'>Não foi possível cirar a solicitação! Erro de banco de dados.</div>";
             }
         }
                     
@@ -143,11 +157,12 @@
             <div class="mt-5 row">
                 <div class="form-group col-lg-2 col-5">
                     <label for="selectTC">Toner ou Cilíndro?</label>
-                    <select class="form-select" name="selectTC" id="selectTC" required> <!-- select Toner Cilindro -->
-                        <option value="" selected hidden></option>                             
-                        <option value="toner">Toner</option>            
-                        <option value="cilindro">Cilíndro</option>            
-                        <option value="conjunto">Conjunto</option>            
+                    <select class="form-select" name="selectTC" id="selectTC" required>
+                        <!-- select Toner Cilindro -->
+                        <option value="" selected hidden></option>
+                        <option value="toner">Toner</option>
+                        <option value="cilindro">Cilíndro</option>
+                        <option value="conjunto">Conjunto</option>
                     </select>
                 </div>
 
@@ -156,16 +171,16 @@
                     <input type="number" class="form-control" name="qntde" id="qntde" min="1" max="2" required>
                 </div>
             </div>
-            
+
             <button type="submit" id="adicionar" class="btn btn-primary mt-5">Adicionar</button>
-            
+
             <input type="hidden" class="form-control" name="impressoras" id="impressoras" value="">
 
         </form>
-        
+
         <form action="cadastro.php?finalizar" method="post" id="formCadastro">
 
-                <?php
+            <?php
                     if(isset($_GET['adicionar'])) {
 
                         $model = new SolicitacaoModel;
@@ -192,9 +207,10 @@
                                 $cilindro = new Produto;
                                 @$cilindro = $model?->getCilindro($idImpressora);
                                 if ($cilindro == null) {
-                            ?>        
-                                    <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
-                            <?php        
+                            ?>
+            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.
+            </div>
+            <?php        
                                 }
                                 if (!isset($_SESSION['qntde'])){
                                     $_SESSION['qntde'] = [];
@@ -216,9 +232,10 @@
                                 }
 
                                 if ($cilindro == null) {
-                            ?>        
-                                    <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
-                            <?php        
+                            ?>
+            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.
+            </div>
+            <?php        
                                 }
                                 break;
                         }
@@ -265,21 +282,21 @@
 
                     if (isset($_SESSION['nomeImpressora']) && $_SESSION['nomeImpressora'] != null){
                             ?>
-                        <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
-                            <tr>
-                                <th class="col-4 text-center">Modelo da Impressora</th>
-                                <th class="col-1 text-center">Quantidade</th>
-                                <th class="col-5 text-center" colspan="2">Produto(s)</th>  
-                                <th class="col-2 text-center">Ações</th>
-                            </tr>
-                            <?php
+            <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
+                <tr>
+                    <th class="col-4 text-center">Modelo da Impressora</th>
+                    <th class="col-1 text-center">Quantidade</th>
+                    <th class="col-5 text-center" colspan="2">Produto(s)</th>
+                    <th class="col-2 text-center">Ações</th>
+                </tr>
+                <?php
                         for ($i=0; $i<count($_SESSION['nomeImpressora']);$i++) {
                             ?>
-                                    <tr>
-                                        <td hidden><?=$_SESSION['idImpressora'][$i]?></td>
-                                        <td class="text-center"><?=$_SESSION['nomeImpressora'][$i]?></td>
-                                        <td class="text-center"><?=$_SESSION['qntdeExibicao'][$i]?></td>
-                            <?php
+                <tr>
+                    <td hidden><?=$_SESSION['idImpressora'][$i]?></td>
+                    <td class="text-center"><?=$_SESSION['nomeImpressora'][$i]?></td>
+                    <td class="text-center"><?=$_SESSION['qntdeExibicao'][$i]?></td>
+                    <?php
                                     if (isset($_SESSION['toner'][$i]) && !isset($_SESSION['cilindro'][$i])){
 
                                         print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
@@ -299,18 +316,19 @@
                                         print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
 
                                     }             
-                            ?>            
-                                        <td class='text-center'><a href="cadastro.php?excluir=<?=$i?>" type="button" class="btn btn-danger">Excluir</a></td>
-                                    </tr>
-                            <?php        
+                            ?>
+                    <td class='text-center'><a href="cadastro.php?excluir=<?=$i?>" type="button"
+                            class="btn btn-danger">Excluir</a></td>
+                </tr>
+                <?php        
                         }
                             ?>
-                        </table>
-                            <?php
+            </table>
+            <?php
                     }
                 ?>
 
-           
+
 
             <div class="form-group mt-5">
                 <label for="observacao">Observação</label>
@@ -320,24 +338,30 @@
             <input type="hidden" class="form-control" name="estado" id="estado" value="Aberto">
 
             <button type="submit" id="finalizar" class="btn btn-primary mt-5 mb-5">Finalizar</button>
-            <a href="<?= $_SESSION['dti'] ? 'pesquisar.php' : 'home.php'?>" type="button" class="btn btn-danger mt-5 mb-5">Cancelar</a>
-           
+            <a href="<?= $_SESSION['dti'] ? 'pesquisar.php' : 'home.php'?>" type="button"
+                class="btn btn-danger mt-5 mb-5">Cancelar</a>
+
         </form>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-                    $(document).ready(function(){
-                        $('#selectImpressora').on('change', function(){
-                            var selectImpressora = document.getElementById('selectImpressora');
-                            var texto = selectImpressora.options[selectImpressora.selectedIndex].text;
-                            document.getElementById('nomeImpressora').value = texto;
-                        });
-                        
-                        $("table").on("click", "button", function () {
-                                $(this).parent().parent().remove();
-                        });
-                    });               
-                </script>
+    $(document).ready(function() {
+        $('#selectImpressora').on('change', function() {
+            var selectImpressora = document.getElementById('selectImpressora');
+            var texto = selectImpressora.options[selectImpressora.selectedIndex].text;
+            document.getElementById('nomeImpressora').value = texto;
+        });
+
+        $("table").on("click", "button", function() {
+            $(this).parent().parent().remove();
+        });
+    });
+    </script>
 </body>
+
 </html>

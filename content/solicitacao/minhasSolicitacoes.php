@@ -28,8 +28,6 @@
 
         include($path . "menu.php");
         
-        include($path . "verificaDti.php");
-        
         include_once ($entityPath . "solicitacao.php");
 
         include_once ($modelPath . "solicitacao_model.php");
@@ -52,7 +50,10 @@
     <?php
         exit();
         }
-
+    ?>
+<main class='container mt-5'>
+    <div class='accordion' id='content'>
+    <?php
         foreach ($solicitacao as $obj) {
 
             $itens = $model->selectItemSolicitacao($obj->getId());
@@ -91,6 +92,8 @@
                 <input disabled id='observacao<?=$obj->getId()?>' class="form-control bg-white" value="<?=$obj->getDescricao()?>">
 <?php
             }
+
+            if ($_SESSION['dti']) {
 ?>                    
                 <!-- Button trigger modal -->
                 <button type='button' class='btn btn-primary mt-4' data-bs-toggle='modal' data-bs-target='#modal<?=$obj->getId()?>'>
@@ -146,10 +149,13 @@
                     </div>
                 </div>
                 </div>
-
+<?php
+            }
+?>
             </div>
         </div>
     </div>
+</main>
 <?php
 }
 ?>
