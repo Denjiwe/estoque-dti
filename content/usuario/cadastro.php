@@ -53,13 +53,13 @@
                 $usuario = new Usuario;
 
                 $id = $_POST['id'];
-                $ativoOk = 0;
+                $ativo = 0;
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
+                    $ativo = 1;
                 }
                 $usuarioDti = 0;
                 if (isset($_POST['usuarioDti']) && strtolower($_POST['usuarioDti']) == 'on'){
-                    $usuarioDtiOk = 1;
+                    $usuarioDti = 1;
                 }
                 $senha = null;
                 if (isset($_POST['senha']) && strlen($_POST['senha']) > 0){
@@ -69,9 +69,6 @@
                 $nome = $_POST['nome'];
                 $cpf = $_POST['cpf'];
                 $email = $_POST['email'];
-                
-                $ativo = $ativoOk;
-                $usuarioDti = $usuarioDtiOk;
 
                 if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
                     $divisao = $_POST['selectDivisao'];
@@ -92,7 +89,7 @@
                 $usuario->setEmail($email);
                 $usuario->setAtivo($ativo);
                 $usuario->setId($id);
-                $usuario->setUsuarioDti($usuarioDtiOk);
+                $usuario->setUsuarioDti($usuarioDti);
                 if ($senha != null) {
                     $usuario->setSenha($senha);
                 }
@@ -119,20 +116,18 @@
 
                 $newUsuario = new Usuario;
 
-                $ativoOk = 0;
+                $newAtivo = 0;
                 if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
+                    $newAtivo = 1;
                 }
-                $usuarioDti = 0;
+                $newUsuarioDti = 0;
                 if (isset($_POST['usuarioDti']) && strtolower($_POST['usuarioDti']) == 'on'){
-                    $usuarioDtiOk = 1;
+                    $newUsuarioDti = 1;
                 }
                 $newNome = $_POST['nome'];
                 $newCpf = $_POST['cpf'];
                 $newEmail = $_POST['email'];
                 $newSenha = MD5($_POST['senha']);
-                $newAtivo = $ativoOk;
-                $newUsuarioDti = $usuarioDti;
 
                 if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
                     $newDivisao = $_POST['selectDivisao'];
@@ -238,7 +233,7 @@
                                     print "<option value='0' selected></option>";
                                 }
                             } else {
-                               print "<option value='0' selected></option>";
+                                print "<option value='0' selected></option>";
                             }
 
                             foreach ($diretorias as $diretoria) {
@@ -278,7 +273,7 @@
                                     print "<option value='0' selected>Nenhuma divisão</option>";
                                 }
                             } else {
-                               print "<option value='0' selected>Nenhuma divisão</option>";
+                                print "<option value='0' selected>Nenhuma divisão</option>";
                             }
 
                             foreach ($divisoes as $divisao) {

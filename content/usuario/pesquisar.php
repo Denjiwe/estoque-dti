@@ -66,7 +66,11 @@
                             $model ->delete($_REQUEST["delete"]);
                             echo "<div class='alert alert-success'>Usuário excluído com sucesso</div>";
                         } catch (PDOException $e) {
-                            echo "<div class='alert alert-danger'>Não foi possível excluir o registro: ". $e->getMessage() ."</div>";
+                            if (str_contains($e->getMessage(), "fk_entrega_usuario")) {
+                                echo "<div class='alert alert-danger'>Não foi possível excluir o usuário, pois o usuário possui solicitações cadastradas, deixe o usuário como inativo caso necessário</div>"; 
+                            } else {
+                                echo "<div class='alert alert-danger'>Não foi possível excluir o usuário, erro de banco de dados</div>";
+                            }
                         }
                     }
                 }

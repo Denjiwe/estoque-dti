@@ -45,7 +45,7 @@ session_start();
             $id_item = $item['id'];
             //$qntde se refere a quantidade do produto da determinada item, $cont define qual dos itens é o atual, 
             //0 está presente somente para pegar o primeiro elemento do array que será retornado, sendo a quantidade
-            $qntde = $qntdes[0][$cont];
+            $qntde = $qntdes[$cont][0];
             //$idItemSolicitacao se refere ao id da tabela itens_solicitacao em si, que é necessario para ser realizada 
             //a inserção na tabela de entregas
             $idItemSolicitacao = $solicitacao_itens[$cont]['is_id'];
@@ -75,8 +75,8 @@ session_start();
 
                 }
             }    
-            $cont++;
-        }   
+        }  
+        $cont++; 
     }
 
     header("Location: ./pesquisar.php?entregue=".$id);

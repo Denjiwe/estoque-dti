@@ -76,7 +76,7 @@
         //select all
         function select () {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id order by estado_solicitacao asc, id desc");
+            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id order by id asc");
             $con->execute();
             
             $solicitacoes = [];
@@ -94,8 +94,10 @@
 
             if ($linha['divisao_id'] == null) {
                 $solicitacao->setUsuarioDiretoria($linha['diretoria_id']);
+                $solicitacao->setUsuarioDivisao(0);
             } else {
                 $solicitacao->setUsuarioDivisao($linha['divisao_id']);
+                $solicitacao->setUsuarioDiretoria(0);
             }
 
             $solicitacoes[] = $solicitacao; 
@@ -109,7 +111,7 @@
         //selectUsuario
         function selectUsuario () {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id where usuario_id = :usuario order by estado_solicitacao asc, id desc");
+            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id where usuario_id = :usuario order by id desc");
             $con->bindValue("usuario", $_SESSION['usuarioId'], PDO::PARAM_INT);
             $con->execute();
             
@@ -124,6 +126,14 @@
             $solicitacao->setDataSolicitacao($linha['data_solicitacao']);
             $solicitacao->setUsuarioId($linha['usuario_id']);
             $solicitacao->setUsuarioNome($linha['nome']);
+
+            if ($linha['divisao_id'] == null) {
+                $solicitacao->setUsuarioDiretoria($linha['diretoria_id']);
+                $solicitacao->setUsuarioDivisao(0);
+            } else {
+                $solicitacao->setUsuarioDivisao($linha['divisao_id']);
+                $solicitacao->setUsuarioDiretoria(0);
+            }
 
             $solicitacoes[] = $solicitacao; 
             
@@ -150,7 +160,7 @@
         //findById
         function findById (int $id) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT *,usuario.nome FROM solicitacao inner join usuario on usuario_id = usuario.id WHERE solicitacao.id = :id");
+            $con = $conexao->prepare("SELECT solicitacao.*, usuario.nome FROM solicitacao inner join usuario on usuario_id = usuario.id WHERE solicitacao.id = :id");
             $con->bindValue ("id", $id, PDO::PARAM_INT);
             $con->execute();
 
@@ -168,8 +178,10 @@
 
                 if ($linha['divisao_id'] == null) {
                     $solicitacao->setUsuarioDiretoria($linha['diretoria_id']);
+                    $solicitacao->setUsuarioDivisao(0);
                 } else {
                     $solicitacao->setUsuarioDivisao($linha['divisao_id']);
+                    $solicitacao->setUsuarioDiretoria(0);
                 }
 
             }
@@ -195,4 +207,28 @@
             $con->bindValue("id", $id, PDO::PARAM_INT);
             $con->execute();
         }
-    }
+
+        //getDivisaoNome
+        function getDivisaoNome($divisaoId) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT nome FROM divisao WHERE id = :id");
+            $con->bindValue("id", $divisaoId, PDO::PARAM_INT);
+            $con->execute();
+
+            $divisao = $con->fetch(PDO::FETCH_ASSOC);
+
+            return $divisao;
+        }
+
+        //getDiretoriaNome
+        function getDiretoriaNome($diretoriaId) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT nome FROM diretoria WHERE id = :id");
+            $con->bindValue("id", $diretoriaId, PDO::PARAM_INT);
+            $con->execute();
+
+            $diretoria = $con->fetch(PDO::FETCH_ASSOC);
+
+            return $diretoria;
+        }
+    }   

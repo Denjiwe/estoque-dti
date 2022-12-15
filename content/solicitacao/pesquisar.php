@@ -64,7 +64,7 @@
 
             <h1 class="mb-4">Solicitações Cadastradas</h1>
 
-            <div class='accordion' id='content'>
+            <div class='accordion mb-5' id='content'>
                 <?php
 
                 $model = new SolicitacaoModel;
@@ -87,8 +87,8 @@
                     <h2 class='accordion-header'>
                         <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
                             data-bs-target='#collapse<?=$obj->getId()?>' aria-expanded='false'>
-                            Pedido <?=$obj->getEstadoSolicitacao()?> <strong>&nbsp #<?=$obj->getId()?> &nbsp</strong> de
-                            <?=$obj->getUsuarioNome()?> feito em <?=date_format($data, "d/m/Y")?>
+                            [<?=$obj->getEstadoSolicitacao()?>] <strong>&nbsp #<?=$obj->getId()?> &nbsp</strong> de
+                            <?=$obj->getUsuarioNome()?>, <?=$obj->getUsuarioDivisao() != 0 ? $model->getDivisaoNome($obj->getUsuarioDivisao())['nome'] : $model->getDiretoriaNome($obj->getUsuarioDiretoria())['nome']?> feito em <?=date_format($data, "d/m/Y")?>
                         </button>
                     </h2>
                     <div id='collapse<?=$obj->getId()?>' class='accordion-collapse collapse'>
@@ -144,15 +144,15 @@
             ?>
                                                         <li class='list-group-item ms-3'>
                                                             <label class='form-check-label'
-                                                                for='checkbox<?=$item['id']?>'><?=$item['modelo_produto']?></label>
+                                                                for='checkbox<?=$item['is_id']?>'><?=$item['modelo_produto']?></label>
                                                             <input class='form-check-input ms-3' type='checkbox'
                                                                 name='id[]' value='<?=$item['id']?>'
-                                                                id='checkbox<?=$item['id']?>'>
+                                                                id='checkbox<?=$item['is_id']?>'>
 
                                                             <input type='number'
                                                                 class='form-input ms-3 col-2 rounded border border-1 float-end'
-                                                                name='qntde[]' id='qntde' min='1'
-                                                                max='<?=$item['qntde_item']?>' required>
+                                                                name='qntde[]' id='qntde<?=$item['is_id']?>' min='1'
+                                                                max='<?=$item['qntde_item']?>' disabled>
                                                             <label for='qntde' class=' float-end'>Quantidade</label>
                                                         </li>
                                                         <?php                                    
@@ -177,7 +177,7 @@
                                         <div class='modal-footer'>
                                             <button type='button' class='btn btn-secondary'
                                                 data-bs-dismiss='modal'>Cancelar</button>
-                                            <button type='submit' class='btn btn-primary'>Confirmar</button>
+                                            <button type='submit' class='btn btn-primary' disabled>Confirmar</button>
                                         </div>
                                         </form>
                                     </div> <!-- modal-content -->
@@ -189,22 +189,23 @@
                 <?php
                         }
                     } else {
-                        $solicitacao = $model -> findById($_GET['pesquisa']);
+                        $pSolicitacao = $model -> findById($_GET['pesquisa']);
 
-                        $itens = $model->selectItemSolicitacao($solicitacao->getId());
-                        $data =  new DateTime($solicitacao->getDataSolicitacao());
+                        $itens = $model->selectItemSolicitacao($pSolicitacao->getId());
+                        $data =  new DateTime($pSolicitacao->getDataSolicitacao());
                     
             ?>
 
                 <div class='accordion-item'>
                     <h2 class='accordion-header'>
                         <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
-                            data-bs-target='#collapse<?=$solicitacao->getId()?>' aria-expanded='false'>
-                            Pedido <?=$solicitacao->getEstadoSolicitacao()?> <strong>&nbsp #<?=$solicitacao->getId()?> &nbsp</strong> de
-                            <?=$solicitacao->getUsuarioNome()?> feito em <?=date_format($data, "d/m/Y")?>
+                            data-bs-target='#collapse<?=$pSolicitacao->getId()?>' aria-expanded='false'>
+                            [<?=$pSolicitacao->getEstadoSolicitacao()?>] <strong>&nbsp #<?=$pSolicitacao->getId()?>
+                                &nbsp</strong> de
+                            <?=$pSolicitacao->getUsuarioNome()?>, <?=$pSolicitacao->getUsuarioDivisao() != 0 ? $model->getDivisaoNome($pSolicitacao->getUsuarioDivisao())['nome'] : $model->getDiretoriaNome($pSolicitacao->getUsuarioDiretoria())['nome']?> feito em <?=date_format($data, "d/m/Y")?>
                         </button>
                     </h2>
-                    <div id='collapse<?=$solicitacao->getId()?>' class='accordion-collapse collapse'>
+                    <div id='collapse<?=$pSolicitacao->getId()?>' class='accordion-collapse collapse'>
                         <div class='accordion-body'>
                             <table class='table table-bordered'>
                                 <tr>
@@ -223,33 +224,34 @@
             ?>
                             </table>
                             <?php
-                if ($solicitacao->getDescricao() != null) {
+                if ($pSolicitacao->getDescricao() != null) {
             ?>
-                            <label for='observacao<?=$solicitacao->getId()?>'>Observação</label>
-                            <input disabled id='observacao<?=$solicitacao->getId()?>' class="form-control bg-white"
-                                value="<?=$solicitacao->getDescricao()?>">
+                            <label for='observacao<?=$pSolicitacao->getId()?>'>Observação</label>
+                            <input disabled id='observacao<?=$pSolicitacao->getId()?>' class="form-control bg-white"
+                                value="<?=$pSolicitacao->getDescricao()?>">
                             <?php
                 }
             ?>
                             <!-- Button trigger modal -->
                             <button type='button' class='btn btn-primary mt-4' data-bs-toggle='modal'
-                                data-bs-target='#modal<?=$solicitacao->getId()?>'>
+                                data-bs-target='#modal<?=$pSolicitacao->getId()?>'>
                                 Entrega
                             </button>
 
                             <!-- Modal -->
-                            <div class='modal fade' id='modal<?=$solicitacao->getId()?>' data-bs-backdrop='static'
+                            <div class='modal fade' id='modal<?=$pSolicitacao->getId()?>' data-bs-backdrop='static'
                                 data-bs-keyboard='false' tabindex='-1' aria-hidden='true'>
                                 <div class='modal-dialog'>
                                     <div class='modal-content'>
                                         <div class='modal-header'>
                                             <h1 class='modal-title fs-5'>Realizar entrega do pedido
-                                                <strong>#<?=$solicitacao->getId()?></strong>
+                                                <strong>#<?=$pSolicitacao->getId()?></strong>
                                             </h1>
                                             <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
                                         </div>
                                         <div class='modal-body'>
-                                            <form action='entrega.php?solicitacao=<?=$solicitacao->getId()?>' method='post'>
+                                            <form action='entrega.php?solicitacao=<?=$pSolicitacao->getId()?>'
+                                                method='post'>
                                                 <div class='row'>
                                                     <ul class='list-group col-10'>
                                                         <?php                    
@@ -257,16 +259,15 @@
             ?>
                                                         <li class='list-group-item ms-3'>
                                                             <label class='form-check-label'
-                                                                for='checkbox<?=$item['id']?>'><?=$item['modelo_produto']?></label>
+                                                                for='checkbox<?=$item['is_id']?>'><?=$item['modelo_produto']?></label>
                                                             <input class='form-check-input ms-3' type='checkbox'
                                                                 name='id[]' value='<?=$item['id']?>'
-                                                                id='checkbox<?=$item['id']?>'>
-
+                                                                id='checkbox<?=$item['is_id']?>'>
                                                             <input type='number'
                                                                 class='form-input ms-3 col-2 rounded border border-1 float-end'
-                                                                name='qntde[]' id='qntde' min='1'
-                                                                max='<?=$item['qntde_item']?>' required>
-                                                            <label for='qntde' class=' float-end'>Quantidade</label>
+                                                                name='qntde[]' id='qntde<?=$item['is_id']?>' min='1'
+                                                                max='<?=$item['qntde_item']?>' disabled>
+                                                            <label for='qntde<?=$item['is_id']?>' class=' float-end'>Quantidade</label>
                                                         </li>
                                                         <?php                                    
                                 }
@@ -286,11 +287,12 @@
                                                     </select>
                                                 </div>
                                         </div> <!-- modal-body -->
-                                        <input type="hidden" name="usuario" value="<?=$solicitacao->getUsuarioId() ?>" />
+                                        <input type="hidden" name="usuario"
+                                            value="<?=$pSolicitacao->getUsuarioId() ?>" />
                                         <div class='modal-footer'>
                                             <button type='button' class='btn btn-secondary'
                                                 data-bs-dismiss='modal'>Cancelar</button>
-                                            <button type='submit' class='btn btn-primary'>Confirmar</button>
+                                            <button type='submit' class='btn btn-primary' disabled>Confirmar</button>
                                         </div>
                                         </form>
                                     </div> <!-- modal-content -->
@@ -299,14 +301,45 @@
                         </div><!-- accordion-body -->
                     </div><!-- collapse -->
                 </div><!-- accordion-item -->
-                <?php
+            </div><!-- accordion -->
+            <a href="pesquisar.php" class="btn btn-light">Voltar para Home</button>
+            <?php
                     }
             ?>
-            </div><!-- accordion -->
+        </div><!-- accordion -->
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
+    <script language='javascript'>
+        let check = document.querySelectorAll(".form-check-input");
+        let qntde = document.querySelectorAll(".form-input");
+        let modal = document.querySelectorAll(".modal-body ul");
+        let confirmar = document.querySelectorAll(".modal-footer button[type=submit]");
+        
+        function verifica() {
+            for (let x = 0; x < modal.length; x++) {
+                confirmar[x].setAttribute('disabled', '');
+                if (modal[x].querySelectorAll("input[type=checkbox]:checked").length > 0){
+                    confirmar[x].removeAttribute('disabled');
+                } else {
+                    confirmar[x].setAttribute('disabled', '');
+                } 
+            }
+        }
+        
+        for (let i = 0; i < check.length; i++) {
+            check[i].addEventListener("change", () => {
+                qntde[i].toggleAttribute('required');
+                qntde[i].toggleAttribute('disabled');
+                verifica();
+            });
+        }
+    </script>
+
 </body>
 
 </html>
