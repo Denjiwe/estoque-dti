@@ -244,8 +244,7 @@
             $con->execute();
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
-                $qntde = new Produto;
-                $qntde ->setQntde($linha['qntde_estoque']);
+                $qntde = $linha['qntde_estoque'];
             }
 
             return $qntde;

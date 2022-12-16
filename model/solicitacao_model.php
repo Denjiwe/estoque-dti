@@ -29,7 +29,8 @@
             if ($local['divisao_id'] == null) {
 
                 $conexao->beginTransaction();
-                $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, diretoria_id) VALUES (:estado, :descricao, now(), :usuario_id, :diretoria)");
+                $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, diretoria_id) 
+                VALUES (:estado, :descricao, now(), :usuario_id, :diretoria)");
                 $con->bindValue ("estado", $solicitacao->getEstadoSolicitacao(), PDO::PARAM_STR);
                 $con->bindValue ("descricao", $solicitacao?->getDescricao(), PDO::PARAM_STR);
                 $con->bindValue ("usuario_id", $_SESSION['usuarioId'], PDO::PARAM_INT);
@@ -39,7 +40,8 @@
             } else {
 
                 $conexao->beginTransaction();
-                $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, divisao_id) VALUES (:estado, :descricao, now(), :usuario_id, :divisao)");
+                $con = $conexao->prepare("INSERT INTO solicitacao (estado_solicitacao, descricao, data_solicitacao, usuario_id, divisao_id) 
+                VALUES (:estado, :descricao, now(), :usuario_id, :divisao)");
                 $con->bindValue ("estado", $solicitacao->getEstadoSolicitacao(), PDO::PARAM_STR);
                 $con->bindValue ("descricao", $solicitacao?->getDescricao(), PDO::PARAM_STR);
                 $con->bindValue ("usuario_id", $_SESSION['usuarioId'], PDO::PARAM_INT);
@@ -191,13 +193,22 @@
 
         function selectItemSolicitacao(int $id) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select produto.id, produto.modelo_produto, itens_solicitacao.id as is_id, itens_solicitacao.qntde_item from produto inner join itens_solicitacao on itens_solicitacao.produto_id = produto.id where itens_solicitacao.solicitacao_id = :id");
+            $con = $conexao->prepare("select produto.id, produto.modelo_produto, itens_solicitacao.id as is_id, itens_solicitacao.qntde_item from produto inner join itens_solicitacao
+            on itens_solicitacao.produto_id = produto.id where itens_solicitacao.solicitacao_id = :id");
             $con->bindValue("id", $id, PDO::PARAM_INT);
             $con->execute();
 
-            $stmt = $con->fetchAll();
-            
-            return $stmt;
+            $itens = [];
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $item['id'] = $linha['id']; 
+                $item['is_id'] = $linha['is_id']; 
+                $item['qntde_item'] = $linha['qntde_item']; 
+                $item['modelo_produto'] = $linha['modelo_produto']; 
+                
+                $itens[] = $item;
+            }
+            return $itens;
         }
 
         function updateEstado(string $estado, int $id) {
@@ -230,5 +241,27 @@
             $diretoria = $con->fetch(PDO::FETCH_ASSOC);
 
             return $diretoria;
+        }
+
+        //comparaEntrega
+        function comparaEntrega($solicitacaoId) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT entrega.qntde, entrega.data_entrega, itens_solicitacao.solicitacao_id, itens_solicitacao.produto_id FROM entrega 
+            INNER JOIN itens_solicitacao ON entrega.itens_solicitacao_id = itens_solicitacao.id WHERE itens_solicitacao.solicitacao_id = :id");
+            $con->bindValue("id", $solicitacaoId, PDO::PARAM_INT);
+            $con->execute();
+
+            $entregues = [];
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $entregue['qntdeEntregue'] = $linha['qntde'];
+                $entregue['dataEntregue'] = $linha['data_entrega'];
+                $entregue['solicitacaoId'] = $linha['solicitacao_id'];
+                $entregue['produtoId'] = $linha['produto_id'];
+
+                $entregues[] = $entregue;
+            }
+
+            return $entregues;
         }
     }   

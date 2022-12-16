@@ -33,7 +33,7 @@
 
         $toner = $model?->getToner($idImpressora);
 
-        $cilindro = $model?->getCilindro($idImpressora);
+        @$cilindro = $model?->getCilindro($idImpressora);
 
         $chaveToner = array_search($toner?->getModelo(), $_SESSION['toner']);     
 
@@ -208,10 +208,15 @@
                                 @$cilindro = $model?->getCilindro($idImpressora);
                                 if ($cilindro == null) {
                             ?>
-            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.
-            </div>
+            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
             <?php        
+                                $toner = null;
+                                unset($nomeImpressora);
+                                unset($idImpressora);
+                                unset($qntde);
+                                break;
                                 }
+
                                 if (!isset($_SESSION['qntde'])){
                                     $_SESSION['qntde'] = [];
                                 }
@@ -230,57 +235,57 @@
                                     }
                                     array_push($_SESSION['qntde'], $qntde);
                                 }
-
                                 if ($cilindro == null) {
                             ?>
-            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.
-            </div>
+            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
             <?php        
+                                $toner = null;
+                                unset($nomeImpressora);
+                                unset($idImpressora);
+                                unset($qntde);
+                                break;
                                 }
                                 break;
                         }
-                        if (!isset($_SESSION['produtos'])) {
-                            $_SESSION['produtos'] = [];
-                        }
 
-                        if (!isset($_SESSION['nomeImpressora'])){
-                            $_SESSION['nomeImpressora'] = [];
-                        }
-                        array_push($_SESSION['nomeImpressora'], $nomeImpressora);
-                        
-                        if (!isset($_SESSION['idImpressora'])){
-                            $_SESSION['idImpressora'] = [];
-                        }
-                        array_push($_SESSION['idImpressora'], $idImpressora);
-                       
-                        if (!isset($_SESSION['qntdeExibicao'])){
-                            $_SESSION['qntdeExibicao'] = [];
-                        }
-                        array_push($_SESSION['qntdeExibicao'], $qntde);
-                        
-                        if ($toner != null) {
-                            if (!isset($_SESSION['toner'])){
-                                $_SESSION['toner'] = [];
+                        if (isset($idImpressora)) {
+                            if (!isset($_SESSION['produtos'])) {
+                                $_SESSION['produtos'] = [];
                             }
-                            array_push($_SESSION['toner'],$toner?->getModelo());
+
+                            if (!isset($_SESSION['nomeImpressora'])){
+                                $_SESSION['nomeImpressora'] = [];
+                            }
+                            array_push($_SESSION['nomeImpressora'], $nomeImpressora);
                             
-                        }
-                        if ($cilindro != null) {
-                            if (!isset($_SESSION['cilindro'])){
-                                $_SESSION['cilindro'] = [];
+                            if (!isset($_SESSION['idImpressora'])){
+                                $_SESSION['idImpressora'] = [];
                             }
-                            array_push($_SESSION['cilindro'],$cilindro?->getModelo());
+                            array_push($_SESSION['idImpressora'], $idImpressora);
+                            
+                            if (!isset($_SESSION['qntdeExibicao'])){
+                                $_SESSION['qntdeExibicao'] = [];
+                            }
+                            array_push($_SESSION['qntdeExibicao'], $qntde);
+                            
+                            if ($toner != null) {
+                                if (!isset($_SESSION['toner'])){
+                                    $_SESSION['toner'] = [];
+                                }
+                                array_push($_SESSION['toner'],$toner?->getModelo());
+                                array_push($_SESSION['produtos'], $toner?->getId());
+                            }
+                            if ($cilindro != null) {
+                                if (!isset($_SESSION['cilindro'])){
+                                    $_SESSION['cilindro'] = [];
+                                }
+                                array_push($_SESSION['cilindro'],$cilindro?->getModelo());
+                                array_push($_SESSION['produtos'], $cilindro?->getId());
+                            }
                         }
-                        if ($cilindro != null) {
-                            array_push($_SESSION['produtos'], $cilindro?->getId());
-                        }
-                        if ($toner != null) {
-                            array_push($_SESSION['produtos'], $toner?->getId());
-                        }
-                        
                     }
 
-                    if (isset($_SESSION['nomeImpressora']) && $_SESSION['nomeImpressora'] != null){
+                    if ((isset($_SESSION['nomeImpressora']) && $_SESSION['nomeImpressora'] != null) && ((isset($_SESSION['toner']) || isset($_SESSION['cilindro'])) && (@$_SESSION['toner'] != null || @$_SESSION['cilindro'] != null))){
                             ?>
             <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
                 <tr>
