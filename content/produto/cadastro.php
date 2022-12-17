@@ -22,20 +22,23 @@
 
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
                     
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
+
         $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
         $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
 
+        include_once ($entityPath . "produto.php");
+
+        include_once ($modelPath . "produto_model.php");
+
+        include ($controllerPath . "produto_controller.php");
+
         include_once ($path . "menu.php");
 
         include($path . "verificaDti.php");
-        
-        include ($entityPath . "produto.php");
 
-        include ($modelPath . "produto_model.php");
-
-        
-
+        $produtoController = new ProdutoController;
 
         if(@$_REQUEST['id']) {
             try {
@@ -43,11 +46,7 @@
                 $produto = new Produto;
 
                 $produto = $model->findById($_REQUEST['id']);
-                $id = $produto->getId();
-                $modelo = $produto->getModelo();
-                $ativo = $produto->getAtivo();  
-                $descricao = $produto->getDescricao();
-                $qntde = $produto->getQntde();
+                $ativo = $produto->getAtivo();
 
                 $suprimentos = $model->getSuprimentos($_REQUEST['id']);
 
@@ -56,85 +55,11 @@
             }
         }
 
-        //atualizar produto
         if (isset($_POST['modelo'])){
             if(@$_REQUEST['id'] != null) {
-                $new_model = new ProdutoModel;
-
-                $new_produto = new Produto;
-
-                $ativook = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativook = 1;
-                }
-                $new_modelo = $_POST['modelo'];
-                $new_ativo = $ativook;
-                $new_descricao = $_POST['descricao'];
-                $new_qntde = $_POST['qntde'];
-                $new_id = $_REQUEST['id'];
-                $itens = $_POST['produtosVinculados'];
-
-                $new_produto->setModelo($new_modelo);
-                $new_produto->setAtivo($new_ativo);
-                $new_produto->setDescricao($new_descricao);
-                $new_produto->setQntde($new_qntde);
-                $new_produto->setId($new_id);  
-
-                if (strlen(trim($itens)) != 0 ){
-                    $new_produto?->setItens(explode(",",trim($itens)));        
-                } else {
-                    $new_produto->setItens([]);
-                }
-
-                try {
-                    $new_model->update($new_produto);
-                    echo "<div class='container alert alert-success mt-5'>Registro atualizado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Modelo")) {
-                        echo "<div class=' container alert alert-danger'>Não foi possível atualizar o registro, pois o modelo do produto já foi cadastrado</div>";
-                    } else {
-                        echo "Não foi possível atualizar o registro! Erro de banco de dados";
-                    }
-                }    
+                $produtoController->atualizaProduto();    
             } else {
-                //cadastrar produto
-                $new_model = new ProdutoModel;
-
-                $new_produto = new Produto;
-
-                $ativook = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativook = 1;
-                }
-                $new_modelo = $_POST['modelo'];
-                $new_ativo = $ativook;
-                $new_descricao = $_POST['descricao'];
-                $new_qntde = $_POST['qntde'];
-                $itens = $_POST['produtosVinculados'];
-
-
-                $new_produto->setModelo($new_modelo);
-                $new_produto->setAtivo($new_ativo);
-                $new_produto->setDescricao($new_descricao);
-                $new_produto->setQntde($new_qntde);
-                if (strlen(trim($itens)) != 0 ){
-                    $new_produto?->setItens(explode(",",trim($itens)));        
-                } else {
-                    $new_produto->setItens([]);
-                }
-
-                try {
-                    $new_model->insert($new_produto);
-                    echo "<div class=' container alert alert-success'>Registro criado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Suprimentos")) {
-                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois os suprimentos estão em duplicidade!</div>";
-                    } elseif (str_contains($e->getMessage(), "UC_Modelo")) {
-                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro, pois o modelo do produto já foi cadastrado</div>";
-                    } else {
-                        echo "<div class=' container alert alert-danger'>Não foi possível salvar o registro! Erro de banco de dados.</div>";
-                    }
-                }  
+                $produtoController->cadastraProduto();
             }
         }
     ?>
@@ -157,7 +82,7 @@
                 <label for="modelo">Modelo <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="modelo" id="modelo" 
                     <?php if(isset($produto)) {
-                        echo "value=\"".$modelo."\"";
+                        echo "value=\"".$produto->getModelo()."\"";
                         }
                     ?>
                 placeholder="insira o modelo do produto">
@@ -179,7 +104,7 @@
                 <label for="descricao">Descrição</label>
                 <input type="text" class="form-control" name="descricao"
                     <?php if(isset($produto)) {
-                        echo "value=\"".$descricao."\"";
+                        echo "value=\"".$produto->getDescricao()."\"";
                         }
                     ?>
                 id="descricao">
@@ -189,7 +114,7 @@
                 <label for="qntde">Quantidade</label>
                 <input type="number" class="form-control" name="qntde"
                     <?php if(isset($produto)) {
-                        echo "value=\"".$qntde."\"";
+                        echo "value=\"".$produto->getQntde()."\"";
                         }
                     ?> 
                 id="qntde">

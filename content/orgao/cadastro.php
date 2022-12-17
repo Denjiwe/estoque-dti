@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD 2.0 - Cadastro</title>
+    <title>Cadastro de Órgãos</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
@@ -20,99 +20,30 @@
 <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
-
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
         include ($path . "menu.php");
 
         include($path . "verificaDti.php");
 
-        include ($entityPath . "orgao.php");
+        include ($controllerPath . "orgao_controller.php");
 
-        include ($modelPath . "orgao_model.php");
+        $orgaoController = new OrgaoController;
 
         if(@$_REQUEST['id']) {
-            try {
-                $model = new OrgaoModel;
-                $orgao = new Orgao;
-
-                $orgao = $model->findById($_REQUEST['id']);
-                $id = $orgao->getId();
-                $nome = $orgao->getNome();
-                $ativo = $orgao->getAtivo();
-                $dataCricacao = $orgao->getDataCriacao();
-                $dataDesativo = $orgao->getDataDesativo();
-
-            } catch (PDOException $e) {
-                echo "<div class='container alert alert-danger mt-5'>Não foi possível recuperar o registro! Erro de banco de dados.</div>";
-            }
+            $orgao = $orgaoController->buscaOrgao();
+            $id = $orgao->getId();
+            $nome = $orgao->getNome();
+            $ativo = $orgao->getAtivo();
+            $dataCricacao = $orgao->getDataCriacao();
+            $dataDesativo = $orgao->getDataDesativo();
         }
 
-        
         if (isset($_POST['nome'])){
-            if(@$_REQUEST['id'] != null) {
-                $model = new OrgaoModel;
-
-                $orgao = new Orgao;
-
-                $ativoOk = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
-                }
-                $nome = $_POST['nome'];
-                $ativo = $ativoOk;
-                $dataCriacao = $_POST['dataCricao'];
-                $dataDesativo = $_POST['dataDesativado'];
-                $dataDesativoOk = strlen($dataDesativo) > 0 ? $dataDesativo : null;
-                $id = $_REQUEST['id'];
-
-                $orgao->setNome($nome);
-                $orgao->setAtivo($ativo);
-                $orgao->setDataCriacao($dataCriacao);
-                $orgao->setDataDesativo($dataDesativoOk);
-                $orgao->setId($id);          
-
-                try {
-                    $model->update($orgao);
-                    echo "<div class='container alert alert-success mt-5'>Registro atualizado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Nome")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar o órgão, pois um de mesmo nome já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar o órgão! Erro de banco de dados.</div>";
-                    }
-                }    
+            if(@$_REQUEST['id'] == null) {
+                $orgaoController->cadastraOrgao();
             } else {
-                $newModel = new OrgaoModel;
-
-                $newOrgao = new Orgao;
-
-                $ativoOk = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
-                }
-                $newNome = $_POST['nome'];
-                $newAtivo = $ativoOk;
-                $newDataCriacao = $_POST['dataCricao'];
-                $newDataDesativo = $_POST['dataDesativado'];
-                $newDataDesativoOk = strlen($newDataDesativo) > 0 ? $newDataDesativo : null;
-
-                $newOrgao->setNome($newNome);
-                $newOrgao->setAtivo($newAtivo);
-                $newOrgao->setDataCriacao($newDataCriacao);
-                $newOrgao->setDataDesativo($newDataDesativoOk);
-
-                try {
-                    $newModel->insert($newOrgao);
-                    echo "<div class='container alert alert-success mt-5'>Registro criado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Nome")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar o ógão, pois um de mesmo nome já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar o ógão! Erro de banco de dados.</div>";
-                    }
-                }  
+                $orgaoController->atualizaOrgao();
             }
         }
     ?>

@@ -20,32 +20,22 @@
 <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        include ($controllerPath . "divisao_controller.php");
 
         include ($path . "menu.php");
 
-        include($path . "verificaDti.php");
+        include ($path . "verificaDti.php");
 
-        include ($entityPath . "divisao.php");
-
-        include ($modelPath . "divisao_model.php");
+        $divisaoController = new DivisaoController;
 
         if (isset($_GET['id'])) {
             try {
-                $model = new DivisaoModel;
-                $divisao = new Divisao;
-                $id = $_GET['id'];
+                //retorna $divisao
+                $divisao = $divisaoController->buscaDivisao();
 
-                $divisao = $model->findById($id);
-                $id = $divisao->getId();
-                $nome = $divisao->getNome();
                 $ativo = $divisao->getAtivo();
-                $dataCriacao = $divisao->getDataCriacao();
-                $dataDesativo = $divisao->getDataDesativo();
-                $diretoriaId = $divisao->getDiretoriaId();
-                $diretoriaNome = $divisao->getDiretoriaNome();
 
             } catch (PDOException $e) {
                 echo "<div class='container alert alert-danger mt-5'>Não foi possível recuperar o registro! Erro de banco de dados.</div>";
@@ -54,71 +44,9 @@
 
         if (isset($_POST['nome'])){
             if(@$_REQUEST['id'] != null) {
-                $model = new DivisaoModel;
-
-                $divisao = new Divisao;
-
-                $ativoOk = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
-                }
-                $nome = $_POST['nome'];
-                $ativo = $ativoOk;
-                $dataCriacao = $_POST['dataCriacao'];
-                $dataDesativo = $_POST['dataDesativado'];
-                $dataDesativoOk = strlen($dataDesativo) > 0 ? $dataDesativo : null;
-                $id = $_REQUEST['id'];
-                $diretoriaId = $_POST['diretoria'];
-
-                $divisao->setNome($nome);
-                $divisao->setAtivo($ativo);
-                $divisao->setDataCriacao($dataCriacao);
-                $divisao->setDataDesativo($dataDesativoOk);
-                $divisao->setDiretoriaId($diretoriaId);
-                $divisao->setId($id);          
-
-                try {
-                    $model->update($divisao);
-                    echo "<div class='container alert alert-success mt-5'>Registro atualizado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Nome")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a divisão, pois uma de mesmo nome já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a divisão! Erro de banco de dados.</div>";
-                    }
-                }    
+                $divisaoController->atualizaDivisao();    
             } else {
-                $model = new DivisaoModel;
-
-                $newDivisao = new Divisao;
-
-                $ativoOk = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
-                }
-                $newNome = $_POST['nome'];
-                $newAtivo = $ativoOk;
-                $newDataCriacao = $_POST['dataCriacao'];
-                $newDataDesativo = $_POST['dataDesativado'];
-                $newDataDesativoOk = strlen($newDataDesativo) > 0 ? $newDataDesativo : null;
-                $newDiretoriaId = $_POST['diretoria'];
-
-                $newDivisao->setNome($newNome);
-                $newDivisao->setAtivo($newAtivo);
-                $newDivisao->setDataCriacao($newDataCriacao);
-                $newDivisao->setDataDesativo($newDataDesativoOk);
-                $newDivisao->setDiretoriaId($newDiretoriaId);
-
-                try {
-                    $model->insert($newDivisao);
-                    echo "<div class='container alert alert-success mt-5'>Registro criado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Nome")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a divisão, pois uma de mesmo nome já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a divisão! Erro de banco de dados.</div>";
-                    }
-                }  
+                $divisaoController->cadastraDivisao();
             }
         }
     ?>
@@ -144,7 +72,7 @@
                     <label for="nome">Nome <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="nome" id="nome" 
                         <?php if(isset($divisao)) {
-                            echo "value=\"".$nome."\"";
+                            echo "value=\"".$divisao->getNome()."\"";
                             }
                         ?>
                     placeholder="insira o nome da divisao" required>
@@ -154,28 +82,7 @@
                     <label for="diretoria">Selecione a diretoria da divisão <span class="text-danger">*</span></label>
                     <select class="form-select" name="diretoria" id="diretoria" required>
                         <?php
-                            $model = new DivisaoModel;
-
-                            $newDivisao = new Divisao;
-
-                            $diretorias = $model->getDiretorias();
-
-                            if (isset($_GET['id'])){
-                                print "<option value=".$diretoriaId." selected>".$diretoriaNome."</option>";
-
-                                foreach ($diretorias as $diretoria) {
-                                    if ($diretoria['id'] !== $diretoriaId){
-                                        print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
-                                    }
-                                }
-                            } else {
-                                print "<option hidden selected></option>";
-
-                                foreach ($diretorias as $diretoria) {
-                                    print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
-                                }
-                            }
-
+                            $divisaoController->exibeDiretorias();
                         ?>
                     </select>
                 </div>
@@ -186,7 +93,7 @@
                     <label for="dataCriacao">Data de Criação <span class="text-danger">*</span></label>
                     <input type="date" class="form-control" name="dataCriacao"
                         <?php if(isset($divisao)) {
-                            echo "value=\"".$dataCriacao."\"";
+                            echo "value=\"".$divisao->getDataCriacao()."\"";
                             }
                         ?>
                     id="dataCriacao" required>
@@ -196,7 +103,7 @@
                     <label for="dataDesativado">Data de Desativação</label>
                     <input type="date" class="form-control" name="dataDesativado"
                         <?php if(isset($divisao)) {
-                            echo "value=\"".$dataDesativo."\"";
+                            echo "value=\"".$divisao->getDataDesativo()."\"";
                             }
                         ?> 
                     id="dataDesativado">

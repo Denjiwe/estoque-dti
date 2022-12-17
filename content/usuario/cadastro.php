@@ -20,149 +20,25 @@
 <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        include ($controllerPath . "usuario_controller.php");
 
         include ($path . "menu.php");
 
-        include($path . "verificaDti.php");
+        include ($path . "verificaDti.php");
 
-        include ($entityPath . "usuario.php");
-
-        include ($modelPath . "usuario_model.php");
+        $usuarioController = new UsuarioController;
 
         if (isset($_GET['id'])){
-            $model = new UsuarioModel;
-
-            $newUsuario = new Usuario;
-
-            $id = $_GET['id'];
-            try {
-                $usuario = $model->findById($id);
-            } catch (PDOException $e) {
-                echo "<div class='container alert alert-danger mt-5'>Não foi possível recuperar o registro! Erro de banco de dados.</div>";
-            }
-            
+            $usuario = $usuarioController->buscaUsuario();
         }
 
         if(isset($_POST['nome'])) {
             if (@$_REQUEST['id'] != null){
-                $model = new UsuarioModel;
-
-                $usuario = new Usuario;
-
-                $id = $_POST['id'];
-                $ativo = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativo = 1;
-                }
-                $usuarioDti = 0;
-                if (isset($_POST['usuarioDti']) && strtolower($_POST['usuarioDti']) == 'on'){
-                    $usuarioDti = 1;
-                }
-                $senha = null;
-                if (isset($_POST['senha']) && strlen($_POST['senha']) > 0){
-                    $senha = MD5($_POST['senha']);
-                }    
-
-                $nome = $_POST['nome'];
-                $cpf = $_POST['cpf'];
-                $email = $_POST['email'];
-
-                if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
-                    $divisao = $_POST['selectDivisao'];
-                    $usuario->setDivisaoId($divisao);
-                    $usuario->setDiretoriaId(0);
-                } elseif ($_POST['selectDiretoria'] >= 1) {
-                    $diretoria = $_POST['selectDiretoria'];
-                    $usuario->setDiretoriaId($diretoria);
-                    $usuario->setDivisaoId(0);
-                } elseif ($_POST['selectDivisao'] >= 1) {
-                    $divisao = $_POST['selectDivisao'];
-                    $usuario->setDivisaoId($divisao);
-                    $usuario->setDiretoriaId(0);
-                }
-
-                $usuario->setNome($nome);
-                $usuario->setCpf($cpf);
-                $usuario->setEmail($email);
-                $usuario->setAtivo($ativo);
-                $usuario->setId($id);
-                $usuario->setUsuarioDti($usuarioDti);
-                if ($senha != null) {
-                    $usuario->setSenha($senha);
-                }
-
-                try {
-                    if ($senha != null) {
-                        $model->updateComSenha($usuario);
-                    } else {
-                        $model->updateSemSenha($usuario);
-                    }
-
-                    print "<div class='container alert alert-success mt-5'>Usuário alterado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Cpf")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a usuário, pois um usuário de mesmo CPF já existe!</div>";
-                    } elseif (str_contains($e->getMessage(), "UC_Email")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a usuário, pois um usuário de mesmo e-mail já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a usuário, erro de banco de dados</div>";
-                    }
-                }
+                $usuarioController->atualizaUsuario();
             } else {
-                $model = new UsuarioModel;
-
-                $newUsuario = new Usuario;
-
-                $newAtivo = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $newAtivo = 1;
-                }
-                $newUsuarioDti = 0;
-                if (isset($_POST['usuarioDti']) && strtolower($_POST['usuarioDti']) == 'on'){
-                    $newUsuarioDti = 1;
-                }
-                $newNome = $_POST['nome'];
-                $newCpf = $_POST['cpf'];
-                $newEmail = $_POST['email'];
-                $newSenha = MD5($_POST['senha']);
-
-                if ($_POST['selectDivisao'] >= 1 && $_POST['selectDiretoria'] >= 1){
-                    $newDivisao = $_POST['selectDivisao'];
-                    $newUsuario->setDivisaoId($newDivisao);
-                    $newUsuario->setDiretoriaId(0);
-                } elseif ($_POST['selectDiretoria'] >= 1) {
-                    $newDiretoria = $_POST['selectDiretoria'];
-                    $newUsuario->setDiretoriaId($newDiretoria);
-                    $newUsuario->setDivisaoId(0);
-                } elseif ($_POST['selectDivisao'] >= 1) {
-                    $newDivisao = $_POST['selectDivisao'];
-                    $newUsuario->setDivisaoId($newDivisao);
-                    $newUsuario->setDiretoriaId(0);
-                }
-
-                $newUsuario->setNome($newNome);
-                $newUsuario->setCpf($newCpf);
-                $newUsuario->setEmail($newEmail);
-                $newUsuario->setSenha($newSenha);
-                $newUsuario->setAtivo($newAtivo);
-                $newUsuario->setUsuarioDti($newUsuarioDti);
-
-                try {
-                    $model->insert($newUsuario);
-
-                    print "<div class='container alert alert-success mt-5'>Usuário criado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Cpf")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a usuário, pois um usuário de mesmo CPF já existe!</div>";
-                    } elseif (str_contains($e->getMessage(), "UC_Email")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a usuário, pois um usuário de mesmo e-mail já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a usuário, erro de banco de dados ".$e->getMessage()."</div>";
-                    }
-                }
+                $usuarioController->cadastraUsuario();
             }
         }
     ?>
@@ -219,38 +95,7 @@
                     <label for="selectDiretoria">Selecione a diretoria</label>
                     <select class="form-select" name="selectDiretoria" id="selectDiretoria" required>
                         <?php 
-                            $model = new UsuarioModel;
-
-                            $diretorias  = $model->selectDiretoria();
-
-                            if (isset($usuario)){
-                                if ($usuario->getDiretoriaId() > 0){
-                                    $id = $usuario->getDiretoriaId();
-                                    $diretoria= $model->findDiretoriaNome($id);
-                                    $usuario->setDiretoriaNome($diretoria);
-                                    print "<option value='0'></option>";
-                                } else {
-                                    print "<option value='0' selected></option>";
-                                }
-                            } else {
-                                print "<option value='0' selected></option>";
-                            }
-
-                            foreach ($diretorias as $diretoria) {
-                                if (isset($usuario)){
-                                    if ($usuario->getDiretoriaId() >= 1){
-                                        if ($diretoria['id'] !== $usuario->getDiretoriaId()){
-                                            print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
-                                        } else {
-                                            print "<option value=\"".$usuario->getDiretoriaId()."\" selected>".$usuario->getDiretoriaNome()."</option>";
-                                        }
-                                    } else {
-                                        print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
-                                    }
-                                } else {
-                                    print "<option value=\"".$diretoria['id']."\">".$diretoria['nome']."</option>";
-                                }
-                            }
+                            $usuarioController->exibeDiretoria();
                         ?>
                     </select>
                 </div>
@@ -259,40 +104,7 @@
                     <label for="selectDivisao">Selecione a divisão</label>
                     <select class="form-select" name="selectDivisao" id="selectDivisao">
                         <?php 
-                            $model = new UsuarioModel;
-                                
-                            $divisoes  = $model->selectDivisao();
-
-                            if (isset($usuario)){
-                                if ($usuario->getDivisaoId() > 0){
-                                    $id = $usuario->getDivisaoId();
-                                    $divisao = $model->findDivisaoNome($id);
-                                    $usuario->setDivisaoNome($divisao);
-                                    print "<option value='0'>Nenhuma divisão</option>";
-                                } else {
-                                    print "<option value='0' selected>Nenhuma divisão</option>";
-                                }
-                            } else {
-                                print "<option value='0' selected>Nenhuma divisão</option>";
-                            }
-
-                            foreach ($divisoes as $divisao) {
-                                if (isset($usuario)){
-                                    
-
-                                    if ($usuario->getDivisaoId() > 0){
-                                        if ($divisao['id'] !== $usuario->getDivisaoId()){
-                                            print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
-                                        } else {
-                                            print "<option value=\"".$usuario->getDivisaoId()."\" selected>".$usuario->getDivisaoNome()."</option>";
-                                        }
-                                    } else {
-                                        print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
-                                    }
-                                } else {
-                                    print "<option value=\"".$divisao['id']."\">".$divisao['nome']."</option>";
-                                }
-                            }
+                            $usuarioController->exibeDivisao();
                         ?>
                     </select>
                 </div>

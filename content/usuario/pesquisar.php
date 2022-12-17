@@ -20,17 +20,15 @@
 <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        include ($controllerPath . "usuario_controller.php");
 
         include ($path . "menu.php");
 
         include($path . "verificaDti.php");
 
-        include ($entityPath . "usuario.php");
-
-        include ($modelPath . "usuario_model.php");
+        $usuarioController = new UsuarioController;
 ?>
 
     <main class="container mt-5">
@@ -53,117 +51,13 @@
             
             <?php
                 if(@$_REQUEST['delete']) {
-                    $model = new UsuarioModel;
-                    $usuario = new Usuario;
-                    $usuario = $model->findById($_GET['delete']);
-                    $cpf = $usuario ->getCpf();
-
-                    if ($_SESSION['cpf'] == $cpf){
-                        echo "<div class='alert alert-danger'>Não pode excluir o usuário em que está logado!</div>";
-                    } else {
-                        try{
-                            
-                            $model ->delete($_REQUEST["delete"]);
-                            echo "<div class='alert alert-success'>Usuário excluído com sucesso</div>";
-                        } catch (PDOException $e) {
-                            if (str_contains($e->getMessage(), "fk_entrega_usuario")) {
-                                echo "<div class='alert alert-danger'>Não foi possível excluir o usuário, pois o usuário possui solicitações cadastradas, deixe o usuário como inativo caso necessário</div>"; 
-                            } else {
-                                echo "<div class='alert alert-danger'>Não foi possível excluir o usuário, erro de banco de dados</div>";
-                            }
-                        }
-                    }
+                    $usuarioController->excluiUsuario();
                 }
 
                 if (isset($_GET['pesquisa'])) {
-                    $model = new UsuarioModel;
-                    
-                    $pesquisa = $_GET['pesquisa'];
-
-                    $usuario = $model->findByName($pesquisa);
-
-                    print "<h1>Usuários cadastrados com nome: \"".$pesquisa."\"</h1>";
-
-                    if ($usuario == null ) {
-            ?>            
-                        <h3>Nenhum usuário encontrado!</h3>
-                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
-            <?php            
-                    } else {
-            ?>            
-                        <table class='container table table-hover table-striped table-bordered text-center'>
-
-                        <tr>
-                            <th style='display:none;'>id</th>
-                            <th class="text-center">Nome</th>
-                            <th class="text-center">CPF</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Locação</th>
-                            <th class="text-center">Ativo</th>
-                            <th class="text-center">Acesso DTI</th>
-                            <th class="text-center">Ações</th>
-                        </tr>
-                    
-                        <tr>
-                            <td style='display:none;'><?=$usuario->getId()?></td>
-                            <td class="text-center"><?=$usuario->getNome()?></td>
-                            <td class="text-center"><?=$usuario->getCpf()?></td>
-                            <td class="text-center"><?=$usuario->getEmail()?></td>
-                            <td class="text-center"><?=($usuario->getDivisaoId() !== 0? $usuario->getDivisaoNome() : $usuario->getDiretoriaNome())?></td>
-                            <td class="text-center"><?=($usuario->getAtivo() ? 'Sim' : 'Não')?></td>
-                            <td class="text-center"><?=($usuario->getUsuarioDti() ? 'Sim' : 'Não')?></td>
-                            <td class="text-center">
-                                <a href="cadastro.php?id=<?=$usuario->getId()?>" class='btn btn-success'>Editar</a>
-                                <a href="pesquisar.php?delete=<?=$usuario->getId()?>" class='btn btn-danger excluir'>Excluir</a>
-                            </td>
-                        </tr>
-                    
-                        </table>
-
-                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
-            <?php            
-                    }
-                    
+                    $usuarioController->exibePesquisa();
                 } else {
-            ?>        
-                    <h1>Usuários cadastrados</h1>
-
-                    <table class='container table table-hover table-striped table-bordered text-center'>
-
-                    <tr>
-                        <th style='display:none;'>id</th>
-                        <th class="text-center">Nome</th>
-                        <th class="text-center">CPF</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Locação</th>
-                        <th class="text-center">Ativo</th>
-                        <th class="text-center">Acesso DTI</th>
-                        <th class="text-center">Ações</th>
-                    </tr>
-            <?php        
-
-                    $model = new UsuarioModel;
-
-                    $usuario = $model->select();
-                    
-                    foreach ($usuario as $obj) {
-            ?>            
-                        <tr>
-                            <td style='display:none;'><?=$obj->getId()?></td>
-                            <td class="text-center"><?=$obj->getNome()?></td>
-                            <td class="text-center"><?=$obj->getCpf()?></td>
-                            <td class="text-center"><?=$obj->getEmail()?></td>
-                            <td class="text-center"><?=($obj->getDiretoriaId() !== 0? $obj->getDiretoriaNome(): $obj->getDivisaoNome())?></td>
-                            <td class="text-center"><?=($obj->getAtivo() ? 'Sim' : 'Não')?></td>
-                            <td class="text-center"><?=($obj->getUsuarioDti() ? 'Sim' : 'Não')?></td>
-                            <td class="text-center">
-                                <a href="cadastro.php?id=<?=$obj->getId()?>" class='btn btn-success'>Editar</a>
-                                <a href="pesquisar.php?delete=<?=$obj->getId()?>" class='btn btn-danger excluir'>Excluir</a>
-                            </td>
-                        </tr>
-            <?php            
-                    }
-                    print "</table>";
+                    $usuarioController->exibeUsuario();
                 }
 
             ?>

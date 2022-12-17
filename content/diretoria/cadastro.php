@@ -20,32 +20,22 @@
 <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        include ($controllerPath . "diretoria_controller.php");
 
         include ($path . "menu.php");
 
         include($path . "verificaDti.php");
 
-        include ($entityPath . "diretoria.php");
-
-        include ($modelPath . "diretoria_model.php");
-
+        $diretoriaController = new DiretoriaController;
+        
         if (isset($_GET['id'])) {
             try {
-                $model = new DiretoriaModel;
-                $diretoria = new Diretoria;
-                $id = $_GET['id'];
+                //retorna $diretoria
+                $diretoria = $diretoriaController->buscaDiretoria();
 
-                $diretoria = $model->findById($id);
-                $id = $diretoria->getId();
-                $nome = $diretoria->getNome();
                 $ativo = $diretoria->getAtivo();
-                $dataCriacao = $diretoria->getDataCriacao();
-                $dataDesativo = $diretoria->getDataDesativo();
-                $orgaoId = $diretoria->getOrgaoId();
-                $orgaoNome = $diretoria->getOrgaoNome();
 
             } catch (PDOException $e) {
                 echo "<div class='container alert alert-danger mt-5'>Não foi possível recuperar o registro! Erro de banco de dados.</div>";
@@ -55,71 +45,9 @@
         
         if (isset($_POST['nome'])){
             if(@$_REQUEST['id'] != null) {
-                $model = new DiretoriaModel;
-
-                $diretoria = new Diretoria;
-
-                $ativoOk = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
-                }
-                $nome = $_POST['nome'];
-                $ativo = $ativoOk;
-                $dataCriacao = $_POST['dataCriacao'];
-                $dataDesativo = $_POST['dataDesativado'];
-                $dataDesativoOk = strlen($dataDesativo) > 0 ? $dataDesativo : null;
-                $id = $_REQUEST['id'];
-                $orgaoId = $_POST['orgao'];
-
-                $diretoria->setNome($nome);
-                $diretoria->setAtivo($ativo);
-                $diretoria->setDataCriacao($dataCriacao);
-                $diretoria->setDataDesativo($dataDesativoOk);
-                $diretoria->setOrgaoId($orgaoId);
-                $diretoria->setId($id);          
-
-                try {
-                    $model->update($diretoria);
-                    echo "<div class='container alert alert-success mt-5'>Registro atualizado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Nome")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a diretoria, pois uma de mesmo nome já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível atualizar a diretoria! Erro de banco de dados.</div>";
-                    }
-                }    
+                $diretoriaController->atualizaDiretoria();
             } else {
-                $model = new DiretoriaModel;
-
-                $newDiretoria = new Diretoria;
-
-                $ativoOk = 0;
-                if (isset($_POST['ativo']) && strtolower($_POST['ativo']) == 'on'){
-                    $ativoOk = 1;
-                }
-                $newNome = $_POST['nome'];
-                $newAtivo = $ativoOk;
-                $newDataCriacao = $_POST['dataCriacao'];
-                $newDataDesativo = $_POST['dataDesativado'];
-                $newDataDesativoOk = strlen($newDataDesativo) > 0 ? $newDataDesativo : null;
-                $newOrgaoId = $_POST['orgao'];
-
-                $newDiretoria->setNome($newNome);
-                $newDiretoria->setAtivo($newAtivo);
-                $newDiretoria->setDataCriacao($newDataCriacao);
-                $newDiretoria->setDataDesativo($newDataDesativoOk);
-                $newDiretoria->setOrgaoId($newOrgaoId);
-
-                try {
-                    $model->insert($newDiretoria);
-                    echo "<div class='container alert alert-success mt-5'>Registro criado com sucesso!</div>";
-                } catch (PDOException $e) {
-                    if (str_contains($e->getMessage(), "UC_Nome")) {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a diretoria, pois uma de mesmo nome já existe!</div>";
-                    } else {
-                        echo "<div class='container alert alert-danger mt-5'>Não foi possível criar a diretoria! Erro de banco de dados.</div>";
-                    }
-                }  
+                $diretoriaController->cadastraDiretoria();  
             }
         }
     ?>
@@ -145,7 +73,7 @@
                     <label for="nome">Nome <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="nome" id="nome" 
                         <?php if(isset($diretoria)) {
-                            echo "value=\"".$nome."\"";
+                            echo "value=\"".$diretoria->getNome()."\"";
                             }
                         ?>
                     placeholder="insira o nome da diretoria" required>
@@ -155,28 +83,7 @@
                     <label for="orgao">Selecione o orgão da diretoria <span class="text-danger">*</span></label>
                     <select class="form-select" name="orgao" id="orgao" required>
                         <?php
-                            $model = new DiretoriaModel;
-
-                            $newDiretoria = new Diretoria;
-
-                            $orgaos = $model->getOrgaos();
-
-                            if (isset($_GET['id'])){
-                                print "<option value=".$orgaoId." selected>".$orgaoNome."</option>";
-
-                                foreach ($orgaos as $orgao) {
-                                    if ($orgao['id'] !== $orgaoId){
-                                        print "<option value=\"".$orgao['id']."\">".$orgao['nome']."</option>";
-                                    }
-                                }
-                            } else {
-                                print "<option hidden selected></option>";
-
-                                foreach ($orgaos as $orgao) {
-                                    print "<option value=\"".$orgao['id']."\">".$orgao['nome']."</option>";
-                                }
-                            }
-
+                            $diretoriaController->exibeOrgaos();
                         ?>
                     </select>
                 </div>
@@ -187,7 +94,7 @@
                     <label for="dataCriacao">Data de Criação <span class="text-danger">*</span></label>
                     <input type="date" class="form-control" name="dataCriacao"
                         <?php if(isset($diretoria)) {
-                            echo "value=\"".$dataCriacao."\"";
+                            echo "value=\"".$diretoria->getDataCriacao()."\"";
                             }
                         ?>
                     id="dataCriacao" required>
@@ -197,7 +104,7 @@
                     <label for="dataDesativado">Data de Desativação</label>
                     <input type="date" class="form-control" name="dataDesativado"
                         <?php if(isset($diretoria)) {
-                            echo "value=\"".$dataDesativo."\"";
+                            echo "value=\"".$diretoria->getDataDesativo()."\"";
                             }
                         ?> 
                     id="dataDesativado">

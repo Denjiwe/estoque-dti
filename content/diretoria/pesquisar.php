@@ -20,21 +20,17 @@
 <body>
     <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
+        
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
-
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        include ($controllerPath . "diretoria_controller.php");
 
         include_once ($path . "menu.php");
         
         include($path . "verificaDti.php");
 
-        include_once ($entityPath . "diretoria.php");
-
-        include_once ($modelPath . "diretoria_model.php");
-
-        
-     ?>
+        $diretoriaController = new DiretoriaController;
+    ?>
     <main class="container mt-5">
         <div class="row">
             
@@ -58,108 +54,13 @@
             <?php
 
                 if (isset($_GET['delete'])) {
-                    try{
-                        $model = new DiretoriaModel;
-                        $model ->delete($_GET["delete"]);
-                        echo "<div class='alert alert-success'>Registro excluído com sucesso</div>";
-                    } catch (PDOException $e) {
-                        echo "Não foi possível excluir o registro: ". $e->getMessage();
-                    }
+                    $diretoriaController->excluiDiretoria();
                 }
 
                 if (isset($_GET['pesquisa'])) {
-                    $model = new DiretoriaModel;
-                    
-                    $pesquisa = $_GET['pesquisa'];
-
-                    $diretoria = $model->findByName($pesquisa);
-
-                    print "<h1>Diretorias cadastradas com nome: \"".$pesquisa."\"</h1>";
-
-                    if ($diretoria == null ) {
-            ?>            
-                        <h3>Nenhuma diretoria encontrada!</h3>
-                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
-            <?php            
-                    } else {
-                        $dataCriacao = new DateTime($diretoria->getDataCriacao());
-                        @$dataDesativo = new DateTime($diretoria->getDataDesativo());
-            ?>            
-                        <table class='container table table-hover table-striped table-bordered text-center'>
-
-                        <tr>
-                        <th style='display:none;'>id</th>
-                        <th>Nome</th>
-                        <th>Ativo</th>
-                        <th>Data de Criação</th>
-                        <th>Data de Desativação</th>
-                        <th>Órgão</th> 
-                        <th>Ações</th>
-                        </tr>
-                    
-                        <tr>
-                        <td style='display:none;'><?=$diretoria->getId()?></td>
-                        <td><?=$diretoria->getNome()?></td>
-                        <td><?=($diretoria->getAtivo() ? 'Sim' : 'Não')?></td>
-                        <td><?=date_format($dataCriacao, "d/m/Y")?></td>
-                        <td><?=($dataDesativo != null ? date_format($dataDesativo, "d/m/Y") : "Diretoria Ativa")?></td>
-                        <td><?=$diretoria->getOrgaoNome()?></td>
-                        <td>
-                         <a href="cadastro.php?id=<?=$diretoria->getId()?>" class='btn btn-success'>Editar</a>
-                         <a href="pesquisar.php?delete=<?=$diretoria->getId()?>" class='btn btn-danger excluir'>Excluir</a>
-                              </td>
-                        </tr>
-                    
-                        </table>
-
-                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
-            <?php            
-                    }
-                    
+                    $diretoriaController->exibePesquisa();
                 } else {
-            ?>        
-                    <h1>Diretorias cadastradas</h1>
-
-                    <table class=' container table table-hover table-striped table-bordered text-center'>
-
-                    <tr>
-                    <th style='display:none;'>#</th>
-                    <th>Nome</th>
-                    <th>Ativo</th>
-                    <th>Data de Criação</th>
-                    <th>Data de Desativação</th>
-                    <th>Órgão</th>
-                    <th>Ações</th>
-                    </tr>
-            <?php        
-
-                    $model = new DiretoriaModel;
-
-                    $diretoria = $model->select();
-                    
-                    foreach ($diretoria as $obj) {
-                        $dataCriacao = new DateTime($obj->getDataCriacao());
-                        if ($obj->getDataDesativo() == null){
-                            $dataDesativo = null;
-                        } else {
-                            $dataDesativo = new DateTime($obj->getDataDesativo());
-                        }
-            ?>            
-                        <tr>
-                        <td style='display:none;'><?=$obj->getId()?></td>
-                        <td><?=$obj->getNome()?></td>
-                        <td><?=($obj->getAtivo() ? 'Sim' : 'Não')?></td>
-                        <td><?=date_format($dataCriacao, "d/m/Y")?></td>
-                        <td><?=($dataDesativo != null ? date_format($dataDesativo, "d/m/Y") : "Diretoria Ativa")?></td>
-                        <td><?=$obj->getOrgaoNome()?></td>
-                        <td>
-                         <a href="cadastro.php?id=<?=$obj->getId()?>" class='btn btn-success'>Editar</a>
-                         <a href="pesquisar.php?delete=<?=$obj->getId()?>" class='btn btn-danger excluir'>Excluir</a>
-                              </td>
-                        </tr>
-            <?php            
-                    }
-                    print "</table>";
+                    $diretoriaController->exibeDiretoria();
                 }
 
             ?>

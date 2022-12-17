@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD 2.0 - Órgãos</title>
+    <title>Pesquisa de Órgãos</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="../../css/menu.css">
@@ -20,18 +20,16 @@
     <?php 
 
         $path = $_SERVER['DOCUMENT_ROOT'] . '/';
-                            
-        $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
-        $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+        $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
     
         include($path . "menu.php"); 
 
         include($path . "verificaDti.php");
 
-        include_once ($entityPath . "orgao.php");
+        include($controllerPath . 'orgao_controller.php');
 
-        include_once ($modelPath . "orgao_model.php");
+        $orgaoController = new OrgaoController;
     
     ?>
     <main class="container mt-5">
@@ -57,100 +55,13 @@
             <?php
 
                 if(@$_REQUEST['delete']) {
-                    try{
-                        $model = new OrgaoModel;
-                        $model ->delete($_REQUEST["delete"]);
-                        echo "<div class='alert alert-success'>Registro excluído com sucesso</div>";
-                    } catch (PDOException $e) {
-                        echo "Não foi possível excluir o registro: ". $e->getMessage();
-                    }
+                    $orgaoController->excluiOrgao();
                 }
 
                 if (isset($_GET['pesquisa'])) {
-                    $model = new OrgaoModel;
-                    
-                    $pesquisa = $_GET['pesquisa'];
-
-                    $orgao = $model->findByName($pesquisa);
-
-                    print "<h1>Órgãos cadastrados com nome: \"".$pesquisa."\"</h1>";
-
-                    if ($orgao == null ) {
-            ?>            
-                        <h3>Nenhum órgão encontrado!</h3>
-                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
-            <?php            
-                    } else {
-                        $dataCriacao = new DateTime($orgao->getDataCriacao());
-            ?>            
-                        <table class='container table table-hover table-striped table-bordered text-center'>
-
-                        <tr>
-                        <th style='display:none;'>id</th>
-                        <th>Nome</th>
-                        <th>Ativo</th>
-                        <th>Data de Criação</th>
-                        <th>Data de Desativação</th>
-                        <th>Ações</th>
-                        </tr>
-                    
-                        <tr>
-                        <td style='display:none;'><?=$orgao->getId()?></td>
-                        <td><?=$orgao->getNome()?></td>
-                        <td><?=($orgao->getAtivo() ? 'Sim' : 'Não')?></td>
-                        <td><?=date_format($dataCriacao, "d/m/Y")?></td>
-                        <td><?=$orgao->getDataDesativo()?></td>
-                        <td>
-                         <a href="cadastro.php?id=<?=$orgao->getId()?>" class='btn btn-success'>Editar</a>
-                         <a href="pesquisar.php?delete=<?=$orgao->getId()?>" class='btn btn-danger excluir'>Excluir</a>
-                              </td>
-                        </tr>
-                    
-                        </table>
-
-                        <a class='btn btn-light' href='pesquisar.php'>Voltar para Home</a>
-            <?php            
-                    }
-                    
+                    $orgaoController->exibePesquisa();
                 } else {
-            ?>        
-                    <h1>Órgãos cadastrados</h1>
-
-                    <table class='container table table-hover table-striped table-bordered text-center'>
-
-                    <tr>
-                    <th style='display:none;'>#</th>
-                    <th>Nome</th>
-                    <th>Ativo</th>
-                    <th>Data de Criação</th>
-                    <th>Data de Desativação</th>
-                    <th>Ações</th>
-                    </tr>
-            <?php        
-
-                    $model = new OrgaoModel;
-
-                    $orgao = $model->select();
-                    
-                    foreach ($orgao as $obj) {
-                        $dataCriacao = new DateTime($obj->getDataCriacao());
-            ?>            
-                        <tr>
-                        <td style='display:none;'><?=$obj->getId()?></td>
-                        <td><?=$obj->getNome()?></td>
-                        <td><?=($obj->getAtivo() ? 'Sim' : 'Não')?></td>
-                        
-                        <td><?=date_format($dataCriacao, "d/m/Y")?></td>
-                        <td><?=$obj->getDataDesativo()?></td>
-
-                        <td>
-                         <a href="cadastro.php?id=<?=$obj->getId()?>" class='btn btn-success'>Editar</a>
-                         <a href="pesquisar.php?delete=<?=$obj->getId()?>" class='btn btn-danger excluir'>Excluir</a>
-                              </td>
-                        </tr>
-            <?php            
-                    }
-                    print "</table>";
+                    $orgaoController->exibeOrgaos();
                 }
 
             ?>

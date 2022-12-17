@@ -2361,3 +2361,8 @@
 2022/12/16 11:14:05 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
 2022/12/16 11:14:05 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
 2022/12/16 11:14:05 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/17 12:50:25 [notice] 1#1: using the "epoll" event method
+2022/12/17 12:50:25 [notice] 1#1: nginx/1.23.2
+2022/12/17 12:50:25 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/17 12:50:25 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2022/12/17 12:50:25 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
