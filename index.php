@@ -34,7 +34,7 @@
                         <form action="login.php" method="post" class="">
                             <div class="input-group">
                                 <span for="cpf" class="input-group-text">&nbsp CPF &nbsp</span>
-                                <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Insira seu CPF" required>
+                                <input type="text" id="cpf" name="cpf" class="form-control" minlength="11" maxlength="11" placeholder="Insira seu CPF" required>
                             </div>
 
                             <div class="input-group mt-3">

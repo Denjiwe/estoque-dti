@@ -1,66 +1,19 @@
 <?php
     session_start();
 
-    $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
-
-    $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
+    $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
     $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
-    include($path . "verificaLogin.php");
+    include ($controllerPath . 'solicitacao_controller.php');
 
-    include_once ($entityPath . "solicitacao.php");
+    include ($path . "verificaLogin.php");
 
-    include_once ($modelPath . "solicitacao_model.php");
-
-    include_once ($entityPath . "produto.php");
-
-    include_once ($modelPath . "produto_model.php");
+    $solicitacaoController = new SolicitacaoController;
 
     //remover elementos da sessão quando o usuário clicar no botão de excluir
     if(isset($_GET['excluir'])) {
-        $model = new ProdutoModel;
-        $toner = new Produto;
-        $cilindro = new Produto;
-
-        $indexImpressora = $_GET['excluir'];
-
-        array_splice($_SESSION['nomeImpressora'], $indexImpressora, 1);
-
-        array_splice($_SESSION['qntdeExibicao'], $indexImpressora, 1);
-
-        $idImpressora = $_SESSION['idImpressora'][$indexImpressora];
-
-        $toner = $model?->getToner($idImpressora);
-
-        @$cilindro = $model?->getCilindro($idImpressora);
-
-        $chaveToner = array_search($toner?->getModelo(), $_SESSION['toner']);     
-
-        $chaveIdToner = array_search($toner?->getId(), $_SESSION['produtos']);
-
-        $chaveCilindro = array_search($cilindro?->getModelo(), $_SESSION['cilindro']);
-
-        $chaveIdCilindro = array_search($cilindro?->getId(), $_SESSION['produtos']);
-
-        if ($chaveToner !==false || $chaveCilindro !==false){
-            array_splice($_SESSION['toner'], $chaveToner, 1);
-            array_splice($_SESSION['cilindro'], $chaveToner, 1);
-        }
-
-        if ($chaveIdToner !==false){
-            array_splice($_SESSION['produtos'], $chaveIdToner, 1);
-            array_splice($_SESSION['qntde'], $chaveIdToner, 1);
-        }
-        
-        if ($chaveIdCilindro !==false){
-            array_splice($_SESSION['produtos'], $chaveIdCilindro, 1);
-            array_splice($_SESSION['qntde'], $chaveIdCilindro, 1);
-        }
-
-        array_splice($_SESSION['idImpressora'], $indexImpressora, 1);
-        
-        header("Location: ./cadastro.php");
+        $solicitacaoController->excluiProduto();
     }
 ?>
 <!DOCTYPE html>
@@ -83,50 +36,8 @@
         include_once ($path . "menu.php"); 
 
         if(isset($_GET['finalizar'])) {
-            $model = new SolicitacaoModel;
-
-            $solicitacao = new Solicitacao;
-
-            $estado = $_POST['estado'];
-            $solicitacao->setEstadoSolicitacao($estado);
-
-            $observacao = $_POST['observacao'];
-            $solicitacao?->setDescricao($observacao);
-
-            $qntdeItem = $_SESSION['qntde'];
-            $solicitacao->setQntdeItem($qntdeItem);
-
-            $usuarioId = $_SESSION['usuarioId'];
-            $solicitacao->setUsuarioId($usuarioId);
-
-            $local = $model->findLocalUsuario($usuarioId);
-
-            if ($local['divisao_id'] == null) {
-                $solicitacao->setUsuarioDiretoria($local['diretoria_id']);
-            } else {
-                $solicitacao->setUsuarioDivisao($local['divisao_id']);
-            }
-
-            $produtos = $_SESSION['produtos'];
-
-            $solicitacao->setItemSolicitacao($produtos); 
-
-            try {
-                $model->insert($solicitacao);
-                echo "<div class=' container alert alert-success mt-5'>Solicitação criada com sucesso!</div>";
-
-                unset($_SESSION['qntde']);
-                unset($_SESSION['produtos']);
-                unset($_SESSION['idImpressora']);
-                unset($_SESSION['toner']);
-                unset($_SESSION['cilindro']);
-                unset($_SESSION['qntdeExibicao']);
-                unset($_SESSION['nomeImpressora']);
-            } catch (PDOException $e){
-                echo "<div class=' container alert alert-danger mt-5'>Não foi possível cirar a solicitação! Erro de banco de dados.</div>";
-            }
+            $solicitacaoController->cadastraSolicitacao();
         }
-                    
 
     ?>
     <main class="container mt-5">
@@ -142,13 +53,7 @@
                     <select class="form-select" name="selectImpressora" id="selectImpressora" required>
                         <option selected hidden></option>
                         <?php 
-                            $model = new ProdutoModel;
-
-                            $select_impressora = $model->selectImpressora();
-                            
-                            foreach ($select_impressora as $impressora) {
-                                print "<option value=\"".$impressora['id']."\">".$impressora['modelo_produto']."</option>";
-                            };
+                            $solicitacaoController->exibeImpressora();
                         ?>
                     </select>
                 </div>
@@ -182,154 +87,11 @@
 
             <?php
                     if(isset($_GET['adicionar'])) {
-
-                        $model = new SolicitacaoModel;
-
-                        $solicitacao = new Solicitacao;
-
-                        $nomeImpressora = $_POST['nomeImpressora'];
-                        $idImpressora = $_POST['selectImpressora'];
-                        $qntde = $_POST['qntde'];    
-
-                        switch ($_POST['selectTC']) {
-                            case "toner":
-                                $model = new ProdutoModel;
-                                $toner = new Produto;
-                                $toner = $model->getToner($idImpressora);
-                                $cilindro = null;
-                                if (!isset($_SESSION['qntde'])){
-                                    $_SESSION['qntde'] = [];
-                                }
-                                array_push($_SESSION['qntde'], $qntde);
-                                break;
-                            case "cilindro":
-                                $model = new ProdutoModel;
-                                $cilindro = new Produto;
-                                @$cilindro = $model?->getCilindro($idImpressora);
-                                if ($cilindro == null) {
-                            ?>
-            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
-            <?php        
-                                $toner = null;
-                                unset($nomeImpressora);
-                                unset($idImpressora);
-                                unset($qntde);
-                                break;
-                                }
-
-                                if (!isset($_SESSION['qntde'])){
-                                    $_SESSION['qntde'] = [];
-                                }
-                                array_push($_SESSION['qntde'], $qntde);
-                                $toner = null;
-                                break;
-                            case "conjunto":
-                                $model = new ProdutoModel;
-                                $toner = new Produto;
-                                $toner= $model->getToner($idImpressora);
-                                $cilindro = new Produto;
-                                @$cilindro = $model?->getCilindro($idImpressora);
-                                for ($i = 0; $i <= 1; $i++){
-                                    if (!isset($_SESSION['qntde'])){
-                                        $_SESSION['qntde'] = [];
-                                    }
-                                    array_push($_SESSION['qntde'], $qntde);
-                                }
-                                if ($cilindro == null) {
-                            ?>
-            <div class='container alert alert-danger mt-5'>A impressora selecionada não possui cilíndro! Somente toner.</div>
-            <?php        
-                                $toner = null;
-                                unset($nomeImpressora);
-                                unset($idImpressora);
-                                unset($qntde);
-                                break;
-                                }
-                                break;
-                        }
-
-                        if (isset($idImpressora)) {
-                            if (!isset($_SESSION['produtos'])) {
-                                $_SESSION['produtos'] = [];
-                            }
-
-                            if (!isset($_SESSION['nomeImpressora'])){
-                                $_SESSION['nomeImpressora'] = [];
-                            }
-                            array_push($_SESSION['nomeImpressora'], $nomeImpressora);
-                            
-                            if (!isset($_SESSION['idImpressora'])){
-                                $_SESSION['idImpressora'] = [];
-                            }
-                            array_push($_SESSION['idImpressora'], $idImpressora);
-                            
-                            if (!isset($_SESSION['qntdeExibicao'])){
-                                $_SESSION['qntdeExibicao'] = [];
-                            }
-                            array_push($_SESSION['qntdeExibicao'], $qntde);
-                            
-                            if ($toner != null) {
-                                if (!isset($_SESSION['toner'])){
-                                    $_SESSION['toner'] = [];
-                                }
-                                array_push($_SESSION['toner'],$toner?->getModelo());
-                                array_push($_SESSION['produtos'], $toner?->getId());
-                            }
-                            if ($cilindro != null) {
-                                if (!isset($_SESSION['cilindro'])){
-                                    $_SESSION['cilindro'] = [];
-                                }
-                                array_push($_SESSION['cilindro'],$cilindro?->getModelo());
-                                array_push($_SESSION['produtos'], $cilindro?->getId());
-                            }
-                        }
+                        $solicitacaoController->adicionaProduto();
                     }
 
                     if ((isset($_SESSION['nomeImpressora']) && $_SESSION['nomeImpressora'] != null) && ((isset($_SESSION['toner']) || isset($_SESSION['cilindro'])) && (@$_SESSION['toner'] != null || @$_SESSION['cilindro'] != null))){
-                            ?>
-            <table class="table table-hover table-striped table-bordered mt-5 row" id="content">
-                <tr>
-                    <th class="col-4 text-center">Modelo da Impressora</th>
-                    <th class="col-1 text-center">Quantidade</th>
-                    <th class="col-5 text-center" colspan="2">Produto(s)</th>
-                    <th class="col-2 text-center">Ações</th>
-                </tr>
-                <?php
-                        for ($i=0; $i<count($_SESSION['nomeImpressora']);$i++) {
-                            ?>
-                <tr>
-                    <td hidden><?=$_SESSION['idImpressora'][$i]?></td>
-                    <td class="text-center"><?=$_SESSION['nomeImpressora'][$i]?></td>
-                    <td class="text-center"><?=$_SESSION['qntdeExibicao'][$i]?></td>
-                    <?php
-                                    if (isset($_SESSION['toner'][$i]) && !isset($_SESSION['cilindro'][$i])){
-
-                                        print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
-                                        print '<td style="padding: 0px; margin: 0px;"></td>';
-                                        $_SESSION['cilindro'][$i] = null;
-
-                                    } elseif (!isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
-
-                                        print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
-                                        print '<td style="padding: 0px; margin: 0px;"></td>';
-                                        $_SESSION['toner'][$i] = null;
-                                        
-
-                                    } elseif (isset($_SESSION['toner'][$i]) && isset($_SESSION['cilindro'][$i])){
-
-                                        print "<td class='text-center'>".$_SESSION['toner'][$i]."</td>";
-                                        print "<td class='text-center'>".$_SESSION['cilindro'][$i]."</td>";
-
-                                    }             
-                            ?>
-                    <td class='text-center'><a href="cadastro.php?excluir=<?=$i?>" type="button"
-                            class="btn btn-danger">Excluir</a></td>
-                </tr>
-                <?php        
-                        }
-                            ?>
-            </table>
-            <?php
+                        $solicitacaoController->exibeListaProduto();
                     }
                 ?>
 

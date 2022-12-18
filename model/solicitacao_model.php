@@ -166,7 +166,7 @@
             $con->bindValue ("id", $id, PDO::PARAM_INT);
             $con->execute();
 
-            $solicitacao = null;
+            $solicitacoes = [];
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
 
@@ -186,9 +186,11 @@
                     $solicitacao->setUsuarioDiretoria(0);
                 }
 
+                $solicitacoes[] = $solicitacao; 
+
             }
 
-            return $solicitacao;
+            return $solicitacoes;
         }
 
         function selectItemSolicitacao(int $id) {
