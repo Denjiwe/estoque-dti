@@ -36,7 +36,15 @@
         include($path . "verificaDti.php");
         
         include ($controllerPath . 'solicitacao_controller.php');
-
+        
+        if (!isset($_POST['atendidos'])) {
+            $atendidos = false;
+        } elseif(isset($_POST['atendidos']) && $_POST['atendidos'] == 'true') {
+            $atendidos = true;
+        } elseif(isset($_POST['atendidos']) && $_POST['atendidos'] == 'false') {
+            $atendidos = false;
+        }
+        
         $solicitacaoController = new SolicitacaoController;
     
         if(@$_REQUEST['entregue']){
@@ -46,7 +54,7 @@
     <main class="container mt-5">
         <div class="row">
 
-            <div class="col-10">
+            <div class="col-8">
                 <form action="pesquisar.php" method="get" id="formPesquisa">
                     <div class="input-group">
                         <input type="text" class="form-control" name="pesquisa" id="pesquisa"
@@ -56,19 +64,47 @@
                 </form>
             </div>
 
-            <div class="col-2">
+            <div class="col-1">
                 <a href="cadastro.php" class="btn btn-primary">Novo</a>
             </div>
+
+            <?php
+            if ($atendidos == false) {
+            ?> 
+                <div class="col-3">
+                    <form action="pesquisar.php" method="post" id="formAtendidos">
+                        <div>
+                            <input type="hidden" class="form-control" name="atendidos" id="atendidos"
+                            placeholder="Pesquise a solicitação" value="true">
+                            <button type="submit" class="btn btn-secondary">Atendidos</button>
+                        </div>
+                    </form>
+                </div>
+            <?php
+            } else {
+            ?>
+                <div class="col-3">
+                    <form action="pesquisar.php" method="post" id="formAtendidos">
+                        <div>
+                            <input type="hidden" class="form-control" name="atendidos" id="atendidos"
+                            placeholder="Pesquise a solicitação" value="false">
+                            <button type="submit" class="btn btn-secondary">Abertos</button>
+                        </div>
+                    </form>
+                </div>
+            <?php
+            }
+            ?>
 
         </div>
 
         <div class="mt-5">
 
-            <h1 class="mb-4">Solicitações Cadastradas</h1>
+            <h1 class="mb-4">Solicitações</h1>
 
             <div class='accordion mb-5' id='content'>
                 <?php
-                    $solicitacaoController->exibeSolicitacao();
+                    $solicitacaoController->exibeSolicitacao($atendidos);
                 ?>
             </div><!-- accordion -->
         </div>

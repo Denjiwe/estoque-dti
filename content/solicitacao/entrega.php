@@ -3,19 +3,25 @@ session_start();
 
     $path = $_SERVER['DOCUMENT_ROOT'] . '/';
 
-    include($path . "verificaLogin.php");
+    include_once ($path . "verificaLogin.php");
 
     $entityPath = $_SERVER['DOCUMENT_ROOT'] . '/entity//';
 
     $modelPath = $_SERVER['DOCUMENT_ROOT'] . '/model//';
 
-    include ($entityPath . "solicitacao.php"); 
-    include ($entityPath . "produto.php");  
-    include ($entityPath . "entrega.php");
+    $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
-    include ($modelPath . "solicitacao_model.php");
-    include ($modelPath . "produto_model.php");
-    include ($modelPath . "entrega_model.php");
+    include_once ($controllerPath . 'solicitacao_controller.php');
+
+    include_once ($entityPath . "solicitacao.php"); 
+    include_once ($entityPath . "produto.php");  
+    include_once ($entityPath . "entrega.php");
+
+    include_once ($modelPath . "solicitacao_model.php");
+    include_once ($modelPath . "produto_model.php");
+    include_once ($modelPath . "entrega_model.php");
+
+    $solicitacaoController = new SolicitacaoController;
 
     $id = $_REQUEST['solicitacao'];
 
@@ -34,15 +40,6 @@ session_start();
         $solicitacaoItens = $solicitacaoModel->selectItemSolicitacao($id);
         
         $entregas = $solicitacaoModel-> comparaEntrega($id);
-        
-
-        try {
-            $novo_estado = $solicitacaoModel->updateEstado($estado, $id);
-            
-        } catch (PDOException $e) {
-            print "Não foi possível atualizar o estado da solicitação! Erro na atualização do estado da solicitação";
-            die();
-        }
 
         foreach ($produtos as $i => $produto){
             // $produto = id do produto
@@ -71,10 +68,11 @@ session_start();
                                 
                                 $produtoModel->updateEstoque($novaQntde, $produto);
 
+                                $solicitacaoModel->updateEstado($estado, $id);
+
                                 $entregaModel->update($entrega);
                             } catch(PDOException $e) {
-                                print "Não foi possível atualizar o estado da solicitação! Erro na atualização das entregas";
-                                die();
+                                $solicitacaoController->modalErroEntrega($e);
                             }
                         } else {
                             $qntdeEstoque = $produtoModel->getEstoque($produto);
@@ -91,10 +89,11 @@ session_start();
                                 
                                 $produtoModel->updateEstoque($novaQntde, $produto);
 
+                                $solicitacaoModel->updateEstado($estado, $id);
+
                                 $entregaModel->update($entrega);
                             } catch(PDOException $e) {
-                                print "Não foi possível atualizar o estado da solicitação! Erro na atualização das entregas";
-                                die();
+                                $solicitacaoController->modalErroEntrega($e);
                             }
                         }
                     } 
@@ -117,10 +116,11 @@ session_start();
                             try {
                                 $produtoModel->updateEstoque($novaQntde, $produto);
 
+                                $solicitacaoModel->updateEstado($estado, $id);
+
                                 $entregaModel->insert($entrega);
                             } catch (PDOException $e) {
-                                print "Não foi possível atualizar quantidade de itens no estoque! Erro na entrega do produto";
-                                die();
+                                $solicitacaoController->modalErroEntrega($e);
                             }
                         }
                     }
@@ -135,9 +135,8 @@ session_start();
         try {
             $solicitacaoModel->updateEstado($estado, $id);
         } catch (PDOException $e){
-            print "Não foi possível atualizar quantidade de itens no estoque! Erro na atualização do estado da solicitação";
-            die();
+            $solicitacaoController->modalErroEntrega($e);
         }
     }
 
-    header("Location: ./pesquisar.php?entregue=".$id);      
+    @header("Location: ./pesquisar.php?entregue=".$id);      

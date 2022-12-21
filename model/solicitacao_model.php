@@ -76,9 +76,14 @@
         }
 
         //select all
-        function select () {
+        function select (bool $atendidos) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("select solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id order by id asc");
+
+            if ($atendidos) {
+                $con = $conexao->prepare("SELECT solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id where estado_solicitacao = 'Atendido' order by id asc");
+            } else {
+                $con = $conexao->prepare("SELECT solicitacao.* ,usuario.nome from solicitacao inner join usuario on usuario_id = usuario.id where estado_solicitacao != 'Atendido' order by id asc");
+            }
             $con->execute();
             
             $solicitacoes = [];

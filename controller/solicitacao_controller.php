@@ -223,7 +223,7 @@
         }
 
         function modalSolicitacao($solicitacaoId, $itensEmFalta, $qntdeEmFalta, $itensOk, $qntdeOk) {
-        ?>
+            ?>
             <div class="modal fade show" id="solicitacaoModal"  style="display: block;" aria-modal="true" tabindex="-1" aria-labelledby="solitacaoModal" data-bs-keyboard="false" role="dialog" data-bs-backdrop="static">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -236,7 +236,7 @@
                         <?php
                             if ($itensEmFalta != null) {
                                 ?>
-                                <h5 class="ms-3">Produtos Em Falta!</h5>
+                                <h5 class="ms-3 text-danger">Produtos Em Falta!</h5>
                                 <?php
                                 foreach ($itensEmFalta as $i => $itemEmFalta){
                                     $model = new ProdutoModel;
@@ -258,8 +258,10 @@
                         </div>
                             <?php
                             }
+
+                            if ($itensOk != null) {
                         ?>
-                                <h5 class="ms-3">Produtos Em Estoque</h5>
+                                <h5 class="ms-3 text-success">Produtos Em Estoque</h5>
                                 <?php
                                 foreach ($itensOk as $i => $itemOk){
                                     $model = new ProdutoModel;
@@ -279,6 +281,9 @@
                                 ?>
                             </ul>
                         </div>
+                        <?php
+                            }
+                        ?>
                     </div>
                     <div class="modal-footer">
                         <a href="pesquisar.php" class="btn btn-secondary">OK</a>
@@ -286,7 +291,7 @@
                     </div>
                 </div>
             </div>
-        <?
+            <?
         }
 
         function cadastraSolicitacao() {
@@ -329,15 +334,6 @@
                 $qntdeEmFalta = [];
             }
 
-            if (isset($itensEmFalta) && $itensEmFalta != null) {
-                $estado = 'Aguardando';
-            } else {
-                $estado = $_POST['estado'];
-            }
-            
-
-            $solicitacao->setEstadoSolicitacao($estado);
-
             foreach ($produtos as $key => $produto) {
                 $qntdeSolicitada = $model->verificaQntdeSolicitado($produto);
                 
@@ -353,6 +349,14 @@
                     array_push($qntdeOk, $qntdeItem[$key]);
                 }
             }
+
+            if (isset($itensEmFalta) && $itensEmFalta != null) {
+                $estado = 'Aguardando';
+            } else {
+                $estado = $_POST['estado'];
+            }
+            
+            $solicitacao->setEstadoSolicitacao($estado);
             
 
             try {
@@ -376,13 +380,13 @@
 
 
 
-        function exibeSolicitacao() {
+        function exibeSolicitacao(bool $atendidos) {
             $model = new SolicitacaoModel;
 
             $solicitacao = new Solicitacao;
 
             if (!isset($_GET['pesquisa']) && $_SERVER["REQUEST_URI"] != '/content/solicitacao/minhasSolicitacoes.php') {
-                $solicitacao = $model->select();
+                $solicitacao = $model->select($atendidos);
             } elseif($_SERVER["REQUEST_URI"] == '/content/solicitacao/minhasSolicitacoes.php') {
                 $solicitacao = $model->selectUsuario();
         
@@ -399,7 +403,7 @@
                     </html>
                     <?php
                     exit();
-                    }
+                }
             } else {
                 $solicitacao = $model->findById($_GET['pesquisa']);
                 if (count($solicitacao) == 0) {
@@ -433,7 +437,22 @@
                     <h2 class='accordion-header'>
                         <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
                             data-bs-target='#collapse<?=$obj->getId()?>' aria-expanded='false'>
-                            [<?=$obj->getEstadoSolicitacao()?>] <strong>&nbsp #<?=$obj->getId()?> &nbsp</strong> de
+                            [<?php
+                                switch ($obj->getEstadoSolicitacao()) {
+                                    case 'Aguardando':
+                                        print "<span class='text-warning'>".$obj->getEstadoSolicitacao()."</span>";
+                                        break;
+                                    case 'Atendido':
+                                        print "<span class='text-primary'>".$obj->getEstadoSolicitacao()."</span>";
+                                        break;
+                                    case 'Aberto':
+                                        print "<span class='text-success'>".$obj->getEstadoSolicitacao()."</span>";
+                                        break;
+                                    case 'Liberado':
+                                        print "<span class='text-info'>".$obj->getEstadoSolicitacao()."</span>";
+                                        break;
+                                }
+                            ?>] <strong>&nbsp #<?=$obj->getId()?> &nbsp</strong> de
                             <?=$obj->getUsuarioNome()?>, <?=$obj->getUsuarioDivisao() != 0 ? $model->getDivisaoNome($obj->getUsuarioDivisao())['nome'] : $model->getDiretoriaNome($obj->getUsuarioDiretoria())['nome']?> feito em <?=date_format($data, "d/m/Y")?>
                         </button>
                     </h2>
@@ -597,6 +616,56 @@
                 </div><!-- accordion-item -->
                 <?php
                     }
+        }
+
+        /* ========================================================= Entrega ========================================================= */
+
+        function modalErroEntrega($exception) {
+            ?>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+                integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+            </script>
+            
+            <div class="modal fade show" id="solicitacaoModal"  style="display: block;" aria-modal="true" tabindex="-1" aria-labelledby="solitacaoModal" data-bs-keyboard="false" role="dialog" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Erro na Entrega!</h5>
+                        </div>
+                        <div class="modal-body">
+                            <?php
+                                if (str_contains($exception, 'chk_produto_positivo')){
+                                    print "Não foi possível realizar a entrega pois existe um ou vários produtos sem estoque!";
+                                } else {
+                                    print "Não foi possível reaizar a entrega!";
+                                }
+                            ?>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="pesquisar.php" class="btn btn-secondary">OK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script language="javascript">
+                let modal = document.querySelector(".modal");
+                let body = document.querySelector("body");
+
+                if (modal.classList.contains("show")) {
+                    body.classList.add("modal-open");
+                    body.style.overflow = "hidden";
+                    let div = document.createElement("div");
+                    div.classList.add("modal-backdrop");
+                    div.classList.add("fade");
+                    div.classList.add("show");
+
+                    body.appendChild(div);
+                }
+            </script>
+        <?php
         }
 
     }
