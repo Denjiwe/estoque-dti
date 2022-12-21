@@ -2418,3 +2418,86 @@
 2022/12/18 13:27:28 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
 2022/12/18 13:27:28 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
 2022/12/18 13:27:28 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/19 11:12:15 [notice] 1#1: using the "epoll" event method
+2022/12/19 11:12:15 [notice] 1#1: nginx/1.23.2
+2022/12/19 11:12:15 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/19 11:12:15 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/12/19 11:12:15 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/19 11:12:15 [notice] 1#1: start worker processes
+2022/12/19 11:12:15 [notice] 1#1: start worker process 29
+2022/12/19 11:12:15 [notice] 1#1: start worker process 30
+2022/12/19 11:12:15 [notice] 1#1: start worker process 31
+2022/12/19 11:12:15 [notice] 1#1: start worker process 32
+2022/12/19 11:53:31 [error] 29#29: *20 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 12:44:48 [error] 29#29: *41 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 12:48:27 [error] 29#29: *50 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 13:05:14 [error] 30#30: *68 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 13:32:49 [error] 30#30: *91 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 13:44:57 [error] 30#30: *110 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 13:46:50 [error] 31#31: *118 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 18:12:46 [error] 31#31: *137 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/19 18:13:19 [error] 31#31: *141 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php?entregue=8"
+2022/12/19 18:59:31 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/12/19 18:59:32 [notice] 32#32: gracefully shutting down
+2022/12/19 18:59:32 [notice] 31#31: gracefully shutting down
+2022/12/19 18:59:32 [notice] 29#29: gracefully shutting down
+2022/12/19 18:59:32 [notice] 31#31: exiting
+2022/12/19 18:59:32 [notice] 30#30: gracefully shutting down
+2022/12/19 18:59:32 [notice] 32#32: exiting
+2022/12/19 18:59:32 [notice] 30#30: exiting
+2022/12/19 18:59:32 [notice] 29#29: exiting
+2022/12/19 18:59:32 [notice] 30#30: exit
+2022/12/19 18:59:32 [notice] 31#31: exit
+2022/12/19 18:59:32 [notice] 29#29: exit
+2022/12/19 18:59:32 [notice] 32#32: exit
+2022/12/19 18:59:32 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/12/19 18:59:32 [notice] 1#1: worker process 30 exited with code 0
+2022/12/19 18:59:32 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/19 18:59:32 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2022/12/19 18:59:32 [notice] 1#1: worker process 32 exited with code 0
+2022/12/19 18:59:32 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/19 18:59:32 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/12/19 18:59:32 [notice] 1#1: worker process 29 exited with code 0
+2022/12/19 18:59:32 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/12/19 18:59:32 [notice] 1#1: worker process 31 exited with code 0
+2022/12/19 18:59:32 [notice] 1#1: exit
+2022/12/20 11:03:03 [notice] 1#1: using the "epoll" event method
+2022/12/20 11:03:03 [notice] 1#1: nginx/1.23.2
+2022/12/20 11:03:03 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/20 11:03:03 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/12/20 11:03:03 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/20 11:03:03 [notice] 1#1: start worker processes
+2022/12/20 11:03:03 [notice] 1#1: start worker process 28
+2022/12/20 11:03:03 [notice] 1#1: start worker process 29
+2022/12/20 11:03:03 [notice] 1#1: start worker process 30
+2022/12/20 11:03:03 [notice] 1#1: start worker process 31
+2022/12/20 11:04:24 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2022/12/20 16:50:23 [error] 28#28: *82 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php?entregue=13"
+2022/12/20 17:57:45 [error] 29#29: *142 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2022/12/20 18:59:41 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/12/20 18:59:41 [notice] 30#30: gracefully shutting down
+2022/12/20 18:59:41 [notice] 29#29: gracefully shutting down
+2022/12/20 18:59:41 [notice] 31#31: gracefully shutting down
+2022/12/20 18:59:41 [notice] 28#28: gracefully shutting down
+2022/12/20 18:59:41 [notice] 31#31: exiting
+2022/12/20 18:59:41 [notice] 30#30: exiting
+2022/12/20 18:59:41 [notice] 28#28: exiting
+2022/12/20 18:59:41 [notice] 29#29: exiting
+2022/12/20 18:59:41 [notice] 30#30: exit
+2022/12/20 18:59:41 [notice] 28#28: exit
+2022/12/20 18:59:41 [notice] 29#29: exit
+2022/12/20 18:59:41 [notice] 31#31: exit
+2022/12/20 18:59:41 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/12/20 18:59:41 [notice] 1#1: worker process 29 exited with code 0
+2022/12/20 18:59:41 [notice] 1#1: worker process 30 exited with code 0
+2022/12/20 18:59:41 [notice] 1#1: worker process 31 exited with code 0
+2022/12/20 18:59:41 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/20 18:59:41 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/12/20 18:59:41 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/12/20 18:59:41 [notice] 1#1: worker process 28 exited with code 0
+2022/12/20 18:59:41 [notice] 1#1: exit
+2022/12/21 11:08:27 [notice] 1#1: using the "epoll" event method
+2022/12/21 11:08:27 [notice] 1#1: nginx/1.23.2
+2022/12/21 11:08:27 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/21 11:08:27 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/12/21 11:08:27 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576

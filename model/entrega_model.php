@@ -44,4 +44,14 @@
                 $con->execute();
             }
 
+            function update(Entrega $entrega) {
+                $conexao = Conexao::getConexao();
+                $con = $conexao->prepare("UPDATE entrega set qntde = :qntde, data_entrega = now(), usuario_id = :usuario_id, itens_solicitacao_id = :itens_id WHERE id = :id");
+                $con->bindValue("qntde", $entrega->getQntde(), PDO::PARAM_INT);
+                $con->bindValue("usuario_id", $entrega->getUsuarioId(), PDO::PARAM_INT);
+                $con->bindValue("itens_id", $entrega->getItensId(), PDO::PARAM_INT);
+                $con->bindValue("id", $entrega->getId(), PDO::PARAM_INT);
+                $con->execute();
+            }
+
         }

@@ -115,7 +115,9 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
         integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    
     <script>
     $(document).ready(function() {
         $('#selectImpressora').on('change', function() {
@@ -127,6 +129,20 @@
         $("table").on("click", "button", function() {
             $(this).parent().parent().remove();
         });
+
+        let modal = document.querySelector(".modal");
+        let body = document.querySelector("body");
+
+        if (modal.classList.contains("show")) {
+            body.classList.add("modal-open");
+            body.style.overflow = "hidden";
+            let div = document.createElement("div");
+            div.classList.add("modal-backdrop");
+            div.classList.add("fade");
+            div.classList.add("show");
+
+            body.appendChild(div);
+        }
     });
     </script>
 </body>

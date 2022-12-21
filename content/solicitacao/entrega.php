@@ -19,104 +19,125 @@ session_start();
 
     $id = $_REQUEST['solicitacao'];
 
-    $produtos = $_POST['id'];
-    $qntdes = $_POST['qntde'];
-    $estado = $_POST['estado'];
-    $usuario = $_POST['usuario'];
+    if (isset($_POST['id'])) {
+        $produtos = $_POST['id'];
+        $qntdes = $_POST['qntde'];
+        $estado = $_POST['estado'];
+        $usuario = $_POST['usuario'];
 
-    $solicitacao_model = new SolicitacaoModel;
+        $solicitacaoModel = new SolicitacaoModel;
 
-    $produto_model = new ProdutoModel;
+        $produtoModel = new ProdutoModel;
 
-    $entrega_model = new EntregaModel;
+        $entregaModel = new EntregaModel;
 
-    $solicitacao_itens = $solicitacao_model->selectItemSolicitacao($id);
-    
-    
-    
+        $solicitacaoItens = $solicitacaoModel->selectItemSolicitacao($id);
+        
+        $entregas = $solicitacaoModel-> comparaEntrega($id);
+        
 
-    try {
-        $novo_estado = $solicitacao_model->updateEstado($estado, $id);
-    } catch (PDOException $e) {
-        print "Não foi possível atualizar o estado da solicitação: ". $e->getMessage();
-        die();
-    }
+        try {
+            $novo_estado = $solicitacaoModel->updateEstado($estado, $id);
+            
+        } catch (PDOException $e) {
+            print "Não foi possível atualizar o estado da solicitação! Erro na atualização do estado da solicitação";
+            die();
+        }
 
-    foreach ($produtos as $i => $produto){
-        // $produto = id do produto
+        foreach ($produtos as $i => $produto){
+            // $produto = id do produto
+            
+            $qntde = (int)$qntdes[$i];
 
-        $qntde = (int)$qntdes[$i];
+            if ($entregas != null) {
+                foreach ($solicitacaoItens as $key => $item) {
+                    
+                    if ($item['is_id'] == $entregas[$key]['is_id']) {
+                        
+                        $idItemSolicitacao = $item['is_id'];
+                        
+                        if ($qntde <= $entregas[$key]['qntdeEntregue']){
+                            $qntdeEstoque = $produtoModel->getEstoque($produto);
 
-        foreach ($solicitacao_itens as $key => $item) {
-            if ($produto == $item['id']){
-                $idItemSolicitacao = $item['is_id'];
+                            $novaQntde = $qntdeEstoque + $qntde;
+                            
+                            $entrega = new Entrega;
+                            $entrega->setId($entregas[$key]['id']);
+                            $entrega->setQtnde($qntde);
+                            $entrega->setUsuarioId($usuario);
+                            $entrega->setItensId($idItemSolicitacao);
+                            
+                            try {
+                                
+                                $produtoModel->updateEstoque($novaQntde, $produto);
 
-                if ($qntde <= $item['qntde_item']){
-                    $qntdeEstoque = $produto_model->getEstoque($produto);
+                                $entregaModel->update($entrega);
+                            } catch(PDOException $e) {
+                                print "Não foi possível atualizar o estado da solicitação! Erro na atualização das entregas";
+                                die();
+                            }
+                        } else {
+                            $qntdeEstoque = $produtoModel->getEstoque($produto);
 
-                    $novaQntde = $qntdeEstoque - $qntde;
+                            $novaQntde = $qntdeEstoque - $qntde;
+                            
+                            $entrega = new Entrega;
+                            $entrega->setId($entregas[$key]['id']);
+                            $entrega->setQtnde($qntde);
+                            $entrega->setUsuarioId($usuario);
+                            $entrega->setItensId($idItemSolicitacao);
+                            
+                            try {
+                                
+                                $produtoModel->updateEstoque($novaQntde, $produto);
 
-                    $entrega = new Entrega;
-                    $entrega->setQtnde($qntde);
-                    $entrega->setUsuarioId($usuario);
-                    $entrega->setItensId($idItemSolicitacao);
+                                $entregaModel->update($entrega);
+                            } catch(PDOException $e) {
+                                print "Não foi possível atualizar o estado da solicitação! Erro na atualização das entregas";
+                                die();
+                            }
+                        }
+                    } 
+                }
+            } else {
+                foreach ($solicitacaoItens as $key => $item) {
+                    if ($produto == $item['id']){
+                        $idItemSolicitacao = $item['is_id'];
 
-                    try {
-                        $produto_model->updateEstoque($novaQntde, $produto);
+                        if ($qntde <= $item['qntde_item']){
+                            $qntdeEstoque = $produtoModel->getEstoque($produto);
 
-                        $entrega_model->insert($entrega);
-                    } catch (PDOException $e) {
-                        print "Não foi possível atualizar quantidade de itens no estoque: ". $e->getMessage();
-                        die();
+                            $novaQntde = $qntdeEstoque - $qntde;
+
+                            $entrega = new Entrega;
+                            $entrega->setQtnde($qntde);
+                            $entrega->setUsuarioId($usuario);
+                            $entrega->setItensId($idItemSolicitacao);
+
+                            try {
+                                $produtoModel->updateEstoque($novaQntde, $produto);
+
+                                $entregaModel->insert($entrega);
+                            } catch (PDOException $e) {
+                                print "Não foi possível atualizar quantidade de itens no estoque! Erro na entrega do produto";
+                                die();
+                            }
+                        }
                     }
                 }
             }
+        } 
+    } else {
+        $estado = $_POST['estado'];
+
+        $solicitacaoModel = new SolicitacaoModel;
+
+        try {
+            $solicitacaoModel->updateEstado($estado, $id);
+        } catch (PDOException $e){
+            print "Não foi possível atualizar quantidade de itens no estoque! Erro na atualização do estado da solicitação";
+            die();
         }
+    }
 
-
-
-
-
-
-        // //$id_item se refere ao id do produto em si
-        // $id_item = $item['id'];
-        // print " ";
-        // print($id_item);
-        
-        // if (isset($qntdes[$i]) && isset($produtos[$i])){
-        //     $qntde = $qntdes[$i];
-        //     print " ";
-        //     print($qntde);
-        //     //$idItemSolicitacao se refere ao id da tabela itens_solicitacao em si, que é necessario para ser realizada 
-        //     //a inserção na tabela de entregas
-        //     $idItemSolicitacao = $item['is_id'];
-
-        //     if (@$produto[$i] == $id_item){
-
-        //         if ($qntde <= $item['qntde_item']){
-
-        //             $qntde_estoque = $produto_model->getEstoque($id_item);
-
-        //             $nova_qntde = $qntde_estoque->getQntde() - $qntde;
-
-        //             $entrega = new Entrega;
-        //             $entrega->setQtnde($qntde);
-        //             $entrega->setUsuarioId($usuario);
-        //             $entrega->setItensId($idItemSolicitacao);
-
-        //             try {
-        //                 $produto_model->updateEstoque($nova_qntde, $id_item);
-
-        //                 $entrega_model->insert($entrega);
-
-        //             } catch (PDOException $e) {
-        //                 print "Não foi possível atualizar quantidade de itens no estoque: ". $e->getMessage();
-        //                 die();
-        //             }
-
-        //         }
-        //     }
-        // } 
-    }  
-
-    header("Location: ./pesquisar.php?entregue=".$id);
+    header("Location: ./pesquisar.php?entregue=".$id);      

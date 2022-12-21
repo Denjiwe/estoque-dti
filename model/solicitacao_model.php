@@ -248,7 +248,7 @@
         //comparaEntrega
         function comparaEntrega($solicitacaoId) {
             $conexao = Conexao::getConexao();
-            $con = $conexao->prepare("SELECT entrega.qntde, entrega.data_entrega, itens_solicitacao.solicitacao_id, itens_solicitacao.produto_id FROM entrega 
+            $con = $conexao->prepare("SELECT entrega.qntde, entrega.data_entrega, entrega.id, itens_solicitacao.id as is_id, itens_solicitacao.solicitacao_id, itens_solicitacao.produto_id FROM entrega 
             INNER JOIN itens_solicitacao ON entrega.itens_solicitacao_id = itens_solicitacao.id WHERE itens_solicitacao.solicitacao_id = :id");
             $con->bindValue("id", $solicitacaoId, PDO::PARAM_INT);
             $con->execute();
@@ -256,14 +256,56 @@
             $entregues = [];
 
             while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $entregue['id'] = $linha['id'];
                 $entregue['qntdeEntregue'] = $linha['qntde'];
                 $entregue['dataEntregue'] = $linha['data_entrega'];
                 $entregue['solicitacaoId'] = $linha['solicitacao_id'];
+                $entregue['is_id'] = $linha['is_id'];
                 $entregue['produtoId'] = $linha['produto_id'];
 
                 $entregues[] = $entregue;
             }
 
             return $entregues;
+        }
+
+        //getEstoque
+        function getEstoque (int $id) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("select qntde_estoque from produto where id = :id");
+            $con->bindValue("id", $id, PDO::PARAM_INT);
+            $con->execute();
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $qntde = $linha['qntde_estoque'];
+            }
+
+            return $qntde;
+        }
+
+        //verificaQntdeSolicitado 
+        function verificaQntdeSolicitado(int $produtoId) {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT qntde_item FROM itens_solicitacao WHERE produto_id = :id");
+            $con->bindValue("id", $produtoId, PDO::PARAM_INT);
+            $con->execute();
+
+            $qntde = 0;
+
+            while ($linha = $con->fetch(PDO::FETCH_ASSOC)) {
+                $qntde += $linha['qntde_item'];
+            }   
+
+            return $qntde;
+        }
+
+        //LastId 
+        function LastId() {
+            $conexao = Conexao::getConexao();
+            $con = $conexao->prepare("SELECT id from solicitacao order by id desc");
+            $con->execute();
+
+            $id = $con->fetch(PDO::FETCH_ASSOC); 
+            return $id;
         }
     }   

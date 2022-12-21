@@ -50,7 +50,7 @@
                 <form action="pesquisar.php" method="get" id="formPesquisa">
                     <div class="input-group">
                         <input type="text" class="form-control" name="pesquisa" id="pesquisa"
-                            placeholder="Pesquise a solicitação" required>
+                        placeholder="Pesquise a solicitação" required>
                         <button type="submit" class="btn btn-secondary">Pesquisar</button>
                     </div>
                 </form>
@@ -68,23 +68,22 @@
 
             <div class='accordion mb-5' id='content'>
                 <?php
-                
-                $solicitacaoController->exibeSolicitacao();
-
-            ?>
-        </div><!-- accordion -->
+                    $solicitacaoController->exibeSolicitacao();
+                ?>
+            </div><!-- accordion -->
+        </div>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
     <script language='javascript'>
+        let modal = document.querySelectorAll(".modal-body ul");
         let check = document.querySelectorAll(".form-check-input");
         let qntde = document.querySelectorAll(".form-input");
-        let modal = document.querySelectorAll(".modal-body ul");
+        let checked = document.querySelectorAll("input[type=checkbox]:disabled");
         let confirmar = document.querySelectorAll(".modal-footer button[type=submit]");
+        let editar = document.querySelectorAll(".btn-editar");
+        let val = [];
         
         function verifica() {
             for (let x = 0; x < modal.length; x++) {
@@ -96,14 +95,40 @@
                 } 
             }
         }
+
+        function edita() {
+            for (let b = 0; b < check.length; b++){
+                qntde[b].setAttribute('required', '');
+                qntde[b].removeAttribute('disabled');
+                if (document.getElementsByClassName("entregue").length > 0){
+                    checked[b].toggleAttribute('disabled');
+                    if (checked[b].hasAttribute('disabled')) {
+                        checked[b].removeAttribute('value');
+                    } else {
+                        checked[b].setAttribute('value', val[b]);
+                    }
+                }
+                verifica();
+            }
+        }    
         
         for (let i = 0; i < check.length; i++) {
             check[i].addEventListener("change", () => {
-                qntde[i].toggleAttribute('required');
-                qntde[i].toggleAttribute('disabled');
-                qntde[i].toggleAttribute('value');
+                if (!qntde[i].hasAttribute('required') ) {
+                    qntde[i].setAttribute('required', '');
+                    qntde[i].removeAttribute('disabled');
+                } else {
+                    qntde[i].removeAttribute('required');
+                    qntde[i].setAttribute('disabled', '');
+                    qntde[i].removeAttribute('value');
+                }
                 verifica();
             });
+        }
+
+        for (let y = 0; y < checked.length; y++) {
+            val.push(checked[y].value);
+            checked[y].removeAttribute('value');
         }
     </script>
 

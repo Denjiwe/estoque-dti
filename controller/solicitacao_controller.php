@@ -19,7 +19,6 @@
 
 
 
-
         function adicionaProduto() {
             $model = new SolicitacaoModel;
 
@@ -223,13 +222,77 @@
             <?php
         }
 
+        function modalSolicitacao($solicitacaoId, $itensEmFalta, $qntdeEmFalta, $itensOk, $qntdeOk) {
+        ?>
+            <div class="modal fade show" id="solicitacaoModal"  style="display: block;" aria-modal="true" tabindex="-1" aria-labelledby="solitacaoModal" data-bs-keyboard="false" role="dialog" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Resumo da solicitação #<?=$solicitacaoId?></h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class='row'>
+                            <ul class='list-group col-10'>
+                        <?php
+                            if ($itensEmFalta != null) {
+                                ?>
+                                <h5 class="ms-3">Produtos Em Falta!</h5>
+                                <?php
+                                foreach ($itensEmFalta as $i => $itemEmFalta){
+                                    $model = new ProdutoModel;
+                                    $produto = new Produto;
+                                    $produto = $model->findById($itemEmFalta);
+                                ?>
+                                <li class='list-group-item ms-3'>
+                                    <label class='form-check-label'><?=$produto->getModelo()?></label>
+                                    
+                                    <input type="tel"
+                                        class="form-input ms-3 col-2 rounded border border-1 float-end"
+                                        maxlength="1" value="<?=$qntdeEmFalta[$i]?>" disabled>
+                                    <label for='qntde' class=' float-end'>Quantidade</label>
+                                </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                            <?php
+                            }
+                        ?>
+                                <h5 class="ms-3">Produtos Em Estoque</h5>
+                                <?php
+                                foreach ($itensOk as $i => $itemOk){
+                                    $model = new ProdutoModel;
+                                    $produtoOk = new Produto;
+                                    $produtoOk = $model->findById($itemOk);
+                                ?>
+                                <li class='list-group-item ms-3'>
+                                    <label class='form-check-label'><?=$produtoOk->getModelo()?></label>
+                                    
+                                    <input type="tel"
+                                        class="form-input ms-3 col-2 rounded border border-1 float-end"
+                                        maxlength="1" value="<?=$qntdeOk[$i]?>" disabled>
+                                    <label for='qntde' class=' float-end'>Quantidade</label>
+                                </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="pesquisar.php" class="btn btn-secondary">OK</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <?
+        }
+
         function cadastraSolicitacao() {
             $model = new SolicitacaoModel;
 
             $solicitacao = new Solicitacao;
-
-            $estado = $_POST['estado'];
-            $solicitacao->setEstadoSolicitacao($estado);
 
             $observacao = $_POST['observacao'];
             $solicitacao?->setDescricao($observacao);
@@ -252,9 +315,49 @@
 
             $solicitacao->setItemSolicitacao($produtos); 
 
+            if (!isset($itensOk)) {
+                $itensOk = [];
+            }
+            if (!isset($qntdeOk)) {
+                $qntdeOk = [];
+            }
+
+            if (!isset($itensEmFalta)) {
+                $itensEmFalta = [];
+            }
+            if (!isset($qntdeEmFalta)) {
+                $qntdeEmFalta = [];
+            }
+
+            if (isset($itensEmFalta) && $itensEmFalta != null) {
+                $estado = 'Aguardando';
+            } else {
+                $estado = $_POST['estado'];
+            }
+            
+
+            $solicitacao->setEstadoSolicitacao($estado);
+
+            foreach ($produtos as $key => $produto) {
+                $qntdeSolicitada = $model->verificaQntdeSolicitado($produto);
+                
+                $qntdeEstoque = $model->getEstoque($produto);
+
+                $disponivel = $qntdeEstoque - $qntdeSolicitada;
+
+                if ($disponivel <= 0) {
+                    array_push($itensEmFalta, $produto);
+                    array_push($qntdeEmFalta, $qntdeItem[$key]);
+                } else {
+                    array_push($itensOk, $produto);
+                    array_push($qntdeOk, $qntdeItem[$key]);
+                }
+            }
+            
+
             try {
                 $model->insert($solicitacao);
-                echo "<div class=' container alert alert-success mt-5'>Solicitação criada com sucesso!</div>";
+                $this->modalSolicitacao($model->LastId()['id'], $itensEmFalta, $qntdeEmFalta, $itensOk, $qntdeOk);
 
                 unset($_SESSION['qntde']);
                 unset($_SESSION['produtos']);
@@ -270,6 +373,8 @@
 
         
         /* ========================================================= Pesquisa ========================================================= */
+
+
 
         function exibeSolicitacao() {
             $model = new SolicitacaoModel;
@@ -322,175 +427,176 @@
                 $dataEntregue = new DateTime($itensEntregues[0]['dataEntregue']);
             }
             
-    ?>
+            ?>
 
-        <div class='accordion-item'>
-            <h2 class='accordion-header'>
-                <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
-                    data-bs-target='#collapse<?=$obj->getId()?>' aria-expanded='false'>
-                    [<?=$obj->getEstadoSolicitacao()?>] <strong>&nbsp #<?=$obj->getId()?> &nbsp</strong> de
-                    <?=$obj->getUsuarioNome()?>, <?=$obj->getUsuarioDivisao() != 0 ? $model->getDivisaoNome($obj->getUsuarioDivisao())['nome'] : $model->getDiretoriaNome($obj->getUsuarioDiretoria())['nome']?> feito em <?=date_format($data, "d/m/Y")?>
-                </button>
-            </h2>
-            <div id='collapse<?=$obj->getId()?>' class='accordion-collapse collapse'>
-                <div class='accordion-body'>
-                    <table class='table table-bordered'>
-                        <tr>
-                            <th>Produto</th>
-                            <th>Quantidade</th>
-                        </tr>
-                        <?php
-        foreach ($itens as $item){
-    ?>
-                        <tr>
-                            <td><?=$item['modelo_produto']?></td>
-                            <td><?=$item['qntde_item']?></td>
-                        </tr>
-                        <?php
-        }
-    ?>
-                    </table>
-                    <?php
-        if ($obj->getDescricao() != null) {
-    ?>
-                    <label for='observacao<?=$obj->getId()?>'>Observação</label>
-                    <input disabled id='observacao<?=$obj->getId()?>' class="form-control bg-white"
-                        value="<?=$obj->getDescricao()?>">
-                    <?php
-        }
-        if ($_SESSION['dti']) {
-    ?>
-                    <!-- Button trigger modal -->
-                    <button type='button' class='btn btn-primary mt-4' data-bs-toggle='modal'
-                        data-bs-target='#modal<?=$obj->getId()?>'>
-                        Entrega
-                    </button>
+                <div class='accordion-item'>
+                    <h2 class='accordion-header'>
+                        <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
+                            data-bs-target='#collapse<?=$obj->getId()?>' aria-expanded='false'>
+                            [<?=$obj->getEstadoSolicitacao()?>] <strong>&nbsp #<?=$obj->getId()?> &nbsp</strong> de
+                            <?=$obj->getUsuarioNome()?>, <?=$obj->getUsuarioDivisao() != 0 ? $model->getDivisaoNome($obj->getUsuarioDivisao())['nome'] : $model->getDiretoriaNome($obj->getUsuarioDiretoria())['nome']?> feito em <?=date_format($data, "d/m/Y")?>
+                        </button>
+                    </h2>
+                    <div id='collapse<?=$obj->getId()?>' class='accordion-collapse collapse'>
+                        <div class='accordion-body'>
+                            <table class='table table-bordered'>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                </tr>
+                                <?php
+                foreach ($itens as $item){
+            ?>
+                                <tr>
+                                    <td><?=$item['modelo_produto']?></td>
+                                    <td><?=$item['qntde_item']?></td>
+                                </tr>
+                                <?php
+                }
+            ?>
+                            </table>
+                            <?php
+                if ($obj->getDescricao() != null) {
+            ?>
+                            <label for='observacao<?=$obj->getId()?>'>Observação</label>
+                            <input disabled id='observacao<?=$obj->getId()?>' class="form-control bg-white"
+                                value="<?=$obj->getDescricao()?>">
+                            <?php
+                }
+                if ($_SESSION['dti']) {
+            ?>
+                            <!-- Button trigger modal -->
+                            <button type='button' class='btn btn-primary mt-4' data-bs-toggle='modal'
+                                data-bs-target='#modal<?=$obj->getId()?>'>
+                                Entrega
+                            </button>
 
-                    <!-- Modal -->
-                    <div class='modal fade' id='modal<?=$obj->getId()?>' data-bs-backdrop='static'
-                        data-bs-keyboard='false' tabindex='-1' aria-hidden='true'>
-                        <div class='modal-dialog'>
-                            <div class='modal-content'>
-                                <div class='modal-header'>
-                                    <h1 class='modal-title fs-5'>Realizar entrega do pedido
-                                        <strong>#<?=$obj->getId()?></strong>
-                                    </h1>
-                                    <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
-                                </div>
-                                <div class='modal-body'>
-                                    <form action='entrega.php?solicitacao=<?=$obj->getId()?>' method='post'>
-                                        <div class='row'>
-                                            <ul class='list-group col-10'>
-                                                <?php                    
-                        foreach ($itens as $i => $item) {
-    ?>
-                                                <li class='list-group-item ms-3'>
-                                                    <label class='form-check-label'
-                                                        for='checkbox<?=$item['is_id']?>'><?=$item['modelo_produto']?></label>
-                                                    <input class='form-check-input ms-3' type='checkbox'
-                                                        name='id[]' 
-                                                        id='checkbox<?=$item['is_id']?>'
-                                                        <?php
-                                                            if ($itensEntregues != null) {
-                                                                foreach ($itensEntregues as $x => $entregue){
-                                                                    if ((isset($entregue) && $entregue['solicitacaoId'] == $obj->getId() && $entregue['produtoId'] == $item['id'])){
-                                                                        print "checked disabled";
-                                                                        print " value=''";
+                            <!-- Modal -->
+                            <div class='modal fade' id='modal<?=$obj->getId()?>' data-bs-backdrop='static'
+                                data-bs-keyboard='false' tabindex='-1' aria-hidden='true'>
+                                <div class='modal-dialog'>
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                            <h1 class='modal-title fs-5'>Realizar entrega do pedido
+                                                <strong>#<?=$obj->getId()?></strong>
+                                            </h1>
+                                            <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+                                        </div>
+                                        <div class='modal-body'>
+                                            <form action='entrega.php?solicitacao=<?=$obj->getId()?>' method='post'>
+                                                <div class='row'>
+                                                    <ul class='list-group col-10'>
+                                                        <?php                    
+                                foreach ($itens as $i => $item) {
+            ?>
+                                                        <li class='list-group-item ms-3'>
+                                                            <label class='form-check-label'
+                                                                for='checkbox<?=$item['is_id']?>'><?=$item['modelo_produto']?></label>
+                                                            <input  type='checkbox'
+                                                                name='id[]' 
+                                                                id='checkbox<?=$item['is_id']?>'
+                                                                <?php
+                                                                    if ($itensEntregues != null) {
+                                                                        foreach ($itensEntregues as $x => $entregue){
+                                                                            if ((isset($entregue) && $entregue['solicitacaoId'] == $obj->getId() && $entregue['produtoId'] == $item['id'])){
+                                                                                print "checked disabled ";
+                                                                                print "value='".$item['id']."' ";
+                                                                                print "class='form-check-input ms-3 entregue'";
+                                                                            }
+                                                                        } 
                                                                     } else {
+                                                                        print "class='form-check-input ms-3' ";
                                                                         print "value='".$item['id']."'";
                                                                     }
-                                                                } 
-                                                            } else {
-                                                                print "value='".$item['id']."'";
-                                                            }
-                                                        ?>
-                                                    >
-                                                    
-                                                    <input type="tel"
-                                                        class="form-input ms-3 col-2 rounded border border-1 float-end"
-                                                        name="qntde[]" id="qntde<?=$item['is_id']?>" min="1"
-                                                        max="<?=$item['qntde_item']?>" maxlength="1" disabled
+                                                                ?>
+                                                            >
+                                                            
+                                                            <input type="tel"
+                                                                class="form-input ms-3 col-2 rounded border border-1 float-end"
+                                                                name="qntde[]" id="qntde<?=$item['is_id']?>" min="1"
+                                                                max="<?=$item['qntde_item']?>" maxlength="1" disabled
+                                                                <?php
+                                                                    if ($itensEntregues != null) {
+                                                                        foreach ($itensEntregues as $x => $entregue){
+                                                                            if (isset($entregue) && $entregue['solicitacaoId'] == $obj->getId() && $entregue['produtoId'] == $item['id']){
+                                                                                print "value='".$entregue['qntdeEntregue']."' ";  
+                                                                                print 'required'; 
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                ?>>
+                                                            <label for='qntde' class=' float-end'>Quantidade</label>
+                                                        </li>
+                                                        <?php                                    
+                                }
+            ?>
+                                                    </ul>
+                                                </div>
+
+
+                                                <div class='form-group col-lg-5 col-7 mt-3 mb-3'>
+                                                    <label for='estado'>Estado da Solicitação</label>
+                                                    <select class='form-select' name='estado' id='estado' required>
                                                         <?php
                                                             if ($itensEntregues != null) {
-                                                                foreach ($itensEntregues as $x => $entregue){
-                                                                    if (isset($entregue) && $entregue['solicitacaoId'] == $obj->getId() && $entregue['produtoId'] == $item['id']){
-                                                                        print "value='".$entregue['qntdeEntregue']."'";   
-                                                                    }
+                                                                switch($obj->getEstadoSolicitacao()) {
+                                                                    case 'Aberto':
+                                                                        ?>
+                                                                            <option value='Aberto' selected>Aberto</option>
+                                                                            <option value='Aguardando'>Aguardando</option>
+                                                                            <option value='Atendido'>Atendido</option>
+                                                                        <?php
+                                                                        break;
+                                                                    case 'Aguardando':
+                                                                        ?>
+                                                                            <option value='Aguardando' selected>Aguardando</option>
+                                                                            <option value='Aberto'>Aberto</option>
+                                                                            <option value='Atendido'>Atendido</option>
+                                                                        <?php
+                                                                        break;
+                                                                    case 'Atendido':
+                                                                        ?>
+                                                                            <option value='Aberto'>Aberto</option>
+                                                                            <option value='Aguardando'>Aguardando</option>
+                                                                            <option value='Atendido' selected>Atendido</option>
+                                                                        <?php
+                                                                        break;
                                                                 }
+                                                            } else {
+                                                        ?>
+                                                        <option value='' selected hidden></option>
+                                                        <option value='Aberto'>Aberto</option>
+                                                        <option value='Aguardando'>Aguardando</option>
+                                                        <option value='Atendido'>Atendido</option>
+                                                        <?php
                                                             }
-                                                        ?>>
-                                                    <label for='qntde' class=' float-end'>Quantidade</label>
-                                                </li>
-                                                <?php                                    
-                        }
-    ?>
-                                            </ul>
+                                                        ?>
+                                                    </select>
+                                                </div>
                                         </div>
-
-
-                                        <div class='form-group col-lg-5 col-7 mt-3 mb-3'>
-                                            <label for='estado'>Estado da Solicitação</label>
-                                            <select class='form-select' name='estado' id='estado' required>
-                                                <?php
-                                                    if ($itensEntregues != null) {
-                                                        switch($obj->getEstadoSolicitacao()) {
-                                                            case 'Aberto':
-                                                                ?>
-                                                                    <option value='Aberto' selected>Aberto</option>
-                                                                    <option value='Aguardando'>Aguardando</option>
-                                                                    <option value='Atendido'>Atendido</option>
-                                                                <?php
-                                                                break;
-                                                            case 'Aguardando':
-                                                                ?>
-                                                                    <option value='Aguardando' selected>Aguardando</option>
-                                                                    <option value='Aberto'>Aberto</option>
-                                                                    <option value='Atendido'>Atendido</option>
-                                                                <?php
-                                                                break;
-                                                            case 'Atendido':
-                                                                ?>
-                                                                    <option value='Aberto'>Aberto</option>
-                                                                    <option value='Aguardando'>Aguardando</option>
-                                                                    <option value='Atendido' selected>Atendido</option>
-                                                                <?php
-                                                                break;
-                                                        }
-                                                    } else {
-                                                ?>
-                                                <option value='' selected hidden></option>
-                                                <option value='Aberto'>Aberto</option>
-                                                <option value='Aguardando'>Aguardando</option>
-                                                <option value='Atendido'>Atendido</option>
-                                                <?php
-                                                    }
-                                                ?>
-                                            </select>
+                                        <input type="hidden" name="usuario" value="<?=$obj->getUsuarioId() ?>" />
+                                        <div class='modal-footer'>
+                <?php
+                                        if ($obj->getEstadoSolicitacao() == "Aguardando" || $obj->getEstadoSolicitacao() == "Atendido" || $obj->getEstadoSolicitacao() == "Liberado"){
+                                            echo "<button type='button' class='btn btn-primary btn-editar' onclick='edita()'>Editar</button>";
+                                        }
+                ?>
+                                            <button type='button' class='btn btn-secondary'
+                                                data-bs-dismiss='modal'>Cancelar</button>
+                                            <button type='submit' class='btn btn-primary' disabled>Confirmar</button>
                                         </div>
-                                </div>
-                                <input type="hidden" name="usuario" value="<?=$obj->getUsuarioId() ?>" />
-                                <div class='modal-footer'>
-        <?php
-                                if ($obj->getEstadoSolicitacao() == "Aguardando" || $obj->getEstadoSolicitacao() == "Atendido" || $obj->getEstadoSolicitacao() == "Liberado"){
-                                    echo "<button type='button' class='btn btn-primary'>Editar</button>";
-                                }
-        ?>
-                                    <button type='button' class='btn btn-secondary'
-                                        data-bs-dismiss='modal'>Cancelar</button>
-                                    <button type='submit' class='btn btn-primary' disabled>Confirmar</button>
-                                </div>
-                                </form>
-                            </div> <!-- modal-content -->
-                        </div><!-- modal-dialog -->
-                    </div><!-- modal -->
-        <?php
-            }
-        ?>
-                </div><!-- accordion-body -->
-            </div><!-- collapse -->
-        </div><!-- accordion-item -->
-        <?php
-            }
+                                        </form>
+                                    </div> <!-- modal-content -->
+                                </div><!-- modal-dialog -->
+                            </div><!-- modal -->
+                <?php
+                    }
+                ?>
+                        </div><!-- accordion-body -->
+                    </div><!-- collapse -->
+                </div><!-- accordion-item -->
+                <?php
+                    }
         }
 
     }
