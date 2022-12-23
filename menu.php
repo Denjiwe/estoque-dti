@@ -33,6 +33,12 @@
                 Solicitações
             </a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-white" href="<?=$root?>content/solicitacao/produtosEntregues.php" role="button">
+                Entregas
+            </a>
+          </li>
 <?php            
   }
 ?>  

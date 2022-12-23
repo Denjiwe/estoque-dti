@@ -11,7 +11,8 @@ session_start();
 
     $controllerPath = $_SERVER['DOCUMENT_ROOT'] . '/controller//';
 
-    include_once ($controllerPath . 'solicitacao_controller.php');
+    include_once ($controllerPath . 'entrega_controller.php');
+
 
     include_once ($entityPath . "solicitacao.php"); 
     include_once ($entityPath . "produto.php");  
@@ -21,7 +22,7 @@ session_start();
     include_once ($modelPath . "produto_model.php");
     include_once ($modelPath . "entrega_model.php");
 
-    $solicitacaoController = new SolicitacaoController;
+    $entregaController = new EntregaController;
 
     $id = $_REQUEST['solicitacao'];
 
@@ -29,7 +30,8 @@ session_start();
         $produtos = $_POST['id'];
         $qntdes = $_POST['qntde'];
         $estado = $_POST['estado'];
-        $usuario = $_POST['usuario'];
+        $usuarioId = $_POST['usuario'];
+        $usuarioEntrega = $_SESSION['usuarioId'];
 
         $solicitacaoModel = new SolicitacaoModel;
 
@@ -61,8 +63,9 @@ session_start();
                             $entrega = new Entrega;
                             $entrega->setId($entregas[$key]['id']);
                             $entrega->setQtnde($qntde);
-                            $entrega->setUsuarioId($usuario);
+                            $entrega->setUsuarioId($usuarioId);
                             $entrega->setItensId($idItemSolicitacao);
+                            $entrega->setUsuarioEntrega($usuarioEntrega);
                             
                             try {
                                 
@@ -72,7 +75,7 @@ session_start();
 
                                 $entregaModel->update($entrega);
                             } catch(PDOException $e) {
-                                $solicitacaoController->modalErroEntrega($e);
+                                $entregaController->modalErroEntrega($e);
                             }
                         } else {
                             $qntdeEstoque = $produtoModel->getEstoque($produto);
@@ -82,8 +85,9 @@ session_start();
                             $entrega = new Entrega;
                             $entrega->setId($entregas[$key]['id']);
                             $entrega->setQtnde($qntde);
-                            $entrega->setUsuarioId($usuario);
+                            $entrega->setUsuarioId($usuarioId);
                             $entrega->setItensId($idItemSolicitacao);
+                            $entrega->setUsuarioEntrega($usuarioEntrega);
                             
                             try {
                                 
@@ -93,7 +97,7 @@ session_start();
 
                                 $entregaModel->update($entrega);
                             } catch(PDOException $e) {
-                                $solicitacaoController->modalErroEntrega($e);
+                                $entregaController->modalErroEntrega($e);
                             }
                         }
                     } 
@@ -110,8 +114,9 @@ session_start();
 
                             $entrega = new Entrega;
                             $entrega->setQtnde($qntde);
-                            $entrega->setUsuarioId($usuario);
+                            $entrega->setUsuarioId($usuarioId);
                             $entrega->setItensId($idItemSolicitacao);
+                            $entrega->setUsuarioEntrega($usuarioEntrega);
 
                             try {
                                 $produtoModel->updateEstoque($novaQntde, $produto);
@@ -120,7 +125,7 @@ session_start();
 
                                 $entregaModel->insert($entrega);
                             } catch (PDOException $e) {
-                                $solicitacaoController->modalErroEntrega($e);
+                                $entregaController->modalErroEntrega($e);
                             }
                         }
                     }
@@ -135,7 +140,7 @@ session_start();
         try {
             $solicitacaoModel->updateEstado($estado, $id);
         } catch (PDOException $e){
-            $solicitacaoController->modalErroEntrega($e);
+            $entregaController->modalErroEntrega($e);
         }
     }
 

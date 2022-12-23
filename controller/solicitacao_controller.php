@@ -255,6 +255,10 @@
                                 }
                                 ?>
                             </ul>
+
+                            <div class="ms-3 mt-3">
+                                <p>OBS: Favor verificar suas solicitações periodicamente até a solicitação <strong>#<?=$solicitacaoId?></strong> esteja com o estado <span class="text-info">Liberado</span>. Favor anotar e trazer o número da solicitação</p>
+                            </div>
                         </div>
                             <?php
                             }
@@ -280,6 +284,10 @@
                                 }
                                 ?>
                             </ul>
+                            
+                            <div class="ms-3 mt-3">
+                                <p>OBS: Anote o número da solicitação <strong>#<?=$solicitacaoId?></strong>, e o informe para facilitar o atendimento!</p>
+                            </div>
                         </div>
                         <?php
                             }
@@ -420,13 +428,27 @@
                     exit();
                 }
             }
-
                     
             foreach ($solicitacao as $obj) {
 
             $itens = $model->selectItemSolicitacao($obj->getId());
             $itensEntregues = $model->comparaEntrega($obj->getId());
             $data =  new DateTime($obj->getDataSolicitacao());
+
+            if ($obj->getEstadoSolicitacao() == 'Aguardando') {
+                foreach ($itens as $item){
+                    $qntdeSolicitada = $model->verificaQntdeSolicitado($item['id']);
+                    
+                    $qntdeEstoque = $model->getEstoque($item['id']);
+
+                    $disponivel = ($qntdeEstoque - $qntdeSolicitada) - $item['qntde_item'];
+
+                    if ($disponivel < 0) {
+                        $model->updateEstado('Liberado', $obj->getId());
+                    }
+                }
+            }
+
             if ($itensEntregues != null) {
                 $dataEntregue = new DateTime($itensEntregues[0]['dataEntregue']);
             }
@@ -616,56 +638,6 @@
                 </div><!-- accordion-item -->
                 <?php
                     }
-        }
-
-        /* ========================================================= Entrega ========================================================= */
-
-        function modalErroEntrega($exception) {
-            ?>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-                integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-            </script>
-            
-            <div class="modal fade show" id="solicitacaoModal"  style="display: block;" aria-modal="true" tabindex="-1" aria-labelledby="solitacaoModal" data-bs-keyboard="false" role="dialog" data-bs-backdrop="static">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Erro na Entrega!</h5>
-                        </div>
-                        <div class="modal-body">
-                            <?php
-                                if (str_contains($exception, 'chk_produto_positivo')){
-                                    print "Não foi possível realizar a entrega pois existe um ou vários produtos sem estoque!";
-                                } else {
-                                    print "Não foi possível reaizar a entrega!";
-                                }
-                            ?>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesquisar.php" class="btn btn-secondary">OK</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <script language="javascript">
-                let modal = document.querySelector(".modal");
-                let body = document.querySelector("body");
-
-                if (modal.classList.contains("show")) {
-                    body.classList.add("modal-open");
-                    body.style.overflow = "hidden";
-                    let div = document.createElement("div");
-                    div.classList.add("modal-backdrop");
-                    div.classList.add("fade");
-                    div.classList.add("show");
-
-                    body.appendChild(div);
-                }
-            </script>
-        <?php
         }
 
     }

@@ -14,6 +14,10 @@ class Entrega
 
         private int $itensId;
 
+        private int $usuarioEntrega;
+
+        private int $solicitacaoId;
+
         public function getId() : int {
             return $this->id;
         }
@@ -23,14 +27,20 @@ class Entrega
         public function getDataEntrega() {
             return $this->dataEntrega;
         }
-        public function geObservacao() : string {
-            return $this->observacao;
+        public function getObservacao() : ?string {
+            return $this?->observacao;
         }
         public function getUsuarioId() : int {
             return $this->usuarioId;
         }
         public function getItensId() : int {
             return $this->itensId;
+        }
+        public function getUsuarioEntrega() : int {
+            return $this->usuarioEntrega;
+        }
+        public function getSolicitacaoId() : int {
+            return $this->solicitacaoId;
         }
 
         public function setId(int $id) {
@@ -50,5 +60,11 @@ class Entrega
         }
         public function setItensId(int $itensId) {
             $this->itensId = $itensId;
+        }
+        public function setSolicitacaoId(int $solicitacaoId) {
+            $this->solicitacaoId = $solicitacaoId;
+        }
+        public function setUsuarioEntrega(int $usuarioEntrega) {
+            $this->usuarioEntrega = $usuarioEntrega;
         }
     }

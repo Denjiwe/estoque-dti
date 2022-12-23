@@ -2509,3 +2509,76 @@
 2022/12/21 11:09:23 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
 2022/12/21 11:51:50 [error] 28#28: *38 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /content/solicitacao/pesquisa.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080"
 2022/12/21 12:08:54 [error] 28#28: *59 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2022/12/21 13:21:45 [error] 29#29: *82 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/21 16:38:33 [error] 30#30: *217 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/21 16:38:37 [error] 30#30: *220 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2022/12/21 16:59:21 [error] 30#30: *240 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/produto/pesquisar.php"
+2022/12/21 17:39:33 [error] 30#30: *254 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2022/12/21 17:39:38 [error] 30#30: *256 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /content/solicitacao/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2022/12/21 17:39:57 [error] 30#30: *265 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /content/produto/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080"
+2022/12/21 17:40:10 [error] 30#30: *265 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /content/produto/index.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080"
+2022/12/21 19:00:39 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/12/21 19:00:39 [notice] 31#31: gracefully shutting down
+2022/12/21 19:00:39 [notice] 29#29: gracefully shutting down
+2022/12/21 19:00:39 [notice] 28#28: gracefully shutting down
+2022/12/21 19:00:39 [notice] 30#30: gracefully shutting down
+2022/12/21 19:00:39 [notice] 29#29: exiting
+2022/12/21 19:00:39 [notice] 31#31: exiting
+2022/12/21 19:00:39 [notice] 28#28: exiting
+2022/12/21 19:00:39 [notice] 30#30: exiting
+2022/12/21 19:00:39 [notice] 31#31: exit
+2022/12/21 19:00:39 [notice] 29#29: exit
+2022/12/21 19:00:39 [notice] 28#28: exit
+2022/12/21 19:00:39 [notice] 30#30: exit
+2022/12/21 19:00:40 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/12/21 19:00:40 [notice] 1#1: worker process 28 exited with code 0
+2022/12/21 19:00:40 [notice] 1#1: worker process 31 exited with code 0
+2022/12/21 19:00:40 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/21 19:00:40 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/12/21 19:00:40 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/12/21 19:00:40 [notice] 1#1: worker process 29 exited with code 0
+2022/12/21 19:00:40 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/21 19:00:40 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/12/21 19:00:40 [notice] 1#1: worker process 30 exited with code 0
+2022/12/21 19:00:40 [notice] 1#1: exit
+2022/12/22 11:07:01 [notice] 1#1: using the "epoll" event method
+2022/12/22 11:07:01 [notice] 1#1: nginx/1.23.2
+2022/12/22 11:07:01 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/22 11:07:01 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/12/22 11:07:01 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/12/22 11:07:01 [notice] 1#1: start worker processes
+2022/12/22 11:07:01 [notice] 1#1: start worker process 28
+2022/12/22 11:07:01 [notice] 1#1: start worker process 29
+2022/12/22 11:07:01 [notice] 1#1: start worker process 30
+2022/12/22 11:07:01 [notice] 1#1: start worker process 31
+2022/12/22 14:27:54 [error] 30#30: *17 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/produtosEntregues.php"
+2022/12/22 17:10:02 [error] 28#28: *50 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/produtosEntregues.php"
+2022/12/22 18:57:53 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2022/12/22 18:57:53 [notice] 28#28: gracefully shutting down
+2022/12/22 18:57:53 [notice] 29#29: gracefully shutting down
+2022/12/22 18:57:53 [notice] 30#30: gracefully shutting down
+2022/12/22 18:57:53 [notice] 29#29: exiting
+2022/12/22 18:57:53 [notice] 31#31: gracefully shutting down
+2022/12/22 18:57:53 [notice] 28#28: exiting
+2022/12/22 18:57:53 [notice] 29#29: exit
+2022/12/22 18:57:53 [notice] 30#30: exiting
+2022/12/22 18:57:53 [notice] 28#28: exit
+2022/12/22 18:57:53 [notice] 31#31: exiting
+2022/12/22 18:57:53 [notice] 31#31: exit
+2022/12/22 18:57:53 [notice] 30#30: exit
+2022/12/22 18:57:53 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2022/12/22 18:57:53 [notice] 1#1: worker process 28 exited with code 0
+2022/12/22 18:57:53 [notice] 1#1: worker process 30 exited with code 0
+2022/12/22 18:57:53 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/22 18:57:53 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2022/12/22 18:57:53 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2022/12/22 18:57:53 [notice] 1#1: worker process 29 exited with code 0
+2022/12/22 18:57:53 [notice] 1#1: signal 29 (SIGIO) received
+2022/12/22 18:57:53 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2022/12/22 18:57:53 [notice] 1#1: worker process 31 exited with code 0
+2022/12/22 18:57:53 [notice] 1#1: exit
+2022/12/23 11:20:27 [notice] 1#1: using the "epoll" event method
+2022/12/23 11:20:27 [notice] 1#1: nginx/1.23.2
+2022/12/23 11:20:27 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2022/12/23 11:20:27 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/12/23 11:20:27 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576

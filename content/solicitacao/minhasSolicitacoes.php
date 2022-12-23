@@ -36,7 +36,7 @@
 <main class='container mt-5'>
     <div class='accordion' id='content'>
     <?php
-        $solicitacaoController->exibeSolicitacao();
+        $solicitacaoController->exibeSolicitacao(false);
     ?>  
                 </div>
             </div>
