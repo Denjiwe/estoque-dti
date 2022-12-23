@@ -294,7 +294,7 @@
                         ?>
                     </div>
                     <div class="modal-footer">
-                        <a href="pesquisar.php" class="btn btn-secondary">OK</a>
+                        <a href="<?=$_SESSION['dti'] ? 'pesquisar' : 'minhasSolicitacoes'?>.php" class="btn btn-secondary">OK</a>
                     </div>
                     </div>
                 </div>

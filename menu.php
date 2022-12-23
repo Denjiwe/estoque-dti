@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../../../css/menu.css">
 <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="<?=$home?>">
+    <a class="navbar-brand text-white" href="<?=$root?>content/solicitacao/minhasSolicitacoes.php">
       Estoque DTI
     </a>
 

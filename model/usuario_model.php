@@ -322,7 +322,12 @@
                 $_SESSION['cpf'] = $login;
                 $_SESSION['usuario'] = $nomeId[0];
                 $_SESSION['usuarioId'] = $nomeId[1];
-                header ('Location: home.php');
+                
+                if ($_SESSION['dti']) {
+                    header ('Location: home.php');
+                } else {
+                    header ('Location: content\solicitacao\minhasSolicitacoes.php');
+                }
                 exit();
             } else {
                 $_SESSION['nao_autenticado'] = true;
