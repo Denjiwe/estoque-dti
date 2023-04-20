@@ -2587,3 +2587,186 @@
 2022/12/23 13:22:11 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
 2022/12/23 13:22:11 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
 2022/12/23 13:22:11 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/03/03 01:05:00 [notice] 1#1: using the "epoll" event method
+2023/03/03 01:05:00 [notice] 1#1: nginx/1.23.2
+2023/03/03 01:05:00 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/03/03 01:05:00 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2023/03/03 01:05:00 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/03/03 01:05:00 [notice] 1#1: start worker processes
+2023/03/03 01:05:00 [notice] 1#1: start worker process 28
+2023/03/03 01:05:00 [notice] 1#1: start worker process 29
+2023/03/03 01:05:00 [notice] 1#1: start worker process 30
+2023/03/03 01:05:00 [notice] 1#1: start worker process 31
+2023/03/03 01:05:00 [notice] 1#1: start worker process 32
+2023/03/03 01:05:00 [notice] 1#1: start worker process 33
+2023/03/03 01:05:15 [error] 28#28: *1 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.19.0.1, server: , request: "GET /content/solicitacao/index.php HTTP/1.1", upstream: "fastcgi://172.19.0.3:9000", host: "localhost:8080"
+2023/03/03 01:05:25 [error] 28#28: *1 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.19.0.1, server: , request: "GET /content/solicitacao/index.php HTTP/1.1", upstream: "fastcgi://172.19.0.3:9000", host: "localhost:8080"
+2023/03/03 01:05:37 [error] 28#28: *1 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.19.0.1, server: , request: "GET /content/solicitacao/cadatrar.php HTTP/1.1", upstream: "fastcgi://172.19.0.3:9000", host: "localhost:8080"
+2023/03/03 01:05:42 [error] 28#28: *1 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.19.0.1, server: , request: "GET /content/solicitacao/cadastrar.php HTTP/1.1", upstream: "fastcgi://172.19.0.3:9000", host: "localhost:8080"
+2023/03/03 01:05:47 [error] 28#28: *1 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.19.0.1, server: , request: "GET /content/solicitacao/index.php HTTP/1.1", upstream: "fastcgi://172.19.0.3:9000", host: "localhost:8080"
+2023/03/03 01:12:31 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/03/03 01:12:31 [notice] 29#29: gracefully shutting down
+2023/03/03 01:12:31 [notice] 32#32: gracefully shutting down
+2023/03/03 01:12:31 [notice] 28#28: gracefully shutting down
+2023/03/03 01:12:31 [notice] 30#30: gracefully shutting down
+2023/03/03 01:12:31 [notice] 31#31: gracefully shutting down
+2023/03/03 01:12:31 [notice] 33#33: gracefully shutting down
+2023/03/03 01:12:31 [notice] 29#29: exiting
+2023/03/03 01:12:31 [notice] 32#32: exiting
+2023/03/03 01:12:31 [notice] 28#28: exiting
+2023/03/03 01:12:31 [notice] 30#30: exiting
+2023/03/03 01:12:31 [notice] 31#31: exiting
+2023/03/03 01:12:31 [notice] 33#33: exiting
+2023/03/03 01:12:31 [notice] 29#29: exit
+2023/03/03 01:12:31 [notice] 32#32: exit
+2023/03/03 01:12:31 [notice] 28#28: exit
+2023/03/03 01:12:31 [notice] 30#30: exit
+2023/03/03 01:12:31 [notice] 31#31: exit
+2023/03/03 01:12:31 [notice] 33#33: exit
+2023/03/03 01:12:31 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2023/03/03 01:12:31 [notice] 1#1: worker process 28 exited with code 0
+2023/03/03 01:12:31 [notice] 1#1: worker process 29 exited with code 0
+2023/03/03 01:12:31 [notice] 1#1: worker process 30 exited with code 0
+2023/03/03 01:12:31 [notice] 1#1: worker process 31 exited with code 0
+2023/03/03 01:12:31 [notice] 1#1: worker process 32 exited with code 0
+2023/03/03 01:12:31 [notice] 1#1: worker process 33 exited with code 0
+2023/03/03 01:12:31 [notice] 1#1: exit
+2023/03/06 17:49:10 [notice] 1#1: using the "epoll" event method
+2023/03/06 17:49:10 [notice] 1#1: nginx/1.23.2
+2023/03/06 17:49:10 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/03/06 17:49:10 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2023/03/06 17:49:10 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/03/06 17:49:10 [notice] 1#1: start worker processes
+2023/03/06 17:49:10 [notice] 1#1: start worker process 28
+2023/03/06 17:49:10 [notice] 1#1: start worker process 29
+2023/03/06 17:49:10 [notice] 1#1: start worker process 30
+2023/03/06 17:49:10 [notice] 1#1: start worker process 31
+2023/03/06 17:49:10 [notice] 1#1: start worker process 32
+2023/03/06 17:49:10 [notice] 1#1: start worker process 33
+2023/03/06 17:49:15 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2023/03/06 18:23:33 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/03/06 18:23:33 [notice] 30#30: gracefully shutting down
+2023/03/06 18:23:33 [notice] 32#32: gracefully shutting down
+2023/03/06 18:23:33 [notice] 29#29: gracefully shutting down
+2023/03/06 18:23:33 [notice] 31#31: gracefully shutting down
+2023/03/06 18:23:33 [notice] 32#32: exiting
+2023/03/06 18:23:33 [notice] 33#33: gracefully shutting down
+2023/03/06 18:23:33 [notice] 28#28: gracefully shutting down
+2023/03/06 18:23:33 [notice] 30#30: exiting
+2023/03/06 18:23:33 [notice] 29#29: exiting
+2023/03/06 18:23:33 [notice] 31#31: exiting
+2023/03/06 18:23:33 [notice] 32#32: exit
+2023/03/06 18:23:33 [notice] 33#33: exiting
+2023/03/06 18:23:33 [notice] 30#30: exit
+2023/03/06 18:23:33 [notice] 28#28: exiting
+2023/03/06 18:23:33 [notice] 29#29: exit
+2023/03/06 18:23:33 [notice] 31#31: exit
+2023/03/06 18:23:33 [notice] 33#33: exit
+2023/03/06 18:23:33 [notice] 28#28: exit
+2023/03/06 18:23:34 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2023/03/06 18:23:34 [notice] 1#1: worker process 31 exited with code 0
+2023/03/06 18:23:34 [notice] 1#1: worker process 33 exited with code 0
+2023/03/06 18:23:34 [notice] 1#1: signal 29 (SIGIO) received
+2023/03/06 18:23:34 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/03/06 18:23:34 [notice] 1#1: worker process 28 exited with code 0
+2023/03/06 18:23:34 [notice] 1#1: worker process 32 exited with code 0
+2023/03/06 18:23:34 [notice] 1#1: signal 29 (SIGIO) received
+2023/03/06 18:23:34 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/03/06 18:23:34 [notice] 1#1: worker process 29 exited with code 0
+2023/03/06 18:23:34 [notice] 1#1: signal 29 (SIGIO) received
+2023/03/06 18:23:34 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/03/06 18:23:34 [notice] 1#1: worker process 30 exited with code 0
+2023/03/06 18:23:34 [notice] 1#1: exit
+2023/03/16 05:12:15 [notice] 1#1: using the "epoll" event method
+2023/03/16 05:12:15 [notice] 1#1: nginx/1.23.2
+2023/03/16 05:12:15 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/03/16 05:12:15 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2023/03/16 05:12:15 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/03/16 05:12:15 [notice] 1#1: start worker processes
+2023/03/16 05:12:15 [notice] 1#1: start worker process 28
+2023/03/16 05:12:15 [notice] 1#1: start worker process 29
+2023/03/16 05:12:15 [notice] 1#1: start worker process 30
+2023/03/16 05:12:15 [notice] 1#1: start worker process 31
+2023/03/16 05:12:15 [notice] 1#1: start worker process 32
+2023/03/16 05:12:15 [notice] 1#1: start worker process 33
+2023/03/16 05:16:29 [error] 28#28: *1 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2023/03/16 05:20:10 [error] 30#30: *8 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/pesquisar.php"
+2023/03/16 05:20:34 [error] 30#30: *8 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.18.0.1, server: , request: "GET /content/solicitacao/home.php HTTP/1.1", upstream: "fastcgi://172.18.0.3:9000", host: "localhost:8080", referrer: "http://localhost:8080/content/solicitacao/cadastro.php"
+2023/03/16 05:57:55 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/03/16 05:57:55 [notice] 28#28: gracefully shutting down
+2023/03/16 05:57:55 [notice] 30#30: gracefully shutting down
+2023/03/16 05:57:55 [notice] 31#31: gracefully shutting down
+2023/03/16 05:57:55 [notice] 29#29: gracefully shutting down
+2023/03/16 05:57:55 [notice] 33#33: gracefully shutting down
+2023/03/16 05:57:55 [notice] 31#31: exiting
+2023/03/16 05:57:55 [notice] 32#32: gracefully shutting down
+2023/03/16 05:57:55 [notice] 31#31: exit
+2023/03/16 05:57:55 [notice] 28#28: exiting
+2023/03/16 05:57:55 [notice] 30#30: exiting
+2023/03/16 05:57:55 [notice] 29#29: exiting
+2023/03/16 05:57:55 [notice] 33#33: exiting
+2023/03/16 05:57:55 [notice] 29#29: exit
+2023/03/16 05:57:55 [notice] 28#28: exit
+2023/03/16 05:57:55 [notice] 30#30: exit
+2023/03/16 05:57:55 [notice] 32#32: exiting
+2023/03/16 05:57:55 [notice] 32#32: exit
+2023/03/16 05:57:55 [notice] 33#33: exit
+2023/03/16 05:57:55 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2023/03/16 05:57:55 [notice] 1#1: worker process 28 exited with code 0
+2023/03/16 05:57:55 [notice] 1#1: worker process 29 exited with code 0
+2023/03/16 05:57:55 [notice] 1#1: signal 29 (SIGIO) received
+2023/03/16 05:57:55 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/03/16 05:57:55 [notice] 1#1: worker process 30 exited with code 0
+2023/03/16 05:57:55 [notice] 1#1: worker process 32 exited with code 0
+2023/03/16 05:57:55 [notice] 1#1: worker process 33 exited with code 0
+2023/03/16 05:57:55 [notice] 1#1: signal 29 (SIGIO) received
+2023/03/16 05:57:55 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/03/16 05:57:55 [notice] 1#1: worker process 31 exited with code 0
+2023/03/16 05:57:55 [notice] 1#1: exit
+2023/04/20 19:22:56 [notice] 1#1: using the "epoll" event method
+2023/04/20 19:22:56 [notice] 1#1: nginx/1.23.2
+2023/04/20 19:22:56 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/04/20 19:22:56 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2023/04/20 19:22:56 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/04/20 19:22:56 [notice] 1#1: start worker processes
+2023/04/20 19:22:56 [notice] 1#1: start worker process 28
+2023/04/20 19:22:56 [notice] 1#1: start worker process 29
+2023/04/20 19:22:56 [notice] 1#1: start worker process 30
+2023/04/20 19:22:56 [notice] 1#1: start worker process 31
+2023/04/20 19:22:56 [notice] 1#1: start worker process 32
+2023/04/20 19:22:56 [notice] 1#1: start worker process 33
+2023/04/20 19:23:30 [error] 30#30: *2 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
+2023/04/20 20:16:40 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/04/20 20:16:40 [notice] 28#28: gracefully shutting down
+2023/04/20 20:16:40 [notice] 32#32: gracefully shutting down
+2023/04/20 20:16:40 [notice] 29#29: gracefully shutting down
+2023/04/20 20:16:40 [notice] 33#33: gracefully shutting down
+2023/04/20 20:16:40 [notice] 30#30: gracefully shutting down
+2023/04/20 20:16:40 [notice] 31#31: gracefully shutting down
+2023/04/20 20:16:40 [notice] 28#28: exiting
+2023/04/20 20:16:40 [notice] 32#32: exiting
+2023/04/20 20:16:40 [notice] 29#29: exiting
+2023/04/20 20:16:40 [notice] 33#33: exiting
+2023/04/20 20:16:40 [notice] 30#30: exiting
+2023/04/20 20:16:40 [notice] 31#31: exiting
+2023/04/20 20:16:40 [notice] 32#32: exit
+2023/04/20 20:16:40 [notice] 28#28: exit
+2023/04/20 20:16:40 [notice] 29#29: exit
+2023/04/20 20:16:40 [notice] 33#33: exit
+2023/04/20 20:16:40 [notice] 30#30: exit
+2023/04/20 20:16:40 [notice] 31#31: exit
+2023/04/20 20:16:40 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/04/20 20:16:40 [notice] 1#1: worker process 32 exited with code 0
+2023/04/20 20:16:40 [notice] 1#1: signal 29 (SIGIO) received
+2023/04/20 20:16:40 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/04/20 20:16:40 [notice] 1#1: worker process 29 exited with code 0
+2023/04/20 20:16:40 [notice] 1#1: signal 29 (SIGIO) received
+2023/04/20 20:16:40 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2023/04/20 20:16:40 [notice] 1#1: worker process 28 exited with code 0
+2023/04/20 20:16:40 [notice] 1#1: worker process 33 exited with code 0
+2023/04/20 20:16:40 [notice] 1#1: signal 29 (SIGIO) received
+2023/04/20 20:16:40 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2023/04/20 20:16:40 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/04/20 20:16:40 [notice] 1#1: worker process 30 exited with code 0
+2023/04/20 20:16:40 [notice] 1#1: worker process 31 exited with code 0
+2023/04/20 20:16:40 [notice] 1#1: exit
