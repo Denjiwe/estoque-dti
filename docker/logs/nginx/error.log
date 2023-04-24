@@ -2770,3 +2770,8 @@
 2023/04/20 20:16:40 [notice] 1#1: worker process 30 exited with code 0
 2023/04/20 20:16:40 [notice] 1#1: worker process 31 exited with code 0
 2023/04/20 20:16:40 [notice] 1#1: exit
+2023/04/23 17:58:22 [notice] 1#1: using the "epoll" event method
+2023/04/23 17:58:22 [notice] 1#1: nginx/1.23.2
+2023/04/23 17:58:22 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/04/23 17:58:22 [notice] 1#1: OS: Linux 5.10.102.1-microsoft-standard-WSL2
+2023/04/23 17:58:22 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576

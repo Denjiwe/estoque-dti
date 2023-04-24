@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('produto_id');
             $table->foreign('produto_id')->references('id')->on('produtos');
-            $table->unsignedBigInteger('produto_vinculado_id');
-            $table->foreign('produto_vinculado_id')->references('id')->on('produtos');
+            $table->unsignedBigInteger('suprimento_id');
+            $table->foreign('suprimento_id')->references('id')->on('produtos');
             $table->timestamps();
         });
     }
@@ -33,8 +33,8 @@ return new class extends Migration
         Schema::table('itens_produtos', function (Blueprint $table) {
             $table->dropForeign('itens_produtos_produto_id_foreign');
             $table->dropColumn('produto_id');
-            $table->dropForeign('itens_produtos_produto_vinculado_id_foreign');
-            $table->dropColumn('produto_vinculado_id');
+            $table->dropForeign('itens_produtos_suprimento_id_foreign');
+            $table->dropColumn('suprimento_id');
         });
         Schema::dropIfExists('itens_produtos');
     }

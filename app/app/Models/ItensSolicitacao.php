@@ -8,4 +8,35 @@ use Illuminate\Database\Eloquent\Model;
 class ItensSolicitacao extends Model
 {
     use HasFactory;
+
+    protected $table = 'itens_solicitacoes';
+
+    protected $fillable = [
+        'qntde',
+        'produto_id',
+        'solicitacao_id'
+    ];
+
+    public function rules() {
+        return [
+            'qntde' => 'required|integer',
+            'produto_id' => 'required|exists:protutos,id',
+            'solicitacao_id' => 'required|exists:solicitacoes,id'
+        ];
+    }
+
+    public function feedback() {
+        return [
+            'qntde.required' => 'A quantidade deve ser preenchida',
+            'qntde.integer' => 'A quantidade deve um número inteiro',
+            'produto_id.required' => 'O produto deve ser preenchido',
+            'produto_id.exists' => 'O produto não foi encontrado',
+            'solicitacao_id.required' => 'A solicitação deve ser passada',
+            'solicitacao_id.exists' => 'A solicitação não foi encontrada',
+        ];
+    }
+
+    public function entregas() {
+        return $this->hasMany('App\Models\Entrega');
+    }
 }

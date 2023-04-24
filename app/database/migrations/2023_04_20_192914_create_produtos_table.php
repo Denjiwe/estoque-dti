@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
             $table->string('modelo_produto', 45);
+            $table->enum('status', ['ATIVO', 'INATIVO']);
             $table->string('descricao', 150)->nullable();
             $table->integer('qntde_estoque');
             $table->timestamps();

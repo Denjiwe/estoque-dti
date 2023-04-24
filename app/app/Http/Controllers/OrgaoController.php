@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class OrgaoController extends Controller
 {
+    public function __construct(Orgao $orgao) {
+        $this->orgao = $orgao;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,9 @@ class OrgaoController extends Controller
      */
     public function index()
     {
-        //
+        $orgaos = $this->orgao->with('diretorias')->get();
+
+        return view('orgao.index', ['orgaos' => $orgaos, 'titulo' => 'Órgãos Cadastrados']);
     }
 
     /**
