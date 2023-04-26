@@ -17,19 +17,9 @@ class OrgaoController extends Controller
      */
     public function index()
     {
-        $orgaos = $this->orgao->with('diretorias')->get();
+        $orgaos = $this->orgao->with('diretorias')->paginate(10);
 
         return view('orgao.index', ['orgaos' => $orgaos, 'titulo' => 'Órgãos Cadastrados']);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -40,7 +30,11 @@ class OrgaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = 0;
+        $request->validate($this->orgao->rules($id), $this->orgao->feedback());
+
+        $orgao = $this->orgao->create($request->all());
+        return redirect()->route('orgaos.index');
     }
 
     /**
@@ -72,9 +66,14 @@ class OrgaoController extends Controller
      * @param  \App\Models\Orgao  $orgao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Orgao $orgao)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->orgao->rules($id), $this->orgao->feedback());
+
+        $orgao = $this->orgao->find($id);
+        $orgao->update($request->all());
+
+        return redirect()->route('orgaos.index');
     }
 
     /**
@@ -83,8 +82,15 @@ class OrgaoController extends Controller
      * @param  \App\Models\Orgao  $orgao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Orgao $orgao)
+    public function destroy($id)
     {
-        //
+        $orgao = $this->orgao->find($id);
+
+        if($orgao == null) {
+            return redirect()->route('orgaos.index');
+        }
+
+        $orgao->delete();
+        return redirect()->route('orgaos.index');
     }
 }

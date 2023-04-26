@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-dark">
-<div class="container-fluid">
+<div class="container">
     <a class="navbar-brand text-white" href="">
         Estoque DTI
     </a>

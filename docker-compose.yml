@@ -17,6 +17,8 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     container_name: php
+    ports:
+      - "8989:8000"
     volumes:
       - ./:/var/www/html/
       - ./docker/logs/php.log:/usr/local/var/log/
