@@ -32,6 +32,7 @@
                 {{-- card de exibição --}}
                 <Card titulo="{{ $titulo }}">
                     <template v-slot:body>
+                        @if (count($diretorias) > 0)
                         <table class="table text-center">
                             <thead>
                                 <tr>
@@ -73,6 +74,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @endif
                     </template>
 
                     <template v-slot:footer>
@@ -97,7 +99,7 @@
 
                 <Modal id="adicionarModal" titulo="Adicionar Diretoria">
                     <template v-slot:body>
-                        @component('diretoria._components.form_create_edit', ['diretorias' => $diretorias, 'orgaos' => $orgaos])
+                        @component('diretoria._components.form_create_edit', ['orgaos' => $orgaos])
                         @endcomponent
                     </template>
                 </Modal>
@@ -117,7 +119,7 @@
 @section('js')
     <script> 
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir o órgão?')) {                                                       
+            if (confirm('Tem certeza que quer excluir a diretoria?')) {                                                       
                 document.getElementById('form_'+id).submit()                                                    
             }
         }

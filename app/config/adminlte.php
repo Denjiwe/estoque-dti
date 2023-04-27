@@ -350,7 +350,7 @@ return [
                 ],
                 [
                     'text' => 'Divisões',
-                    'url'  => 'divisoes/',
+                    'url'  => 'divisao/',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [

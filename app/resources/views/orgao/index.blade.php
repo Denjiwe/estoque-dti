@@ -33,6 +33,7 @@
                 {{-- card de exibição --}}
                 <Card titulo="{{ $titulo }}">
                     <template v-slot:body>
+                        @if (count($orgaos) > 0)
                         <table class="table text-center">
                             <thead>
                                 <tr>
@@ -72,6 +73,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @endif
                     </template>
 
                     <template v-slot:footer>

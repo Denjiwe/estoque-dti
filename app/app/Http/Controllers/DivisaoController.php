@@ -21,7 +21,7 @@ class DivisaoController extends Controller
         $divisoes = $this->divisao->with('diretoria')->paginate(10);
         $diretorias = Diretoria::get();
 
-        return view('divisao.index', ['divisaos' => $divisoes, 'titulo' => 'divisoes Cadastradas', 'diretorias' => $diretorias]);
+        return view('divisao.index', ['divisoes' => $divisoes, 'titulo' => 'Divisões Cadastradas', 'diretorias' => $diretorias]);
     }
 
     /**
@@ -36,7 +36,7 @@ class DivisaoController extends Controller
         $request->validate($this->divisao->rules($id), $this->divisao->feedback());
 
         $divisao = $this->divisao->create($request->all());
-        return redirect()->route('divisoes.index');
+        return redirect()->route('divisao.index');
     }
 
     /**
@@ -53,7 +53,7 @@ class DivisaoController extends Controller
         $divisao = $this->divisao->find($id);
         $divisao->update($request->all());
 
-        return redirect()->route('divisoes.index');
+        return redirect()->route('divisao.index');
     }
 
     /**
@@ -67,10 +67,10 @@ class DivisaoController extends Controller
         $divisao = $this->divisao->find($id);
 
         if($divisao == null) {
-            return redirect()->route('divisoes.index');
+            return redirect()->route('divisao.index');
         }
 
         $divisao->delete();
-        return redirect()->route('divisoes.index');
+        return redirect()->route('divisao.index');
     }
 }

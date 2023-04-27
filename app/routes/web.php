@@ -2,6 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\OrgaoController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\DiretoriaController;
+use App\Http\Controllers\DivisaoController;
+use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\SolicitacaoController;
+use App\Http\Controllers\EntregaController;
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,15 +29,15 @@ Route::get('/', function () {
 });
 
 // Route::group(function () {  middleware('auth:sanctum')
-    Route::resource('usuarios', App\Http\Controllers\UsuariosController::class);
-    Route::resource('orgaos', App\Http\Controllers\OrgaoController::class);
-    Route::resource('diretorias', App\Http\Controllers\DiretoriaController::class);
-    Route::resource('divisoes', App\Http\Controllers\DivisaoController::class);
-    Route::resource('produtos', App\Http\Controllers\ProdutoController::class);
-    Route::resource('entregas', App\Http\Controllers\EntregaController::class);
-    Route::resource('solicitar', App\Http\Controllers\SolicitacaoController::class);
-    Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
-    Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
+    Route::resource('usuarios', UsuarioController::class);
+    Route::resource('orgaos', OrgaoController::class);
+    Route::resource('diretorias', DiretoriaController::class);
+    Route::resource('divisao', DivisaoController::class);
+    Route::resource('produtos', ProdutoController::class);
+    Route::resource('entregas', EntregaController::class);
+    Route::resource('solicitar', SolicitacaoController::class);
+    // Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
+    // Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
 // });
 Auth::routes();
 
