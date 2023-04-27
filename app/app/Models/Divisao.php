@@ -14,10 +14,10 @@ class Divisao extends Model
 
     protected $fillable = ['nome', 'status', 'diretoria_id'];
 
-    public function rules() {
+    public function rules($id) {
         return [
-            'nome' => 'required|unique:diretorias|max:45',
-            'status' => ['required', new Enum(['ATIVO', 'INATIVO'])],
+            'nome' => 'required|max:45|unique:diretorias,nome,'.$id,
+            'status' => 'required|in:ATIVO,INATIVO',
             'diretoria_id' => 'required|exists:diretorias,id'
         ];
     }
@@ -27,7 +27,7 @@ class Divisao extends Model
             'required' => 'O campo :attribute deve ser preenchido',
             'nome.max' => 'O nome deve ter no máximo 45 caracteres',
             'nome.unique' => 'O nome inserido já foi utilizado',
-            'status.enum' => 'O status deve ser "ATIVO" ou "INATIVO"',
+            'status.in' => 'O status deve ser "ATIVO" ou "INATIVO"',
             'diretoria_id.required' => 'A diretoria deve ser preenchida',
             'diretoria_id.exists' => 'A diretoria não foi encontrada'
         ];

@@ -25,6 +25,7 @@ Route::get('/', function () {
     Route::resource('produtos', App\Http\Controllers\ProdutoController::class);
     Route::resource('entregas', App\Http\Controllers\EntregaController::class);
     Route::resource('solicitar', App\Http\Controllers\SolicitacaoController::class);
+    Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
     Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
 // });
 Auth::routes();

@@ -38,28 +38,6 @@ class OrgaoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Orgao  $orgao
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Orgao $orgao)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Orgao  $orgao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Orgao $orgao)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

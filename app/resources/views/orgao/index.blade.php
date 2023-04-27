@@ -1,8 +1,12 @@
-@extends('_layouts.app')
+@extends('adminlte::page')
 
-@section('titulo', 'Órgãos')
+@section('title', 'Órgãos')
 
-@section('conteudo')
+@section('content_header')
+    <h1>Cadastro de Órgãos</h1>
+@endsection
+
+@section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-7">
@@ -52,16 +56,16 @@
                                         <td>{{$orgao->status}}</td>
                                         <td>{{(date('d/m/Y h:i:s', $dataCriacao))}}</td>
                                         <td>{{(date('d/m/Y h:i:s', $dataEdicao))}}</td>
-                                        <td><button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal{{$orgao->id}}">Editar</button></td>
+                                        <td><button data-bs-toggle="modal" data-bs-target="#editarModal{{$orgao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
+                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </button>
                                         <td>
                                             <form id="form_{{$orgao->id}}" action="{{route('orgaos.destroy', ['orgao' => $orgao->id])}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                                <button type="button" 
-                                                        onclick="if (confirm('Tem certeza que quer excluir o órgão?')) {                                                       
-                                                            document.getElementById('form_'+{{$orgao->id}}).submit()                                                    
-                                                        }" class="btn btn-outline-danger btn-sm" 
-                                                >Excluir</button>
+                                                <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir({{$orgao->id}})" title="Excluir">
+                                                    <i class="fa fa-lg fa-fw fa-trash"></i>
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
@@ -108,4 +112,15 @@
             </div>
         </div>
     </div>   
-@endsection
+@stop
+
+@section('js')
+    <script> 
+        function excluir(id) {
+            if (confirm('Tem certeza que quer excluir o órgão?')) {                                                       
+                document.getElementById('form_'+id).submit()                                                    
+            }
+        }
+
+    </script>
+@stop

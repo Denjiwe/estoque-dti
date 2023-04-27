@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Divisao;
+use App\Models\Diretoria;
 use Illuminate\Http\Request;
 
 class DivisaoController extends Controller
 {
+    public function __construct(Divisao $divisao) {
+        $this->divisao = $divisao;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,17 +18,10 @@ class DivisaoController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $divisoes = $this->divisao->with('diretoria')->paginate(10);
+        $diretorias = Diretoria::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('divisao.index', ['divisaos' => $divisoes, 'titulo' => 'divisoes Cadastradas', 'diretorias' => $diretorias]);
     }
 
     /**
@@ -35,29 +32,11 @@ class DivisaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $id = 0;
+        $request->validate($this->divisao->rules($id), $this->divisao->feedback());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Divisao  $divisao
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Divisao $divisao)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Divisao  $divisao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Divisao $divisao)
-    {
-        //
+        $divisao = $this->divisao->create($request->all());
+        return redirect()->route('divisoes.index');
     }
 
     /**
@@ -67,9 +46,14 @@ class DivisaoController extends Controller
      * @param  \App\Models\Divisao  $divisao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Divisao $divisao)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->divisao->rules($id), $this->divisao->feedback());
+
+        $divisao = $this->divisao->find($id);
+        $divisao->update($request->all());
+
+        return redirect()->route('divisoes.index');
     }
 
     /**
@@ -78,8 +62,15 @@ class DivisaoController extends Controller
      * @param  \App\Models\Divisao  $divisao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Divisao $divisao)
+    public function destroy($id)
     {
-        //
+        $divisao = $this->divisao->find($id);
+
+        if($divisao == null) {
+            return redirect()->route('divisoes.index');
+        }
+
+        $divisao->delete();
+        return redirect()->route('divisoes.index');
     }
 }

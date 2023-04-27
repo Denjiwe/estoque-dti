@@ -40,28 +40,6 @@ class DiretoriaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Diretoria  $diretoria
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Diretoria $diretoria)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Diretoria  $diretoria
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Diretoria $diretoria)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
