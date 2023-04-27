@@ -98,7 +98,7 @@
                 </Modal>
 
                 @foreach($orgaos as $orgao)
-                    <Modal id="editarModal{{$orgao->id}}" titulo="Editar {{$orgao->nome}}">
+                    <Modal id="editarModal{{$orgao->id}}" titulo="Editar{{$orgao->nome}}">
                         <template v-slot:body>
                             @component('orgao._components.form_create_edit', ['orgao' => $orgao])
                             @endcomponent

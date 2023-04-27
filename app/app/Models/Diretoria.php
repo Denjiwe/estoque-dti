@@ -12,10 +12,10 @@ class Diretoria extends Model
 
     protected $fillable= ['nome', 'status', 'orgao_id'];
 
-    public function rules() {
+    public function rules($id) {
         return [
-            'nome' => 'required|unique:diretorias',
-            'status' => ['required', new Enum(['ATIVO', 'INATIVO'])],
+            'nome' => 'required|unique:diretorias,nome,'.$id,
+            'status' => 'required|in:ATIVO,INATIVO',
             'orgao_id' => 'required|exists:orgaos,id'
         ];
     }
@@ -23,7 +23,7 @@ class Diretoria extends Model
     public function feedback() {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
-            'status.enum' => 'O status deve ser "ATIVO" ou "INATIVO"',
+            'status.in' => 'O status deve ser "ATIVO" ou "INATIVO"',
             'nome.max' => 'O nome deve ter no máximo 45 caracteres',
             'nome.unique' => 'O nome passado já foi utilizado',
             'orgao_id.required' => 'O órgão deve ser informado',

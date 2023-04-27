@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Diretoria;
+use App\Models\Orgao;
 use Illuminate\Http\Request;
 
 class DiretoriaController extends Controller
 {
+    public function __construct(Diretoria $diretoria) {
+        $this->diretoria = $diretoria;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,17 +18,10 @@ class DiretoriaController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $diretorias = $this->diretoria->with('orgao')->paginate(10);
+        $orgaos = Orgao::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('diretoria.index', ['diretorias' => $diretorias, 'titulo' => 'Diretorias Cadastradas', 'orgaos' => $orgaos]);
     }
 
     /**
@@ -35,7 +32,11 @@ class DiretoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = 0;
+        $request->validate($this->diretoria->rules($id), $this->diretoria->feedback());
+
+        $diretoria = $this->diretoria->create($request->all());
+        return redirect()->route('diretorias.index');
     }
 
     /**
@@ -67,9 +68,14 @@ class DiretoriaController extends Controller
      * @param  \App\Models\Diretoria  $diretoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Diretoria $diretoria)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->diretoria->rules($id), $this->diretoria->feedback());
+
+        $diretoria = $this->diretoria->find($id);
+        $diretoria->update($request->all());
+
+        return redirect()->route('diretorias.index');
     }
 
     /**
@@ -78,8 +84,15 @@ class DiretoriaController extends Controller
      * @param  \App\Models\Diretoria  $diretoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Diretoria $diretoria)
+    public function destroy($id)
     {
-        //
+        $diretoria = $this->diretoria->find($id);
+
+        if($diretoria == null) {
+            return redirect()->route('diretorias.index');
+        }
+
+        $diretoria->delete();
+        return redirect()->route('diretorias.index');
     }
 }
