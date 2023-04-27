@@ -56,8 +56,8 @@
                                         <td>{{$divisao->nome}}</td>
                                         <td>{{$divisao->diretoria->nome}}</td>
                                         <td>{{$divisao->status}}</td>
-                                        <td>{{(date('d/m/Y h:i:s', $dataCriacao))}}</td>
-                                        <td>{{(date('d/m/Y h:i:s', $dataEdicao))}}</td>
+                                        <td>{{(date('d/m/Y H:i:s', $dataCriacao))}}</td>
+                                        <td>{{(date('d/m/Y H:i:s', $dataEdicao))}}</td>
                                         <td><button data-bs-toggle="modal" data-bs-target="#editarModal{{$divisao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
                                         </button>
