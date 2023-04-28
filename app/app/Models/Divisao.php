@@ -24,7 +24,7 @@ class Divisao extends Model
     public function feedback() {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
-            'nome.max' => 'O nome deve ter no máximo 45 caracteres',
+            'nome.max' => 'O nome deve ter no máximo :max caracteres',
             'nome.unique' => 'O nome inserido já foi utilizado',
             'status.in' => 'O status deve ser "ATIVO" ou "INATIVO"',
             'diretoria_id.required' => 'A diretoria deve ser preenchida',

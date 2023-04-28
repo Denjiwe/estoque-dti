@@ -28,6 +28,7 @@
             <option value="{{$diretoria->id}}" <?php if(isset($divisao->diretoria_id) && $divisao->diretoria_id == $diretoria->id) echo 'selected'?> >{{$diretoria->nome}}</option>
         @endforeach
     </select>
+    {{ $errors->has('diretoria_id') ? $errors->first('diretoria_id') : '' }}
 
     <div class="pt-3 float-end">
         @if (isset($divisao->id))

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status', ['ATIVO', 'INATIVO']);
             $table->bigInteger('cpf')->unique;
             $table->string('email', 50)->unique;
-            $table->string('senha', 16);
+            $table->string('senha', 100);
 
             $table->unsignedBigInteger('divisao_id')->nullable();
             $table->foreign('divisao_id')->references('id')->on('divisoes');

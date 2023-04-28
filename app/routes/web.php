@@ -28,7 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::group(function () {  middleware('auth:sanctum')
+Route::group(['middleware' => 'auth'], function () {  
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('orgaos', OrgaoController::class);
     Route::resource('diretorias', DiretoriaController::class);
@@ -38,7 +38,12 @@ Route::get('/', function () {
     Route::resource('solicitar', SolicitacaoController::class);
     // Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
     // Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
-// });
-Auth::routes();
+});
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login.login');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

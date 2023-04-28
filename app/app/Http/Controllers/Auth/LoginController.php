@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Models\Usuario;
+// use App\Providers\RouteServiceProvider;
+// use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -19,14 +23,42 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    public function login(Request $request) {
+        $rules = [
+            'cpf' => 'required|max:11',
+            'password' => 'required|min:8'
+        ];
+
+        $feedback = [
+            'cpf.required' => 'O CPF deve ser preenchido',
+            'cpf.max' => 'O CPF deve conter no máximo 11 caracteres',
+            'password.required' => 'A senha deve ser preenchida',
+            'password.min' => 'A senha deve possuir no mínimo 8 caracteres'
+        ];
+
+        $request->validate($rules, $feedback);
+
+        $user = Usuario::where('cpf', $request->cpf)->first();
+
+        if(!$user) {
+            return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
+        }
+
+        if(!Hash::check($request->password, $user->senha)) {
+            return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
+        }
+        
+        Auth::loginUsingId($user->id);
+
+        return redirect()->route('home');
+    }
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
