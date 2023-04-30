@@ -26,23 +26,27 @@ class Usuario extends Authenticatable
     public function rules() {
         return [
             'nome' => 'required|max:45',
-            'status' => ['required', new Enum(['ATIVO', 'INATIVO'])],
+            'status' => 'required|in:ATIVO,INATIVO',
             'cpf' => 'required|unique:usuarios,cpf|min:11|max:20',
             'email' => 'required|email',
-            'senha' => 'required|min:4|max:16'
+            'diretoria_id' => 'exists:diretorias,id',
+            'senha' => 'required|min:4|max:16',
+            'user_interno' => 'required|in:SIM,NAO'
         ];
     }
 
     public function feedback() {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
-            'status.enum' => 'A status deve ser "ATIVO" ou "INATIVO"',
+            'min' => 'O campo :attribute deve ter no mínimo :min caracteres',
+            'max' => 'O campo :attribute deve ter no máximo :max caracteres', 
+            'status.in' => 'A status deve ser "ATIVO" ou "INATIVO"',
             'cpf.unique' => 'O CPF inserido já foi utilizado',
-            'cpf.min' => 'O CPF deve ser possuir no mínimo 11 caracteres',
-            'cpf.max' => 'O CPF deve ser possuir no máximo 20 caracteres',
             'email.email' => 'O email deve ser válido',
-            'senha.min' => 'A senha deve possuir no mínimo 4 caracteres',
-            'senha.max' => 'A senha deve possuir no máximo 20 caracteres'
+            'diretoria_id.exists' => 'A diretoria não pode ser encontrada',
+            'divisao_id.exists' => 'A divisão não pode ser encontrada',
+            'user_interno.required' => 'A especificação do usuário deve ser preenchida', 
+            'user_interno.in' => 'A especificação do usuário deve ser Sim ou Não', 
         ];
     }
 

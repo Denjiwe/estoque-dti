@@ -25,7 +25,7 @@ use App\Http\Controllers\EntregaController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
 
 Route::group(['middleware' => 'auth'], function () {  
@@ -36,6 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('produtos', ProdutoController::class);
     Route::resource('entregas', EntregaController::class);
     Route::resource('solicitar', SolicitacaoController::class);
+});
+
+Route::group([],function () {
     // Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
     // Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
 });
@@ -43,7 +46,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
-
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login.login');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

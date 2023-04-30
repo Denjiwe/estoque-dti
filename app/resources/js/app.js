@@ -6,8 +6,8 @@ import {createApp} from 'vue';
 
 const app = createApp({});
 
-import CardComponent from './components/Card.vue';
-app.component('Card', CardComponent);
+import BoxComponent from './components/Box.vue';
+app.component('Box', BoxComponent);
 
 import PaginateComponent from './components/Paginate.vue';
 app.component('Paginate', PaginateComponent);
