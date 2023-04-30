@@ -56,7 +56,8 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->usuario->rules(), $this->usuario->feedback());
+        $id=0;
+        $request->validate($this->usuario->rules($id), $this->usuario->feedback());
 
         $data = $request->except('senha');
         $data['senha'] = bcrypt($request->senha);
@@ -87,9 +88,20 @@ class UsuarioController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function edit(Usuario $usuario)
+    public function edit($id)
     {
-        //
+        $usuario = $this->usuario->with('diretoria')->with('divisao')->find($id);
+
+        $diretorias = Diretoria::get();
+        $divisoes = Divisao::get();
+
+        $data = [
+            'usuario' => $usuario,
+            'diretorias' => $diretorias,
+            'divisoes' => $divisoes
+        ];
+
+        return view('usuario.create', $data);
     }
 
     /**
@@ -99,9 +111,27 @@ class UsuarioController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Usuario $usuario)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->usuario->rulesUpdate($request, $id), $this->usuario->feedback());
+
+        $usuario = $this->usuario->find($id);
+
+        if($usuario == null) {
+            return redirect()->route('usuarios.index', ['erro' => 'Usuário não encontrado!']);
+        }
+
+        if ($request->divisao_id == 0) {
+            $request['divisao_id'] = null;
+        }
+
+        if ($request->senha == '') {
+            $request['senha'] = $usuario->senha;
+        }
+
+        $usuario->update($request->all());
+
+        return redirect()->route('usuarios.index', ['sucesso' => "Usuário $usuario->nome alterado com sucesso!" ]);
     }
 
     /**

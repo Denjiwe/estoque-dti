@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Enum;
+use Illuminate\Validation\Rule;
 
 class Usuario extends Authenticatable
 {
@@ -18,17 +19,30 @@ class Usuario extends Authenticatable
         'email',
         'senha',
         'divisao_id',
-        'diretoria_id'
+        'diretoria_id',
+        'user_interno'
     ];
 
     protected $hidden = ['senha'];
 
-    public function rules() {
+    public function rulesUpdate($request, $id) {
         return [
             'nome' => 'required|max:45',
             'status' => 'required|in:ATIVO,INATIVO',
-            'cpf' => 'required|unique:usuarios,cpf|min:11|max:20',
-            'email' => 'required|email',
+            'cpf' => 'required|unique:usuarios,cpf,'.$id.'|min:11|max:20',
+            'email' => 'required|email|unique:usuarios,email,'.$id,
+            'diretoria_id' => 'exists:diretorias,id',
+            'senha' => [Rule::requiredIf(!empty($request->get('senha'))), 'nullable', 'min:3'],
+            'user_interno' => 'required|in:SIM,NAO'
+        ];
+    }
+
+    public function rules($id) {
+        return [
+            'nome' => 'required|max:45',
+            'status' => 'required|in:ATIVO,INATIVO',
+            'cpf' => 'required|unique:usuarios,cpf,'.$id.'|min:11|max:20',
+            'email' => 'required|email|unique:usuarios,email,'.$id,
             'diretoria_id' => 'exists:diretorias,id',
             'senha' => 'required|min:4|max:16',
             'user_interno' => 'required|in:SIM,NAO'

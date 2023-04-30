@@ -28,7 +28,7 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-Route::group(['middleware' => 'auth'], function () {  
+Route::middleware(['auth', 'user_interno'])->group(function () {  
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('orgaos', OrgaoController::class);
     Route::resource('diretorias', DiretoriaController::class);
@@ -36,16 +36,25 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('produtos', ProdutoController::class);
     Route::resource('entregas', EntregaController::class);
     Route::resource('solicitar', SolicitacaoController::class);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
-Route::group([],function () {
+Route::group(['middleware' => 'auth'], function () {
     // Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
-    // Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
+    Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
+    Route::get('/sem-permissao', function() {
+        return view('sem-permissao');
+    })->name('sem-permissao');
+    Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 });
 
 Route::get('/login', function () {
-    return view('auth.login');
+    if (Auth::check()) {
+        return redirect()->route('minhas-solicitacoes');
+    } else {
+        return view('auth.login');
+    }
+
 })->name('login');
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login.login');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

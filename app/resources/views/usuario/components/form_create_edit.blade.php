@@ -5,7 +5,6 @@
     <form method="post" action="{{ route('usuarios.store') }}">
 @endif
 @csrf
-
     <div class="row">
         <div class="col-3">
             <label for="nome" class="fom-label">Nome</label>
@@ -39,7 +38,7 @@
 
         <div class="col-2">
             <label for="senha" class="fom-label">Senha</label>
-            <input type="password" name="senha" id="senha" maxlength="16" value="{{ $usuario->senha ?? old('senha') }}" placeholder="Senha" class="form-control @error('senha') is-invalid @enderror">
+            <input type="password" name="senha" id="senha" maxlength="16" value="{{ old('senha') }}" placeholder="Senha" class="form-control @error('senha') is-invalid @enderror">
             {{ $errors->has('senha') ? $errors->first('senha') : '' }}
         </div>
     
@@ -79,6 +78,7 @@
     </div>
 
     <div class="pt-3 float-end">
+        <a href="{{url()->previous() == route('usuarios.create') ? route('usuarios.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
         @if (isset($usuario->id))
             <button type="submit" class="btn btn-primary">Editar</button>
         @else

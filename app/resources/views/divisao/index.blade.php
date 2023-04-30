@@ -35,7 +35,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Órgão</th>
+                        <th>Diretoria</th>
                         <th>Status</th>
                         <th>Data de Criação</th>
                         <th>Data de Atualização</th>
@@ -55,17 +55,23 @@
                             <td>{{$divisao->status}}</td>
                             <td>{{(date('d/m/Y H:i:s', $dataCriacao))}}</td>
                             <td>{{(date('d/m/Y H:i:s', $dataEdicao))}}</td>
-                            <td><button data-bs-toggle="modal" data-bs-target="#editarModal{{$divisao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
-                                <i class="fa fa-lg fa-fw fa-pen"></i>
-                            </button>
                             <td>
-                                <form id="form_{{$divisao->id}}" action="{{route('divisao.destroy', ['divisao' => $divisao->id])}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                    <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir({{$divisao->id}})" title="Excluir">
-                                        <i class="fa fa-lg fa-fw fa-trash"></i>
-                                    </button>
-                                </form>
+                                <div class="row justify-content-center">
+                                    <div class="col-2">
+                                        <button data-bs-toggle="modal" data-bs-target="#editarModal{{$divisao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
+                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-3">
+                                        <form id="form_{{$divisao->id}}" action="{{route('divisao.destroy', ['divisao' => $divisao->id])}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir({{$divisao->id}})" title="Excluir">
+                                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

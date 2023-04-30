@@ -75,13 +75,18 @@
                             <td>{{(date('d/m/Y H:i:s', $dataCriacao))}}</td>
                             <td>{{(date('d/m/Y H:i:s', $dataEdicao))}}</td>
                             <td>
-                                <div class="row justify-content-center">
-                                    <div class="col-2">
-                                        <button data-bs-toggle="modal" data-bs-target="#editarModal{{$usuario->id}}" class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}"><button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </button></a>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
+                                            <i class="fa fa-lg fa-fw fa-eye"></i>
                                         </button>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col">
                                         <form id="form_{{$usuario->id}}" action="{{route('usuarios.destroy', ['usuario' => $usuario->id])}}" method="post">
                                         @csrf
                                         @method('DELETE')

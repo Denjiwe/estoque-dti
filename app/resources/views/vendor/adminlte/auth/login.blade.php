@@ -23,25 +23,24 @@
 @section('auth_body')
     <form action="{{ $login_url }}" method="post">
         @csrf
-
         
+        @if($errors->has('error'))
+        <span class="text-red" role="alert">
+            <strong>{{$errors->first('error')}}</strong>
+        </span>
+        @endif
 
         {{-- CPF field --}}
         <div class="input-group mb-3">
+            
             <input type="text" maxlength="11" name="cpf" class="form-control @error('cpf') is-invalid @enderror"
                     value="{{ old('cpf') }}" placeholder="CPF" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                    <span class="fas fa-address-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
                 </div>
             </div>
-
-            @error('error')
-            <span class="invalid-feedback" role="alert">
-                <strong>'{{ $message }}'</strong>
-            </span>
-            @enderror
 
             @error('cpf')
                 <span class="invalid-feedback" role="alert">

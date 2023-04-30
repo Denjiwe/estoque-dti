@@ -26,14 +26,14 @@ class LoginController extends Controller
     public function login(Request $request) {
         $rules = [
             'cpf' => 'required|max:11',
-            'password' => 'required|min:8'
+            'password' => 'required|min:4'
         ];
 
         $feedback = [
             'cpf.required' => 'O CPF deve ser preenchido',
             'cpf.max' => 'O CPF deve conter no máximo 11 caracteres',
             'password.required' => 'A senha deve ser preenchida',
-            'password.min' => 'A senha deve possuir no mínimo 8 caracteres'
+            'password.min' => 'A senha deve possuir no mínimo 4 caracteres'
         ];
 
         $request->validate($rules, $feedback);
@@ -47,10 +47,24 @@ class LoginController extends Controller
         if(!Hash::check($request->password, $user->senha)) {
             return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
         }
+
+        if($user->status == 'INATIVO') {
+            return redirect()->route('login')->withErrors(['error' => 'Usuário inativo']);
+        }
         
         Auth::loginUsingId($user->id);
 
-        return redirect()->route('home');
+        if ($user->user_interno == 'SIM') {
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('minhas-solicitacoes');
+        }
+    }
+
+    public function logout() {
+        Auth::logout();
+
+        return redirect()->route('login');
     }
 
     /**

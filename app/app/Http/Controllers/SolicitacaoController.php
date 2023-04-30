@@ -82,4 +82,8 @@ class SolicitacaoController extends Controller
     {
         //
     }
+
+    public function minhasSolicitacoes() {
+        return 'Minhas solicitações';
+    }
 }
