@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rules\Enum;
 
 class Solicitacao extends Model
 {
@@ -20,7 +19,7 @@ class Solicitacao extends Model
 
     public function rules() {
         return [
-            'status' = ['required', new Enum(['AGUARDANDO', 'ABERTO', 'ENCERRADO', 'LIBERADO'])],
+            'status' = 'required|in:AGUARDANDO,ABERTO,ENCERRADO,LIBERADO',
             'observacao' = 'sometimes|max:100',
             'usuario_id' = 'required|exists:usuarios,id'
         ];
@@ -29,6 +28,7 @@ class Solicitacao extends Model
     public function feedback() {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
+            'status.in' => 'O status da solicitação passado é inválido',
             'observacao.max' => 'A observação deve conter no máximo 100 caracteres',
             'usuario_id.required' => 'O usuário deve ser preenchido',
             'usuario_id.exists' => 'O usuário não foi encontrado'

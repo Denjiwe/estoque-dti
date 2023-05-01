@@ -14,7 +14,7 @@
         </template>
         <template v-slot:footer>
             <div class="float-end">
-                <a href="{{url()->previous()}}" class="me-2"><button type="button" class="btn btn-secondary">Voltar</button></a>
+                <a href="{{route('solicitar.index')}}"><button type="button" class="btn btn-secondary me-2">Solicitar</button></a>
                 <a href="{{route('minhas-solicitacoes')}}"><button type="button" class="btn btn-primary">Minhas Solicitações</button></a>
             </div>
         </template>

@@ -23,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->register();
+
+        \Gate::define('user_interno', function ($user) {
+            if ($user->user_interno == 'SIM') {
+                return true;
+            }
+            return false;
+        });
     }
 }

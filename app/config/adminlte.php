@@ -294,11 +294,15 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
+        ],
+        [
+            'type'         => 'darkmode-widget',
+            'topnav_right' => true, // Or "topnav => true" to place on the left.
         ],
 
         // Sidebar items:
@@ -319,11 +323,23 @@ return [
         //     'label_color' => 'success',
         // ],
         // ['header' => 'Operações'],
-        // [
-        //     'text' => 'profile',
-        //     'url'  => route(''),
-        //     'icon' => 'fas fa-fw fa-user',
-        // ],
+        [
+            'text' => 'profile',
+            'icon' => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text' => 'Editar',
+                    'url' => 'usuarios/',
+                    'icon' => 'fas fa-fw fa-user-edit',
+                    'can' => 'user_interno'
+                ],
+                [
+                    'text' => 'Logout',
+                    'url' => 'logout',
+                    'icon' => 'fas fa-fw fa-share'
+                ]
+            ]
+        ],
         // [
         //     'text' => 'change_password',
         //     'url'  => 'admin/settings',
@@ -332,6 +348,7 @@ return [
         [
             'text'    => 'Cadastros',
             'icon'    => 'fas fa-fw fa-table',
+            'can' => 'user_interno',
             'submenu' => [
                 [
                     'text' => 'Produtos',
@@ -387,12 +404,14 @@ return [
         [
             'text' => 'Solicitações',
             'url' => 'solicitar/',
-            'icon' => 'fas fa-fw fa-clipboard-list'
+            'icon' => 'fas fa-fw fa-clipboard-list',
+            'can' => 'user_interno'
         ],
         [
             'text' => 'Entregas',
             'url' => 'entregas/',
-            'icon' => 'fas fa-fw fa-clipboard-check'
+            'icon' => 'fas fa-fw fa-clipboard-check',
+            'can' => 'user_interno'
         ],
         [
             'text' => 'Solicitar',
@@ -402,17 +421,19 @@ return [
         [
             'text' => 'Minhas Solicitações',
             'url' => '/minhas-solicitacoes',
-            'icon' => 'fas fa-fw fa-user-edit'
+            'icon' => 'fas fa-fw fa-folder'
         ],
         [
             'text' => 'Relatórios',
             'url' => '',
-            'icon' => 'fas fa-fw fa-download'
+            'icon' => 'fas fa-fw fa-download',
+            'can' => 'user_interno'
         ],
         [
             'text' => 'Auditoria',
             'url' => '',
-            'icon' => 'fas fa-fw fa-suitcase'
+            'icon' => 'fas fa-fw fa-suitcase',
+            'can' => 'user_interno'
         ],
         
         // ['header' => 'labels'],
