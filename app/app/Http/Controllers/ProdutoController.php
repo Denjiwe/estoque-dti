@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
+    public function __construct(Produto $produto) {
+        $this->produto = $produto;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,9 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        //
+        $produtos = $this->produto->paginate(10);
+
+        return view('produto.index', ['produtos' => $produtos, 'titulo' => 'Produtos Cadastrados']);
     }
 
     /**
@@ -24,7 +29,7 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        //
+        return view('produto.create');
     }
 
     /**
@@ -35,7 +40,11 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->produto->rules(), $this->produto->feedback());
+
+        $produto = $this->produto->create($request->all());
+
+        return redirect()->route('produtos.index', ['sucesso' => "Produto $produto->modelo_produto criado com sucesso!"]);
     }
 
     /**
@@ -78,8 +87,12 @@ class ProdutoController extends Controller
      * @param  \App\Models\Produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produto $produto)
+    public function destroy($id)
     {
-        //
+        $produto = $this->produto->find($id);
+
+        $produto->delete();
+
+        return redirect()->route('produtos.index');
     }
 }
