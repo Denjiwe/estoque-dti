@@ -129,7 +129,7 @@ return [
     |
     */
 
-    'usermenu_enabled' => true,
+    'usermenu_enabled' => false,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
@@ -323,23 +323,23 @@ return [
         //     'label_color' => 'success',
         // ],
         // ['header' => 'Operações'],
-        [
-            'text' => 'profile',
-            'icon' => 'fas fa-fw fa-user',
-            'submenu' => [
-                [
-                    'text' => 'Editar',
-                    'url' => 'usuarios/',
-                    'icon' => 'fas fa-fw fa-user-edit',
-                    'can' => 'user_interno'
-                ],
-                [
-                    'text' => 'Logout',
-                    'url' => 'logout',
-                    'icon' => 'fas fa-fw fa-share'
-                ]
-            ]
-        ],
+        // [
+        //     'text' => 'profile',
+        //     'icon' => 'fas fa-fw fa-user',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Editar',
+        //             'url' => 'usuarios/',
+        //             'icon' => 'fas fa-fw fa-user-edit',
+        //             'can' => 'user_interno'
+        //         ],
+        //         [
+        //             'text' => 'Logout',
+        //             'url' => 'logout',
+        //             'icon' => 'fas fa-fw fa-share'
+        //         ]
+        //     ]
+        // ],
         // [
         //     'text' => 'change_password',
         //     'url'  => 'admin/settings',

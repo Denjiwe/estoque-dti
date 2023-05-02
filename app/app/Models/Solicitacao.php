@@ -19,9 +19,9 @@ class Solicitacao extends Model
 
     public function rules() {
         return [
-            'status' = 'required|in:AGUARDANDO,ABERTO,ENCERRADO,LIBERADO',
-            'observacao' = 'sometimes|max:100',
-            'usuario_id' = 'required|exists:usuarios,id'
+            'status' => 'required|in:AGUARDANDO,ABERTO,ENCERRADO,LIBERADO',
+            'observacao' => 'sometimes|max:100',
+            'usuario_id' => 'required|exists:usuarios,id'
         ];
     }
 

@@ -77,14 +77,18 @@
                             <td>
                                 <div class="row">
                                     <div class="col">
-                                        <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}"><button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
-                                        </button></a>
+                                        <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}">
+                                            <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
+                                                <i class="fa fa-lg fa-fw fa-pen"></i>
+                                            </button>
+                                        </a>
                                     </div>
                                     <div class="col">
-                                        <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
-                                            <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        </button>
+                                        <a href="{{route('usuarios.show', ['usuario' => $usuario->id])}}">
+                                            <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
+                                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            </button>
+                                        </a>
                                     </div>
                                     <div class="col">
                                         <form id="form_{{$usuario->id}}" action="{{route('usuarios.destroy', ['usuario' => $usuario->id])}}" method="post">

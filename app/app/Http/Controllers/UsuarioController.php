@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use App\Models\Diretoria;
 use App\Models\Divisao;
+use App\Models\Solicitacao;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -66,24 +67,30 @@ class UsuarioController extends Controller
             unset($data['divisao_id']);
         }
         
-        $usuario= $this->usuario->create($data);
+        $usuario = $this->usuario->create($data);
 
         return redirect()->route('usuarios.index', ['sucesso' => "Usuário $usuario->nome criado com sucesso!"]);
     }
 
     /**
-     * Display the specified resource.
      *
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function show(Usuario $usuario)
+    public function show($id)
     {
-        //
-    }
+        $usuario = $this->usuario->with('diretoria')->with('divisao')->find($id);
+        
+        if ($usuario == null) {
+            return redirect()->route('usuarios.index', ['error' => 'Usuário não encontrado!']);
+        }
+
+        $solicitacoes = Solicitacao::where('usuario_id', $usuario->id)->get();
+
+        return view('usuario.detalhes', ['usuario' => $usuario, 'solicitacoes' => $solicitacoes]);
+    }   
 
     /**
-     * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
@@ -91,6 +98,10 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $usuario = $this->usuario->with('diretoria')->with('divisao')->find($id);
+
+        if ($usuario == null) {
+            return redirect()->route('usuarios.index', ['error' => 'Usuário não encontrado!']);
+        }
 
         $diretorias = Diretoria::get();
         $divisoes = Divisao::get();
@@ -125,13 +136,17 @@ class UsuarioController extends Controller
             $request['divisao_id'] = null;
         }
 
+        $data = $request->except('senha');
+
         if ($request->senha == '') {
             $request['senha'] = $usuario->senha;
+        } else {
+            $data['senha'] = bcrypt($request->senha);
         }
 
-        $usuario->update($request->all());
+        $usuario->update($data);
 
-        return redirect()->route('usuarios.index', ['sucesso' => "Usuário $usuario->nome alterado com sucesso!" ]);
+        return redirect()->route('usuarios.index', ['sucesso' => "Usuário $usuario->nome alterado com sucesso!"]);
     }
 
     /**

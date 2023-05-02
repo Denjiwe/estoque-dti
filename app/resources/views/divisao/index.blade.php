@@ -56,13 +56,13 @@
                             <td>{{(date('d/m/Y H:i:s', $dataCriacao))}}</td>
                             <td>{{(date('d/m/Y H:i:s', $dataEdicao))}}</td>
                             <td>
-                                <div class="row justify-content-center">
-                                    <div class="col-2">
+                                <div class="row">
+                                    <div class="col">
                                         <button data-bs-toggle="modal" data-bs-target="#editarModal{{$divisao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
                                         </button>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col">
                                         <form id="form_{{$divisao->id}}" action="{{route('divisao.destroy', ['divisao' => $divisao->id])}}" method="post">
                                         @csrf
                                         @method('DELETE')

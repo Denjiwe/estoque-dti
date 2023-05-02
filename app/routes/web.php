@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('sem-permissao');
     })->name('sem-permissao');
     Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+    Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 });
 
 Route::get('/login', function () {
