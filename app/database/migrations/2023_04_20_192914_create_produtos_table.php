@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
+            $table->enum('tipo_produto', ['IMPRESSORA', 'CILINDRO', 'TONER', 'OUTROS']);
             $table->string('modelo_produto', 45);
             $table->enum('status', ['ATIVO', 'INATIVO']);
             $table->string('descricao', 150)->nullable();

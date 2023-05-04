@@ -23,8 +23,8 @@
     @endif
 
     {{-- Box de pesquisa --}}
-    <Box titulo="Pesquisar">
-        <template v-slot:body>
+    <x-box titulo="Pesquisar">
+        <x-slot:body>
             <div class="row">
                 <div class="col-3">
                     <label for="IdOrgao">Id do Usuário</label>
@@ -36,14 +36,14 @@
                 </div>
                 <div class="col-3 pt-4 mt-2">
                     <button type="submit" class="btn btn-primary">Pesquisar</button>                 
-                <div>
+                </div>
             </div>
-        </template>
-    </Box>
+        </x-slot:body>
+    </x-box>
 
     {{-- Box de exibição --}}
-    <Box titulo="{{ $titulo }}">
-        <template v-slot:body>
+    <x-box titulo="{{ $titulo }}">
+        <x-slot:body>
             @if (count($usuarios) > 0)
             <table class="table text-center table-hover table-bordered" >
                 <thead>
@@ -106,27 +106,29 @@
                 </tbody>
             </table>
             @endif
-        </template>
+        </x-slot:body>
 
-        <template v-slot:footer>
+        <x-slot:footer>
             <div class="row mt-3">
                 <div class="col-6">
-                    <Paginate>
-                        <li class="page-item"><a class="page-link {{ $usuarios->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $usuarios->previousPageUrl() }}">Anterior</a></li>
-                            @for($i = 1; $i <= $usuarios->lastPage(); $i++)
-                                <li class="page-item {{ $usuarios->currentPage() == $i ? 'active' : ''}}">
-                                    <a class="page-link" href="{{ $usuarios->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-                        <li class="page-item"><a class="page-link {{ $usuarios->currentPage() == $usuarios->lastPage() ? 'disabled' : ''}}" href="{{ $usuarios->nextPageUrl() }}">Próxima</a></li>
-                    </Paginate>
+                    <x-paginate>
+                        <x-slot:content>
+                            <li class="page-item"><a class="page-link {{ $usuarios->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $usuarios->previousPageUrl() }}">Anterior</a></li>
+                                @for($i = 1; $i <= $usuarios->lastPage(); $i++)
+                                    <li class="page-item {{ $usuarios->currentPage() == $i ? 'active' : ''}}">
+                                        <a class="page-link" href="{{ $usuarios->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+                            <li class="page-item"><a class="page-link {{ $usuarios->currentPage() == $usuarios->lastPage() ? 'disabled' : ''}}" href="{{ $usuarios->nextPageUrl() }}">Próxima</a></li>
+                        </x-slot:content>
+                    </x-paginate>
                 </div>
                 <div class="col-6">
                     <a href="{{route('usuarios.create')}}"><button type="button" class="btn btn-primary float-end">Adicionar</button></a>
                 </div>
             </div>
-        </template>
-    </Box>
+        </x-slot:footer>
+    </x-box>
 @stop
 
 @section('js')

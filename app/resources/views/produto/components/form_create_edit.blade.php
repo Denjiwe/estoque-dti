@@ -6,6 +6,18 @@
 @endif
 @csrf
     <div class="row">
+        <div class="col-2">
+            <label for="tipo_produto" class="fom-label">Tipo do Produto</label>
+            <select name="tipo_produto" id="tipo_produto" class="form-select @error('tipo_produto') is-invalid @enderror" v-model="tipoProduto">
+                <option selected>-- Selecione o Tipo do Produto --</option>
+                <option value="IMPRESSORA" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'IMPRESSORA') echo 'selected'@endphp >Impressora</option>
+                <option value="TONER" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'TONER') echo 'selected'@endphp >Toner</option>
+                <option value="CILINDRO" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'CILINDRO') echo 'selected'@endphp >Cilíndro</option>
+                <option value="OUTROS" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'OUTROS') echo 'selected'@endphp >Outros</option>
+            </select>
+            {{ $errors->has('tipo_produto') ? $errors->first('tipo_produto') : '' }}
+        </div>
+
         <div class="col-3">
             <label for="modelo_produto" class="fom-label">Modelo do Produto</label>
             <input type="text" id="modelo_produto" name="modelo_produto" value="{{ $produto->modelo_produto ?? old('modelo_produto') }}" placeholder="Modelo do Produto" class="form-control @error('modelo_produto') is-invalid @enderror">
@@ -45,3 +57,7 @@
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         @endif
     </div>
+
+@section('js')
+    <script src="{{ asset('js/produtos.js')}}"></script>
+@stop

@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <Box titulo="Visualizar">
-        <template v-slot:body>
+    <x-box titulo="Visualizar">
+        <x-slot:body>
             @include('usuario.components.user_show')
-        </template>
-    </Box>
+        </x-slot:body>
+    </x-box>
 @stop

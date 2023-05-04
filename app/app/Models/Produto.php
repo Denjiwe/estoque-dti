@@ -9,11 +9,12 @@ class Produto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['modelo_produto', 'descricao', 'qntde_estoque', 'status'];
+    protected $fillable = ['tipo_produto','modelo_produto', 'descricao', 'qntde_estoque', 'status'];
 
     public function rules() {
         return [
-            'modelo_produto' => 'required|max:45|unique:produtos',
+            'tipo_produto' => 'required|in:IMPRESSORA,CILINDRO,TONER,OUTROS',
+            'modelo_produto' => 'required|max:45|unique:produtos,modelo_produto',
             'status' => 'required|in:ATIVO,INATIVO',
             'descricao' => 'sometimes|max:150',
             'qntde_estoque' => 'required|integer'
@@ -22,6 +23,8 @@ class Produto extends Model
 
     public function feedback() {
         return [
+            'tipo_produto.required' => 'O tipo do produto deve ser preenchido',
+            'tipo_produto.in' => 'O tipo do produto deve ser "Impressora", "Cilíndro", "Toner" ou "Outros"',
             'modelo_produto.required' => 'O modelo do produto deve ser preenchido',
             'modelo_produto.max' => 'O modelo do produto deve conter no máximo 45 caracteres',
             'modelo_produto.unique' => 'O nome do modelo já existe',

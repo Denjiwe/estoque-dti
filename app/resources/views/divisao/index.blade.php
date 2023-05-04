@@ -8,8 +8,8 @@
 
 @section('content')
     {{-- Box de pesquisa --}}
-    <Box titulo="Pesquisar">
-        <template v-slot:body>
+    <x-box titulo="Pesquisar">
+        <x-slot:body>
             <div class="row ">
                 <div class="col-3">
                     <label for="IdDivisao">Id da Divisão</label>
@@ -21,14 +21,14 @@
                 </div>
                 <div class="col-3 pt-4 mt-2">
                     <button type="submit" class="btn btn-primary">Pesquisar</button>                 
-                <div>
+                </div>
             </div>
-        </template>
-    </Box>
+        </x-slot:body>
+    </x-box>
 
     {{-- Box de exibição --}}
-    <Box titulo="{{ $titulo }}">
-        <template v-slot:body>
+    <x-box titulo="{{ $titulo }}">
+        <x-slot:body>
             @if (count($divisoes) > 0)
             <table class="table text-center table-hover table-bordered">
                 <thead>
@@ -78,42 +78,44 @@
                 </tbody>
             </table>
             @endif
-        </template>
+        </x-slot:body>
 
-        <template v-slot:footer>
+        <x-slot:footer>
             <div class="row mt-3">
                 <div class="col-6">
-                    <Paginate>
-                        <li class="page-item"><a class="page-link {{ $divisoes->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $divisoes->previousPageUrl() }}">Anterior</a></li>
-                            @for($i = 1; $i <= $divisoes->lastPage(); $i++)
-                                <li class="page-item {{ $divisoes->currentPage() == $i ? 'active' : ''}}">
-                                    <a class="page-link" href="{{ $divisoes->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-                        <li class="page-item"><a class="page-link {{ $divisoes->currentPage() == $divisoes->lastPage() ? 'disabled' : ''}}" href="{{ $divisoes->nextPageUrl() }}">Próxima</a></li>
-                    </Paginate>
+                    <x-paginate>
+                        <x-slot:content>
+                            <li class="page-item"><a class="page-link {{ $divisoes->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $divisoes->previousPageUrl() }}">Anterior</a></li>
+                                @for($i = 1; $i <= $divisoes->lastPage(); $i++)
+                                    <li class="page-item {{ $divisoes->currentPage() == $i ? 'active' : ''}}">
+                                        <a class="page-link" href="{{ $divisoes->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+                            <li class="page-item"><a class="page-link {{ $divisoes->currentPage() == $divisoes->lastPage() ? 'disabled' : ''}}" href="{{ $divisoes->nextPageUrl() }}">Próxima</a></li>
+                        </x-slot:content>
+                    </x-paginate>
                 </div>
                 <div class="col-6">
                     <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#adicionarModal">Adicionar</button>
                 </div>
             </div>
-        </template>
-    </Box>
+        </x-slot:footer>
+    </x-box>
 
-    <Modal id="adicionarModal" titulo="Adicionar Divisão">
-        <template v-slot:body>
+    <x-modal id="adicionarModal" titulo="Adicionar Divisão">
+        <x-slot:body>
             @component('divisao.components.form_create_edit', ['diretorias' => $diretorias])
             @endcomponent
-        </template>
-    </Modal>
+        </x-slot:body>
+    </x-modal>
 
     @foreach($divisoes as $divisao)
-        <Modal id="editarModal{{$divisao->id}}" titulo="Editar{{$divisao->nome}}">
-            <template v-slot:body>
+        <x-modal id="editarModal{{$divisao->id}}" titulo="Editar{{$divisao->nome}}">
+            <x-slot:body>
                 @component('divisao.components.form_create_edit', ['divisao' => $divisao, 'diretorias' => $diretorias])
                 @endcomponent
-            </template>
-        </Modal>
+            </x-slot:body>
+        </x-modal>
     @endforeach
 @stop
 

@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <Box titulo="Cadastro">
-        <template v-slot:body>
+    <x-box titulo="Cadastro">
+        <x-slot:body>
             @include('usuario.components.form_create_edit')
-        </template>
-    </Box>
+        </x-slot:body>
+    </x-box>
 @stop

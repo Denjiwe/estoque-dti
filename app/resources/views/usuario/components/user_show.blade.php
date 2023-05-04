@@ -59,7 +59,9 @@
         @endif
     </div>
 
-    <div class="pt-3 float-end">
+    <div class="mt-3 row justify-content-end">
+        <div class="col-auto">
         <a href="{{url()->previous() == route('usuarios.create') ? route('usuarios.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
+        </div>
     </div>
 </div>

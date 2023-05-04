@@ -5,14 +5,14 @@
     <form method="post" action="{{ route('usuarios.store') }}">
 @endif
 @csrf
-    <div class="row">
-        <div class="col-3">
+    <div class="row justify-content-center">
+        <div class="col-2">
             <label for="nome" class="fom-label">Nome</label>
             <input type="text" id="nome" name="nome" value="{{ $usuario->nome ?? old('nome') }}" placeholder="Nome" class="form-control @error('nome') is-invalid @enderror">
             {{ $errors->has('nome') ? $errors->first('nome') : '' }}
         </div>
 
-        <div class="col-3">
+        <div class="col-2">
             <label for="email" class="fom-label">Email</label>
             <input type="text" id="email" name="email" value="{{ $usuario->email ?? old('email') }}" placeholder="Email" class="form-control @error('email') is-invalid @enderror">
             {{ $errors->has('email') ? $errors->first('email') : '' }}
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 justify-content-center">
         <div class="col-2">
             <label for="cpf" class="fom-label">CPF</label>
             <input type="text" name="cpf" id="cpf" maxlength="11" value="{{ $usuario->cpf ?? old('cpf') }}" placeholder="CPF" class="form-control @error('cpf') is-invalid @enderror">
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 justify-content-center">
         <div class="col-3">
             <label for="diretoria_id" class="fom-label">Diretoria</label>
             <select name="diretoria_id" id="diretoria_id" class="form-select @error('diretoria_id') is-invalid @enderror">
@@ -77,11 +77,13 @@
         </div>
     </div>
 
-    <div class="pt-3 float-end">
-        <a href="{{url()->previous() == route('usuarios.create') ? route('usuarios.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
-        @if (isset($usuario->id))
-            <button type="submit" class="btn btn-primary">Editar</button>
-        @else
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-        @endif
+    <div class="mt-3 row justify-content-end">
+        <div class="col-auto">
+            <a href="{{url()->previous() == route('usuarios.create') ? route('usuarios.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
+            @if (isset($usuario->id))
+                <button type="submit" class="btn btn-primary">Editar</button>
+            @else
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            @endif
+        </div>
     </div>

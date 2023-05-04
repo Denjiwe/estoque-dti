@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <Box titulo='teste'>
+    <x-box titulo='teste'>
     
-    </Box>
+    </x-box>
 @stop

@@ -8,8 +8,8 @@
 
 @section('content')
     {{-- Box de pesquisa --}}
-    <Box titulo="Pesquisar">
-        <template v-slot:body>
+    <x-box titulo="Pesquisar">
+        <x-slot:body>
             <div class="row">
                 <div class="col-3">
                     <label for="IdOrgao">Id do Órgão</label>
@@ -21,19 +21,19 @@
                 </div>
                 <div class="col-3 pt-4 mt-2">
                     <button type="submit" class="btn btn-primary">Pesquisar</button>                 
-                <div>
+                </div>
             </div>
 
-        </template>
+        </x-slot:body>
 
-        <template v-slot:footer>
+        <x-slot:footer>
                 
-        </template>
-    </Box>
+        </x-slot:footer>
+    </x-box>
 
     {{-- Box de exibição --}}
-    <Box titulo="{{ $titulo }}">
-        <template v-slot:body>
+    <x-box titulo="{{ $titulo }}">
+        <x-slot:body>
             @if (count($orgaos) > 0)
             <table class="table text-center table-hover table-bordered" >
                 <thead>
@@ -81,42 +81,44 @@
                 </tbody>
             </table>
             @endif
-        </template>
+        </x-slot:body>
 
-        <template v-slot:footer>
+        <x-slot:footer>
             <div class="row mt-3">
                 <div class="col-6">
-                    <Paginate>
-                        <li class="page-item"><a class="page-link {{ $orgaos->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $orgaos->previousPageUrl() }}">Anterior</a></li>
-                            @for($i = 1; $i <= $orgaos->lastPage(); $i++)
-                                <li class="page-item {{ $orgaos->currentPage() == $i ? 'active' : ''}}">
-                                    <a class="page-link" href="{{ $orgaos->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-                        <li class="page-item"><a class="page-link {{ $orgaos->currentPage() == $orgaos->lastPage() ? 'disabled' : ''}}" href="{{ $orgaos->nextPageUrl() }}">Próxima</a></li>
-                    </Paginate>
+                    <x-paginate>
+                        <x-slot:content>
+                            <li class="page-item"><a class="page-link {{ $orgaos->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $orgaos->previousPageUrl() }}">Anterior</a></li>
+                                @for($i = 1; $i <= $orgaos->lastPage(); $i++)
+                                    <li class="page-item {{ $orgaos->currentPage() == $i ? 'active' : ''}}">
+                                        <a class="page-link" href="{{ $orgaos->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+                            <li class="page-item"><a class="page-link {{ $orgaos->currentPage() == $orgaos->lastPage() ? 'disabled' : ''}}" href="{{ $orgaos->nextPageUrl() }}">Próxima</a></li>
+                        </x-slot:content>
+                    </x-paginate>
                 </div>
                 <div class="col-6">
                     <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#adicionarModal">Adicionar</button>
                 </div>
             </div>
-        </template>
-    </Box>
+        </x-slot:footer>
+    </x-box>
 
-    <Modal id="adicionarModal" titulo="Adicionar Órgão">
-        <template v-slot:body>
-            @component('orgao._components.form_create_edit')
+    <x-modal id="adicionarModal" titulo="Adicionar Órgão">
+        <x-slot:body>
+            @component('orgao.components.form_create_edit')
             @endcomponent
-        </template>
-    </Modal>
+        </x-slot:body>
+    </x-modal>
 
     @foreach($orgaos as $orgao)
-        <Modal id="editarModal{{$orgao->id}}" titulo="Editar{{$orgao->nome}}">
-            <template v-slot:body>
-                @component('orgao._components.form_create_edit', ['orgao' => $orgao])
+        <x-modal id="editarModal{{$orgao->id}}" titulo="Editar{{$orgao->nome}}">
+            <x-slot:body>
+                @component('orgao.components.form_create_edit', ['orgao' => $orgao])
                 @endcomponent
-            </template>
-        </Modal>
+            </x-slot:body>
+        </x-modal>
     @endforeach
 @stop
 
