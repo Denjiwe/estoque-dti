@@ -6,7 +6,7 @@
 @endif
 @csrf
     <div class="row justify-content-center">
-        <div class="col-2">
+        <div class="col-2 form-floating">
             <label for="nome" class="fom-label">Nome</label>
             <input type="text" id="nome" name="nome" value="{{ $usuario->nome ?? old('nome') }}" placeholder="Nome" class="form-control @error('nome') is-invalid @enderror">
             {{ $errors->has('nome') ? $errors->first('nome') : '' }}
