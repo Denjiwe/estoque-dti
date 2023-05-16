@@ -1,7 +1,9 @@
-@props(['titulo', 'body', 'footer'])
+@props(['titulo', 'header', 'body', 'footer'])
 
 <div class="box mb-4" style="width: 100%;">
-    <div class="box-header"><h2 class="mt-2">{{$titulo}}</h2></div>
+    <div class="box-header"><h2 class="mt-2">{{$titulo ?? ''}}</h2>
+        {{$header}}
+    </div>
 
     <div class="box-body">
         {{$body}}

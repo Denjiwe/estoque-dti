@@ -44,7 +44,8 @@ class ProdutoController extends Controller
 
         $produto = $this->produto->create($request->all());
 
-        return response()->json($produto, 201);
+        // return response()->json($produto, 201);
+        return redirect()->route('produtos.index');
     }
 
     /**
