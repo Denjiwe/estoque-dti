@@ -17,6 +17,8 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     container_name: php
+    ports: 
+      - "8080:8000"
     volumes:
       - ./:/var/www/html/
       - ./docker/logs/php.log:/usr/local/var/log/
@@ -33,3 +35,10 @@ services:
       - ./db/database/:/var/lib/mysql/
     environment:
       MYSQL_ROOT_PASSWORD: root
+  npm:
+    image: node:latest
+    container_name: npm
+    volumes:
+      - ./:/var/www/html/
+    working_dir: /var/www/html/app/
+    entrypoint: ['npm']
