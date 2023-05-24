@@ -2,7 +2,7 @@
 
 <div class="box mb-4" style="width: 100%;">
     <div class="box-header"><h2 class="mt-2">{{$titulo ?? ''}}</h2>
-        {{$header}}
+        {{$header ?? ''}}
     </div>
 
     <div class="box-body">
@@ -23,4 +23,5 @@
         box-shadow: 1px black solid;
         padding: 15px;
     }
+    
 </style>

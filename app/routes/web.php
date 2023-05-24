@@ -7,6 +7,8 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DiretoriaController;
 use App\Http\Controllers\DivisaoController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\LocalImpressoraController;
+use App\Http\Controllers\SuprimentoController;
 use App\Http\Controllers\SolicitacaoController;
 use App\Http\Controllers\EntregaController;
 
@@ -28,6 +30,7 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+// rotas user_interno
 Route::middleware(['auth', 'user_interno'])->group(function () {  
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('orgaos', OrgaoController::class);
@@ -37,8 +40,15 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::resource('entregas', EntregaController::class);
     Route::resource('solicitar', SolicitacaoController::class);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('produtos/{id}/locais', [LocalImpressoraController::class, 'create'])->name('locais.create');
+    Route::post('produtos/{id}/locais', [LocalImpressoraController::class, 'store'])->name('locais.store');
+    Route::match(['put', 'patch'], 'produtos/{id}/locais', [LocalImpressoraController::class, 'update'])->name('locais.update');
+    Route::get('produtos/{id}/suprimentos', [SuprimentoController::class, 'create'])->name('suprimentos.create');
+    Route::post('produtos/{id}/suprimentos', [SuprimentoController::class, 'store'])->name('suprimentos.store');
+    Route::match(['put', 'patch'], 'produtos/{id}/suprimentos', [SuprimentoController::class, 'update'])->name('suprimentos.update');
 });
 
+// rotas clientes
 Route::group(['middleware' => 'auth'], function () {
     // Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
     Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
@@ -49,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 });
 
+// rotas autenticação
 Route::get('/login', function () {
     if (Auth::check()) {
         return redirect()->route('minhas-solicitacoes');

@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\DivisaoController;
+use App\Http\Controllers\DiretoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/toners', [ProdutoController::class, 'toners']);
+Route::get('/cilindros', [ProdutoController::class, 'cilindros']);
+Route::get('/diretorias', [DiretoriaController::class, 'diretorias']);
+Route::get('/divisoes', [DivisaoController::class, 'divisoes']);

@@ -1,16 +1,17 @@
 @if (isset($produto->id))
-    <form method="post" action="{{ route('produtos.update', ['produto' => $produto]) }}">
+    <form method="post" id="form" action="{{ route('produtos.update', ['produto' => $produto]) }}">
     @method('PUT') 
 @else
-    <form method="post" action="{{ route('produtos.store') }}">
+    <form method="post" id="form" action="{{ route('produtos.store') }}">
 @endif
 @csrf
 <div class="tab-content mt-3" id="TabContent">
     <div class="tab-pane fade show active mt-2" id="dados-gerais-tab-pane" role="tabpanel" aria-labelledby="dados-gerais-tab" tabindex="0">
+        <input type="hidden" name="proximo" id="proximoInput" value="nenhum">
         <div class="row">
             <div class="col-2">
                 <div class="form-floating">
-                    <select name="tipo_produto" id="tipo_produto" class="form-select @error('tipo_produto') is-invalid @enderror">
+                    <select name="tipo_produto" id="tipo_produto" @php if(isset($produto->tipo_produto)) echo 'disabled' @endphp class="form-select @error('tipo_produto') is-invalid @enderror">
                         <option selected hidden>Selecione o Tipo do Produto</option>
                         <option value="IMPRESSORA" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'IMPRESSORA') echo 'selected'@endphp >Impressora</option>
                         <option value="TONER" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'TONER') echo 'selected'@endphp >Toner</option>
@@ -34,7 +35,7 @@
                 <div class="row">
                     <div class="col-12" id="divTipoProduto">
                         <div class="form-floating">
-                            <input type="number" id="qntde_estoque" name="qntde_estoque" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" placeholder="Quantidade em estoque" class="form-control @error('qntde_estoque') is-invalid @enderror">
+                            <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @php if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') echo 'disabled' @endphp placeholder="Quantidade em estoque" class="form-control @error('qntde_estoque') is-invalid @enderror">
                             <label for="qntde_estoque">Quantidade</label>
                             {{ $errors->has('qntde_estoque') ? $errors->first('qntde_estoque') : '' }}
                         </div>
@@ -61,50 +62,87 @@
         <div class="row mt-3">
             <div class="col-6" id="divDescricao">
                 <div class="form-floating">
-                    <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" value="{{ $produto->Descrição ?? old('Descrição') }}" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px"></textarea>
-                    <label for="descricao">Descrição</label>
+                    <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px">{{ $produto->descricao ?? old('descricao') }}</textarea>
+                    <label for="descricao">Descrição (opcional)</label>
                     {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
                 </div>
             </div>
 
-            <div class="col-2">
-                <div class="form-floating" id="divToner" style="display: none">
-                    <select name="toner" id="toner" class="form-select @error('toner') is-invalid @enderror">
-                        <option selected hidden>Selecione o toner</option>
-                        <option value="TAL" @php if(isset($produto->toner) && $produto->toner == 'TAL') echo 'selected'@endphp >TAL</option>
-                        <option value="Toner tal" @php if(isset($produto->toner) && $produto->toner == 'Toner tal') echo 'selected'@endphp >Toner tal</option>
-                    </select>
-                    {{ $errors->has('toner') ? $errors->first('toner') : '' }}
-                    <label for="toner">Toner</label>
-                </div>
-            </div>
-
-            <div class="col-2">
-                <div class="form-floating" id="divCilindro" style="display: none">
-                    <select name="cilindro" id="cilindro" class="form-select @error('cilindro') is-invalid @enderror">
-                        <option selected hidden>Selecione o cilindro</option>
-                        <option value="Nenhum" @php if(isset($produto->cilindro) && $produto->cilindro == 'Nenhum') echo 'selected'@endphp >Nenhum</option>
-                        <option value="Cilíndro tal" @php if(isset($produto->cilindro) && $produto->cilindro == 'Cilíndro tal') echo 'selected'@endphp >Cilíndro tal</option>
-                    </select>
-                    {{ $errors->has('cilindro') ? $errors->first('cilindro') : '' }}
-                    <label for="cilindro">Cilíndro</label>
-                </div>
-            </div>
         </div>
 
         <div class="mt-3 row justify-content-end">
             <div class="col-auto">
-            <a href="{{url()->previous() == route('produtos.create') ? route('produtos.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
+                <a href="{{url()->previous() == route('produtos.create') || (isset($produto) && route('produtos.edit', ['produto' => $produto->id])) ? route('produtos.index') : url()->previous()}}">
+                    <button type="button" class="btn btn-secondary me-2">Voltar</button>
+                </a>
+                <button class="btn btn-primary handle_aba me-2" id="primeiro-handle" type="button" @php if(!isset($produto->id) || $produto->tipo_produto == 'OUTROS') echo 'style="display: none;"' @endphp>Próximo</button>
             @if (isset($produto->id))
-                <button type="submit" class="btn btn-primary">Editar</button>
+                <button type="submit" id="btnSubmit" class="btn btn-primary">Editar</button>
             @else
-                {{-- <button type="submit" class="btn btn-primary">Cadastrar</button> --}}
-                <button class="btn btn-primary prox_aba" type="button">Próximo</button>
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="display:none;">Cadastrar</button>
             @endif
             </div>
         </div>
     </div>
+
+    <div class="tab-pane fade show mt-2" id="impressoras-tab-pane" role="tabpanel" aria-labelledby="impressoras-tab" tabindex="0">
+        <div class="row">
+            <h1>Insira as impressoras que o suprimento abastece</h1>
+            <div class="col-12" id="locais">
+                <x-box-input>
+                    <x-slot:body>
+                        <table class="table text-center table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Impressora</th>
+                                    <th>Divisão</th>
+                                    <th>Diretoria</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="nome-impressora"></td>
+                                    <td>
+                                        <select name="diretoria" id="diretoria1" class="form-select">
+                                            <option value="tal">Tal</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="divisao" id="divisao1" class="form-select">
+                                            <option value="tal">Tal</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 20%"><button class="btn btn-danger">Remover</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </x-slot:body>
+
+                    <x-slot:footer>
+                        <div class="mt-3 row justify-content-end">
+                            <div class="col-auto">
+                                <button class="btn btn-primary">Adicionar</button>
+                            </div>
+                        </div>
+                    </x-slot:footer>
+                </x-box-input>
+            </div>
+
+            <div class="mt-3 row justify-content-end">
+                <div class="col-auto">
+                    <button class="btn btn-secondary handle_aba me-2" type="button">Voltar</button>
+                    @if (isset($produto->id))
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                    @else
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+</form>
 
 @section('js')
     <script src="{{ asset('js/produtos.js')}}"></script>

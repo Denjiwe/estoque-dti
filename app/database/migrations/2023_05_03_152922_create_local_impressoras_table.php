@@ -28,18 +28,6 @@ return new class extends Migration
 
             $table->timestamps();
         });
-
-        DB::statement(
-            'CREATE TRIGGER insert_qntde_estoque
-            AFTER INSERT ON local_impressoras
-            FOR EACH ROW
-            UPDATE produtos SET qntde_estoque = (SELECT COUNT(*) FROM local_impressoras WHERE produto_id = produtos.id) WHERE produtos.id = produto_id;
-            
-            CREATE TRIGGER delete_qntde_estoque
-            AFTER DELETE ON local_impressoras
-            FOR EACH ROW
-            UPDATE produtos SET qntde_estoque = (SELECT COUNT(*) FROM local_impressoras WHERE produto_id = produtos.id) WHERE produtos.id = produto_id'
-        );
     }
 
     /**

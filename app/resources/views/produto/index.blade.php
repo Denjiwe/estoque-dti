@@ -34,6 +34,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Tipo</th>
                         <th>Modelo</th>
                         <th>Quantidade</th>
                         <th>Status</th>
@@ -50,6 +51,7 @@
                     @endphp
                         <tr>
                             <td>{{$produto->id}}</td>
+                            <td>{{ucfirst(strtolower($produto->tipo_produto))}}</td>
                             <td>{{$produto->modelo_produto}}</td>
                             <td>{{$produto->qntde_estoque}}</td>
                             <td>{{$produto->status}}</td>

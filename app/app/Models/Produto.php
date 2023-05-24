@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
+use App\Models\LocalImpressora;
+use App\Models\Suprimento;
 
 class Produto extends Model
 {
@@ -11,13 +14,13 @@ class Produto extends Model
 
     protected $fillable = ['tipo_produto','modelo_produto', 'descricao', 'qntde_estoque', 'status'];
 
-    public function rules() {
+    public function rules($request, $id) {
         return [
             'tipo_produto' => 'required|in:IMPRESSORA,CILINDRO,TONER,OUTROS',
-            'modelo_produto' => 'required|max:45|unique:produtos,modelo_produto',
+            'modelo_produto' => 'required|max:45|unique:produtos,modelo_produto,'.$id,
             'status' => 'required|in:ATIVO,INATIVO',
             'descricao' => 'sometimes|max:150',
-            'qntde_estoque' => 'required|integer'
+            'qntde_estoque' => ['integer', Rule::requiredIf($request->tipo_produto != 'IMPRESSORA')]
         ];
     }
 
@@ -39,7 +42,11 @@ class Produto extends Model
         return $this->belongsToMany('App\Models\Solicitacao', 'itens_solicitacoes');
     }
 
-    public function suprimento() {
-        return $this->hasMany('App\Models\ItensProduto')->withPivot('suprimento_id');
+    public function locais() {
+        return $this->hasMany(LocalImpressora::class);
     }
+
+    public function suprimentos() {
+        return $this->hasMany(Suprimento::class);
+    } 
 }
