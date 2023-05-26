@@ -145,14 +145,14 @@ class ProdutoController extends Controller
 
     public function toners()
     {
-        $toners = $this->produto->where([['tipo_produto', 'TONER'], ['status', 'ATIVO']])->get();
+        $toners = $this->produto->select('id','modelo_produto')->where([['tipo_produto', 'TONER'], ['status', 'ATIVO']])->get();
 
         return response()->json($toners, 200);
     }
     
     public function cilindros()
     {
-        $cilindros = $this->produto->where([['tipo_produto', 'CILINDRO'], ['status', 'ATIVO']])->get();
+        $cilindros = $this->produto->select('id','modelo_produto')->where([['tipo_produto', 'CILINDRO'], ['status', 'ATIVO']])->get();
 
         return response()->json($cilindros, 200);
     }

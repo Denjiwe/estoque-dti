@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('produto_id')->references('id')->on('produtos');
             $table->unsignedBigInteger('suprimento_id');
             $table->foreign('suprimento_id')->references('id')->on('produtos');
+            $table->enum('em_uso', ['SIM', 'NAO'])->default('NAO');
+            $table->enum('tipo_suprimento', ['CILINDRO', 'IMPRESSORA']);
             $table->unique(['produto_id', 'suprimento_id'], 'unique_produto_suprimento_constraint');
             $table->timestamps();
         });

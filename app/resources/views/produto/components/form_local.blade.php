@@ -9,8 +9,8 @@
 <div class="tab-content mt-3" id="TabContent">
     <div class="tab-pane fade show active mt-2" id="locais-tab-pane" role="tabpanel" aria-labelledby="locais-tab" tabindex="0">
         <h1>Defina os locais em que a impressora está alocada</h1>
-        {{ $errors->has('diretoria_id') ? $errors->first('diretoria_id') : '' }}
-        {{ $errors->has('divisao_id') ? $errors->first('divisao_id') : '' }}
+        <h4>{{ $errors->has('diretoria_id') ? $errors->first('diretoria_id') : '' }}</h4>
+        <h4>{{ $errors->has('divisao_id') ? $errors->first('divisao_id') : '' }}</h4>
         <div class="row">
             <div class="col-12" id="locais">
                 <x-box-input>
@@ -84,10 +84,10 @@
                 </x-box-input>
             </div>
 
-            <div class="mt-3 row justify-content-end">
-                <div class="col-auto">
+            <div class="mt-3 ms-2 row justify-content-end">
+                <div class="col-auto ">
                     <a href="{{route('produtos.edit', ['produto' => $produto->id])}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
-                    <button class="btn btn-primary me-2" type="submit">Próximo</button>
+                    <button class="btn btn-primary" type="submit">Próximo</button>
                 </div>
             </div>
         </div>

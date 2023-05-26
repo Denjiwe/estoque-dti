@@ -47,6 +47,6 @@ class Produto extends Model
     }
 
     public function suprimentos() {
-        return $this->hasMany(Suprimento::class);
+        return $this->hasMany(Suprimento::class)->orderBy('id');
     } 
 }

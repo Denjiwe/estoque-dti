@@ -84,63 +84,6 @@
             </div>
         </div>
     </div>
-
-    <div class="tab-pane fade show mt-2" id="impressoras-tab-pane" role="tabpanel" aria-labelledby="impressoras-tab" tabindex="0">
-        <div class="row">
-            <h1>Insira as impressoras que o suprimento abastece</h1>
-            <div class="col-12" id="locais">
-                <x-box-input>
-                    <x-slot:body>
-                        <table class="table text-center table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Impressora</th>
-                                    <th>Divisão</th>
-                                    <th>Diretoria</th>
-                                    <th>Ação</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td id="nome-impressora"></td>
-                                    <td>
-                                        <select name="diretoria" id="diretoria1" class="form-select">
-                                            <option value="tal">Tal</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="divisao" id="divisao1" class="form-select">
-                                            <option value="tal">Tal</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 20%"><button class="btn btn-danger">Remover</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </x-slot:body>
-
-                    <x-slot:footer>
-                        <div class="mt-3 row justify-content-end">
-                            <div class="col-auto">
-                                <button class="btn btn-primary">Adicionar</button>
-                            </div>
-                        </div>
-                    </x-slot:footer>
-                </x-box-input>
-            </div>
-
-            <div class="mt-3 row justify-content-end">
-                <div class="col-auto">
-                    <button class="btn btn-secondary handle_aba me-2" type="button">Voltar</button>
-                    @if (isset($produto->id))
-                        <button type="submit" class="btn btn-primary">Editar</button>
-                    @else
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 </form>
 
