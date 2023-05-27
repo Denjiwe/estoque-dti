@@ -13,22 +13,31 @@
         </div>
 
         <div class="col-6">
+            <select name="orgao_id" class="form-select">
+                <option selected>-- Selecione um Órgão --</option>
+                @foreach ($orgaos as $chave => $orgao)
+                    <option value="{{$orgao->id}}" <?php if(isset($diretoria->orgao_id) && $diretoria->orgao_id == $orgao->id) echo 'selected'?> >{{$orgao->nome}}</option>
+                @endforeach
+            </select>
+            {{ $errors->has('orgao_id') ? $errors->first('orgao_id') : '' }}
+        </div>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col-8">
+            <input type="text" name="email" value="{{ $diretoria->email ?? old('email')}}" placeholder="Email" class="form-control">
+            {{ $errors->has('email') ? $errors->first('email') : '' }}
+        </div>
+
+        <div class="col-4">
             <select name="status" class="form-select">
-                <option selected>-- Selecione o Status --</option>
+                <option selected>-- Status --</option>
                 <option value="ATIVO" <?php if(isset($diretoria->status) && $diretoria->status == 'ATIVO') echo 'selected'?> >Ativo</option> {{-- {{ $diretoria->status ? old('status') == $diretoria->id ? 'selected' : '' }}   --}}
                 <option value="INATIVO" <?php if(isset($diretoria->status) && $diretoria->status == 'INATIVO') echo 'selected'?> >Inativo</option>
             </select>
             {{ $errors->has('status') ? $errors->first('status') : '' }}
         </div>
     </div>
-
-    <select name="orgao_id" class="form-select mt-3">
-        <option selected>-- Selecione um Órgão --</option>
-        @foreach ($orgaos as $chave => $orgao)
-            <option value="{{$orgao->id}}" <?php if(isset($diretoria->orgao_id) && $diretoria->orgao_id == $orgao->id) echo 'selected'?> >{{$orgao->nome}}</option>
-        @endforeach
-    </select>
-    {{ $errors->has('orgao_id') ? $errors->first('orgao_id') : '' }}
 
     <div class="pt-3 float-end">
         @if (isset($diretoria->id))

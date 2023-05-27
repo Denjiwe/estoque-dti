@@ -110,7 +110,7 @@
     </x-modal>
 
     @foreach($divisoes as $divisao)
-        <x-modal id="editarModal{{$divisao->id}}" titulo="Editar{{$divisao->nome}}">
+        <x-modal id="editarModal{{$divisao->id}}" titulo="Editar {{$divisao->nome}}">
             <x-slot:body>
                 @component('divisao.components.form_create_edit', ['divisao' => $divisao, 'diretorias' => $diretorias])
                 @endcomponent

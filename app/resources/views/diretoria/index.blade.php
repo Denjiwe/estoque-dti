@@ -111,7 +111,7 @@
     </x-modal>
 
     @foreach($diretorias as $diretoria)
-        <x-modal id="editarModal{{$diretoria->id}}" titulo="Editar{{$diretoria->nome}}">
+        <x-modal id="editarModal{{$diretoria->id}}" titulo="Editar {{$diretoria->nome}}">
             <x-slot:body>
                 @component('diretoria.components.form_create_edit', ['diretoria' => $diretoria, 'orgaos' => $orgaos])
                 @endcomponent

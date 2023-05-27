@@ -10,24 +10,27 @@ class Diretoria extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['nome', 'status', 'orgao_id'];
+    protected $fillable= ['nome', 'status', 'orgao_id', 'email'];
 
     public function rules($id) {
         return [
             'nome' => 'required|unique:diretorias,nome,'.$id,
             'status' => 'required|in:ATIVO,INATIVO',
-            'orgao_id' => 'required|exists:orgaos,id'
+            'orgao_id' => 'required|exists:orgaos,id',
+            'email' => 'nullable|max:100|email|unique:diretorias,email,'.$id
         ];
     }
 
     public function feedback() {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
+            'max' => 'O campo :attribute deve ter no máximo :max caracteres',
             'status.in' => 'O status deve ser "ATIVO" ou "INATIVO"',
-            'nome.max' => 'O nome deve ter no máximo 45 caracteres',
             'nome.unique' => 'O nome passado já foi utilizado',
             'orgao_id.required' => 'O órgão deve ser informado',
-            'orgao_id.exists' => 'O órgão passado não pode ser encontrado'
+            'orgao_id.exists' => 'O órgão passado não pode ser encontrado',
+            'email.email' => 'O email inserido não é válido',
+            'email.unique' => 'O email inserido já foi utilizado!'
         ];
     }
 
