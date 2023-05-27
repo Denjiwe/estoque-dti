@@ -55,7 +55,7 @@ class ProdutoController extends Controller
                 break;
             case 'impressoras':
                 // caso seja um toner ou cilíndro
-                return redirect()->route('produtos.impressoras', ['id' => $produto->id]);
+                return redirect()->route('impressoras.create', ['id' => $produto->id]);
                 break;
             case 'nenhum':
                 // caso seja outros
@@ -119,7 +119,7 @@ class ProdutoController extends Controller
                 break;
             case 'impressoras':
                 // caso seja um toner ou cilíndro
-                return redirect()->route('produtos.impressoras', ['id' => $produto->id]);
+                return redirect()->route('impressoras.create', ['id' => $produto->id]);
                 break;
             case 'nenhum':
                 // caso seja outros

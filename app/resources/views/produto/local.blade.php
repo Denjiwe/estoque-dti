@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Suprimentos')
+@section('title', 'Locais')
 
 @section('content_header')
     <h1>Locais da impressora {{ $produto->modelo_produto }}</h1>

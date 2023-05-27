@@ -100,20 +100,6 @@ class SuprimentoController extends Controller
         $emUsosNovos = array_diff_assoc($emUsos, $pEmUsos);
         $suprimentosExcluidos = array_diff_assoc($pSuprimentos, $suprimentos);
         
-            // dd(
-            //     'suprimentos requisição:',$suprimentos,
-            //     'suprimentos do produto:',$pSuprimentos,
-            //     'novos:',$suprimentosNovos,
-            //     'excluidos:',$suprimentosExcluidos,
-
-            //     'em_usos da requisição:',$emUsos,
-            //     'em_usos do produto:',$pEmUsos,
-            //     'novos:',$emUsosNovos,
-
-            //     'tipos requisição:',$tipos,
-            //     'tipos do produto:',$pTipos,
-            //     'novos:',$tiposNovos,
-            // );
         if($suprimentosExcluidos != [])
         {
             foreach($suprimentosExcluidos as $suprimentoExcluido)

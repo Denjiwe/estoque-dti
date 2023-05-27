@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Produto;
 
 class Suprimento extends Model
 {
@@ -32,5 +33,9 @@ class Suprimento extends Model
             'em_uso.required' => 'O campo em uso deve ser informado',
             'em_uso.in' => 'O campo em uso deve ser SIM ou NAO',
         ];
+    }
+
+    public function impressoras() {
+        return $this->belongsToMany(Produto::class)->orderBy('id');
     }
 }
