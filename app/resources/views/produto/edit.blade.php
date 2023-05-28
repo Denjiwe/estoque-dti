@@ -19,7 +19,7 @@
                 <li class="nav-item" role="presentation" @php if($produto->tipo_produto != 'IMPRESSORA') echo 'style="display:none;"' @endphp id="suprimentos-li" >
                     <button class="nav-link disabled" id="suprimentos-tab" data-bs-toggle="tab" data_id="3" data-bs-target="#suprimentos-tab-pane" type="button" role="tab" aria-controls="suprimentos-tab-pane" aria-selected="false">Suprimentos</button>
                 </li>
-                <li class="nav-item" role="presentation" @php if(!in_array($produto->tipo_produto, ['TONER','CINILINDRO'])) echo 'style="display:none;"' @endphp id="impressoras-li" >
+                <li class="nav-item" role="presentation" @php if(!in_array($produto->tipo_produto, ['TONER','CILINDRO'])) echo 'style="display:none;"' @endphp id="impressoras-li" >
                     <button class="nav-link disabled" id="impressoras-tab" data-bs-toggle="tab" data_id="4" data-bs-target="#impressoras-tab-pane" type="button" role="tab" aria-controls="impressoras-tab-pane" aria-selected="false">Impressoras</button>
                 </li>
             </ul>
