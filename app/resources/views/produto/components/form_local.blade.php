@@ -33,15 +33,15 @@
                                                 <select name="diretoria[]" id="diretoria" class="form-select">
                                                     <option value="" selected hidden>Selecione a Diretoria</option>
                                                     @foreach($diretorias as $diretoria)
-                                                        <option value="{{$diretoria->id}}" @php if($local->diretoria_id == $diretoria->id) echo 'selected' @endphp>{{$diretoria->nome}}</option>
+                                                        <option value="{{$diretoria->id}}" @if($local->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
                                             <td>
                                                 <select name="divisao[]" id="divisao" class="form-select">
-                                                    <option value="" selected hidden>Selecione a Divisão</option>
+                                                    <option value="" selected>Nenhuma</option>
                                                     @foreach($divisoes as $divisao)
-                                                        <option value="{{$divisao->id}}" @php if($local->divisao_id == $divisao->id) echo 'selected' @endphp>{{$divisao->nome}}</option>
+                                                        <option value="{{$divisao->id}}" @if($local->divisao_id == $divisao->id)selected @endif>{{$divisao->nome}}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
@@ -61,7 +61,7 @@
                                         </td>
                                         <td>
                                             <select name="divisao[]" id="divisao" class="form-select">
-                                                <option value="" selected hidden>Selecione a Divisão</option>
+                                                <option value="" selected>Nenhuma</option>
                                                 @foreach($divisoes as $divisao)
                                                     <option value="{{$divisao->id}}">{{$divisao->nome}}</option>
                                                 @endforeach

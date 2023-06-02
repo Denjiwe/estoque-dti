@@ -13,6 +13,9 @@ class ProdutoController extends Controller
     public function __construct(Produto $produto) {
         $this->produto = $produto;
     }
+
+    // /======================================== Funções Resource ========================================/
+
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +54,7 @@ class ProdutoController extends Controller
         switch ($request->proximo) {
             case 'locais':
                 // caso seja uma impressora
-                return redirect()->route('produtos.locais', ['id' => $produto->id]);
+                return redirect()->route('locais.create', ['id' => $produto->id]);
                 break;
             case 'impressoras':
                 // caso seja um toner ou cilíndro
@@ -143,17 +146,41 @@ class ProdutoController extends Controller
         return redirect()->route('produtos.index');
     }
 
+    // /======================================== Funções Manuais ========================================/
+
     public function toners()
     {
-        $toners = $this->produto->select('id','modelo_produto')->where([['tipo_produto', 'TONER'], ['status', 'ATIVO']])->get();
+        $toners = $this->produto->select('id','modelo_produto', 'qntde_estoque')->where([['tipo_produto', 'TONER'], ['status', 'ATIVO']])->get();
 
         return response()->json($toners, 200);
     }
     
     public function cilindros()
     {
-        $cilindros = $this->produto->select('id','modelo_produto')->where([['tipo_produto', 'CILINDRO'], ['status', 'ATIVO']])->get();
+        $cilindros = $this->produto->select('id','modelo_produto', 'qntde_estoque')->where([['tipo_produto', 'CILINDRO'], ['status', 'ATIVO']])->get();
 
         return response()->json($cilindros, 200);
+    }
+
+    public function tonerPorImpressora($impressoraId) {
+        $toner = $this->produto
+            ->select('produtos.id', 'modelo_produto', 'qntde_estoque')
+            ->where([['tipo_produto', 'TONER'], ['status', 'ATIVO']])
+            ->join('suprimentos', 'produtos.id', '=', 'suprimento_id')
+            ->where([['produto_id', $impressoraId],['em_uso', 'SIM']])
+            ->orderBy('qntde_estoque', 'desc')->first();
+
+        return response()->json($toner, 200);
+    }
+
+    public function cilindroPorImpressora($impressoraId) {
+        $cilindro = $this->produto
+            ->select('produtos.id', 'modelo_produto', 'qntde_estoque')
+            ->where([['tipo_produto', 'CILINDRO'], ['status', 'ATIVO']])
+            ->join('suprimentos', 'produtos.id', '=', 'suprimento_id')
+            ->where([['produto_id', $impressoraId],['em_uso', 'SIM']])
+            ->orderBy('qntde_estoque', 'desc')->first();
+
+        return response()->json($cilindro, 200);
     }
 }

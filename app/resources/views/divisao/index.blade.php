@@ -122,7 +122,7 @@
 @section('js')
     <script> 
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir a divisão?')) {                                                       
+            if (confirm('Tem certeza que quer excluir a divisão? As impressoras a ela cadastradas serão excluídas também!!!')) {                                                       
                 document.getElementById('form_'+id).submit()                                                    
             }
         }

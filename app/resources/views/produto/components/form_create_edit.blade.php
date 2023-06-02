@@ -72,9 +72,9 @@
 
         <div class="mt-3 row justify-content-end">
             <div class="col-auto">
-                <a href="{{url()->previous() == route('produtos.create') || (isset($produto) && route('produtos.edit', ['produto' => $produto->id])) ? route('produtos.index') : url()->previous()}}">
-                    <button type="button" class="btn btn-secondary me-2">Voltar</button>
-                </a>
+                
+                <a href="{{url()->previous() == route('produtos.create') || (isset($produto) && route('produtos.edit', ['produto' => $produto->id])) ? route('produtos.index') : url()->previous()}}" class="btn btn-secondary me-2">Voltar</a>
+
                 <button class="btn btn-primary handle_aba me-2" id="primeiro-handle" type="button" @php if(!isset($produto->id) || $produto->tipo_produto == 'OUTROS') echo 'style="display: none;"' @endphp>Próximo</button>
             @if (isset($produto->id))
                 <button type="submit" id="btnSubmit" class="btn btn-primary">Editar</button>

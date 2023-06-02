@@ -52,8 +52,8 @@
                         <th>Nome</th>
                         <th>Status</th>
                         <th>Usuário Interno</th>
-                        <th>Divisão</th>
                         <th>Diretoria</th>
+                        <th>Divisão</th>
                         <th>Data de Criação</th>
                         <th>Data de Atualização</th>
                         <th>Ações</th>

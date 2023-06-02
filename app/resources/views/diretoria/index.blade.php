@@ -123,7 +123,7 @@
 @section('js')
     <script> 
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir a diretoria?')) {                                                       
+            if (confirm('Tem certeza que quer excluir a diretoria? As divisões e as impressoras ligadas serão excluídas!!!')) {                                                       
                 document.getElementById('form_'+id).submit()                                                    
             }
         }

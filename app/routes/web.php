@@ -27,10 +27,6 @@ use App\Http\Controllers\EntregaController;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('home');
-});
-
 // rotas user_interno
 Route::middleware(['auth', 'user_interno'])->group(function () {  
     Route::resource('usuarios', UsuarioController::class);
@@ -39,7 +35,14 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::resource('divisao', DivisaoController::class);
     Route::resource('produtos', ProdutoController::class);
     Route::resource('entregas', EntregaController::class);
-    Route::resource('solicitar', SolicitacaoController::class);
+    
+    Route::get('solicitacoes/', [SolicitacaoController::class, 'index'])->name('solicitacoes.index');
+    Route::get('solicitar/', [SolicitacaoController::class, 'create'])->name('solicitacoes.create');
+    Route::post('solicitar/', [SolicitacaoController::class, 'store'])->name('solicitacoes.store');
+    Route::get('solicitacoes/{id}', [SolicitacaoController::class, 'edit'])->name('solicitacoes.edit');
+    Route::match(['put', 'patch'], 'solicitacoes/{id}', [SolicitacaoController::class, 'update'])->name('solicitacoes.update');
+    Route::delete('solicitacoes/{id}', [SolicitacaoController::class, 'delete'])->name('solicitacoes.delete');
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('produtos/{id}/locais', [LocalImpressoraController::class, 'create'])->name('locais.create');
@@ -76,4 +79,6 @@ Route::get('/login', function () {
 
 })->name('login');
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login.login');
-
+Route::get('/', function () {
+    return redirect()->route('home');
+});

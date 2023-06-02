@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Solicitacao;
+use App\Models\Produto;
+use App\Models\Usuario;
+use App\Models\Divisao;
+use App\Models\Diretoria;
 use Illuminate\Http\Request;
 
 class SolicitacaoController extends Controller
 {
+    public function __construct(Solicitacao $solicitacao, Produto $produto)
+    {
+        $this->solicitacao = $solicitacao;
+        $this->produto = $produto;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +33,31 @@ class SolicitacaoController extends Controller
      */
     public function create()
     {
-        //
+        $usuario = new \stdClass;
+
+        $impressoras = $this->produto
+            ->select('produtos.id', 'modelo_produto')
+            ->where([['tipo_produto', 'IMPRESSORA'],['status', 'ATIVO']])
+            ->join('local_impressoras','produtos.id', '=', 'produto_id');
+
+        if(isset(auth()->user()->divisao_id) && auth()->user()->divisao_id != null)
+        {
+            $localUser = auth()->user()->divisao_id;
+            $impressoras = $impressoras->where('divisao_id', $localUser)->get();
+            $usuario->divisao_id = $localUser;
+            $usuario->diretoria_id = auth()->user()->diretoria_id;
+            $usuario->id = auth()->user()->id;
+            $usuario->nome = auth()->user()->nome;
+        } else {
+            $localUser = auth()->user()->diretoria_id;
+            $impressoras = $impressoras->where('diretoria_id', $localUser)->get();
+        };
+
+        $divisoes = Divisao::where('status', 'ATIVO')->get();
+        $diretorias = Diretoria::where('status', 'ATIVO')->get();
+        $usuarios = Usuario::where('status', 'ATIVO')->get();
+
+        return view('solicitacao.create', ['impressoras' => $impressoras, 'usuario' => $usuario, 'usuarios' => $usuarios, 'diretorias' => $diretorias, 'divisoes' => $divisoes]);
     }
 
     /**
@@ -35,7 +68,7 @@ class SolicitacaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

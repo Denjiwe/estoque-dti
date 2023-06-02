@@ -403,7 +403,7 @@ return [
         ],
         [
             'text' => 'Solicitações',
-            'url' => 'solicitar/',
+            'url' => 'solicitacoes/',
             'icon' => 'fas fa-fw fa-clipboard-list',
             'can' => 'user_interno'
         ],
@@ -415,7 +415,7 @@ return [
         ],
         [
             'text' => 'Solicitar',
-            'url' => 'solicitar/nova-solicitacao',
+            'url' => 'solicitar/',
             'icon' => 'fas fa-fw fa-clipboard'
         ],
         [

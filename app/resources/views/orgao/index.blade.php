@@ -125,7 +125,7 @@
 @section('js')
     <script> 
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir o órgão?')) {                                                       
+            if (confirm('Tem certeza que quer excluir o órgão? Todas as diretorias criadas nesse órgão serão excluídas, além das divisões e impressoras a elas atreladas!!!')) {                                                       
                 document.getElementById('form_'+id).submit()                                                    
             }
         }

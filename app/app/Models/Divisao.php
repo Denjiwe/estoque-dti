@@ -18,7 +18,7 @@ class Divisao extends Model
             'nome' => 'required|max:45|unique:divisoes,nome,'.$id,
             'status' => 'required|in:ATIVO,INATIVO',
             'diretoria_id' => 'required|exists:diretorias,id',
-            'email' => 'required|max:100|email|unique:divisoes,email,'.$id
+            'email' => 'nullable|max:100|email|unique:divisoes,email,'.$id
         ];
     }
 
