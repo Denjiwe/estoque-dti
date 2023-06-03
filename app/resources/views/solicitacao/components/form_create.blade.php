@@ -1,33 +1,36 @@
 <form method="post" action="{{ route('solicitacoes.store') }}">
 @csrf
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <label for="diretoria">Diretoria</label>
-            <select name="diretoria_id" id="diretoria" class="form-select">
-                @foreach($diretorias as $diretoria)
-                    <option value="{{$diretoria->id}}" @if($usuario->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>
-                @endforeach
-            </select>
-        </div>
+    @if(auth()->user()->user_interno == 'SIM')
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <label for="diretoria">Diretoria</label>
+                <select name="diretoria_id" id="diretoria" class="form-select">
+                    @foreach($diretorias as $diretoria)
+                        <option value="{{$diretoria->id}}" @if($usuario->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>
+                    @endforeach
+                </select>
+            </div>
 
-        <div class="col-4">
-            <label for="divisao">Divisão</label>
-            <select name="divisao_id" id="divisao" class="form-select">
-                @foreach($divisoes as $divisao)
-                <option value="{{$divisao->id}}" @if(isset($usuario->divisao_id) && $usuario->divisao_id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
-                @endforeach
-            </select>
-        </div>
+            <div class="col-4">
+                <label for="divisao">Divisão</label>
+                <select name="divisao_id" id="divisao" class="form-select">
+                    <option value="0">Nenhuma</option>
+                    @foreach($divisoes as $divisao)
+                    <option value="{{$divisao->id}}" @if(isset($usuario->divisao_id) && $usuario->divisao_id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
+                    @endforeach
+                </select>
+            </div>
 
-        <div class="col-4">
-            <label for="usuario">Usuario</label>
-            <select name="usuario_id" id="usuario" class="form-select">
-                @foreach($usuarios as $usuarioSelect)
-                <option value="{{$usuarioSelect->id}}" @if($usuario->id == $usuarioSelect->id) selected @endif>{{$usuarioSelect->nome}}</option>
-                @endforeach
-            </select>
+            <div class="col-4">
+                <label for="usuario">Usuario</label>
+                <select name="usuario_id" id="usuario" class="form-select">
+                    @foreach($usuarios as $usuarioSelect)
+                    <option value="{{$usuarioSelect->id}}" @if($usuario->id == $usuarioSelect->id) selected @endif>{{$usuarioSelect->nome}}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-    </div>
+    @endif
 
     <div class="row justify-content-center mt-3">
         <div class="col-4">

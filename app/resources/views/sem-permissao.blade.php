@@ -8,15 +8,17 @@
 
 @section('content')
     {{-- Box de pesquisa --}}
-    <Box titulo="">
-        <template v-slot:body>
+    <x-box titulo="">
+        <x-slot:body>
             <h4>Você não possui permissão para acessar essa página!</h4>
-        </template>
-        <template v-slot:footer>
-            <div class="float-end">
-                <a href="{{route('solicitar.index')}}"><button type="button" class="btn btn-secondary me-2">Solicitar</button></a>
-                <a href="{{route('minhas-solicitacoes')}}"><button type="button" class="btn btn-primary">Minhas Solicitações</button></a>
+        </x-slot:body>
+        <x-slot:footer>
+            <div class="row justify-content-end">
+                <div class="col-auto">
+                    <a href="{{route('solicitacoes.store')}}"><button type="button" class="btn btn-secondary me-2">Solicitar</button></a>
+                    <a href="{{route('minhas-solicitacoes')}}"><button type="button" class="btn btn-primary">Minhas Solicitações</button></a>
+                </div>
             </div>
-        </template>
-    </Box>
+        </x-slot:footer>
+    </x-box>
 @stop

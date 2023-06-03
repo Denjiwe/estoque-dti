@@ -25,10 +25,10 @@ return new class extends Migration
         });
 
         Schema::table('suprimentos', function (Blueprint $table) {
-            $table->dropForeign('itens_produtos_suprimento_id_foreign');
+            $table->dropForeign('suprimentos_suprimento_id_foreign');
             $table->foreign('suprimento_id')->references('id')->on('produtos')->onDelete('cascade');
 
-            $table->dropForeign('itens_produtos_produto_id_foreign');
+            $table->dropForeign('suprimentos_produto_id_foreign');
             $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
         });
 
