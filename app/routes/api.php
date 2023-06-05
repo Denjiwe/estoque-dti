@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\DivisaoController;
 use App\Http\Controllers\DiretoriaController;
+use App\Http\Controllers\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,5 @@ Route::get('/cilindros', [ProdutoController::class, 'cilindros']);
 Route::get('/cilindro-por-impressora/{impressoraId}', [ProdutoController::class, 'cilindroPorImpressora']);
 Route::get('/diretorias', [DiretoriaController::class, 'diretorias']);
 Route::get('/divisoes', [DivisaoController::class, 'divisoes']);
-Route::get('/divisoes-por-diretoria/{diretoriaId}', [DivisaoController::class, 'divisoesPorDiretoria']);
+Route::get('/dados-por-diretoria/{diretoriaId}', [DiretoriaController::class, 'dadosPorDiretoria']);
+Route::get('/dados-por-usuario/{usuarioId}', [UsuarioController::class, 'dadosPorUsuario']);

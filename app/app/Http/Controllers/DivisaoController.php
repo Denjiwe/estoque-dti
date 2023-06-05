@@ -74,12 +74,4 @@ class DivisaoController extends Controller
         $divisao->delete();
         return redirect()->route('divisao.index');
     }
-
-    public function divisoesPorDiretoria($diretoriaId) 
-    {
-        $divisoes = $this->divisao->select('id','nome')->where([['status', 'ATIVO'],['diretoria_id', $diretoriaId]])->get();
-        $usuarios = Usuario::select('id','nome')->where([['status', 'ATIVO'],['diretoria_id', $diretoriaId]])->get();
-
-        return response()->json([$divisoes,$usuarios], 200);
-    }
 }

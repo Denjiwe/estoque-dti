@@ -13,9 +13,6 @@ use App\Http\Controllers\ImpressoraController;
 use App\Http\Controllers\SolicitacaoController;
 use App\Http\Controllers\EntregaController;
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes

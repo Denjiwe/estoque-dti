@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Diretoria;
+use App\Models\Divisao;
+use App\Models\Usuario;
 use App\Models\Orgao;
 use Illuminate\Http\Request;
 
@@ -72,5 +74,18 @@ class DiretoriaController extends Controller
 
         $diretoria->delete();
         return redirect()->route('diretorias.index');
+    }
+
+    public function dadosPorDiretoria($diretoriaId) 
+    {
+        $divisoes = Divisao::select('id','nome')->where([['status', 'ATIVO'],['diretoria_id', $diretoriaId]])->get();
+        $diretoriaNome = $this->diretoria::select('nome')->find($diretoriaId)->nome;
+        $divisoes->diretoria_nome = $diretoriaNome;
+
+        $usuariosDivisao = Usuario::select('id','nome')->where([['status', 'ATIVO'],['diretoria_id', $diretoriaId]])->orderBy('nome')->get();
+        $usuarios = Usuario::select('id','nome')->where('status', 'ATIVO')->orderBy('nome')->get();
+        $usuarios = $usuarios->diff($usuariosDivisao);
+
+        return response()->json([$divisoes,$usuariosDivisao,$usuarios], 200);
     }
 }

@@ -163,4 +163,18 @@ class UsuarioController extends Controller
 
         return redirect()->route('usuarios.index');
     }
+
+    public function dadosPorUsuario($usuarioId)
+    {
+        $usuario = $this->usuario->select('diretoria_id', 'divisao_id')->find($usuarioId);
+
+        if($usuario === null)
+        {
+            return response()->json(['erro' => 'Usuário não encontrado!'], 422);
+        }
+
+        $usuario->divisoes = Divisao::select('id', 'nome')->where('diretoria_id', $usuario->diretoria_id)->get();
+
+        return response()->json($usuario);
+    }
 }

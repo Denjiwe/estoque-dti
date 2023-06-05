@@ -34,9 +34,10 @@ class SolicitacaoController extends Controller
     public function create()
     {
         $usuario = new \stdClass;
-        $usuario->diretoria_id = auth()->user()->diretoria_id;
         $usuario->id = auth()->user()->id;
         $usuario->nome = auth()->user()->nome;
+        $usuario->diretoria_id = auth()->user()->diretoria_id;
+        $usuario->divisao_id = auth()->user()->divisao_id;
 
         if(auth()->user()->user_interno == 'NAO') {
             $impressoras = $this->produto
@@ -46,10 +47,10 @@ class SolicitacaoController extends Controller
 
             if(auth()->user()->divisao_id != null)
             {
-                $usuario->divisao_id = auth()->user()->divisao_id;
                 $impressoras = $impressoras->where('divisao_id', $usuario->divisao_id)->get();
                 
             } else {
+
                 $impressoras = $impressoras->where('diretoria_id', $usuario->diretoria_id)->get();
             }
         } else {
@@ -59,9 +60,9 @@ class SolicitacaoController extends Controller
                 ->get();
         }
 
-        $divisoes = Divisao::where('status', 'ATIVO')->get();
-        $diretorias = Diretoria::where('status', 'ATIVO')->get();
-        $usuarios = Usuario::where('status', 'ATIVO')->get();
+        $divisoes = Divisao::where([['status', 'ATIVO'],['diretoria_id', $usuario->diretoria_id]])->orderBy('nome')->get();
+        $diretorias = Diretoria::where('status', 'ATIVO')->orderBy('nome')->get();
+        $usuarios = Usuario::where('status', 'ATIVO')->orderBy('nome')->get();
 
         return view('solicitacao.create', ['impressoras' => $impressoras, 'usuario' => $usuario, 'usuarios' => $usuarios, 'diretorias' => $diretorias, 'divisoes' => $divisoes]);
     }

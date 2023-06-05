@@ -1,16 +1,15 @@
 $(document).ready(function() {
-    var url = 'http://localhost:8000/api/';
-
-    
+    var urlBase = 'http://localhost:8000/api/';
+    var usuario = $('#usuario option:first');
 
     async function criaTrToner(impressoraId, impressoraModelo, quantidade) {
         var row = $('<tr>');
         var impressoraTd = $('<td>').text(impressoraModelo);
         row.append(impressoraTd);
 
-        urlP = url+'toner-por-impressora/'+impressoraId;
+        url = urlBase+'toner-por-impressora/'+impressoraId;
 
-        await fetch(urlP,{
+        await fetch(url,{
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -43,9 +42,9 @@ $(document).ready(function() {
         var impressoraTd = $('<td>').text(impressoraModelo);
         row.append(impressoraTd);
 
-        urlP = url+'cilindro-por-impressora/'+impressoraId;
+        url = urlBase+'cilindro-por-impressora/'+impressoraId;
 
-        await fetch(urlP,{
+        await fetch(url,{
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -71,6 +70,104 @@ $(document).ready(function() {
 
         $('#tbody').append(row);
     }
+
+    async function divisoes(diretoriaId){
+        var selectDivisao = $('#divisao');
+        var selectUsuario = $('#usuario');
+        var usuarioSelecionadoId = selectUsuario.val();
+
+        selectDivisao.prop('disabled', true);
+        selectDivisao.empty();
+        selectDivisao.append($('<option>').val('0').text('Nenhuma'));
+
+        selectUsuario.prop('disabled', true);
+        selectUsuario.empty();
+
+        var loader = $('<div>').addClass('float-end').append($('<div>').addClass('spinner-border spinner-border-sm'));
+        selectDivisao.after(loader);
+        selectUsuario.after(loader);
+
+        url = urlBase+'dados-por-diretoria/'+diretoriaId;
+
+        await fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept' : 'application/json'
+            }
+        })
+            .then(response=>response.json())
+            .then(data => {
+                loader.remove();
+                data[0].forEach(divisao => {
+                    selectDivisao.append($('<option>').val(divisao.id).text(divisao.nome));
+                });
+
+                selectUsuario.append($(usuario));
+                selectUsuario.append($('<option>').addClass('bg-body').prop('disabled', true).val('').text('-- Diretoria: '+$('#diretoria').find(':selected').text()+' --'));
+                data[1].forEach(usuarioDiretoria => {
+                    if(usuarioDiretoria.id != usuario.val()) {
+                        selectUsuario.append($('<option>').val(usuarioDiretoria.id).text(usuarioDiretoria.nome));
+                    }
+                });
+
+                selectUsuario.append($('<option>').addClass('bg-body').prop('disabled', true).val('').text('-- Todos --'));
+                data[2].forEach(usuarioTodos => {
+                    if(usuarioTodos.id != usuario.val()) {
+                        selectUsuario.append($('<option>').val(usuarioTodos.id).text(usuarioTodos.nome));
+                    }
+                });
+
+                selectUsuario.find(`option[value="${usuarioSelecionadoId}"]`).prop('selected', true);
+                selectDivisao.prop('disabled', false);
+                selectUsuario.prop('disabled', false);
+            });
+    }
+
+    async function dadosPorUsuario(usuarioId){
+        var selectDiretoria = $("#diretoria");
+        var selectDivisao = $("#divisao");
+
+        selectDiretoria.prop('disabled', true);
+        selectDivisao.prop('disabled', true);
+        selectDivisao.empty();
+        selectDivisao.append($('<option>').val('0').text('Nenhuma'));
+
+
+        url = urlBase+'dados-por-usuario/'+usuarioId
+
+        await fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept' : 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                selectDiretoria.find(`option[value="${data.diretoria_id}"]`).prop('selected', true);
+
+                if(data.divisao_id != null) {
+                    data.divisoes.forEach(divisao => {
+                        if(data.divisao_id == divisao.id) {
+                            selectDivisao.append($('<option>').val(divisao.id).text(divisao.nome).prop('selected', true));
+                        } else {
+                            selectDivisao.append($('<option>').val(divisao.id).text(divisao.nome));
+                        }
+                    })
+                }
+
+                selectDiretoria.prop('disabled', false);
+                selectDivisao.prop('disabled', false);
+            });
+    }
+
+    $('#diretoria').on('change', function(){
+        var diretoriaId = $('#diretoria').val();
+        divisoes(diretoriaId);
+    });
+
+    $('#usuario').on('change', function(){
+        dadosPorUsuario($('#usuario').val());
+    });
 
     $('#adicionar').click(function() {
         var tipoProduto = $('#suprimento').val();

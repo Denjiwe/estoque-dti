@@ -24,8 +24,11 @@
             <div class="col-4">
                 <label for="usuario">Usuario</label>
                 <select name="usuario_id" id="usuario" class="form-select">
+                    <option value="{{$usuario->id}}">{{$usuario->nome}}</option>
                     @foreach($usuarios as $usuarioSelect)
-                    <option value="{{$usuarioSelect->id}}" @if($usuario->id == $usuarioSelect->id) selected @endif>{{$usuarioSelect->nome}}</option>
+                        @if($usuarioSelect->id != $usuario->id)
+                            <option value="{{$usuarioSelect->id}}">{{$usuarioSelect->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -91,6 +94,6 @@
 </form>
 
 @section('js')
-    <script src="{{ asset('js/solicitacao.js')}}"></script>
+    <script src="{{asset('js/solicitacao.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @stop
