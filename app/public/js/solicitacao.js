@@ -1,6 +1,8 @@
 $(document).ready(function() {
     var url = 'http://localhost:8000/api/';
 
+    
+
     async function criaTrToner(impressoraId, impressoraModelo, quantidade) {
         var row = $('<tr>');
         var impressoraTd = $('<td>').text(impressoraModelo);
@@ -22,7 +24,8 @@ $(document).ready(function() {
                 var tonerTd = $('<td>').text(modeloToner);
                 tonerTd.append(`<input style="display:none;" value="${tonerId}" name="produto[]">`)
                 row.append(tonerTd);
-            });
+            })
+            .catch(data => console.log(data))
         
         var quantidadeTd = $('<td>').text(quantidade);
         quantidadeTd.append(`<input style="display:none;" value="${quantidade}" name="quantidade[]">`)
@@ -92,8 +95,6 @@ $(document).ready(function() {
         $('#suprimento').val('0');
         $('#quantidade').val('');
     });
-
-    
 
     $(document).on('click', '.remover',function(e) {
         e.preventDefault();

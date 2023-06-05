@@ -1,3 +1,4 @@
 {
-    "vue.features.codeActions.enable": false
+    "vue.features.codeActions.enable": false,
+    "php.version": "8.2.6"
 }

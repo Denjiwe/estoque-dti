@@ -34,24 +34,30 @@ class SolicitacaoController extends Controller
     public function create()
     {
         $usuario = new \stdClass;
+        $usuario->diretoria_id = auth()->user()->diretoria_id;
+        $usuario->id = auth()->user()->id;
+        $usuario->nome = auth()->user()->nome;
 
-        $impressoras = $this->produto
-            ->select('produtos.id', 'modelo_produto')
-            ->where([['tipo_produto', 'IMPRESSORA'],['status', 'ATIVO']])
-            ->join('local_impressoras','produtos.id', '=', 'produto_id');
+        if(auth()->user()->user_interno == 'NAO') {
+            $impressoras = $this->produto
+                ->select('produtos.id', 'modelo_produto')
+                ->where([['tipo_produto', 'IMPRESSORA'],['status', 'ATIVO']])
+                ->join('local_impressoras','produtos.id', '=', 'produto_id');
 
-        if(isset(auth()->user()->divisao_id) && auth()->user()->divisao_id != null)
-        {
-            $localUser = auth()->user()->divisao_id;
-            $impressoras = $impressoras->where('divisao_id', $localUser)->get();
-            $usuario->divisao_id = $localUser;
-            $usuario->diretoria_id = auth()->user()->diretoria_id;
-            $usuario->id = auth()->user()->id;
-            $usuario->nome = auth()->user()->nome;
+            if(auth()->user()->divisao_id != null)
+            {
+                $usuario->divisao_id = auth()->user()->divisao_id;
+                $impressoras = $impressoras->where('divisao_id', $usuario->divisao_id)->get();
+                
+            } else {
+                $impressoras = $impressoras->where('diretoria_id', $usuario->diretoria_id)->get();
+            }
         } else {
-            $localUser = auth()->user()->diretoria_id;
-            $impressoras = $impressoras->where('diretoria_id', $localUser)->get();
-        };
+            $impressoras = $this->produto
+                ->select('produtos.id', 'modelo_produto')
+                ->where([['tipo_produto', 'IMPRESSORA'],['status', 'ATIVO']])
+                ->get();
+        }
 
         $divisoes = Divisao::where('status', 'ATIVO')->get();
         $diretorias = Diretoria::where('status', 'ATIVO')->get();

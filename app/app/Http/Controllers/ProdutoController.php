@@ -182,5 +182,5 @@ class ProdutoController extends Controller
             ->orderBy('qntde_estoque', 'desc')->first();
 
         return response()->json($cilindro, 200);
-    }
+    }       
 }

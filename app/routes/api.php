@@ -27,3 +27,4 @@ Route::get('/cilindros', [ProdutoController::class, 'cilindros']);
 Route::get('/cilindro-por-impressora/{impressoraId}', [ProdutoController::class, 'cilindroPorImpressora']);
 Route::get('/diretorias', [DiretoriaController::class, 'diretorias']);
 Route::get('/divisoes', [DivisaoController::class, 'divisoes']);
+Route::get('/divisoes-por-diretoria/{diretoriaId}', [DivisaoController::class, 'divisoesPorDiretoria']);
