@@ -25,10 +25,6 @@
             </div>
 
         </x-slot:body>
-
-        <x-slot:footer>
-                
-        </x-slot:footer>
     </x-box>
 
     {{-- Box de exibição --}}

@@ -1,5 +1,6 @@
 <form method="post" action="{{ route('solicitacoes.store') }}">
 @csrf
+    <h3 style="color: red">{{$errors != []? $errors->first() : ''}}</h3>
     @if(auth()->user()->user_interno == 'SIM')
         <div class="row justify-content-center">
             <div class="col-4">
@@ -16,7 +17,7 @@
                 <select name="divisao_id" id="divisao" class="form-select">
                     <option value="0">Nenhuma</option>
                     @foreach($divisoes as $divisao)
-                    <option value="{{$divisao->id}}" @if(isset($usuario->divisao_id) && $usuario->divisao_id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
+                        <option value="{{$divisao->id}}" @if(isset($usuario->divisao_id) && $usuario->divisao_id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
                     @endforeach
                 </select>
             </div>
@@ -38,7 +39,7 @@
     <div class="row justify-content-center mt-3">
         <div class="col-4">
             <label for="impressora" class="fom-label">Selecione o modelo da impressora</label>
-            <select name="impressora" id="impressora" class="form-select">
+            <select id="impressora" class="form-select">
                 <option value="0" selected hidden>-- Impressora --</option>
                 @foreach ($impressoras as $impressora)
                     <option value="{{$impressora->id}}">{{$impressora->modelo_produto}}</option>
@@ -49,7 +50,7 @@
 
         <div class="col-3">
             <label for="suprimento" class="fom-label">Selecione o tipo do suprimento</label>
-            <select name="suprimento" id="suprimento" class="form-select">
+            <select id="suprimento" class="form-select">
                 <option value="0" selected hidden>-- Suprimento --</option>
                 <option value="TONER">Toner</option>
                 <option value="CILINDRO">Cilindro</option>

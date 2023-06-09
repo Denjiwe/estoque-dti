@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('observacao', 100)->nullable();
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->unsignedBigInteger('divisao_id');
+            $table->foreign('divisao_id')->references('id')->on('divisoes');
+            $table->unsignedBigInteger('diretoria_id');
+            $table->foreign('diretoria_id')->references('id')->on('diretorias');
             $table->timestamps();
         });
     }
@@ -33,6 +37,10 @@ return new class extends Migration
         Schema::table('solicitacaos', function (Blueprint $table) {
             $table->dropForeign('solicitacoes_usuario_id_foreign');
             $table->dropColumn('usuario_id');
+            $table->dropForeign('solicitacoes_divisao_id_foreign');
+            $table->dropColumn('divisao_id');
+            $table->dropForeign('solicitacoes_diretoria_id_foreign');
+            $table->dropColumn('diretoria_id');
         });
         Schema::dropIfExists('solicitacaos');
     }

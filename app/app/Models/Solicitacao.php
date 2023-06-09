@@ -14,24 +14,27 @@ class Solicitacao extends Model
     protected $fillable = [
         'status',
         'observacao',
-        'usuario_id'
+        'usuario_id',
+        'divisao_id',
+        'diretoria_id'
     ];
 
     public function rules() {
         return [
-            'status' => 'required|in:AGUARDANDO,ABERTO,ENCERRADO,LIBERADO',
-            'observacao' => 'sometimes|max:100',
-            'usuario_id' => 'required|exists:usuarios,id'
+            'observacao' => 'nullable|max:100',
+            'usuario_id' => 'nullable|exists:usuarios,id',
+            'divisao_id' => 'nullable|exists:divisoes,id',
+            'diretoria_id' => 'nullable|exists:diretorias,id'
         ];
     }
 
     public function feedback() {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
-            'status.in' => 'O status da solicitação passado é inválido',
             'observacao.max' => 'A observação deve conter no máximo 100 caracteres',
-            'usuario_id.required' => 'O usuário deve ser preenchido',
-            'usuario_id.exists' => 'O usuário não foi encontrado'
+            'usuario_id.exists' => 'O usuário não foi encontrado',
+            'divisao_id.exists' => 'A divisão não foi encontrado',
+            'diretoria_id.exists' => 'A diretoria não foi encontrado',
         ];
     }
 
