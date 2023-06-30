@@ -30,58 +30,25 @@
     {{-- Box de exibição --}}
     <x-box titulo="{{ $titulo }}">
         <x-slot:body>
+            <nav class="nav nav-pills nav-justified mt-3 mb-3">
+                <button class="nav-link active me-3" id="nav-abertos-tab" data-bs-toggle="tab" data-bs-target="#nav-abertos" type="button" role="tab" aria-controls="nav-abertos" aria-selected="true">Abertos/Liberados</button>
+                <button class="nav-link me-3" id="nav-aguardando-tab" data-bs-toggle="tab" data-bs-target="#nav-aguardando" type="button" role="tab" aria-controls="nav-aguardando" aria-selected="false">Aguardando</button>
+                <button class="nav-link" id="nav-encerrados-tab" data-bs-toggle="tab" data-bs-target="#nav-encerrados" type="button" role="tab" aria-controls="nav-encerrados" aria-selected="false">Encerrados</button>
+            </nav>
             @if (count($solicitacoes) > 0)
-            <table class="table text-center table-hover table-bordered" >
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Usuário</th>
-                        <th>Divisão</th>
-                        <th>Diretoria</th>
-                        <th>Status</th>
-                        <th>Data de Criação</th>
-                        <th>Data de Atualização</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($solicitacoes as $key => $solicitacao)
-                    @php
-                        $dataCriacao = strtotime($solicitacao->created_at);
-                        $dataEdicao = strtotime($solicitacao->updated_at);
-                    @endphp
-                        <tr>
-                            <td>{{$solicitacao->id}}</td>
-                            <td>{{$solicitacao->nome_usuario}}</td>
-                            <td>{{$solicitacao->nome_divisao ? $solicitacao->nome_divisao : 'Nenhuma'}}</td>
-                            <td>{{$solicitacao->nome_diretoria}}</td>
-                            <td>{{$solicitacao->status}}</td>
-                            <td>{{(date('d/m/Y H:i:s', $dataCriacao))}}</td>
-                            <td>{{(date('d/m/Y H:i:s', $dataEdicao))}}</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col">
-                                        <button data-bs-toggle="modal" data-bs-target="#editarModal{{$solicitacao->id}}" class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col">
-                                        {{-- <form id="form_{{$solicitacao->id}}" action="{{route('solicitacoes.destroy', ['solicitacao' => $solicitacao->id])}}" method="post">
-                                        @csrf
-                                        @method('DELETE') --}}
-                                            <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$solicitacao->id}})" title="Excluir">
-                                                <i class="fa fa-lg fa-fw fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-abertos" role="tabpanel" aria-labelledby="nav-abertos-tab" tabindex="0">
+                        <x-tabela-solicitacao solicitacoes='{{ json_encode($solicitacoes) }}' status="ABERTO"></x-tabela-solicitacao>
+                    </div>
+                    <div class="tab-pane fade" id="nav-aguardando" role="tabpanel" aria-labelledby="nav-aguardando-tab" tabindex="0">
+                        <x-tabela-solicitacao solicitacoes="{{ json_encode($solicitacoes)  }}" status="AGUARDANDO"></x-tabela-solicitacao>
+                    </div>
+                    <div class="tab-pane fade" id="nav-encerrados" role="tabpanel" aria-labelledby="nav-encerrados-tab" tabindex="0">
+                        <x-tabela-solicitacao solicitacoes="{{ json_encode($solicitacoes) }}" status="ENCERRADO"></x-tabela-solicitacao>
+                    </div>
+                </div>
             @endif
-        </x-slot:body>
+        </x-slotbody>
 
         <x-slot:footer>
             <div class="row mt-3">
@@ -99,9 +66,18 @@
                     </x-paginate>
                 </div>
                 <div class="col-6">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#adicionarModal">Adicionar</button>
+                    <a href="{{ route('solicitacoes.store') }}"><button type="button" class="btn btn-primary float-end" >Adicionar</button></a>
                 </div>
             </div>
         </x-slot:footer>
     </x-box>
+
+    <style scoped>
+        button.nav-link {
+            background-color: #c3c3c3 !important;
+        }
+        button.nav-link.active {
+            background-color: #0d6efd !important;
+        }
+    </style>
 @stop

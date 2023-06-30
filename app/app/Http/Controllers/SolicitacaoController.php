@@ -26,7 +26,7 @@ class SolicitacaoController extends Controller
      */
     public function index()
     {
-        $solicitacoes = $this->solicitacao->paginate(10);
+        $solicitacoes = $this->solicitacao->orderBy('created_at', 'desc')->paginate(10);
 
         foreach($solicitacoes as $solicitacao) 
         {
@@ -155,9 +155,21 @@ class SolicitacaoController extends Controller
      * @param  \App\Models\Solicitacao  $solicitacao
      * @return \Illuminate\Http\Response
      */
-    public function edit(Solicitacao $solicitacao)
+    public function edit($id)
     {
-        //
+        $solicitacao = $this->solicitacao->with(['produtos', 'usuario'])->find($id);
+
+        if($solicitacao === null) {
+            return redirect()->back();
+        }
+
+        $solicitacao->nome_usuario = Usuario::find($solicitacao->usuario_id)->nome;
+        if($solicitacao->divisao_id != null) {
+            $solicitacao->nome_divisao = Divisao::find($solicitacao->divisao_id)->nome;
+        }
+        $solicitacao->nome_diretoria = Diretoria::find($solicitacao->diretoria_id)->nome;
+
+        return view('solicitacao.edit', ['solicitacao' => $solicitacao]);
     }
 
     /**

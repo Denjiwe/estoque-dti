@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<style>
+<style scoped>
     .box-input {
         width: 100%;
         background-color: #9cacb9;
