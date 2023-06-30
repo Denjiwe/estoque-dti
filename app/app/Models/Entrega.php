@@ -39,4 +39,12 @@ class Entrega extends Model
     public function itens_solicitacao() {
         return $this->belongsTo('App\Models\ItensSolicitacao');
     }
+
+    public function produto() {
+        return $this->hasOneThrough('App\Models\Produto', 'App\Models\ItensSolicitacao', 'id', 'id', 'itens_solicitacao_id', 'produto_id');
+    }
+
+    public function solicitacao() {
+        return $this->hasOneThrough('App\Models\Solicitacao', 'App\Models\ItensSolicitacao', 'id', 'id', 'itens_solicitacao_id', 'solicitacao_id');
+    }
 }

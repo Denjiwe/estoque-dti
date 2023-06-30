@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entrega;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class EntregaController extends Controller
 {
+    public function __construct(Entrega $entrega) {
+        $this->entrega = $entrega;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,15 @@ class EntregaController extends Controller
      */
     public function index()
     {
-        //
+        $entregas = $this->entrega->with(['usuario', 'itens_solicitacao', 'solicitacao'])->paginate(10);
+
+        foreach($entregas as $entrega) {
+            $usuarioSolicitante = Usuario::find($entrega->solicitacao->usuario_id);
+
+            $entrega->solicitacao->usuario = $usuarioSolicitante;
+        }
+
+        return view('entrega.index', ['entregas' => $entregas, 'titulo' => 'Entregas']);
     }
 
     /**
@@ -22,7 +34,7 @@ class EntregaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
     }
@@ -44,9 +56,11 @@ class EntregaController extends Controller
      * @param  \App\Models\Entrega  $entrega
      * @return \Illuminate\Http\Response
      */
-    public function show(Entrega $entrega)
+    public function show($id)
     {
-        //
+        $entrega = $this->entrega->with(['usuario', 'itens_solicitacao', 'solicitacao'])->find($id);
+
+        return view('entrega.show', ['entrega' => $entrega, 'titulo' => 'Visualizar Entrega '.$entrega->id]);
     }
 
     /**
