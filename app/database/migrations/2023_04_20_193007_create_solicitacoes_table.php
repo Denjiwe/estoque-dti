@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('solicitacoes', function (Blueprint $table) {
             $table->id();
             $table->enum('status', ['AGUARDANDO', 'ABERTO', 'ENCERRADO', 'LIBERADO']);
-            $table->string('observacao', 100)->nullable();
+            $table->string('observacao', 255)->nullable();
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios');
-            $table->unsignedBigInteger('divisao_id');
+            $table->unsignedBigInteger('divisao_id')->nullable();
             $table->foreign('divisao_id')->references('id')->on('divisoes');
             $table->unsignedBigInteger('diretoria_id');
             $table->foreign('diretoria_id')->references('id')->on('diretorias');

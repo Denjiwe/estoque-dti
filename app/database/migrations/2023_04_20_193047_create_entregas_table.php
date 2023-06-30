@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('entregas', function (Blueprint $table) {
             $table->id();
             $table->integer('qntde');
-            $table->string('observacao', 100);
+            $table->string('observacao', 255)->nullable();
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->unsignedBigInteger('itens_solicitacao_id');

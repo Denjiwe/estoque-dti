@@ -21,14 +21,18 @@
         @php
             $dataCriacao = strtotime($solicitacao->created_at);
             $dataEdicao = strtotime($solicitacao->updated_at);
-            $primeiroNome = explode(' ', $solicitacao->nome_usuario)[0];
+            $primeiroNome = explode(' ', $solicitacao->usuario->nome)[0];
+            $liberado = false;
+            if($status == 'ABERTO') {
+                $liberado = 'LIBERADO'; 
+            }
         @endphp
-        @if($solicitacao->status == $status)
+        @if($solicitacao->status == $status || $solicitacao->status == $liberado)
             <tr>
                 <td>{{$solicitacao->id}}</td>
                 <td>{{$primeiroNome}}</td>
-                <td>{{$solicitacao->nome_divisao ? $solicitacao->nome_divisao : 'Nenhuma'}}</td>
-                <td>{{$solicitacao->nome_diretoria}}</td>
+                <td>{{$solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma'}}</td>
+                <td>{{$solicitacao->diretoria->nome}}</td>
                 <td>{{$solicitacao->status}}</td>
                 <td>{{(date('d/m/Y', $dataCriacao))}}</td>
                 <td>{{(date('d/m/Y', $dataEdicao))}}</td>

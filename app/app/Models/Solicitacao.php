@@ -39,7 +39,15 @@ class Solicitacao extends Model
     }
 
     public function produtos() {
-        return $this->belongsToMany('App\Models\Produto', 'itens_solicitacoes');
+        return $this->belongsToMany('App\Models\Produto', 'itens_solicitacoes')->withPivot('id', 'qntde');
+    }
+
+    public function divisao() {
+        return $this->belongsTo('App\Models\Divisao');
+    }
+
+    public function diretoria() {
+        return $this->belongsTo('App\Models\Diretoria');
     }
 
     public function usuario() {

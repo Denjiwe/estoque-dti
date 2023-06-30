@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Solicitacao;
 use App\Models\ItensSolicitacao;
+use App\Models\Entrega;
 use App\Models\Produto;
 use App\Models\Usuario;
 use App\Models\Divisao;
 use App\Models\Diretoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class SolicitacaoController extends Controller
 {
-    public function __construct(Solicitacao $solicitacao, Produto $produto, ItensSolicitacao $itemSolicitacao)
+    public function __construct(Solicitacao $solicitacao, Produto $produto, ItensSolicitacao $itemSolicitacao, Entrega $entrega)
     {
         $this->solicitacao = $solicitacao;
         $this->produto = $produto;
         $this->itemSolicitacao = $itemSolicitacao;
+        $this->entrega = $entrega;
     }
     /**
      * Display a listing of the resource.
@@ -26,17 +29,7 @@ class SolicitacaoController extends Controller
      */
     public function index()
     {
-        $solicitacoes = $this->solicitacao->orderBy('created_at', 'desc')->paginate(10);
-
-        foreach($solicitacoes as $solicitacao) 
-        {
-            $solicitacao->nome_usuario = Usuario::find($solicitacao->usuario_id)->nome;
-            if($solicitacao->divisao_id != null)
-            {
-                $solicitacao->nome_divisao = Divisao::find($solicitacao->divisao_id)->nome;
-            }
-            $solicitacao->nome_diretoria = Diretoria::find($solicitacao->diretoria_id)->nome;
-        }
+        $solicitacoes = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->orderBy('created_at', 'desc')->paginate(10);
 
         return view('solicitacao.index', ['solicitacoes' => $solicitacoes, 'titulo' => 'Solicitações Cadastradas']);
     }
@@ -157,17 +150,23 @@ class SolicitacaoController extends Controller
      */
     public function edit($id)
     {
-        $solicitacao = $this->solicitacao->with(['produtos', 'usuario'])->find($id);
+        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->find($id);
 
         if($solicitacao === null) {
             return redirect()->back();
         }
 
-        $solicitacao->nome_usuario = Usuario::find($solicitacao->usuario_id)->nome;
-        if($solicitacao->divisao_id != null) {
-            $solicitacao->nome_divisao = Divisao::find($solicitacao->divisao_id)->nome;
+        $entregas = array();
+
+        foreach ($solicitacao->produtos as $key => $produto) {
+            $itemSolicitacao = $this->itemSolicitacao->where([['solicitacao_id', $solicitacao->id], ['produto_id', $produto->id]])->first();
+
+            $entrega = $this->entrega->select('qntde')->where('itens_solicitacao_id', $itemSolicitacao->id)->first();
+
+            $entregas[] = $entrega;
         }
-        $solicitacao->nome_diretoria = Diretoria::find($solicitacao->diretoria_id)->nome;
+
+        $solicitacao->entregas = $entregas;
 
         return view('solicitacao.edit', ['solicitacao' => $solicitacao]);
     }
@@ -179,9 +178,43 @@ class SolicitacaoController extends Controller
      * @param  \App\Models\Solicitacao  $solicitacao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Solicitacao $solicitacao)
+    public function update(Request $request, $id)
     {
-        //
+        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->find($id);
+
+        if($solicitacao === null) {
+            return redirect()->back();
+        } 
+
+        DB::beginTransaction();
+
+        try {
+            $solicitacao->status = $request->status;
+
+            $solicitacao->save();
+
+            foreach ($request->produto as $key => $produto) {
+                if($request->qntde_atendida[$key] != 0) {
+                    $itemSolicitacao = $this->itemSolicitacao->where([['solicitacao_id', $solicitacao->id], ['produto_id', $produto]])->first();
+
+                    $solicitacao->produtos[$key]->qntde_estoque -= $request->qntde_atendida[$key];
+
+                    $entrega= $this->entrega->create([
+                        'solicitacao_id' => $solicitacao->id,
+                        'itens_solicitacao_id' => $itemSolicitacao->id,
+                        'qntde' => $request->qntde_atendida[$key],
+                        'observacao' => $request->observacao,
+                        'usuario_id' => $solicitacao->usuario_id,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('solicitacoes.index');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     /**
