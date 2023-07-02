@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <x-box titulo="Solicitar">
+    <x-box>
         <x-slot:body>
             @include('solicitacao.components.form_edit')
         </x-slot:body>

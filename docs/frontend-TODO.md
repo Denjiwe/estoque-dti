@@ -1,6 +1,7 @@
 ## New Features
 
 - Finalizar Minhas Solicitações
+- Finalizar produtos.show
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 - Mudar a exibição de alguns elementos nas index
     - Status com ucfirst(strtolower($objeto->status))
@@ -17,5 +18,6 @@
     - Diretorias ter dados gerais, divisões e usuários
     - Divisões ter usuários
         - Tabelas de todos os acima devem ter edit, show e destroy
+- Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 
 ## Bugs
