@@ -44,43 +44,43 @@ com gráficos de quantas solicitações estavam em qual status por período, con
 <h2 align="center" id="telas"> 🖥️Telas </h2>
 
  ### Login
- <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/login.png?raw=true" width="100%">
+ <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/login.png?raw=true" width="100%">
  
  ### Cadastro de Produtos
- <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/cadastro_produto.png?raw=true" width="100%">
+ <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/cadastro_produto.png?raw=true" width="100%">
  
  ### Criar Produto
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_produto.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_produto.png?raw=true" width="100%">
   
  ### Cadastrar Locais (Impressoras)
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_locais.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_locais.png?raw=true" width="100%">
  
  ### Cadastrar Suprimentos (Impressoras)
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_suprimentos.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_suprimentos.png?raw=true" width="100%">
   
  ### Cadastrar Impressoras (Toners ou Cilindros)
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_impressoras.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_impressoras.png?raw=true" width="100%">
   
  ### Cadastro de Órgãos
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/cadastro_orgaos.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/cadastro_orgaos.png?raw=true" width="100%">
   
  ### Criar Órgão
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_orgao.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_orgao.png?raw=true" width="100%">
   
  ### Cadastro de Diretorias
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/cadastro_diretoria.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/cadastro_diretoria.png?raw=true" width="100%">
   
  ### Criar Diretoria
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_diretoria.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_diretoria.png?raw=true" width="100%">
  
  ### Cadastro de Divisões
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/cadastro_divisoes.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/cadastro_divisoes.png?raw=true" width="100%">
   
  ### Criar Divisão
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_divisao.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_divisao.png?raw=true" width="100%">
  
  ### Cadastro de Usuários
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/cadastro_usuarios.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/cadastro_usuarios.png?raw=true" width="100%">
   
  ### Criar Usuário
-  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/telas/criar_usuario.png?raw=true" width="100%">
+  <img alt="Página Inicial" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_usuario.png?raw=true" width="100%">
