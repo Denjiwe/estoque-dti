@@ -79,13 +79,13 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $usuario = $this->usuario->with('diretoria')->with('divisao')->find($id);
+        $usuario = $this->usuario->with(['diretoria', 'divisao'])->find($id);
         
         if ($usuario == null) {
             return redirect()->route('usuarios.index', ['error' => 'Usuário não encontrado!']);
         }
 
-        $solicitacoes = Solicitacao::where('usuario_id', $usuario->id)->get();
+        $solicitacoes = Solicitacao::where('usuario_id', $usuario->id)->paginate(10);
 
         return view('usuario.detalhes', ['usuario' => $usuario, 'solicitacoes' => $solicitacoes]);
     }   

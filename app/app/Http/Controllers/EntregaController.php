@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Entrega;
 use App\Models\Usuario;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class EntregaController extends Controller
 {
-    public function __construct(Entrega $entrega) {
+    public function __construct(Entrega $entrega, Produto $produto) {
         $this->entrega = $entrega;
+        $this->produto = $produto;
     }
     /**
      * Display a listing of the resource.
@@ -92,8 +94,16 @@ class EntregaController extends Controller
      * @param  \App\Models\Entrega  $entrega
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entrega $entrega)
+    public function destroy($id)
     {
-        //
+        $entrega = $this->entrega->with('produto')->find($id);
+
+        $produtoEstoque = $this->produto->find($entrega->produto->id);
+        $produtoEstoque->qntde_estoque += $entrega->qntde;
+        $produtoEstoque->save();
+
+        $entrega->delete();
+
+        return redirect()->route('entregas.index');
     }
 }

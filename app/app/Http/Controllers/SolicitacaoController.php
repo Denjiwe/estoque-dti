@@ -150,24 +150,17 @@ class SolicitacaoController extends Controller
      */
     public function edit($id)
     {
-        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->find($id);
+        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas'])->find($id);
 
         if($solicitacao === null) {
             return redirect()->back();
         }
 
-        $entregas = array();
-
-        foreach ($solicitacao->produtos as $key => $produto) {
-            $itemSolicitacao = $this->itemSolicitacao->where([['solicitacao_id', $solicitacao->id], ['produto_id', $produto->id]])->first();
-
-            $entrega = $this->entrega->select('qntde')->where('itens_solicitacao_id', $itemSolicitacao->id)->first();
-
-            $entregas[] = $entrega;
+        foreach($solicitacao->entregas as $entrega) {
+            if($entrega->observacao != null) {
+                $solicitacao->observacaoEntrega = $entrega->observacao;
+            }
         }
-
-        $solicitacao->entregas = $entregas;
-
         return view('solicitacao.edit', ['solicitacao' => $solicitacao]);
     }
 
@@ -180,7 +173,7 @@ class SolicitacaoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->find($id);
+        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas'])->find($id);
 
         if($solicitacao === null) {
             return redirect()->back();
@@ -194,19 +187,44 @@ class SolicitacaoController extends Controller
             $solicitacao->save();
 
             foreach ($request->produto as $key => $produto) {
-                if($request->qntde_atendida[$key] != 0) {
-                    $itemSolicitacao = $this->itemSolicitacao->where([['solicitacao_id', $solicitacao->id], ['produto_id', $produto]])->first();
+                $produtoEstoque = $this->produto->find($produto);
+                if(isset($solicitacao->entregas[$key])) {
+                    $entrega = $this->entrega->find($solicitacao->entregas[$key]->id);
 
-                    $solicitacao->produtos[$key]->qntde_estoque -= $request->qntde_atendida[$key];
+                    if($request->qntde_atendida[$key] == 0) {
+                        $produtoEstoque->qntde_estoque += $entrega->qntde;
 
-                    $entrega= $this->entrega->create([
-                        'solicitacao_id' => $solicitacao->id,
-                        'itens_solicitacao_id' => $itemSolicitacao->id,
-                        'qntde' => $request->qntde_atendida[$key],
-                        'observacao' => $request->observacao,
-                        'usuario_id' => $solicitacao->usuario_id,
-                    ]);
+                        $entrega->delete();
+                    } else {
+                        if($entrega->qntde > $request->qntde_atendida[$key]) {
+                            $produtoEstoque->qntde_estoque += $entrega->qntde - $request->qntde_atendida[$key];
+                        } else {
+                            $produtoEstoque->qntde_estoque -= $request->qntde_atendida[$key] - $entrega->qntde;
+                        }
+
+                        $entrega->qntde = $request->qntde_atendida[$key];
+                        $entrega->observacao = $request->observacao;
+
+                        $entrega->save();
+                    }
+                } else {
+                    if($request->qntde_atendida[$key] != 0) {
+                        $itemSolicitacao = $this->itemSolicitacao->where([['solicitacao_id', $solicitacao->id], ['produto_id', $produto]])->first();
+
+                        $solicitacao->produtos[$key]->qntde_estoque -= $request->qntde_atendida[$key];
+
+                        $produtoEstoque->qntde_estoque -= $request->qntde_atendida[$key];
+
+                        $entrega= $this->entrega->create([
+                            'solicitacao_id' => $solicitacao->id,
+                            'itens_solicitacao_id' => $itemSolicitacao->id,
+                            'qntde' => $request->qntde_atendida[$key],
+                            'observacao' => $request->observacao,
+                            'usuario_id' => auth()->user()->id,
+                        ]);
+                    }
                 }
+                $produtoEstoque->save();
             }
 
             DB::commit();

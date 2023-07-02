@@ -23,18 +23,14 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="divisao_id">Divisão</label>
-                <select class="form-control" id="divisao_id" readonly>
-                    <option value="{{ $solicitacao->divisao != null ? $solicitacao->divisao->id : '' }}">{{ $solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma' }}</option>
-                </select>
+                <input type="text" class="form-control" value="{{ $solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma' }}" readonly/>
             </div>
         </div>
 
         <div class="col-4">
             <div class="form-group">
                 <label for="diretoria_id">Diretoria</label>
-                <select class="form-control" id="diretoria_id" readonly>
-                    <option value="{{ $solicitacao->diretoria->id }}">{{ $solicitacao->diretoria->nome }}</option>
-                </select>
+                <input type="text" class="form-control" value="{{ $solicitacao->diretoria->nome }}" readonly/>
             </div>
         </div>
     </div>
@@ -86,7 +82,7 @@
 
             <div class="col-3">
                 <div class="form-group">
-                    <input type="number" class="form-control" id="qntde_atendida[]" name="qntde_atendida[]" value="{{ $solicitacao->entregas[$key] ? $solicitacao->entregas[$key]->qntde : '0'}}" min="0" max="{{$produto->pivot->qntde}}" >
+                    <input type="number" class="form-control" id="qntde_atendida[]" name="qntde_atendida[]" value="{{  count($solicitacao->entregas) > 0 && isset($solicitacao->entregas[$key]) ? $solicitacao->entregas[$key]->qntde : '0'}}" min="0" max="{{$produto->pivot->qntde}}" >
                 </div>
             </div>
         </div>
@@ -96,7 +92,7 @@
         <div class="col-12">
             <label>Observação</label>
             <div class="form-group">
-                <textarea class="form-control" id="observacao" name="observacao" rows="3" maxlength="255" style="resize: none;">{{ $solicitacao->observacao ? $solicitacao->observacao : ''}}</textarea>
+                <textarea class="form-control" id="observacao" name="observacao" rows="3" maxlength="255" style="resize: none;">{{ count($solicitacao->entregas) > 0 && isset($solicitacao->observacaoEntrega) ? $solicitacao->observacaoEntrega : ''}}</textarea>
             </div>
         </div>
     </div>

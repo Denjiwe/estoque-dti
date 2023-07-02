@@ -53,4 +53,8 @@ class Solicitacao extends Model
     public function usuario() {
         return $this->belongsTo('App\Models\Usuario');
     }
+
+    public function entregas() {
+        return $this->hasManyThrough('App\Models\Entrega', 'App\Models\ItensSolicitacao', 'solicitacao_id', 'itens_solicitacao_id', 'id', 'id');
+    }
 }

@@ -33,7 +33,7 @@
                 <td>{{$primeiroNome}}</td>
                 <td>{{$solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma'}}</td>
                 <td>{{$solicitacao->diretoria->nome}}</td>
-                <td>{{$solicitacao->status}}</td>
+                <td>{{ucfirst(strtolower($solicitacao->status))}}</td>
                 <td>{{(date('d/m/Y', $dataCriacao))}}</td>
                 <td>{{(date('d/m/Y', $dataEdicao))}}</td>
                 <td>
