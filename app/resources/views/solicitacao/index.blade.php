@@ -66,7 +66,7 @@
                     </x-paginate>
                 </div>
                 <div class="col-6">
-                    <a href="{{ route('solicitacoes.store') }}"><button type="button" class="btn btn-primary float-end" >Adicionar</button></a>
+                    <a href="{{ route('solicitacoes.store') }}"><button type="button" class="btn btn-primary float-end" >Criar</button></a>
                 </div>
             </div>
         </x-slot:footer>

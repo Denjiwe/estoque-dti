@@ -73,9 +73,34 @@ class ProdutoController extends Controller
      * @param  \App\Models\Produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function show(Produto $produto)
+    public function show($id)
     {
-        //
+        $produto = $this->produto->with(['suprimentos'])->find($id);
+
+        if ($produto == null) {
+            return redirect()->route('produtos.index');
+        }
+
+        $diretorias = Diretoria::where('status', 'ATIVO')->get();
+        $divisoes = Divisao::where('status', 'ATIVO')->get();
+        $suprimentos = Suprimento::where('suprimento_id',$id)->get();
+        foreach ($suprimentos as $key => $suprimento) {
+            $nome = $this->produto->select('modelo_produto')->find($suprimento->suprimento_id);
+            $suprimento['nome_produto'] = $nome['modelo_produto'];
+        }
+        $toners = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'TONER']])->get();
+        $cilindros = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'CILINDRO']])->get();
+        $impressoras = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'IMPRESSORA']])->get();
+
+        return view('produto.detalhes', [
+            'produto' => $produto, 
+            'diretorias' => $diretorias, 
+            'divisoes' => $divisoes, 
+            'suprimentos' => $suprimentos, 
+            'toners' => $toners, 
+            'cilindros' => $cilindros,
+            'impressoras' => $impressoras
+        ]);
     }
 
     /**

@@ -68,12 +68,12 @@
                         <tr>
                             <td>{{$usuario->id}}</td>
                             <td>{{$usuario->nome}}</td>
-                            <td>{{$usuario->status}}</td>
+                            <td>{{ucfirst(strtolower($usuario->status))}}</td>
                             <td>{{$usuario->user_interno == 'SIM' ? 'Sim' : 'Não'}}</td>
                             <td>{{$usuario->diretoria->nome}}</td>
                             <td>{{$usuario->divisao ? $usuario->divisao->nome : 'Não possui'}}</td>
-                            <td>{{(date('d/m/Y H:i:s', $dataCriacao))}}</td>
-                            <td>{{(date('d/m/Y H:i:s', $dataEdicao))}}</td>
+                            <td>{{(date('d/m/Y', $dataCriacao))}}</td>
+                            <td>{{(date('d/m/Y', $dataEdicao))}}</td>
                             <td>
                                 <div class="row">
                                     <div class="col">

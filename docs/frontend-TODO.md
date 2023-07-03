@@ -24,3 +24,4 @@
 
 - Hamburger menu da topbar está muito próximo da sidebar
 - Dark theme não funciona nos box 
+- Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
