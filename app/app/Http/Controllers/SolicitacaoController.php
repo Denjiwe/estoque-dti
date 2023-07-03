@@ -247,6 +247,11 @@ class SolicitacaoController extends Controller
     }
 
     public function minhasSolicitacoes() {
-        return view('solicitacao.minhas-solicitacoes');
+        $solicitacoes = $this->solicitacao
+        ->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas'])
+        ->where('usuario_id', auth()->user()->id)
+        ->paginate(10);
+
+        return view('solicitacao.minhas-solicitacoes', ['solicitacoes' => $solicitacoes, 'titulo' => 'Minhas Solicitações']);
     }
 }
