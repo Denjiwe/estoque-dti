@@ -8,7 +8,7 @@
 
 @section('content')
     {{-- Box de pesquisa --}}
-    <x-box titulo="Pesquisar">
+    <x-box titulo="Pesquisar" id="searchBox">
         <x-slot:body>
             <div class="row ">
                 <div class="col-3">
@@ -27,7 +27,7 @@
     </x-box>
 
     {{-- Box de exibição --}}
-    <x-box titulo="{{ $titulo }}">
+    <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             @if (count($produtos) > 0)
             <table class="table text-center table-hover table-bordered">
@@ -54,9 +54,9 @@
                             <td>{{ucfirst(strtolower($produto->tipo_produto))}}</td>
                             <td>{{$produto->modelo_produto}}</td>
                             <td>{{$produto->qntde_estoque}}</td>
-                            <td>{{$produto->status}}</td>
-                            <td>{{(date('d/m/Y H:i:s', $dataCriacao))}}</td>
-                            <td>{{(date('d/m/Y H:i:s', $dataEdicao))}}</td>
+                            <td>{{ucfirst(strtolower($produto->status))}}</td>
+                            <td>{{(date('d/m/Y', $dataCriacao))}}</td>
+                            <td>{{(date('d/m/Y', $dataEdicao))}}</td>
                             <td>
                                 <div class="row">
                                     <div class="col">

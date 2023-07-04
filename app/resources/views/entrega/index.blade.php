@@ -8,7 +8,7 @@
 
 @section('content')
     {{-- Box de pesquisa --}}
-    <x-box titulo="Pesquisar">
+    <x-box titulo="Pesquisar" id="searchBox">
         <x-slot:body>
             <div class="row ">
                 <div class="col-3">
@@ -27,7 +27,7 @@
     </x-box>
 
     {{-- Box de exibição --}}
-    <x-box titulo="{{ $titulo }}">
+    <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             @if (count($entregas) > 0)
             <table class="table text-center table-hover table-bordered">

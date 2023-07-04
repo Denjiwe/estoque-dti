@@ -1,11 +1,11 @@
 ## New Features
 
 - [X] Finalizar Minhas Solicitações
-- Finalizar produtos.show
-- Mudar a exibição de alguns elementos nas index
+- [X] Finalizar produtos.show
+- [X] Mudar a exibição de alguns elementos nas index
     - Status com ucfirst(strtolower($objeto->status))
     - Data de criação sem H:i:s
-- Definir ids para os box, para que possam ocupar vh fixos com css (pesquisar se dá pra passar um id por x-component)
+- [X] Definir ids para os box, para que possam ocupar vh fixos com css (pesquisar se dá pra passar um id por x-component)
     - searchBox para pesquisas
     - main para páginas que possuam um searchBox
     - content para páginas que não possuirem searchBox
