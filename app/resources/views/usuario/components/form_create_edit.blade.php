@@ -55,8 +55,8 @@
 
     <div class="row mt-3 justify-content-center">
         <div class="col-3">
-            <label for="diretoria_id" class="fom-label">Diretoria</label>
-            <select name="diretoria_id" id="diretoria_id" class="form-select @error('diretoria_id') is-invalid @enderror">
+            <label for="diretoria" class="fom-label">Diretoria</label>
+            <select name="diretoria_id" id="diretoria" class="form-select @error('diretoria_id') is-invalid @enderror">
                 <option selected>-- Selecione a Diretoria --</option>
                 @foreach ($diretorias as $diretoria)
                     <option value="{{$diretoria->id}}" @php if(isset($usuario->diretoria->id) && $usuario->diretoria->id == $diretoria->id) echo 'selected'@endphp >{{$diretoria->nome}}</option>
@@ -66,11 +66,11 @@
         </div>
 
         <div class="col-3">
-            <label for="divisao_id" class="fom-label">Divisão</label>
-            <select name="divisao_id" id="divisao_id" class="form-select @error('divisao_id') is-invalid @enderror">
+            <label for="divisao" class="fom-label">Divisão</label>
+            <select name="divisao_id" id="divisao" class="form-select @error('divisao_id') is-invalid @enderror">
                 <option value="0" selected>-- Selecione a Divisão --</option>
                 @foreach ($divisoes as $divisao)
-                    <option value="{{$divisao->id}}" @php if(isset($usuario->divisao->id) && $usuario->divisao->id == $divisao->id) echo 'selected'@endphp >{{$divisao->nome}}</option>
+                    <option value="{{$divisao->id}}" @if(isset($usuario->divisao->id) && $usuario->divisao->id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
                 @endforeach
             </select>
             {{ $errors->has('divisao_id') ? $errors->first('divisao_id') : '' }}
@@ -87,3 +87,8 @@
             @endif
         </div>
     </div>
+
+@section('js')
+    <script src="{{asset('js/solicitacao.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@stop

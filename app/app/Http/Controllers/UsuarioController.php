@@ -97,14 +97,14 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        $usuario = $this->usuario->with('diretoria')->with('divisao')->find($id);
+        $usuario = $this->usuario->with(['diretoria', 'divisao'])->find($id);
 
         if ($usuario == null) {
             return redirect()->route('usuarios.index', ['error' => 'Usuário não encontrado!']);
         }
 
         $diretorias = Diretoria::get();
-        $divisoes = Divisao::get();
+        $divisoes = Divisao::where('diretoria_id', $usuario->diretoria_id)->get();
 
         $data = [
             'usuario' => $usuario,

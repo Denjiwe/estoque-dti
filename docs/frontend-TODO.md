@@ -12,7 +12,7 @@
 - Fazer o diabo das pesquisas funcionarem, sendo selecionável a coluna em que se deseja procurar o objeto para a pesquisa
     - Criar campo no select de data entre e dia específico
 - [X] Na tela de usuários criar botão de edição, redirecionando para usuario.edit
-- Fazer com que as divisões sejam exibidas de acordo com a diretoria no cadastro de usuário
+- [X] Fazer com que as divisões sejam exibidas de acordo com a diretoria no cadastro de usuário
 - [X] Criar telas de show para alguns objetos
     - Órgãos ter dados gerais e diretorias
     - Diretorias ter dados gerais, divisões e usuários
@@ -24,5 +24,6 @@
 ## Bugs
 
 - [X] Hamburger menu da topbar está muito próximo da sidebar
+- Quando vai adicionar um cilíndro para uma impressora que não possui um cadastrado, adiciona espaço em branco
 - Dark theme não funciona nos box 
 - Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
