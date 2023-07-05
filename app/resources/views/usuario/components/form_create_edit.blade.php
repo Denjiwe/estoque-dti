@@ -81,7 +81,7 @@
         <div class="col-auto">
             <a href="{{url()->previous() == route('usuarios.create') ? route('usuarios.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
             @if (isset($usuario->id))
-                <button type="submit" class="btn btn-primary">Editar</button>
+                <button type="submit" class="btn btn-primary">Aplicar</button>
             @else
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
             @endif

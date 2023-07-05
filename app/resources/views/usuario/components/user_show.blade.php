@@ -124,6 +124,7 @@
             </x-paginate>
         </div>
         <div class="col-12" id='voltarDiv'>
+            <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}"><button class="btn btn-primary float-end" id="btnSubmit" type="submit">Editar</button></a>
             <a href="{{ route('usuarios.index') }}"><button type="button" class="btn btn-secondary float-end me-2">Voltar</button></a>
         </div>
     </div>
