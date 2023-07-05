@@ -37,6 +37,16 @@ class OrgaoController extends Controller
         return redirect()->route('orgaos.index');
     }
 
+    public function show($id) {
+        $orgao = $this->orgao->with('diretorias')->find($id);
+
+        if($orgao == null) {
+            return redirect()->route('orgaos.index');
+        }
+
+        return view('orgao.show', ['orgao' => $orgao]);
+    }
+
     /**
      * Update the specified resource in storage.
      *

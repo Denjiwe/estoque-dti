@@ -63,6 +63,13 @@
                                         </button>
                                     </div>
                                     <div class="col">
+                                        <a href="{{route('divisao.show', ['divisao' => $divisao->id])}}">
+                                            <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
+                                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col">
                                         <form id="form_{{$divisao->id}}" action="{{route('divisao.destroy', ['divisao' => $divisao->id])}}" method="post">
                                         @csrf
                                         @method('DELETE')

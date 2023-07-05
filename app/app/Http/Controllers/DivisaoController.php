@@ -41,6 +41,22 @@ class DivisaoController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Divisao  $divisao
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id) {
+        $divisao = $this->divisao->with(['diretoria','usuarios'])->find($id);
+
+        if($divisao == null) {
+            return redirect()->route('divisao.index');
+        }
+
+        return view('divisao.show', ['divisao' => $divisao]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

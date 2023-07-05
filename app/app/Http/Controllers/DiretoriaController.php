@@ -41,6 +41,22 @@ class DiretoriaController extends Controller
         return redirect()->route('diretorias.index');
     }
 
+    public function show($id) {
+        $diretoria = $this->diretoria->with(['divisoes', 'usuarios'])->find($id);
+
+        if($diretoria == null) {
+            return redirect()->route('diretorias.index');
+        }
+
+        foreach($diretoria->usuarios as $usuario) {
+            if ($usuario->divisao_id != null) {
+                $usuario->divisao = Divisao::select('id','nome')->find($usuario->divisao_id);
+            }
+        }
+
+        return view('diretoria.show', ['diretoria' => $diretoria]);
+    }
+
     /**
      * Update the specified resource in storage.
      *

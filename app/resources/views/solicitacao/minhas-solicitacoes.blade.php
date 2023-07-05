@@ -8,7 +8,7 @@
 
 @section('content')
     {{-- Box de pesquisa --}}
-    <x-box titulo="Pesquisar">
+    <x-box titulo="Pesquisar" id="searchBox">
         <x-slot:body>
             <div class="row">
                 <div class="col-3">
@@ -28,7 +28,7 @@
     </x-box>
 
     {{-- Box de exibição --}}
-    <x-box titulo="{{ $titulo }}">
+    <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             <nav class="nav nav-pills nav-justified mt-3 mb-3">
                 <button class="nav-link active me-3" id="nav-abertos-tab" data-bs-toggle="tab" data-bs-target="#nav-abertos" type="button" role="tab" aria-controls="nav-abertos" aria-selected="true">Abertos/Liberados</button>

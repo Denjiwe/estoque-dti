@@ -13,7 +13,7 @@
     - Criar campo no select de data entre e dia específico
 - [X] Na tela de usuários criar botão de edição, redirecionando para usuario.edit
 - Fazer com que as divisões sejam exibidas de acordo com a diretoria no cadastro de usuário
-- Criar telas de show para alguns objetos
+- [X] Criar telas de show para alguns objetos
     - Órgãos ter dados gerais e diretorias
     - Diretorias ter dados gerais, divisões e usuários
     - Divisões ter usuários
