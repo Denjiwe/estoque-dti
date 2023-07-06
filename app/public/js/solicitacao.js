@@ -60,6 +60,13 @@ $(document).ready(function() {
                 row.append(cilindroTd);
             });
         
+        if(row.find('td').eq(1).find('input').val() === 'undefined') {
+            $('#suprimento').addClass('is-invalid');
+            $('#suprimento').after($('<div>').addClass('invalid-feedback').text('A impressora selecionada não possui cilindro cadastrado.'));
+            
+            return;
+        }
+
         var quantidadeTd = $('<td>').text(quantidade);
         quantidadeTd.append(`<input style="display:none;" value="${quantidade}" name="quantidade[]">`)
         row.append(quantidadeTd);
@@ -83,10 +90,6 @@ $(document).ready(function() {
         selectUsuario.prop('disabled', true);
         selectUsuario.empty();
 
-        var loader = $('<div>').addClass('float-end').append($('<div>').addClass('spinner-border spinner-border-sm'));
-        selectDivisao.after(loader);
-        selectUsuario.after(loader);
-
         url = urlBase+'dados-por-diretoria/'+diretoriaId;
 
         await fetch(url,{
@@ -97,7 +100,6 @@ $(document).ready(function() {
         })
             .then(response=>response.json())
             .then(data => {
-                loader.remove();
                 data[0].forEach(divisao => {
                     selectDivisao.append($('<option>').val(divisao.id).text(divisao.nome));
                 });
@@ -132,7 +134,6 @@ $(document).ready(function() {
         selectDivisao.empty();
         selectDivisao.append($('<option>').val('0').text('Nenhuma'));
 
-
         url = urlBase+'dados-por-usuario/'+usuarioId
 
         await fetch(url,{
@@ -160,37 +161,60 @@ $(document).ready(function() {
             });
     }
 
-    $('#diretoria').on('change', function(){
+    $('#diretoria').on('change', async function(){
         var diretoriaId = $('#diretoria').val();
-        divisoes(diretoriaId);
+        await divisoes(diretoriaId);
     });
 
-    $('#usuario').on('change', function(){
-        dadosPorUsuario($('#usuario').val());
+    $('#usuario').on('change', async function(){
+        await dadosPorUsuario($('#usuario').val());
     });
 
-    $('#adicionar').click(function() {
+    $('#adicionar').click(async function() {
         var tipoProduto = $('#suprimento').val();
         var impressoraId = $('#impressora').val();
         var impressoraModelo = $('#impressora').find(':selected').text();
         var quantidade = $('#quantidade').val();
 
+        if(quantidade == '') {
+            $('#quantidade').addClass('is-invalid');
+            $('#quantidade').after($('<div>').addClass('invalid-feedback').text('Informe a quantidade.'));
+
+            return;
+        }
+
         switch(tipoProduto){
             case 'TONER':
-                    criaTrToner(impressoraId, impressoraModelo, quantidade);
+                    await criaTrToner(impressoraId, impressoraModelo, quantidade);
                 break;
             case 'CILINDRO':
-                    criaTrCilindro(impressoraId, impressoraModelo, quantidade);
+                    await criaTrCilindro(impressoraId, impressoraModelo, quantidade);
                 break;
             case 'CONJUNTO':
-                    criaTrToner(impressoraId, impressoraModelo, quantidade);
-                    criaTrCilindro(impressoraId, impressoraModelo, quantidade);
+                    await criaTrToner(impressoraId, impressoraModelo, quantidade);
+                    await criaTrCilindro(impressoraId, impressoraModelo, quantidade);
                 break;
         }
 
-        $('#impressora').val('0');
-        $('#suprimento').val('0');
-        $('#quantidade').val('');
+        if(!$('#quantidade').hasClass('is-invalid') && !$('#suprimento').hasClass('is-invalid')) {
+            $('#impressora').val('0');
+            $('#suprimento').val('0');
+            $('#quantidade').val('');
+        }
+    });
+
+    $('#impressora').on('change', function(){
+        if ($('#suprimento').hasClass('is-invalid')) {
+            $('#suprimento').removeClass('is-invalid');
+            $('#suprimento').next().remove();
+        }
+    });
+
+    $('#quantidade').on('change', function(){
+        if ($('#quantidade').hasClass('is-invalid')) {
+            $('#quantidade').removeClass('is-invalid');
+            $('#quantidade').next().remove();   
+        }
     });
 
     $(document).on('click', '.remover',function(e) {

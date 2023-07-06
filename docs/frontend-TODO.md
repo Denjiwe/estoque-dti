@@ -24,6 +24,6 @@
 ## Bugs
 
 - [X] Hamburger menu da topbar está muito próximo da sidebar
-- Quando vai adicionar um cilíndro para uma impressora que não possui um cadastrado, adiciona espaço em branco
+- [X] Quando vai adicionar um cilíndro para uma impressora que não possui um cadastrado, adiciona espaço em branco
 - Dark theme não funciona nos box 
 - Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
