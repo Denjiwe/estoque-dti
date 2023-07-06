@@ -118,8 +118,8 @@ class SolicitacaoController extends Controller
 
             $itemSolicitacao = $this->itemSolicitacao->create($dados);
 
-            $totalSolicitado = $this->itemSolicitacao->where('produto_id', $dados->produto_id)->sum('qntde');
-            $totalEstoque = $this->produto->find($dados->produto_id)->qntde_estoque;
+            $totalSolicitado = intval($this->itemSolicitacao->where('produto_id', $dados['produto_id'])->sum('qntde'));
+            $totalEstoque = $this->produto->find($dados['produto_id'])->qntde_estoque;
 
             if($totalSolicitado > $totalEstoque)
             {

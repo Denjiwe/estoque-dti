@@ -18,6 +18,7 @@
     - Diretorias ter dados gerais, divisões e usuários
     - Divisões ter usuários
         - Tabelas de todos os acima devem ter edit, show e destroy
+- Caso seja tentado atender um pedido que irá exceder a quantidade do produto em estoque, retornar informando qual produto está em falta
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 
@@ -25,5 +26,6 @@
 
 - [X] Hamburger menu da topbar está muito próximo da sidebar
 - [X] Quando vai adicionar um cilíndro para uma impressora que não possui um cadastrado, adiciona espaço em branco
+- solicitacoes.destroy não funciona
 - Dark theme não funciona nos box 
 - Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação

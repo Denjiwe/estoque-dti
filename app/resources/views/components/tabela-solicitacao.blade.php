@@ -12,7 +12,6 @@
             <th>Diretoria</th>
             <th>Status</th>
             <th>Data de Criação</th>
-            <th>Data de Atualização</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -35,7 +34,6 @@
                 <td>{{$solicitacao->diretoria->nome}}</td>
                 <td>{{ucfirst(strtolower($solicitacao->status))}}</td>
                 <td>{{(date('d/m/Y', $dataCriacao))}}</td>
-                <td>{{(date('d/m/Y', $dataEdicao))}}</td>
                 <td>
                     <div class="row">
                         <div class="col">
