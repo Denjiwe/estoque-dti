@@ -19,7 +19,8 @@
     - Divisões ter usuários
         - Tabelas de todos os acima devem ter edit, show e destroy
 - [X] Caso seja tentado atender um pedido que irá exceder a quantidade do produto em estoque, retornar informando qual produto está em falta
-- Fazer minhas solicitações novamente, por conta da necessidade de criar 3 rotas para os status das solicitações 
+- [X] Fazer minhas solicitações novamente, por conta da necessidade de criar 3 rotas para os status das solicitações 
+- Adicionar campo de observação da solicitação ao editar ou visualizar uma solicitação
 - Verificar se vale a pena fazer um paginate dentro do box-input
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
@@ -28,6 +29,6 @@
 
 - [X] Hamburger menu da topbar está muito próximo da sidebar
 - [X] Quando vai adicionar um cilíndro para uma impressora que não possui um cadastrado, adiciona espaço em branco
-- solicitacoes.destroy não funciona
+- [X] Solicitacoes.destroy não funciona
 - Dark theme não funciona nos box 
 - Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação

@@ -22,11 +22,7 @@
             $dataEdicao = strtotime($solicitacao->updated_at);
             $primeiroNome = explode(' ', $solicitacao->usuario->nome)[0];
             $liberado = false;
-            if($status == 'ABERTO') {
-                $liberado = 'LIBERADO'; 
-            }
         @endphp
-        @if($solicitacao->status == $status || $solicitacao->status == $liberado)
             <tr>
                 <td>{{$solicitacao->id}}</td>
                 <td>{{$primeiroNome}}</td>
@@ -44,9 +40,9 @@
                             </a>
                         </div>
                         <div class="col">
-                            {{-- <form id="form_{{$solicitacao->id}}" action="{{route('solicitacoes.destroy', ['solicitacao' => $solicitacao->id])}}" method="post">
+                            <form id="form_{{$solicitacao->id}}" action="{{route('solicitacoes.destroy', ['id' => $solicitacao->id])}}" method="post">
                             @csrf
-                            @method('DELETE') --}}
+                            @method('DELETE')
                                 <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$solicitacao->id}})" title="Excluir">
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                 </button>
@@ -55,7 +51,6 @@
                     </div>
                 </td>
             </tr>
-        @endif
         @endforeach
     </tbody>
 </table>

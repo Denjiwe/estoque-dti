@@ -96,7 +96,7 @@ $(document).ready(function() {
 
         selectDivisao.prop('disabled', true);
         selectDivisao.empty();
-        selectDivisao.append($('<option>').val('0').text('Nenhuma'));
+        selectDivisao.append($('<option>').val('').text('Nenhuma'));
 
         selectUsuario.prop('disabled', true);
         selectUsuario.empty();
@@ -143,7 +143,7 @@ $(document).ready(function() {
         selectDiretoria.prop('disabled', true);
         selectDivisao.prop('disabled', true);
         selectDivisao.empty();
-        selectDivisao.append($('<option>').val('0').text('Nenhuma'));
+        selectDivisao.append($('<option>').val('').text('Nenhuma'));
 
         url = urlBase+'dados-por-usuario/'+usuarioId
 

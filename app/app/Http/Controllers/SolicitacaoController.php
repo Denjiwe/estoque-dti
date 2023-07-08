@@ -12,6 +12,7 @@ use App\Models\Diretoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class SolicitacaoController extends Controller
 {
@@ -24,21 +25,39 @@ class SolicitacaoController extends Controller
     }
     
     public function abertas() {
-        $solicitacoesAbertas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ABERTO')->orWhere('status', 'LIBERADO')->orderBy('created_at', 'desc')->paginate(8);
+        if (!Route::currentRouteNamed('minhas-solicitacoes.abertas')) {
+            $solicitacoesAbertas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ABERTO')->orWhere('status', 'LIBERADO')->orderBy('created_at', 'desc')->paginate(8);
+            $rota = 'todas';
+        } else {
+            $solicitacoesAbertas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where([['status', 'ABERTO'], ['usuario_id', auth()->user()->id]])->orWhere([['status', 'LIBERADO'],['usuario_id', auth()->user()->id]])->orderBy('created_at', 'desc')->paginate(8);
+            $rota = 'minhas';
+        }
 
-        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAbertas, 'titulo' => 'Solicitações Abertas', 'ativo' => 'abertas']);
+        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAbertas, 'titulo' => 'Solicitações Abertas', 'ativo' => 'abertas', 'rota' => $rota]);
     }
 
     public function aguardando() {
-        $solicitacoesAguardando = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'AGUARDANDO')->orderBy('created_at', 'desc')->paginate(8);
+        if (!Route::currentRouteNamed('minhas-solicitacoes.aguardando')) {
+            $solicitacoesAguardando = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'AGUARDANDO')->orderBy('created_at', 'desc')->paginate(8);
+            $rota = 'todas';
+        } else {
+            $solicitacoesAguardando = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where([['status', 'AGUARDANDO'], ['usuario_id', auth()->user()->id]])->orderBy('created_at', 'desc')->paginate(8);
+            $rota = 'minhas';
+        }
 
-        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAguardando, 'titulo' => 'Solicitações Aguardando', 'ativo' => 'aguardando']);
+        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAguardando, 'titulo' => 'Solicitações Aguardando', 'ativo' => 'aguardando', 'rota' => $rota]);
     }
 
     public function encerradas() {
-        $solicitacoesEncerradas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ENCERRADO')->orderBy('created_at', 'desc')->paginate(8);
+        if (!Route::currentRouteNamed('minhas-solicitacoes.encerradas')) {
+            $solicitacoesEncerradas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ENCERRADO')->orderBy('created_at', 'desc')->paginate(8);
+            $rota = 'todas';
+        } else {
+            $solicitacoesEncerradas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where([['status', 'ENCERRADO'], ['usuario_id', auth()->user()->id]])->orderBy('created_at', 'desc')->paginate(8);
+            $rota = 'minhas';
+        }
 
-        return view('solicitacao.index', ['solicitacoes' => $solicitacoesEncerradas, 'titulo' => 'Solicitações Encerradas', 'ativo' => 'encerradas']);
+        return view('solicitacao.index', ['solicitacoes' => $solicitacoesEncerradas, 'titulo' => 'Solicitações Encerradas', 'ativo' => 'encerradas', 'rota' => $rota]);
     }
 
     /**
@@ -242,7 +261,7 @@ class SolicitacaoController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('solicitacoes.index');
+            return redirect()->route('solicitacoes.abertas');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->withErrors($e->getMessage());
@@ -255,17 +274,39 @@ class SolicitacaoController extends Controller
      * @param  \App\Models\Solicitacao  $solicitacao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Solicitacao $solicitacao)
+    public function destroy($id)
     {
-        //
-    }
+        $solicitacao = $this->solicitacao->with(['produtos', 'entregas', 'itens_solicitacoes'])->find($id);
 
-    public function minhasSolicitacoes() {
-        $solicitacoes = $this->solicitacao
-        ->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas'])
-        ->where('usuario_id', auth()->user()->id)
-        ->paginate(10);
+        if($solicitacao === null) {
+            return redirect()->back();
+        }
 
-        return view('solicitacao.minhas-solicitacoes', ['solicitacoes' => $solicitacoes, 'titulo' => 'Minhas Solicitações']);
+        DB::beginTransaction();
+        try {
+            if($solicitacao->entregas != null) {
+                foreach($solicitacao->entregas as $entrega) {
+                    $itemSolicitacao = ItensSolicitacao::with('produto')->find($entrega->itens_solicitacao_id);
+                    $produto = $itemSolicitacao->produto;
+                    $produto->qntde_estoque += $entrega->qntde;
+                    $produto->save();
+
+                    $entrega->delete();
+                }
+            }
+
+            if($solicitacao->itens_solicitacoes != null) {
+                foreach($solicitacao->itens_solicitacoes as $itemSolicitacao) {
+                    $itemSolicitacao->delete();
+                }
+            }
+            $solicitacao->delete();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors($e->getMessage());
+        }
+
+        DB::commit();
+        return redirect()->route('solicitacoes.abertas');
     }
 }

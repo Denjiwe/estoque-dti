@@ -33,12 +33,12 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::resource('produtos', ProdutoController::class);
     Route::resource('entregas', EntregaController::class);
     
-    Route::get('solicitacoes-abertas/', [SolicitacaoController::class, 'abertas'])->name('solicitacoes.abertas');
-    Route::get('solicitacoes-aguardando/', [SolicitacaoController::class, 'aguardando'])->name('solicitacoes.aguardando');
-    Route::get('solicitacoes-encerradas/', [SolicitacaoController::class, 'encerradas'])->name('solicitacoes.encerradas');
+    Route::get('solicitacoes/abertas', [SolicitacaoController::class, 'abertas'])->name('solicitacoes.abertas');
+    Route::get('solicitacoes/aguardando', [SolicitacaoController::class, 'aguardando'])->name('solicitacoes.aguardando');
+    Route::get('solicitacoes/encerradas', [SolicitacaoController::class, 'encerradas'])->name('solicitacoes.encerradas');
     Route::get('solicitacoes/{id}', [SolicitacaoController::class, 'edit'])->name('solicitacoes.edit');
     Route::match(['put', 'patch'], 'solicitacoes/{id}', [SolicitacaoController::class, 'update'])->name('solicitacoes.update');
-    Route::delete('solicitacoes/{id}', [SolicitacaoController::class, 'delete'])->name('solicitacoes.delete');
+    Route::delete('solicitacoes/{id}', [SolicitacaoController::class, 'destroy'])->name('solicitacoes.destroy');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -59,7 +59,9 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('solicitar/', [SolicitacaoController::class, 'create'])->name('solicitacoes.create');
     Route::post('solicitar/', [SolicitacaoController::class, 'store'])->name('solicitacoes.store');
-    Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');
+    Route::get('minhas-solicitacoes/abertas', 'App\Http\Controllers\SolicitacaoController@abertas')->name('minhas-solicitacoes.abertas');
+    Route::get('minhas-solicitacoes/aguardando', 'App\Http\Controllers\SolicitacaoController@aguardando')->name('minhas-solicitacoes.aguardando');
+    Route::get('minhas-solicitacoes/encerradas', 'App\Http\Controllers\SolicitacaoController@encerradas')->name('minhas-solicitacoes.encerradas');
     Route::get('/sem-permissao', function() {
         return view('sem-permissao');
     })->name('sem-permissao');

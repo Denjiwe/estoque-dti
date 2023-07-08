@@ -40,4 +40,12 @@ class ItensSolicitacao extends Model
     public function entregas() {
         return $this->hasMany('App\Models\Entrega');
     }
+
+    public function produto() {
+        return $this->belongsTo('App\Models\Produto');
+    }
+
+    public function solicitacao() {
+        return $this->belongsTo('App\Models\Solicitacao');
+    }
 }

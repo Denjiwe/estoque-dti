@@ -22,9 +22,9 @@ class Solicitacao extends Model
     public function rules() {
         return [
             'observacao' => 'nullable|max:100',
-            'usuario_id' => 'nullable|exists:usuarios,id',
-            'divisao_id' => 'nullable|exists:divisoes,id',
-            'diretoria_id' => 'nullable|exists:diretorias,id'
+            'usuario_id' => 'required|exists:usuarios,id',
+            'divisao_id' => 'exists:divisoes,id|nullable',
+            'diretoria_id' => 'required|exists:diretorias,id'
         ];
     }
 
@@ -33,8 +33,8 @@ class Solicitacao extends Model
             'required' => 'O campo :attribute deve ser preenchido',
             'observacao.max' => 'A observação deve conter no máximo 100 caracteres',
             'usuario_id.exists' => 'O usuário não foi encontrado',
-            'divisao_id.exists' => 'A divisão não foi encontrado',
-            'diretoria_id.exists' => 'A diretoria não foi encontrado',
+            'divisao_id.exists' => 'A divisão não foi encontrada',
+            'diretoria_id.exists' => 'A diretoria não foi encontrada',
         ];
     }
 
@@ -52,6 +52,10 @@ class Solicitacao extends Model
 
     public function usuario() {
         return $this->belongsTo('App\Models\Usuario');
+    }
+
+    public function itens_solicitacoes() {
+        return $this->hasMany('App\Models\ItensSolicitacao');
     }
 
     public function entregas() {

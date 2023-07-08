@@ -31,12 +31,12 @@
     <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             <nav class="nav nav-pills nav-justified mt-3 mb-3">
-                <a href="{{route('solicitacoes.abertas')}}" class="nav-link @if($ativo == 'abertas') active @endif me-3 solicitacao">Abertos/Liberados</a>
-                <a href="{{route('solicitacoes.aguardando')}}" class="nav-link @if($ativo == 'aguardando') active @endif me-3 solicitacao">Aguardando</a>
-                <a href="{{route('solicitacoes.encerradas')}}" class="nav-link @if($ativo == 'encerradas') active @endif solicitacao">Encerrados</a>
+                <a href="{{$rota == 'todas' ?  route('solicitacoes.abertas') : route('minhas-solicitacoes.abertas')}}" class="nav-link @if($ativo == 'abertas') active @endif me-3 solicitacao">Abertos/Liberados</a>
+                <a href="{{$rota == 'todas' ? route('solicitacoes.aguardando') : route('minhas-solicitacoes.aguardando')}}" class="nav-link @if($ativo == 'aguardando') active @endif me-3 solicitacao">Aguardando</a>
+                <a href="{{$rota == 'todas' ? route('solicitacoes.encerradas') : route('minhas-solicitacoes.encerradas')}}" class="nav-link @if($ativo == 'encerradas') active @endif solicitacao">Encerrados</a>
             </nav>
 
-            <x-tabela-solicitacao solicitacoes='{{ json_encode($solicitacoes) }}' status="ABERTO"></x-tabela-solicitacao>
+            <x-tabela-solicitacao solicitacoes='{{ json_encode($solicitacoes) }}'></x-tabela-solicitacao>
         </x-slot:body>
 
         <x-slot:footer>
@@ -69,4 +69,15 @@
             background-color: #0d6efd !important;
         }
     </style>
+@stop
+
+@section('js')
+    <script> 
+        function excluir(id) {
+            if (confirm('Tem certeza que quer excluir a solicitação? As entregas feitas serão excluídas também e o estoque será atualizado')) {                                                       
+                document.getElementById('form_'+id).submit()                                                    
+            }
+        }
+
+    </script>
 @stop

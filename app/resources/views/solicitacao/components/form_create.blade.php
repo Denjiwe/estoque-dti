@@ -15,7 +15,7 @@
             <div class="col-4">
                 <label for="divisao">Divisão</label>
                 <select name="divisao_id" id="divisao" class="form-select">
-                    <option value="0">Nenhuma</option>
+                    <option value="">Nenhuma</option>
                     @foreach($divisoes as $divisao)
                         <option value="{{$divisao->id}}" @if(isset($usuario->divisao_id) && $usuario->divisao_id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
                     @endforeach
@@ -88,7 +88,7 @@
 
     <div class="row justify-content-end mt-3">
         <div class="col-auto">
-            <a href="{{url()->previous() == route('solicitacoes.create') ? route('solicitacoes.index') : url()->previous()}}" class="btn btn-secondary me-2">Voltar</a>
+            <a href="{{url()->previous() == route('solicitacoes.create') ? route('solicitacoes.abertas') : url()->previous()}}" class="btn btn-secondary me-2">Voltar</a>
             <button type="submit" class="btn btn-primary">Criar</button>
         </div>
     </div>

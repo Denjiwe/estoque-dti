@@ -403,7 +403,7 @@ return [
         ],
         [
             'text' => 'Solicitações',
-            'url' => 'solicitacoes-abertas/',
+            'url' => 'solicitacoes/abertas',
             'icon' => 'fas fa-fw fa-clipboard-list',
             'can' => 'user_interno'
         ],
@@ -420,7 +420,7 @@ return [
         ],
         [
             'text' => 'Minhas Solicitações',
-            'url' => '/minhas-solicitacoes',
+            'url' => 'minhas-solicitacoes/abertas',
             'icon' => 'fas fa-fw fa-folder'
         ],
         [
