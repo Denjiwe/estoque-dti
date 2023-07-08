@@ -33,7 +33,9 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::resource('produtos', ProdutoController::class);
     Route::resource('entregas', EntregaController::class);
     
-    Route::get('solicitacoes/', [SolicitacaoController::class, 'index'])->name('solicitacoes.index');
+    Route::get('solicitacoes-abertas/', [SolicitacaoController::class, 'abertas'])->name('solicitacoes.abertas');
+    Route::get('solicitacoes-aguardando/', [SolicitacaoController::class, 'aguardando'])->name('solicitacoes.aguardando');
+    Route::get('solicitacoes-encerradas/', [SolicitacaoController::class, 'encerradas'])->name('solicitacoes.encerradas');
     Route::get('solicitacoes/{id}', [SolicitacaoController::class, 'edit'])->name('solicitacoes.edit');
     Route::match(['put', 'patch'], 'solicitacoes/{id}', [SolicitacaoController::class, 'update'])->name('solicitacoes.update');
     Route::delete('solicitacoes/{id}', [SolicitacaoController::class, 'delete'])->name('solicitacoes.delete');
@@ -55,7 +57,6 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
 
 // rotas clientes
 Route::group(['middleware' => 'auth'], function () {
-    // Route::get('solicitar/nova-solicitacao', 'App\Http\Controllers\SolicitacaoController::class@create');
     Route::get('solicitar/', [SolicitacaoController::class, 'create'])->name('solicitacoes.create');
     Route::post('solicitar/', [SolicitacaoController::class, 'store'])->name('solicitacoes.store');
     Route::get('/minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@minhasSolicitacoes')->name('minhas-solicitacoes');

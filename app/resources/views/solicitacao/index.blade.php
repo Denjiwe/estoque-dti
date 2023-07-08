@@ -31,24 +31,13 @@
     <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             <nav class="nav nav-pills nav-justified mt-3 mb-3">
-                <button class="nav-link active me-3" id="nav-abertos-tab" data-bs-toggle="tab" data-bs-target="#nav-abertos" type="button" role="tab" aria-controls="nav-abertos" aria-selected="true">Abertos/Liberados</button>
-                <button class="nav-link me-3" id="nav-aguardando-tab" data-bs-toggle="tab" data-bs-target="#nav-aguardando" type="button" role="tab" aria-controls="nav-aguardando" aria-selected="false">Aguardando</button>
-                <button class="nav-link" id="nav-encerrados-tab" data-bs-toggle="tab" data-bs-target="#nav-encerrados" type="button" role="tab" aria-controls="nav-encerrados" aria-selected="false">Encerrados</button>
+                <a href="{{route('solicitacoes.abertas')}}" class="nav-link @if($ativo == 'abertas') active @endif me-3 solicitacao">Abertos/Liberados</a>
+                <a href="{{route('solicitacoes.aguardando')}}" class="nav-link @if($ativo == 'aguardando') active @endif me-3 solicitacao">Aguardando</a>
+                <a href="{{route('solicitacoes.encerradas')}}" class="nav-link @if($ativo == 'encerradas') active @endif solicitacao">Encerrados</a>
             </nav>
-            @if (count($solicitacoes) > 0)
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-abertos" role="tabpanel" aria-labelledby="nav-abertos-tab" tabindex="0">
-                        <x-tabela-solicitacao solicitacoes='{{ json_encode($solicitacoes) }}' status="ABERTO"></x-tabela-solicitacao>
-                    </div>
-                    <div class="tab-pane fade" id="nav-aguardando" role="tabpanel" aria-labelledby="nav-aguardando-tab" tabindex="0">
-                        <x-tabela-solicitacao solicitacoes="{{ json_encode($solicitacoes)  }}" status="AGUARDANDO"></x-tabela-solicitacao>
-                    </div>
-                    <div class="tab-pane fade" id="nav-encerrados" role="tabpanel" aria-labelledby="nav-encerrados-tab" tabindex="0">
-                        <x-tabela-solicitacao solicitacoes="{{ json_encode($solicitacoes) }}" status="ENCERRADO"></x-tabela-solicitacao>
-                    </div>
-                </div>
-            @endif
-        </x-slotbody>
+
+            <x-tabela-solicitacao solicitacoes='{{ json_encode($solicitacoes) }}' status="ABERTO"></x-tabela-solicitacao>
+        </x-slot:body>
 
         <x-slot:footer>
             <div class="row mt-3">
@@ -73,10 +62,10 @@
     </x-box>
 
     <style scoped>
-        button.nav-link {
+        a.nav-link.solicitacao {
             background-color: #c3c3c3 !important;
         }
-        button.nav-link.active {
+        a.nav-link.active.solicitacao {
             background-color: #0d6efd !important;
         }
     </style>

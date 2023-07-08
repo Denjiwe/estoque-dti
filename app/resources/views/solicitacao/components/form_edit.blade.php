@@ -52,35 +52,45 @@
     </div>
 
     <div class="row pt-2">
-        <div class="col-4">
+        <div class="col-2">
             <label>Produtos</label>
         </div>
 
-        <div class="col-3">
+        <div class="col-2">
+            <label>Quantidade em Estoque</label>
+        </div>
+
+        <div class="col-2">
             <label>Quantidade Solicitada</label>
         </div>
 
-        <div class="col-4">
+        <div class="col-2">
             <label>Quantidade a ser atendida</label>
         </div>
     </div>
 
     @foreach($solicitacao->produtos as $key => $produto)
         <div class="row">
-            <div class="col-4">
+            <div class="col-2">
                 <div class="form-group">
                     <input type="hidden" name="produto[]" value="{{$produto->id}}">
                     <input type="text" class="form-control" id="produto[]" value="{{$produto->modelo_produto}}" readonly>
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-2">
+                <div class="form-group">
+                    <input type="text" class="form-control" value="{{$produto->qntde_estoque}}" readonly>
+                </div>
+            </div>
+
+            <div class="col-2">
                 <div class="form-group">
                     <input type="text" class="form-control" id="qntde_solicitada[]" value="{{$produto->pivot->qntde}}" readonly>
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-2">
                 <div class="form-group">
                     <input type="number" class="form-control" id="qntde_atendida[]" name="qntde_atendida[]" value="{{  count($solicitacao->entregas) > 0 && isset($solicitacao->entregas[$key]) ? $solicitacao->entregas[$key]->qntde : '0'}}" min="0" max="{{$produto->pivot->qntde}}" >
                 </div>
@@ -113,7 +123,7 @@
 
     <div class="row justify-content-end mt-3">
         <div class="col-auto">
-            <a href="{{url()->previous() == route('solicitacoes.update', ['id' => $solicitacao->id]) ? route('solicitacoes.index') : url()->previous()}}" class="btn btn-secondary me-2">Voltar</a>
+            <a href="{{url()->previous() == route('solicitacoes.update', ['id' => $solicitacao->id]) ? route('solicitacoes.abertas') : url()->previous()}}" class="btn btn-secondary me-2">Voltar</a>
             <button type="submit" class="btn btn-primary">Aplicar</button>
         </div>
     </div>

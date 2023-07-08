@@ -26,6 +26,15 @@ $(document).ready(function() {
             })
             .catch(data => console.log(data))
         
+        if(row.find('td').eq(1).find('input').val() === 'undefined' && !$('#suprimento').hasClass('is-invalid')) {
+            $('#suprimento').addClass('is-invalid');
+            $('#suprimento').after($('<div>').addClass('invalid-feedback').text('A impressora selecionada não possui toner cadastrado.'));
+            
+            return;
+        } else if (row.find('td').eq(1).find('input').val() === 'undefined' && $('#suprimento').hasClass('is-invalid')) {
+            return;
+        }
+
         var quantidadeTd = $('<td>').text(quantidade);
         quantidadeTd.append(`<input style="display:none;" value="${quantidade}" name="quantidade[]">`)
         row.append(quantidadeTd);
@@ -60,10 +69,12 @@ $(document).ready(function() {
                 row.append(cilindroTd);
             });
         
-        if(row.find('td').eq(1).find('input').val() === 'undefined') {
+        if(row.find('td').eq(1).find('input').val() === 'undefined' && !$('#suprimento').hasClass('is-invalid')) {
             $('#suprimento').addClass('is-invalid');
             $('#suprimento').after($('<div>').addClass('invalid-feedback').text('A impressora selecionada não possui cilindro cadastrado.'));
             
+            return;
+        } else if (row.find('td').eq(1).find('input').val() === 'undefined' && $('#suprimento').hasClass('is-invalid')) {
             return;
         }
 
@@ -176,10 +187,12 @@ $(document).ready(function() {
         var impressoraModelo = $('#impressora').find(':selected').text();
         var quantidade = $('#quantidade').val();
 
-        if(quantidade == '') {
+        if(quantidade == '' && !$('#quantidade').hasClass('is-invalid')) {
             $('#quantidade').addClass('is-invalid');
             $('#quantidade').after($('<div>').addClass('invalid-feedback').text('Informe a quantidade.'));
 
+            return;
+        } else if(quantidade == '' && $('#quantidade').hasClass('is-invalid')) {
             return;
         }
 
@@ -204,6 +217,13 @@ $(document).ready(function() {
     });
 
     $('#impressora').on('change', function(){
+        if ($('#suprimento').hasClass('is-invalid')) {
+            $('#suprimento').removeClass('is-invalid');
+            $('#suprimento').next().remove();
+        }
+    });
+
+    $('#suprimento').on('change', function(){
         if ($('#suprimento').hasClass('is-invalid')) {
             $('#suprimento').removeClass('is-invalid');
             $('#suprimento').next().remove();

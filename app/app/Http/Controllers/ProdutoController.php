@@ -6,6 +6,8 @@ use App\Models\Produto;
 use App\Models\Divisao;
 use App\Models\Suprimento;
 use App\Models\Diretoria;
+use App\Models\ItensSolicitacao;
+use App\Models\Solicitacao;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -81,6 +83,10 @@ class ProdutoController extends Controller
             return redirect()->route('produtos.index');
         }
 
+        if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO') {
+            $produto->qntde_solicitada = intval(ItensSolicitacao::where('produto_id', $produto->id)->sum('qntde'));
+        }
+
         $diretorias = Diretoria::where('status', 'ATIVO')->get();
         $divisoes = Divisao::where('status', 'ATIVO')->get();
         $suprimentos = Suprimento::where('suprimento_id',$id)->get();
@@ -117,6 +123,10 @@ class ProdutoController extends Controller
             return redirect()->route('produtos.index');
         }
 
+        if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO') {
+            $produto->qntde_solicitada = intval(ItensSolicitacao::where('produto_id', $produto->id)->sum('qntde'));
+        }
+
         return view('produto.edit', ['produto' => $produto]);
     }
 
@@ -136,6 +146,20 @@ class ProdutoController extends Controller
         }
 
         $request->validate($this->produto->rules($request, $produto->id), $this->produto->feedback());
+
+        if(($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO') && $request->qntde_estoque > $produto->qntde_estoque){
+            $totalSolicitado = $request->qntde_solicitada;
+            if($totalSolicitado <= $request->qntde_estoque){
+                $solicitacoes = Solicitacao::where('status', 'AGUARDANDO')->with('produtos')->get();
+
+                foreach ($solicitacoes as $solicitacao) {
+                    if ($solicitacao->produtos->contains($produto->id)) {
+                        $solicitacao->status = 'LIBERADO';
+                        $solicitacao->save();
+                    }
+                }
+            }
+        }
 
         $produto->update($request->all());
 

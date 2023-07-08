@@ -83,7 +83,7 @@
         </table>
     </div>
 
-    <label for="observacao">Observação(opcional)</label>
+    <label for="observacao">Observação (opcional)</label>
     <input type="text" name="observacao" id="observacao" class="form-control">
 
     <div class="row justify-content-end mt-3">

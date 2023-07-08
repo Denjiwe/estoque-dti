@@ -403,7 +403,7 @@ return [
         ],
         [
             'text' => 'Solicitações',
-            'url' => 'solicitacoes/',
+            'url' => 'solicitacoes-abertas/',
             'icon' => 'fas fa-fw fa-clipboard-list',
             'can' => 'user_interno'
         ],

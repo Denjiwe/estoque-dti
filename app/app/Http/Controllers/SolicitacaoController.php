@@ -22,16 +22,23 @@ class SolicitacaoController extends Controller
         $this->itemSolicitacao = $itemSolicitacao;
         $this->entrega = $entrega;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $solicitacoes = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->orderBy('created_at', 'desc')->paginate(10);
+    
+    public function abertas() {
+        $solicitacoesAbertas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ABERTO')->orWhere('status', 'LIBERADO')->orderBy('created_at', 'desc')->paginate(8);
 
-        return view('solicitacao.index', ['solicitacoes' => $solicitacoes, 'titulo' => 'Solicitações Cadastradas']);
+        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAbertas, 'titulo' => 'Solicitações Abertas', 'ativo' => 'abertas']);
+    }
+
+    public function aguardando() {
+        $solicitacoesAguardando = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'AGUARDANDO')->orderBy('created_at', 'desc')->paginate(8);
+
+        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAguardando, 'titulo' => 'Solicitações Aguardando', 'ativo' => 'aguardando']);
+    }
+
+    public function encerradas() {
+        $solicitacoesEncerradas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ENCERRADO')->orderBy('created_at', 'desc')->paginate(8);
+
+        return view('solicitacao.index', ['solicitacoes' => $solicitacoesEncerradas, 'titulo' => 'Solicitações Encerradas', 'ativo' => 'encerradas']);
     }
 
     /**
@@ -128,7 +135,7 @@ class SolicitacaoController extends Controller
             }
         }
 
-        return redirect()->route('solicitacoes.index');
+        return redirect()->route('solicitacoes.abertas');
     }
 
     /**
@@ -188,6 +195,13 @@ class SolicitacaoController extends Controller
 
             foreach ($request->produto as $key => $produto) {
                 $produtoEstoque = $this->produto->find($produto);
+
+                if($produtoEstoque->qntde_estoque < $request->qntde_atendida[$key]) {
+                    $ordem = $key + 1;
+                    DB::rollBack();
+                    return redirect()->back()->withErrors("Não é possível atender a solicitação pois o ".$ordem."º produto não possui estoque suficiente.");
+                }
+                
                 if(isset($solicitacao->entregas[$key])) {
                     $entrega = $this->entrega->find($solicitacao->entregas[$key]->id);
 
