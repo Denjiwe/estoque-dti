@@ -64,6 +64,7 @@
     </div>
 
     @if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')
+    @if(count($suprimentos) != 0)
         <div class="mt-3" id="impressoras">
             <h3>Impressoras que o suprimento atende</h3>
             <div class="row">
@@ -78,8 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    @if (count($suprimentos) != 0)
-                                        @foreach ($suprimentos as $i => $suprimento)
+                                    @foreach ($suprimentos as $i => $suprimento)
                                         <tr class="linha">
                                             <td>
                                                 <select name="impressora[]" id="impressora" class="form-control" disabled>
@@ -95,27 +95,7 @@
                                                 </select>
                                             </td>
                                         </tr>
-                                        @endforeach
-                                    @else
-                                    <tr class="linha">
-                                        <td style="width:15%;"><input type="text" name="tipo[]" value="{{ucfirst(strtolower($produto->tipo_produto))}}" disabled class="form-control"></td>
-                                        <td style="width:15%;"><input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control"></td>
-                                        <td>
-                                            <select name="impressora[]" id="impressora" class="form-select">
-                                                <option value="">Selecione a impressora</option>
-                                                @foreach ($impressoras as $impressora)
-                                                    <option value="{{$impressora->id}}">{{$impressora->modelo_produto}}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="em_uso[]" id="em_uso" class="form-select">
-                                                <option value="SIM">Sim</option>
-                                                <option value="NAO" selected>Não</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </x-slot:body>
@@ -123,7 +103,9 @@
                 </div>
             </div>
         </div>
+    @endif
     @elseif($produto->tipo_produto == 'IMPRESSORA')
+    @if (count($produto->locais) != 0)
         <div class=" mt-3">
             <h3>Locais em que a impressora está locada</h3>
             <div class="row">
@@ -138,7 +120,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    @if (count($produto->locais) != 0)
                                         @foreach ($produto->locais as $i => $local)
                                             <tr class="linha">
                                                 <td>
@@ -157,27 +138,6 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    @else
-                                        <tr class="linha">
-                                            <td style="width:30%;"><input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control"></td>
-                                            <td>
-                                                <select name="diretoria[]" id="diretoria" class="form-control" disabled>
-                                                    <option value="" selected hidden>Selecione a Diretoria</option>
-                                                    @foreach($diretorias as $diretoria)
-                                                        <option value="{{$diretoria->id}}">{{$diretoria->nome}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="divisao[]" id="divisao" class="form-control" disabled>
-                                                    <option value="" selected>Nenhuma</option>
-                                                    @foreach($divisoes as $divisao)
-                                                        <option value="{{$divisao->id}}">{{$divisao->nome}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    @endif
                                 </tbody>
                             </table>
                         </x-slot:body>
@@ -185,7 +145,8 @@
                 </div>
             </div>
         </div>
-
+    @endif
+    @if (count($produto->suprimentos) != 0)
         <div class="mt-2" id="suprimentos">
         <div class="row">
             <h3>Suprimentos da Impressora</h3>
@@ -201,7 +162,6 @@
                                 </tr>
                             </thead>
                             <tbody id="tbody">
-                                @if (count($produto->suprimentos) != 0)
                                     @foreach ($produto->suprimentos as $i => $suprimento)
                                     <tr class="linha">
                                         <td>
@@ -233,29 +193,6 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                @else
-                                    <tr class="linha">
-                                        <td style="width:15%;"><input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control"></td>
-                                        <td>
-                                            <select name="tipo[]" id="tipo" class="form-select">
-                                                <option value="" selected hidden>Selecione o Tipo do Suprimento</option>
-                                                <option value="TONER">Toner</option>
-                                                <option value="CILINDRO">Cilíndro</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="suprimento[]" id="suprimento" class="form-select">
-                                                <option value="">Selecione o suprimento</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="em_uso[]" id="em_uso" class="form-select">
-                                                <option value="SIM">Sim</option>
-                                                <option value="NAO" selected>Não</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                @endif
                             </tbody>
                         </table>
                     </x-slot:body>
@@ -263,6 +200,7 @@
             </div>
         </div>
     </div>
+    @endif
     @endif
     <div class="mt-3 ms-2 row justify-content-end">
         <div class="col-auto ">

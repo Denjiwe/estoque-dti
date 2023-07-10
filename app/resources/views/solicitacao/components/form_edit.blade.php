@@ -100,7 +100,16 @@
 
     <div class="row">
         <div class="col-12">
-            <label>Observação</label>
+            <label>Observação da Solicitação</label>
+            <div class="form-group">
+                <textarea class="form-control" rows="3" maxlength="255" style="resize: none;" readonly>{{ $solicitacao->observacao != null ? $solicitacao->observacao : '' }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <label>Observação da Entrega</label>
             <div class="form-group">
                 <textarea class="form-control" id="observacao" name="observacao" rows="3" maxlength="255" style="resize: none;">{{ count($solicitacao->entregas) > 0 && isset($solicitacao->observacaoEntrega) ? $solicitacao->observacaoEntrega : ''}}</textarea>
             </div>

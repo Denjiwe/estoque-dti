@@ -20,7 +20,7 @@ class EntregaController extends Controller
      */
     public function index()
     {
-        $entregas = $this->entrega->with(['usuario', 'itens_solicitacao', 'solicitacao'])->paginate(10);
+        $entregas = $this->entrega->with(['usuario', 'itens_solicitacao', 'solicitacao'])->orderBy('created_at', 'desc')->paginate(10);
 
         foreach($entregas as $entrega) {
             $usuarioSolicitante = Usuario::find($entrega->solicitacao->usuario_id);

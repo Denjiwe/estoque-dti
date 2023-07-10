@@ -98,7 +98,7 @@ class ImpressoraController extends Controller
 
             array_push($pEmUsos,$produto['em_uso']);
         }
-
+        
         $impressorasNovas = array_diff_assoc($impressoras, $pImpressoras);
         $emUsosNovos = array_diff_assoc($emUsos, $pEmUsos);
         $impressorasExcluidas = array_diff_assoc($pImpressoras, $impressoras);
@@ -136,7 +136,7 @@ class ImpressoraController extends Controller
 
         if($emUsosNovos != [] && count($emUsosNovos) > count($impressorasNovas)) {
             foreach ($emUsosNovos as $i => $emUsoNovo) {
-                $emUsoMudado = $this->suprimento->where('produto_id', $impressoras[$i])->first();
+                $emUsoMudado = $this->suprimento->where([['produto_id', $impressoras[$i]], ['suprimento_id', $suprimento->id]])->first();
                 $emUsoMudado->em_uso = $emUsoNovo;
                 $emUsoMudado->save();
             }

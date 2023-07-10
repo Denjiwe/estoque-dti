@@ -212,6 +212,7 @@ class ProdutoController extends Controller
     }
 
     public function tonerPorImpressora($impressoraId) {
+
         $toner = $this->produto
             ->select('produtos.id', 'modelo_produto', 'qntde_estoque')
             ->where([['tipo_produto', 'TONER'], ['status', 'ATIVO']])
