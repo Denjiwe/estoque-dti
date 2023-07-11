@@ -6,6 +6,8 @@ use App\Models\Usuario;
 use App\Models\Diretoria;
 use App\Models\Divisao;
 use App\Models\Solicitacao;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -136,12 +138,10 @@ class UsuarioController extends Controller
             $request['divisao_id'] = null;
         }
 
-        $data = $request->except('senha');
+        $data = $request->except('senha_provisoria');
 
-        if ($request->senha == '') {
-            $request['senha'] = $usuario->senha;
-        } else {
-            $data['senha'] = bcrypt($request->senha);
+        if ($request->senha_provisoria != '') {
+            $data['senha_provisoria'] = bcrypt($request->senha_provisoria);
         }
 
         $usuario->update($data);
@@ -162,6 +162,39 @@ class UsuarioController extends Controller
         $usuario->delete();
 
         return redirect()->route('usuarios.index');
+    }
+
+    public function senhaEdit($usuarioId) {
+        $usuario = $this->usuario->find($usuarioId);
+
+        if ($usuario == null) {
+            return redirect()->back();
+        }
+
+        if ($usuario->senha_provisoria == null) {
+            return redirect()->back()->withErrors(['error' => 'Usuário não possui senha provisória!']);
+        }
+
+        return view('auth.alterar-senha', ['usuario' => $usuario]);
+    }
+
+    public function senhaUpdate(Request $request, $usuarioId) {
+        $usuario = $this->usuario->find($usuarioId);
+
+        if ($usuario == null) {
+            return redirect()->back();
+        }
+
+        if($request->password != $request->password_confirmation) {
+            return redirect()->back()->withErrors(['error' => 'As senhas não conferem!']);
+        }
+
+        $usuario->update([
+            'senha' => bcrypt($request->password),
+            'senha_provisoria' => null
+        ]);
+
+        return redirect()->route('login', ['sucesso' => 'Senha alterada com sucesso!']);
     }
 
     public function dadosPorUsuario($usuarioId)

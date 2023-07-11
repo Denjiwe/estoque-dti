@@ -44,6 +44,14 @@ class LoginController extends Controller
             return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
         }
 
+        if($user->senha_provisoria != null) {
+            if(!Hash::check($request->password, $user->senha_provisoria)) {
+                return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
+            }
+
+            return redirect()->route('alterar-senha', ['usuarioId' => $user->id]);
+        }
+
         if(!Hash::check($request->password, $user->senha)) {
             return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
         }
@@ -57,7 +65,7 @@ class LoginController extends Controller
         if ($user->user_interno == 'SIM') {
             return redirect()->route('home');
         } else {
-            return redirect()->route('minhas-solicitacoes');
+            return redirect()->route('minhas-solicitacoes.abertas');
         }
     }
 

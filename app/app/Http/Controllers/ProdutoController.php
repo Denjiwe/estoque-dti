@@ -156,6 +156,12 @@ class ProdutoController extends Controller
                     if ($solicitacao->produtos->contains($produto->id)) {
                         $solicitacao->status = 'LIBERADO';
                         $solicitacao->save();
+
+                        try {
+                            // $solicitacao->user->notify(new SolicitacaoLiberada($solicitacao));
+                        } catch (\Throwable $th) {
+                            throw $th;
+                        }
                     }
                 }
             }

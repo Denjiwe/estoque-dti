@@ -23,6 +23,11 @@
 @section('auth_body')
     <form action="{{ $login_url }}" method="post">
         @csrf
+        @if(isset($_GET['sucesso']))
+        <span class="text-success" role="alert">
+            <strong>{{ $_GET['sucesso'] }}</strong>
+        </span>
+        @endif
         
         @if($errors->has('error'))
         <span class="text-red" role="alert">

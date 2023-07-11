@@ -76,8 +76,9 @@ Route::get('/login', function () {
     } else {
         return view('auth.login');
     }
-
 })->name('login');
+Route::get('/alterar-senha/{usuarioId}', [UsuarioController::class, 'senhaEdit'])->name('alterar-senha');
+Route::patch('/alterar-senha/{usuarioId}', [UsuarioController::class, 'senhaUpdate'])->name('alterar-senha.update');
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login.login');
 Route::get('/', function () {
     return redirect()->route('home');

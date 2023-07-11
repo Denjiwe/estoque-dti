@@ -18,6 +18,7 @@ class Usuario extends Authenticatable
         'cpf',
         'email',
         'senha',
+        'senha_provisoria',
         'divisao_id',
         'diretoria_id',
         'user_interno'
@@ -32,7 +33,7 @@ class Usuario extends Authenticatable
             'cpf' => 'required|unique:usuarios,cpf,'.$id.'|min:11|max:20',
             'email' => 'required|email|unique:usuarios,email,'.$id,
             'diretoria_id' => 'exists:diretorias,id',
-            'senha' => [Rule::requiredIf(!empty($request->get('senha'))), 'nullable', 'min:3'],
+            'senha_provisoria' => [Rule::requiredIf(!empty($request->get('senha_provisoria'))), 'nullable', 'min:3', 'max:16'],
             'user_interno' => 'required|in:SIM,NAO'
         ];
     }

@@ -37,9 +37,9 @@
         </div>
 
         <div class="col-2">
-            <label for="senha" class="fom-label">Senha</label>
-            <input type="password" name="senha" id="senha" maxlength="16" value="{{ old('senha') }}" placeholder="Senha" class="form-control @error('senha') is-invalid @enderror">
-            {{ $errors->has('senha') ? $errors->first('senha') : '' }}
+            <label for="senha_provisoria" class="fom-label">Senha Provisória</label>
+            <input type="password" name="senha_provisoria" id="senha_provisoria" maxlength="16" value="{{ old('senha_provisoria') }}" placeholder="Senha Provisória" class="form-control @error('senha_provisoria') is-invalid @enderror">
+            {{ $errors->has('senha_provisoria') ? $errors->first('senha_provisoria') : '' }}
         </div>
     
         <div class="col-2">
