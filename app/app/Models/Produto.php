@@ -12,7 +12,7 @@ class Produto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tipo_produto','modelo_produto', 'descricao', 'qntde_estoque', 'status'];
+    protected $fillable = ['tipo_produto','modelo_produto', 'descricao', 'qntde_estoque', 'qntde_solicitada', 'status'];
 
     public function rules($request, $id) {
         return [

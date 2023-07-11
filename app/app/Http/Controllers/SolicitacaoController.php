@@ -132,8 +132,8 @@ class SolicitacaoController extends Controller
             'diretoria_id' => $diretoria, 
         ]);
 
-        foreach ($request->produto as $i => $produto) {
-            $dados = array('produto_id' => $produto, 'qntde' => $request->quantidade[$i], 'solicitacao_id' => $solicitacao->id);
+        foreach ($request->produto as $i => $produtoId) {
+            $dados = array('produto_id' => $produtoId, 'qntde' => $request->quantidade[$i], 'solicitacao_id' => $solicitacao->id);
 
             $validacao = Validator::make($dados, $this->itemSolicitacao->rules(), $this->itemSolicitacao->feedback());
 
@@ -144,10 +144,11 @@ class SolicitacaoController extends Controller
 
             $itemSolicitacao = $this->itemSolicitacao->create($dados);
 
-            $totalSolicitado = intval($this->itemSolicitacao->where('produto_id', $dados['produto_id'])->sum('qntde'));
-            $totalEstoque = $this->produto->find($dados['produto_id'])->qntde_estoque;
+            $produto = $this->produto->find($produtoId);
+            $produto->qntde_solicitada += $request->quantidade[$i];
+            $produto->save();
 
-            if($totalSolicitado > $totalEstoque)
+            if($produto->qntde_solicitada > $produto->qntde_estoque)
             {
                 $solicitacao->status = 'AGUARDANDO';
                 $solicitacao->save();
@@ -231,8 +232,10 @@ class SolicitacaoController extends Controller
                     } else {
                         if($entrega->qntde > $request->qntde_atendida[$key]) {
                             $produtoEstoque->qntde_estoque += $entrega->qntde - $request->qntde_atendida[$key];
+                            $produtoEstoque->qntde_solicitada += $entrega->qntde - $request->qntde_atendida[$key];
                         } else {
                             $produtoEstoque->qntde_estoque -= $request->qntde_atendida[$key] - $entrega->qntde;
+                            $produtoEstoque->qntde_solicitada -= $request->qntde_atendida[$key] - $entrega->qntde;
                         }
 
                         $entrega->qntde = $request->qntde_atendida[$key];
@@ -244,9 +247,9 @@ class SolicitacaoController extends Controller
                     if($request->qntde_atendida[$key] != 0) {
                         $itemSolicitacao = $this->itemSolicitacao->where([['solicitacao_id', $solicitacao->id], ['produto_id', $produto]])->first();
 
-                        $solicitacao->produtos[$key]->qntde_estoque -= $request->qntde_atendida[$key];
-
                         $produtoEstoque->qntde_estoque -= $request->qntde_atendida[$key];
+                        
+                        $produtoEstoque->qntde_solicitada -= $request->qntde_atendida[$key];
 
                         $entrega= $this->entrega->create([
                             'solicitacao_id' => $solicitacao->id,
@@ -297,6 +300,9 @@ class SolicitacaoController extends Controller
 
             if($solicitacao->itens_solicitacoes != null) {
                 foreach($solicitacao->itens_solicitacoes as $itemSolicitacao) {
+                    if($solicitacao->entregas == null) {
+                        $produto->qntde_solicitada -= $itemSolicitacao->qntde;
+                    }
                     $itemSolicitacao->delete();
                 }
             }

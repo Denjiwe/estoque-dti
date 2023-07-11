@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Produto;
 use App\Models\Divisao;
+use App\Models\Usuario;
 use App\Models\Suprimento;
 use App\Models\Diretoria;
 use App\Models\ItensSolicitacao;
 use App\Models\Solicitacao;
+use App\Mail\SolicitacaoLiberadaMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -123,10 +126,6 @@ class ProdutoController extends Controller
             return redirect()->route('produtos.index');
         }
 
-        if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO') {
-            $produto->qntde_solicitada = intval(ItensSolicitacao::where('produto_id', $produto->id)->sum('qntde'));
-        }
-
         return view('produto.edit', ['produto' => $produto]);
     }
 
@@ -148,9 +147,8 @@ class ProdutoController extends Controller
         $request->validate($this->produto->rules($request, $produto->id), $this->produto->feedback());
 
         if(($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO') && $request->qntde_estoque > $produto->qntde_estoque){
-            $totalSolicitado = $request->qntde_solicitada;
-            if($totalSolicitado <= $request->qntde_estoque){
-                $solicitacoes = Solicitacao::where('status', 'AGUARDANDO')->with('produtos')->get();
+            if($produto->qntde_solicitada <= $request->qntde_estoque){
+                $solicitacoes = Solicitacao::where('status', 'AGUARDANDO')->with(['produtos', 'usuario', 'divisao', 'diretoria'])->get();
 
                 foreach ($solicitacoes as $solicitacao) {
                     if ($solicitacao->produtos->contains($produto->id)) {
@@ -158,7 +156,52 @@ class ProdutoController extends Controller
                         $solicitacao->save();
 
                         try {
-                            // $solicitacao->user->notify(new SolicitacaoLiberada($solicitacao));
+                            $primeiroNome = explode(' ', $solicitacao->usuario->nome)[0];
+                            $nomeDir = $solicitacao->diretoria->nome;
+                            $nomeDiv = $solicitacao->divisao->nome;
+
+                            $horario = date('G');
+
+                            switch(true) {
+                                case $horario >= 0 && $horario < 12:
+                                    $saudacao = 'Bom dia';
+                                    break;
+                                case $horario >= 12 && $horario < 18:
+                                    $saudacao = 'Boa tarde';
+                                    break;
+                                case $horario >= 18 && $horario < 24:
+                                    $saudacao = 'Boa noite';
+                                    break;
+                            }
+
+                            $id = $solicitacao->id;
+
+                            $usuarioEmail = Usuario::find($solicitacao->usuario_id)->email;
+                            Mail::raw("$saudacao, $primeiroNome! sua solicitação #$id foi liberada e está disponível para retirada.
+                                    \n\n Atenciosamente, \n Equipe de TI", function ($message) use ($usuarioEmail, $id) {
+                                $message->to($usuarioEmail)
+                                ->subject("Solicitação #$id Liberada!");
+                            });
+
+                            $diretoriaEmail = Diretoria::find($solicitacao->diretoria_id)->email;
+                            if ($diretoriaEmail != null && $diretoriaEmail != $usuarioEmail) {
+                                Mail::raw("$saudacao, $nomeDir! sua solicitação #$id foi liberada e está disponível para retirada.
+                                    \n\n Atenciosamente, \n Equipe de TI", function ($message) use ($diretoriaEmail, $id) {
+                                    $message->to($diretoriaEmail)
+                                    ->subject("Solicitação #$id liberada!");
+                                });
+                            }
+                        
+                            if ($solicitacao->divisao_id != null) {
+                                $divisaoEmail = Divisao::find($solicitacao->divisao_id)->email;
+                                if ($divisaoEmail != null && $divisaoEmail != $diretoriaEmail && $divisaoEmail != $usuarioEmail) {
+                                    Mail::raw("$saudacao, $nomeDiv! sua solicitação #$id foi liberada e está disponível para retirada.
+                                        \n\n atenciosamente \n Equipe de TI", function ($message) use ($divisaoEmail, $id) {
+                                        $message->to($divisaoEmail)
+                                        ->subject("Solicitação #$id liberada!");
+                                    });
+                                }
+                            }
                         } catch (\Throwable $th) {
                             throw $th;
                         }
