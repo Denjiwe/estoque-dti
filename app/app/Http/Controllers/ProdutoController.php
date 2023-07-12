@@ -174,32 +174,18 @@ class ProdutoController extends Controller
                                     break;
                             }
 
-                            $id = $solicitacao->id;
-
                             $usuarioEmail = Usuario::find($solicitacao->usuario_id)->email;
-                            Mail::raw("$saudacao, $primeiroNome! sua solicitação #$id foi liberada e está disponível para retirada.
-                                    \n\n Atenciosamente, \n Equipe de TI", function ($message) use ($usuarioEmail, $id) {
-                                $message->to($usuarioEmail)
-                                ->subject("Solicitação #$id Liberada!");
-                            });
+                            Mail::to($usuarioEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $primeiroNome, $saudacao));
 
                             $diretoriaEmail = Diretoria::find($solicitacao->diretoria_id)->email;
                             if ($diretoriaEmail != null && $diretoriaEmail != $usuarioEmail) {
-                                Mail::raw("$saudacao, $nomeDir! sua solicitação #$id foi liberada e está disponível para retirada.
-                                    \n\n Atenciosamente, \n Equipe de TI", function ($message) use ($diretoriaEmail, $id) {
-                                    $message->to($diretoriaEmail)
-                                    ->subject("Solicitação #$id liberada!");
-                                });
+                                Mail::to($diretoriaEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDir, $saudacao));
                             }
                         
                             if ($solicitacao->divisao_id != null) {
                                 $divisaoEmail = Divisao::find($solicitacao->divisao_id)->email;
                                 if ($divisaoEmail != null && $divisaoEmail != $diretoriaEmail && $divisaoEmail != $usuarioEmail) {
-                                    Mail::raw("$saudacao, $nomeDiv! sua solicitação #$id foi liberada e está disponível para retirada.
-                                        \n\n atenciosamente \n Equipe de TI", function ($message) use ($divisaoEmail, $id) {
-                                        $message->to($divisaoEmail)
-                                        ->subject("Solicitação #$id liberada!");
-                                    });
+                                    Mail::to($divisaoEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDiv, $saudacao));
                                 }
                             }
                         } catch (\Throwable $th) {

@@ -22,6 +22,7 @@
 - [X] Fazer minhas solicitações novamente, por conta da necessidade de criar 3 rotas para os status das solicitações 
 - [X] Adicionar campo de observação da solicitação ao editar uma solicitação
 - [X] Verificar se vale a pena fazer um paginate dentro do box-input
+- [X] Remover campo de criar nova conta no login, além de criar modal para entrarem em contato (tabela no banco que contém número de telefone, e a assinatura no email)
 - Fazer home, trazendo informações sobre os pedidos e entregas, etc
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema

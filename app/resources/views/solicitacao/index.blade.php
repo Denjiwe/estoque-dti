@@ -30,6 +30,15 @@
     {{-- Box de exibição --}}
     <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="m-0">
+                        @foreach($errors->all() as $error)
+                            <li class="m-0">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <nav class="nav nav-pills nav-justified mt-3 mb-3">
                 <a href="{{$rota == 'todas' ?  route('solicitacoes.abertas') : route('minhas-solicitacoes.abertas')}}" class="nav-link @if($ativo == 'abertas') active @endif me-3 solicitacao">Abertos/Liberados</a>
                 <a href="{{$rota == 'todas' ? route('solicitacoes.aguardando') : route('minhas-solicitacoes.aguardando')}}" class="nav-link @if($ativo == 'aguardando') active @endif me-3 solicitacao">Aguardando</a>

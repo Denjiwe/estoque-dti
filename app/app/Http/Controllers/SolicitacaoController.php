@@ -200,7 +200,7 @@ class SolicitacaoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas'])->find($id);
+        $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas', 'itens_solicitacoes'])->find($id);
 
         if($solicitacao === null) {
             return redirect()->back();
@@ -287,7 +287,7 @@ class SolicitacaoController extends Controller
 
         DB::beginTransaction();
         try {
-            if($solicitacao->entregas != null) {
+            if(count($solicitacao->entregas) != 0) {
                 foreach($solicitacao->entregas as $entrega) {
                     $itemSolicitacao = ItensSolicitacao::with('produto')->find($entrega->itens_solicitacao_id);
                     $produto = $itemSolicitacao->produto;
@@ -296,16 +296,16 @@ class SolicitacaoController extends Controller
 
                     $entrega->delete();
                 }
-            }
-
-            if($solicitacao->itens_solicitacoes != null) {
+            } else {
                 foreach($solicitacao->itens_solicitacoes as $itemSolicitacao) {
-                    if($solicitacao->entregas == null) {
-                        $produto->qntde_solicitada -= $itemSolicitacao->qntde;
-                    }
+                    $produto = $this->produto->find($itemSolicitacao->produto->id);
+                    $produto->qntde_solicitada -= $itemSolicitacao->qntde;
+                    $produto->save();
+
                     $itemSolicitacao->delete();
                 }
             }
+
             $solicitacao->delete();
         } catch (\Exception $e) {
             DB::rollback();
