@@ -28,6 +28,7 @@ use App\Http\Controllers\EntregaController;
 Route::middleware(['auth', 'user_interno'])->group(function () {  
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('orgaos', OrgaoController::class);
+    Route::post('orgaos/pesquisa', [OrgaoController::class, 'pesquisa'])->name('orgaos.pesquisa');
     Route::resource('diretorias', DiretoriaController::class);
     Route::resource('divisao', DivisaoController::class);
     Route::resource('produtos', ProdutoController::class);

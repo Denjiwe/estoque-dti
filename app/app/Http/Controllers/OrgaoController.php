@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orgao;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 class OrgaoController extends Controller
@@ -80,5 +82,42 @@ class OrgaoController extends Controller
 
         $orgao->delete();
         return redirect()->route('orgaos.index');
+    }
+
+    public function pesquisa(Request $request) {
+        switch (true) {
+            case isset($request->id):
+                $orgaos = $this->orgao->where('id', $request->id)->paginate(10);
+                $resposta = 'Resultado da Pesquisa pelo ID '.$request->id;
+                break;
+            case isset($request->nome):
+                $orgaos = $this->orgao->where('nome', 'like', '%'.$request->nome.'%')->paginate(10);
+                $resposta = 'Resultado da Pesquisa por Nome: '.$request->nome;
+                break;
+            case isset($request->status):
+                $orgaos = $this->orgao->where('status', $request->status)->paginate(10);
+                $resposta = 'Resultado da Pesquisa por Status '.ucfirst(strtolower($request->status));
+                break;
+            case isset($request->data_criacao_inicio):
+                if(!isset($request->data_criacao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_criacao_inicio)->startOfDay();
+                    $orgaos = $this->orgao->whereDate('created_at', $timestamp)->paginate(10);
+                } else {
+                    $orgaos = $this->orgao->whereBetween('created_at', [$request->data_criacao_inicio, $request->data_criacao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Criação';
+                break;
+            case isset($request->data_atualizacao_inicio):
+                if(!isset($request->data_atualizacao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_atualizacao_inicio)->startOfDay();
+                    $orgaos = $this->orgao->whereDate('updated_at', $timestamp)->paginate(10);
+                } else {
+                    $orgaos = $this->orgao->whereBetween('updated_at', [$request->data_atualizacao_inicio, $request->data_atualizacao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Atualização';
+                break;
+        }
+
+        return view('orgao.index', ['orgaos' => $orgaos, 'titulo' => $resposta]);
     }
 }
