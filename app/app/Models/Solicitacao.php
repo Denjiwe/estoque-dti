@@ -21,6 +21,7 @@ class Solicitacao extends Model
 
     public function rules() {
         return [
+            'status' => 'required|in:AGUARDANDO,ABERTO,ENCERRADO,LIBERADO',
             'observacao' => 'nullable|max:100',
             'usuario_id' => 'required|exists:usuarios,id',
             'divisao_id' => 'exists:divisoes,id|nullable',

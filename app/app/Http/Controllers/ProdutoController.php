@@ -12,6 +12,7 @@ use App\Models\Solicitacao;
 use App\Mail\SolicitacaoLiberadaMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ProdutoController extends Controller
 {
@@ -268,4 +269,52 @@ class ProdutoController extends Controller
 
         return response()->json($cilindro, 200);
     }       
+
+    public function pesquisa(Request $request) {
+        switch (true) {
+            case isset($request->id):
+                $produtos = $this->produto->where('id', $request->id)->paginate(10);
+                $resposta = 'Resultado da Pesquisa pelo ID '.$request->id;
+                break;
+            case isset($request->tipo):
+                $produtos = $this->produto->where('tipo_produto', $request->tipo)->paginate(10);
+                $resposta = 'Resultado da Pesquisa pelo tipo '.ucfirst(strtolower($request->tipo));
+                break;
+            case isset($request->modelo):
+                $produtos = $this->produto->where('modelo_produto', 'like', '%'.$request->modelo.'%')->paginate(10);
+                $resposta = 'Resultado da Pesquisa pelo modelo: '.$request->modelo;
+                break;
+            case isset($request->quantidade):
+                $produtos = $this->produto->where('qntde_estoque', $request->quantidade)->paginate(10);
+                $resposta = 'Resultado da Pesquisa pela quantidade '.$request->quantidade;
+                break;
+            case isset($request->status):
+                $produtos = $this->produto->where('status', $request->status)->paginate(10);
+                $resposta = 'Resultado da Pesquisa pelo status '.ucfirst(strtolower($request->status));
+                break;
+            case isset($request->data_criacao_inicio):
+                if(!isset($request->data_criacao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_criacao_inicio)->startOfDay();
+                    $produtos = $this->produto->whereDate('created_at', $timestamp)->paginate(10);
+                } else {
+                    $produtos = $this->produto->whereBetween('created_at', [$request->data_criacao_inicio, $request->data_criacao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Criação';
+                break;
+            case isset($request->data_edicao_inicio):
+                if(!isset($request->data_edicao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_edicao_inicio)->startOfDay();
+                    $produtos = $this->produto->whereDate('updated_at', $timestamp)->paginate(10);
+                } else {
+                    $produtos = $this->produto->whereBetween('updated_at', [$request->data_edicao_inicio, $request->data_edicao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Atualização';
+                break;
+            default:
+                return redirect()->back()->withErrors('Erro ao pesquisar, tente novamente.');
+                break;
+        }
+
+        return view('produto.pesquisa', ['produtos' => $produtos, 'titulo' => $resposta]);
+    }
 }

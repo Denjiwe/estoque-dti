@@ -8,8 +8,8 @@
         <tr>
             <th>Código</th>
             <th>Nome do Usuário</th>
-            <th>Divisão</th>
             <th>Diretoria</th>
+            <th>Divisão</th>
             <th>Status</th>
             <th>Data de Criação</th>
             <th>Ações</th>
@@ -26,8 +26,8 @@
             <tr>
                 <td>{{$solicitacao->id}}</td>
                 <td>{{$primeiroNome}}</td>
-                <td>{{$solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma'}}</td>
                 <td>{{$solicitacao->diretoria->nome}}</td>
+                <td>{{$solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma'}}</td>
                 <td>{{ucfirst(strtolower($solicitacao->status))}}</td>
                 <td>{{(date('d/m/Y', $dataCriacao))}}</td>
                 <td>

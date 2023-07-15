@@ -315,4 +315,61 @@ class SolicitacaoController extends Controller
         DB::commit();
         return redirect()->route('solicitacoes.abertas');
     }
+
+    public function pesquisa(Request $request) {
+        switch (true) {
+            case isset($request->id):
+                $solicitacoes = $this->solicitacao->where('id', $request->id)->paginate(10);
+                $resposta = 'Resultado da Pesquisa pelo ID '.$request->id;
+                break;
+            case isset($request->nome):
+                $solicitacoes = $this->solicitacao->whereHas('usuario', function($query) use ($request) {
+                    $query->where('nome', 'like', '%'.$request->nome.'%');
+                })->paginate(10);
+                $resposta = 'Resultado da Pesquisa por Nome: '.$request->nome;
+                break;
+            case isset($request->status):
+                $solicitacoes = $this->solicitacao->where('status', $request->status)->paginate(10);
+                $resposta = 'Resultado da Pesquisa por Status '.ucfirst(strtolower($request->status));
+                break;
+            case isset($request->diretoria):
+                $solicitacoes = $this->solicitacao->whereHas('diretoria', function($query) use ($request) {
+                    $query->where('nome', 'like', '%'.$request->diretoria.'%');
+                })->paginate(10);
+                $resposta = 'Resultado da Pesquisa por Nome da Diretoria: '.$request->diretoria;
+                break;
+            case isset($request->divisao):
+                $solicitacoes = $this->solicitacao->whereHas('divisao', function($query) use ($request) {
+                    $query->where('nome', 'like', '%'.$request->divisao.'%');
+                })->paginate(10);
+                if($request->divisao == 'Nenhuma' || $request->divisao == 'nenhuma') {
+                    $solicitacoes = $this->solicitacao->where('divisao_id', null)->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Nome da Divisão: '.$request->divisao;
+                break;
+            case isset($request->data_criacao_inicio):
+                if(!isset($request->data_criacao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_criacao_inicio)->startOfDay();
+                    $solicitacoes = $this->solicitacao->whereDate('created_at', $timestamp)->paginate(10);
+                } else {
+                    $solicitacoes = $this->solicitacao->whereBetween('created_at', [$request->data_criacao_inicio, $request->data_criacao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Criação';
+                break;
+            case isset($request->data_edicao_inicio):
+                if(!isset($request->data_edicao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_edicao_inicio)->startOfDay();
+                    $solicitacoes = $this->solicitacao->whereDate('updated_at', $timestamp)->paginate(10);
+                } else {
+                    $solicitacoes = $this->solicitacao->whereBetween('updated_at', [$request->data_edicao_inicio, $request->data_edicao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Atualização';
+                break;
+            default:
+                return redirect()->back()->withErrors('Erro ao pesquisar, tente novamente.');
+                break;
+        }
+
+        return view('solicitacao.pesquisa', ['solicitacoes' => $solicitacoes, 'titulo' => $resposta]);
+    }
 }

@@ -104,4 +104,46 @@ class DiretoriaController extends Controller
 
         return response()->json([$divisoes,$usuariosDivisao,$usuarios], 200);
     }
+
+    public function pesquisa(Request $request) {
+        switch (true) {
+            case isset($request->id):
+                $diretorias = $this->diretoria->where('id', $request->id)->paginate(10);
+                $resposta = 'Resultado da Pesquisa pelo ID '.$request->id;
+                break;
+            case isset($request->nome):
+                $diretorias = $this->diretoria->where('nome', 'like', '%'.$request->nome.'%')->paginate(10);
+                $resposta = 'Resultado da Pesquisa por Nome: '.$request->nome;
+                break;
+            case isset($request->status):
+                $diretorias = $this->diretoria->where('status', $request->status)->paginate(10);
+                $resposta = 'Resultado da Pesquisa por Status '.ucfirst(strtolower($request->status));
+                break;
+            case isset($request->data_criacao_inicio):
+                if(!isset($request->data_criacao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_criacao_inicio)->startOfDay();
+                    $diretorias = $this->diretoria->whereDate('created_at', $timestamp)->paginate(10);
+                } else {
+                    $diretorias = $this->diretoria->whereBetween('created_at', [$request->data_criacao_inicio, $request->data_criacao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Criação';
+                break;
+            case isset($request->data_edicao_inicio):
+                if(!isset($request->data_edicao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_edicao_inicio)->startOfDay();
+                    $diretorias = $this->diretoria->whereDate('updated_at', $timestamp)->paginate(10);
+                } else {
+                    $diretorias = $this->diretoria->whereBetween('updated_at', [$request->data_edicao_inicio, $request->data_edicao_fim])->paginate(10);
+                }
+                $resposta = 'Resultado da Pesquisa por Data de Atualização';
+                break;
+            default:
+                return redirect()->back()->withErrors('Erro ao pesquisar, tente novamente.');
+                break;
+        }
+
+        $orgaos = Orgao::get();
+
+        return view('diretoria.pesquisa', ['diretorias' => $diretorias, 'titulo' => $resposta, 'orgaos' => $orgaos]);
+    }
 }

@@ -26,14 +26,20 @@ use App\Http\Controllers\EntregaController;
 
 // rotas user_interno
 Route::middleware(['auth', 'user_interno'])->group(function () {  
+    Route::get('usuarios/pesquisa', [UsuarioController::class, 'pesquisa'])->name('usuarios.pesquisa');
     Route::resource('usuarios', UsuarioController::class);
+    Route::get('orgaos/pesquisa', [OrgaoController::class, 'pesquisa'])->name('orgao.pesquisa');
     Route::resource('orgaos', OrgaoController::class);
-    Route::post('orgaos/pesquisa', [OrgaoController::class, 'pesquisa'])->name('orgaos.pesquisa');
+    Route::get('diretorias/pesquisa', [DiretoriaController::class, 'pesquisa'])->name('diretorias.pesquisa');
     Route::resource('diretorias', DiretoriaController::class);
+    Route::get('divisoes/pesquisa', [DivisaoController::class, 'pesquisa'])->name('divisoes.pesquisa');
     Route::resource('divisao', DivisaoController::class);
+    Route::get('produtos/pesquisa', [ProdutoController::class, 'pesquisa'])->name('produtos.pesquisa');
     Route::resource('produtos', ProdutoController::class);
+    Route::get('entregas/pesquisa', [EntregaController::class, 'pesquisa'])->name('entregas.pesquisa');
     Route::resource('entregas', EntregaController::class);
     
+    Route::get('solicitacoes/pesquisa', [SolicitacaoController::class, 'pesquisa'])->name('solicitacoes.pesquisa');
     Route::get('solicitacoes/abertas', [SolicitacaoController::class, 'abertas'])->name('solicitacoes.abertas');
     Route::get('solicitacoes/aguardando', [SolicitacaoController::class, 'aguardando'])->name('solicitacoes.aguardando');
     Route::get('solicitacoes/encerradas', [SolicitacaoController::class, 'encerradas'])->name('solicitacoes.encerradas');

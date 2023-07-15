@@ -107,17 +107,20 @@ class OrgaoController extends Controller
                 }
                 $resposta = 'Resultado da Pesquisa por Data de Criação';
                 break;
-            case isset($request->data_atualizacao_inicio):
-                if(!isset($request->data_atualizacao_fim)) {
-                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_atualizacao_inicio)->startOfDay();
+            case isset($request->data_edicao_inicio):
+                if(!isset($request->data_edicao_fim)) {
+                    $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_edicao_inicio)->startOfDay();
                     $orgaos = $this->orgao->whereDate('updated_at', $timestamp)->paginate(10);
                 } else {
-                    $orgaos = $this->orgao->whereBetween('updated_at', [$request->data_atualizacao_inicio, $request->data_atualizacao_fim])->paginate(10);
+                    $orgaos = $this->orgao->whereBetween('updated_at', [$request->data_edicao_inicio, $request->data_edicao_fim])->paginate(10);
                 }
                 $resposta = 'Resultado da Pesquisa por Data de Atualização';
                 break;
+            default:
+                return redirect()->back()->withErrors('Erro ao pesquisar, tente novamente.');
+                break;
         }
 
-        return view('orgao.index', ['orgaos' => $orgaos, 'titulo' => $resposta]);
+        return view('orgao.pesquisa', ['orgaos' => $orgaos, 'titulo' => $resposta]);
     }
 }
