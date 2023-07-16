@@ -95,8 +95,7 @@
 
         var options = {
             title: "Produtos mais entregues no último mês",
-            width: 500,
-            height: 412,
+            height: 412.5,
             legend: { position: "none" },
             hAxis: {
                 viewWindow: {

@@ -25,20 +25,22 @@ class LoginController extends Controller
 
     public function login(Request $request) {
         $rules = [
-            'cpf' => 'required|max:11',
+            'cpf' => 'required|max:14',
             'password' => 'required|min:4'
         ];
 
         $feedback = [
             'cpf.required' => 'O CPF deve ser preenchido',
-            'cpf.max' => 'O CPF deve conter no máximo 11 caracteres',
+            'cpf.max' => 'O CPF deve conter no máximo 14 caracteres',
             'password.required' => 'A senha deve ser preenchida',
             'password.min' => 'A senha deve possuir no mínimo 4 caracteres'
         ];
 
         $request->validate($rules, $feedback);
 
-        $user = Usuario::where('cpf', $request->cpf)->first();
+        $cpf = str_replace(['.', '-'], '', $request->cpf);
+
+        $user = Usuario::where('cpf', $cpf)->first();
 
         if(!$user) {
             return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
