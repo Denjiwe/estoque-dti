@@ -12,6 +12,7 @@ use App\Http\Controllers\SuprimentoController;
 use App\Http\Controllers\ImpressoraController;
 use App\Http\Controllers\SolicitacaoController;
 use App\Http\Controllers\EntregaController;
+use App\Http\Controllers\AuditoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,9 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::get('produtos/{id}/impressoras', [ImpressoraController::class, 'create'])->name('impressoras.create');
     Route::post('produtos/{id}/impressoras', [ImpressoraController::class, 'store'])->name('impressoras.store');
     Route::match(['put', 'patch'], 'produtos/{id}/impressoras', [ImpressoraController::class, 'update'])->name('impressoras.update');
+
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+    Route::get('/auditoria/pesquisa', [AuditoriaController::class, 'pesquisa'])->name('auditoria.pesquisa');
 });
 
 // rotas clientes

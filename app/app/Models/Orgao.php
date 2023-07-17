@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Enum;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Orgao extends Model
+class Orgao extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
-    // use SoftDelete;
     protected $fillable= ['nome', 'status'];
 
     public function rules($id){

@@ -40,12 +40,13 @@
     <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             @if($errors->any())
-                <div class="alert alert-danger">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <ul class="m-0">
                         @foreach($errors->all() as $error)
                             <li class="m-0">{{ $error }}</li>
                         @endforeach
                     </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
             <nav class="nav nav-pills nav-justified mt-3 mb-3">

@@ -295,6 +295,7 @@ class SolicitacaoController extends Controller
                     $produto->save();
 
                     $entrega->delete();
+                    $itemSolicitacao->delete();
                 }
             } else {
                 foreach($solicitacao->itens_solicitacoes as $itemSolicitacao) {

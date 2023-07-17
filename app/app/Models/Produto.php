@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
+use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\LocalImpressora;
 use App\Models\Suprimento;
 
-class Produto extends Model
+class Produto extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = ['tipo_produto','modelo_produto', 'descricao', 'qntde_estoque', 'qntde_solicitada', 'status'];
 

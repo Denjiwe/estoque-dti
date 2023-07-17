@@ -7,10 +7,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rule;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Usuario extends Authenticatable
+class Usuario extends Authenticatable implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'nome',
@@ -24,7 +26,7 @@ class Usuario extends Authenticatable
         'user_interno'
     ];
 
-    protected $hidden = ['senha'];
+    protected $hidden = ['senha', 'senha_provisoria'];
 
     public function rulesUpdate($request, $id) {
         return [

@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Enum;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Diretoria extends Model
+class Diretoria extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable= ['nome', 'status', 'orgao_id', 'email'];
 

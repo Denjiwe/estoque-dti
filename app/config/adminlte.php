@@ -431,7 +431,7 @@ return [
         ],
         [
             'text' => 'Auditoria',
-            'url' => '',
+            'url' => 'auditoria/',
             'icon' => 'fas fa-fw fa-suitcase',
             'can' => 'user_interno'
         ],

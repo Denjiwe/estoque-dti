@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Entrega extends Model
+class Entrega extends Model implements Auditable
 {
     use HasFactory;
-
+    use \OwenIt\Auditing\Auditable;
+    
     protected $fillable = ['qntde', 'observacao', 'usuario_id', 'itens_solicitacao_id'];
 
     public function rules() {

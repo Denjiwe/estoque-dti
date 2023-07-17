@@ -1,0 +1,4 @@
+172.18.0.1 - - [17/Jul/2023:21:02:39 +0000] "GET / HTTP/1.1" 200 2123 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 OPR/99.0.0.0" "-"
+172.18.0.1 - - [17/Jul/2023:21:02:39 +0000] "GET /css/index.css HTTP/1.1" 200 318 "http://localhost:8989/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 OPR/99.0.0.0" "-"
+172.18.0.1 - - [17/Jul/2023:21:02:39 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "http://localhost:8989/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 OPR/99.0.0.0" "-"
+172.18.0.1 - - [17/Jul/2023:21:03:27 +0000] "GET / HTTP/1.1" 200 2123 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 OPR/99.0.0.0" "-"
