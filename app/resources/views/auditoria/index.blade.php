@@ -9,7 +9,8 @@
 @section('content')
     <x-box>
         <x-slot:body>
-            <form action="{{ route('auditoria.pesquisa') }}" method="GET">
+            <form action="{{ route('auditorias.pesquisa') }}" method="POST">
+                @csrf
                 <div class="row ">
                     <div class="col-2">
                         <label for="tipo">Tipo</label>
@@ -28,21 +29,23 @@
                         <label for="acao">Ação</label>
                         <select id="acao" name="acao" class="form-select">
                             <option value="Todos" selected>Todos</option>
-                            <option value="created">Criação</option>
+                            <option value="created">Criado</option>
                             <option value="updated">Atualizado</option>
                             <option value="deleted">Excluído</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div id="dataDiv" class="col-2">
                         <label for="data">Data</label>
                         <select id="data" name="data" class="form-select">
-                            <option value="today" selected>Hoje</option>
-                            <option value="week">Última Semana</option>
-                            <option value="month">Último mês</option>
-                            <option value="customized">Personalizado</option>
+                            <option value="hoje" selected>Hoje</option>
+                            <option value="ontem">Ontem</option>
+                            <option value="semana">Última Semana</option>
+                            <option value="mes">Últimos 30 dias</option>
+                            <option value="ultimo_mes">Este mês</option>
+                            <option value="personalizado">Personalizado</option>
                         </select>
                     </div>
-                    <div class="col-3 pt-4 mt-2">
+                    <div class="col-2 pt-4 mt-2">
                         <button type="submit" class="btn btn-primary">Pesquisar</button>                 
                     </div>
                 </div>
