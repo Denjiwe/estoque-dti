@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auditoria;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -63,9 +64,93 @@ class AuditoriaController extends Controller
                 break;
         }
 
-        $auditorias = $auditorias->orderBy('created_at', 'desc')->get();
+        $auditorias = $auditorias->with('usuario')->orderBy('created_at', 'desc')->get();
 
-        dd($auditorias);
-        return view('auditoria.pesquisa', compact('auditorias'));
+        $mensagens = array();
+
+        foreach ($auditorias as $key => $auditoria) {
+            $model = explode("\\" ,$auditoria->auditable_type)[2];
+
+            switch ($model) {
+                case 'Usuario':
+                    $usuario = Usuario::find($auditoria->auditable_id);
+                    $model = 'o usuário '.$usuario->nome.', id';
+                    break;
+                case 'Solicitacao':
+                    $model = 'a solicitação';
+                    break;
+                case 'Orgao':
+                    $model = 'o órgão';
+                    break;
+                case 'Diretoria':
+                    $model = 'a diretoria';
+                    break;
+                case 'Divisao':
+                    $model = 'a divisão';
+                    break;
+                case 'Entrega':
+                    $model = 'a entrega';
+                    break;
+                case 'Produto':
+                    $model = 'o produto';
+                    break;
+            }
+
+            switch ($auditoria->event) {
+                case 'created':
+                    $acao = 'criou';
+                    $auditoria->new_values = json_decode($auditoria->new_values);
+                    $campos = '';
+                    foreach ($auditoria->new_values as $campo => $valor) {
+                        if($valor != end($auditoria->new_values)) {
+                            $campos .= $campo. ' com o valor "' .$valor. '", ';
+                        } else {
+                            $campos .= $campo. ' com o valor "' .$valor.'"';
+                        }
+                    }
+                    break;
+                case 'updated':
+                    $acao = 'alterou';
+                    $auditoria->old_values = json_decode($auditoria->old_values);
+                    $auditoria->new_values = json_decode($auditoria->new_values);
+
+                    $campos = '';
+                    foreach ($auditoria->old_values as $campo => $valor) {
+                        if($valor != end($auditoria->old_values)) {
+                            $campos .= $campo. ' de "' .$valor. '" para "' .$auditoria->new_values->$campo.'", ';
+                        } else {
+                            $campos .= $campo. ' de "' .$valor. '" para "' .$auditoria->new_values->$campo.'"';
+                        }
+                    }
+                    break;
+                case 'deleted':
+                    $acao = 'excluiu';
+                    $auditoria->old_values = json_decode($auditoria->old_values);
+                    $campos = '';
+                    foreach ($auditoria->old_values as $campo => $valor) {
+                        if($valor != end($auditoria->old_values)) {
+                            $campos .= $campo. ' com o valor "' .$valor. '", ';
+                        } else {
+                            $campos .= $campo. ' com o valor "' .$valor.'"';
+                        }
+                    }
+                    break;
+            }
+
+            $mensagens[$key] = '- '.$auditoria->usuario->nome.' '.$acao.' '.$model.' '.$auditoria->auditable_id.' com '.$campos.' em '.Carbon::parse($auditoria->created_at)->format('d/m/Y H:i:s');
+        }
+
+        $mensagensFormatadas = array();
+        foreach ($mensagens as $mensagem) {
+            $mensagem = str_replace('qntde_estoque', 'quantidade estoque', $mensagem);
+            $mensagem = str_replace('qntde_solicitada', 'quantidade solicitada', $mensagem);
+            $mensagem = str_replace('qntde', 'quantidade', $mensagem);
+            $mensagem = str_replace('senha_provisoria', 'senha provisória', $mensagem);
+            $mensagem = str_replace('valor "",', 'valor vazio,', $mensagem);
+        
+            $mensagensFormatadas[] = $mensagem;
+        }
+        
+        return view('auditoria.pesquisa', ['mensagens' => $mensagensFormatadas]);
     }
 }

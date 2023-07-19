@@ -29,9 +29,9 @@
                         <label for="acao">Ação</label>
                         <select id="acao" name="acao" class="form-select">
                             <option value="Todos" selected>Todos</option>
-                            <option value="created">Criado</option>
-                            <option value="updated">Atualizado</option>
-                            <option value="deleted">Excluído</option>
+                            <option value="created">Criação</option>
+                            <option value="updated">Atualização</option>
+                            <option value="deleted">Exclusão</option>
                         </select>
                     </div>
                     <div id="dataDiv" class="col-2">

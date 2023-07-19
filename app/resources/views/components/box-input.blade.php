@@ -21,5 +21,7 @@
         box-shadow: 1px black solid;
         padding: 15px;
         box-shadow: inset 10px 11px 21px 5px rgba(0,0,0,0.29);
+        max-height: 45vh;
+        overflow-y: auto;
     }
 </style>

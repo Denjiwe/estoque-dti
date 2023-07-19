@@ -9,5 +9,9 @@ class Auditoria extends Model
 {
     use HasFactory;
 
-    protected $table='audits';
+    protected $table= 'audits';
+
+    public function usuario() {
+        return $this->belongsTo('App\Models\Usuario', 'usuario_id');
+    }
 }
