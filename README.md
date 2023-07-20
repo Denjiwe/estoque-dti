@@ -46,6 +46,9 @@ com gráficos de quantas solicitações estavam em qual status por período, con
  ### Login
  <img alt="Login" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/login.png?raw=true" width="100%">
  
+ ### Home
+ <img alt="Home" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/home.png?raw=true" width="100%">
+
  ### Cadastro de Produtos
  <img alt="Cadastro de Produtos" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/cadastro_produto.png?raw=true" width="100%">
  
