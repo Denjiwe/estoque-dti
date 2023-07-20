@@ -25,11 +25,13 @@
 - [X] Remover campo de criar nova conta no login, além de criar modal para entrarem em contato (tabela no banco que contém número de telefone, e a assinatura no email)
 - Mudar tabelas para as do adminlte, que possuem troca de ordem dos campos
     - Fazer o mesmo para modais
-- Colocar mascara em campos de cpf
+- [X] Colocar mascara em campos de cpf
 - [X] Fazer home, trazendo informações sobre os pedidos e entregas, etc
     - No chart de entregas, trazer o dado de % de diferença do mês anterior
-- Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
+- [X] Fazer botão de toggle entre visualização em log e tabela, renderizando as duas, ocultando com display none
+- Responsividade 🫣
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
+- Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 
 ## Bugs
 

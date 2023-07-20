@@ -96,10 +96,23 @@ class AuditoriaController extends Controller
                     break;
             }
 
+            if($auditoria->new_values != '[]') {
+                $auditoria->new_values = json_decode($auditoria->new_values);
+            } else {
+                $auditoria->new_values = '{}';
+                $auditoria->new_values = json_decode($auditoria->new_values);
+            }
+
+            if($auditoria->old_values != '[]') {
+                $auditoria->old_values = json_decode($auditoria->old_values);
+            } else {
+                $auditoria->old_values = '{}';
+                $auditoria->old_values = json_decode($auditoria->old_values);
+            }
+
             switch ($auditoria->event) {
                 case 'created':
                     $acao = 'criou';
-                    $auditoria->new_values = json_decode($auditoria->new_values);
                     $campos = '';
                     foreach ($auditoria->new_values as $campo => $valor) {
                         if($valor != end($auditoria->new_values)) {
@@ -111,9 +124,6 @@ class AuditoriaController extends Controller
                     break;
                 case 'updated':
                     $acao = 'alterou';
-                    $auditoria->old_values = json_decode($auditoria->old_values);
-                    $auditoria->new_values = json_decode($auditoria->new_values);
-
                     $campos = '';
                     foreach ($auditoria->old_values as $campo => $valor) {
                         if($valor != end($auditoria->old_values)) {
@@ -125,7 +135,6 @@ class AuditoriaController extends Controller
                     break;
                 case 'deleted':
                     $acao = 'excluiu';
-                    $auditoria->old_values = json_decode($auditoria->old_values);
                     $campos = '';
                     foreach ($auditoria->old_values as $campo => $valor) {
                         if($valor != end($auditoria->old_values)) {
@@ -151,6 +160,6 @@ class AuditoriaController extends Controller
             $mensagensFormatadas[] = $mensagem;
         }
         
-        return view('auditoria.pesquisa', ['mensagens' => $mensagensFormatadas]);
+        return view('auditoria.pesquisa', ['mensagens' => $mensagensFormatadas, 'auditorias' => $auditorias]);
     }
 }

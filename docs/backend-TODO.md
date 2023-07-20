@@ -5,7 +5,8 @@
 - [X] Quantidade solicitada deve desconsiderar produtos entregues
 - [X] Caso solicitação estivesse em aguardando, mandar email para o usuário e diretoria quando estoque for reabastecido, alterando o status do pedido para liberado
 - Verificar relatórios para pdf e excel com laravelExcel
-- Verificar auditoria com laravel auditoring
+- [X] Verificar auditoria com laravel auditoring
+    - Verificar se é possível fazer algo em relação a exclusão direta de uma auditoria no banco de dados
 - [X] Criar um campo de senha provisória, para reset de senhas
 
 ## Bugs
