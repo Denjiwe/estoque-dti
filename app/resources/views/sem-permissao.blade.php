@@ -16,7 +16,7 @@
             <div class="row justify-content-end">
                 <div class="col-auto">
                     <a href="{{route('solicitacoes.store')}}"><button type="button" class="btn btn-secondary me-2">Solicitar</button></a>
-                    <a href="{{route('minhas-solicitacoes')}}"><button type="button" class="btn btn-primary">Minhas Solicitações</button></a>
+                    <a href="{{route('minhas-solicitacoes.abertas')}}"><button type="button" class="btn btn-primary">Minhas Solicitações</button></a>
                 </div>
             </div>
         </x-slot:footer>

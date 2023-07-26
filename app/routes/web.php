@@ -95,3 +95,6 @@ Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('
 Route::get('/', function () {
     return redirect()->route('home');
 });
+Route::get('/nojs', function () {
+    return view('nojs');
+})->name('nojs');
