@@ -425,7 +425,7 @@ return [
         ],
         [
             'text' => 'Relatórios',
-            'url' => '',
+            'url' => 'relatorios',
             'icon' => 'fas fa-fw fa-download',
             'can' => 'user_interno'
         ],

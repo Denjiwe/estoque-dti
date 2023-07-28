@@ -1,6 +1,6 @@
 @props(['titulo', 'header', 'body', 'footer', 'id'])
 
-<div class="box" id="{{ $id ?? '' }}" style="width: 100%;">
+<div class="box" id="{{ $id ?? '' }}" >
     <div class="box-header"><h2>{{$titulo ?? ''}}</h2>
         {{$header ?? ''}}
     </div>
@@ -16,7 +16,6 @@
 
 <style scoped>
     .box {
-        width: 100%;
         background-color: white;
         border-radius: 10px;
         border: 1px solid #dbdbdb;
