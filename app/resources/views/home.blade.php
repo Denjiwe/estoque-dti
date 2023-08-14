@@ -111,7 +111,7 @@
         var chart = new google.visualization.BarChart(document.getElementById("entregas_chart"));
         chart.draw(view, options);
     }
-  </script>
+</script>
 @endsection
 
 @section('css')

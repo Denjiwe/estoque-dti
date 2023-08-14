@@ -39,10 +39,9 @@
                     <div class="col-2">
                         <label for="campo">Campo</label>
                         <select id="campo" name="campo" class="form-select">
-                            <option value="Todos" selected>Todos</option>
+                            <option value="todos" selected>Todos</option>
                             <option value="id">ID</option>
                             <option value="nome">Nome</option>
-                            <option value="status">Status</option>
                         </select>
                     </div>
                     <div id="dataDiv" class="col-2">

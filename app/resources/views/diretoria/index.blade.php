@@ -10,7 +10,7 @@
     {{-- Box de pesquisa --}}
     <x-box titulo="Pesquisar" id="searchBox">
         <x-slot:body>
-            <form action="{{ route('divisoes.pesquisa') }}" method="GET">
+            <form action="{{ route('diretorias.pesquisa') }}" method="GET">
                 <div class="row">
                     <div class="col-2">
                         <label for="campo">Selecione o campo de pesquisa</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Auditoria;
 use App\Models\Usuario;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -92,7 +93,8 @@ class AuditoriaController extends Controller
                     $model = 'a entrega';
                     break;
                 case 'Produto':
-                    $model = 'o produto';
+                    $produto = Produto::find($auditoria->auditable_id);
+                    $model = 'o produto '.$produto->modelo_produto;
                     break;
             }
 
@@ -146,7 +148,7 @@ class AuditoriaController extends Controller
                     break;
             }
 
-            $mensagens[$key] = '- '.$auditoria->usuario->nome.' '.$acao.' '.$model.' '.$auditoria->auditable_id.' com '.$campos.' em '.Carbon::parse($auditoria->created_at)->format('d/m/Y H:i:s');
+            $mensagens[$key] = '- '.$auditoria->usuario->nome.' '.$acao.' '.$model.' de id '.$auditoria->auditable_id.' com '.$campos.' em '.Carbon::parse($auditoria->created_at)->format('d/m/Y H:i:s');
         }
 
         $mensagensFormatadas = array();

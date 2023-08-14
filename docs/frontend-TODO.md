@@ -29,6 +29,7 @@
 - [X] Fazer home, trazendo informações sobre os pedidos e entregas, etc
     - No chart de entregas, trazer o dado de % de diferença do mês anterior
 - [X] Fazer botão de toggle entre visualização em log e tabela, renderizando as duas, ocultando com display none
+- Usar toasts para avisar mudanças
 - Responsividade 🫣
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt

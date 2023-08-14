@@ -74,13 +74,13 @@
                 <div class="col-6">
                     <x-paginate>
                         <x-slot:content>
-                            <li class="page-item"><a class="page-link {{ $diretorias->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $diretorias->previousPageUrl() }}">Anterior</a></li>
-                                @for($i = 1; $i <= $diretorias->lastPage(); $i++)
-                                    <li class="page-item {{ $diretorias->currentPage() == $i ? 'active' : ''}}">
-                                        <a class="page-link" href="{{ $diretorias->url($i) }}">{{ $i }}</a>
+                            <li class="page-item"><a class="page-link {{ $diretorias->withQueryString()->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $diretorias->withQueryString()->previousPageUrl() }}">Anterior</a></li>
+                                @for($i = 1; $i <= $diretorias->withQueryString()->lastPage(); $i++)
+                                    <li class="page-item {{ $diretorias->withQueryString()->currentPage() == $i ? 'active' : ''}}">
+                                        <a class="page-link" href="{{ $diretorias->withQueryString()->url($i) }}">{{ $i }}</a>
                                     </li>
                                 @endfor
-                            <li class="page-item"><a class="page-link {{ $diretorias->currentPage() == $diretorias->lastPage() ? 'disabled' : ''}}" href="{{ $diretorias->nextPageUrl() }}">Próxima</a></li>
+                            <li class="page-item"><a class="page-link {{ $diretorias->withQueryString()->currentPage() == $diretorias->withQueryString()->lastPage() ? 'disabled' : ''}}" href="{{ $diretorias->withQueryString()->nextPageUrl() }}">Próxima</a></li>
                         </x-slot:content>
                     </x-paginate>
                 </div>

@@ -51,7 +51,7 @@ class SolicitacaoLiberadaMail extends Mailable implements ShouldQueue
     public function content()
     {
         return new Content(
-            markdown: 'solicitacao.liberada',
+            text: 'solicitacao.liberada',
             with: [
                 'saudacao' => $this->saudacao,
                 'id' => $this->solicitacao->id,
