@@ -1,20 +1,8 @@
 version: "3"
 services:
-  nginx:
-    build:
-      context: .
-      dockerfile: docker/nginx/Dockerfile
-    container_name: nginx
-    ports: 
-      - "8989:80"
-    volumes:
-      - ./:/var/www/html/
-      - ./docker/logs/nginx:/var/log/nginx/
-    links:
-      - php
   php:
     build:
-      context: .
+      context: ./
       dockerfile: docker/php/Dockerfile
     container_name: php
     ports: 
@@ -38,7 +26,9 @@ services:
   npm:
     image: node:latest
     container_name: npm
+    ports:
+      - "5173:5173"
     volumes:
       - ./:/var/www/html/
-    working_dir: /var/www/html/app/
-    entrypoint: ['npm']
+    working_dir: /var/www/html/
+    entrypoint: /bin/sh -c "npm install && npm run dev -- --host"

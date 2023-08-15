@@ -96,3 +96,12 @@ com gráficos de quantas solicitações estavam em qual status por período, con
 
  ### Alterar Solicitação
   <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/alterar_solicitacao.png?raw=true" width="100%">
+
+ ### Busca de Auditoria
+  <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/auditoria_index.png?raw=true" width="100%">
+
+ ### Auditoria em Log
+  <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/auditoria_log.png?raw=true" width="100%">
+
+ ### Auditoria em Tabela
+  <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/auditoria_table.png?raw=true" width="100%">
