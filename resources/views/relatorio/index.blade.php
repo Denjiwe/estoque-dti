@@ -19,14 +19,15 @@
                             <option value="suprimentos">Suprimentos</option>
                             <option value="entregas">Entregas</option>
                             <option value="impressoras">Impressoras</option>
-                            <option value="usuarios">Usuário</option>
-                            <option value="solicitacoes">Solicitação</option>
+                            <option value="produtos">Produtos</option>
+                            <option value="usuarios">Usuários</option>
+                            <option value="solicitacoes">Solicitações</option>
                         </select>
                     </div>
                     <div class="col-2">
                         <label for="tipo">Por</label>
-                        <select id="tipo" name="tipo" class="form-select">
-                            <option value="Todos" selected>Todos</option>
+                        <select id="tipo" name="tipo" class="form-select" required>
+                            <option value="" selected>Selecione um valor</option>
                             <option value="Orgao">Órgão</option>
                             <option value="Diretoria">Diretoria</option>
                             <option value="Divisao">Divisão</option>
@@ -37,7 +38,7 @@
                         </select>
                     </div>
                     <div class="col-2">
-                        <label for="campo">Campo</label>
+                        <label for="campo">Filtro</label>
                         <select id="campo" name="campo" class="form-select">
                             <option value="todos" selected>Todos</option>
                             <option value="id">ID</option>
@@ -55,13 +56,40 @@
                             <option value="personalizado">Personalizado</option>
                         </select>
                     </div>
+                    <div id="formato" class="col-2">
+                        <label for="formato">Formato do Arquivo</label>
+                        <select id="formato" name="formato" class="form-select">
+                            <option value="pdf" selected>PDF</option>
+                            <option value="xslx">XSLX</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                    </div>
                     <div class="col-2 pt-4 mt-2">
-                        <button type="submit" class="btn btn-primary">Pesquisar</button>                 
+                        <button type="submit" class="btn btn-primary">Gerar</button>                 
                     </div>
                 </div>
             </form>
         </x-slot:body>
     </x-box>
+@stop
+
+@section('css')
+    <style>
+        .nome-item {
+            border-bottom: 1px solid #d4d4d4;
+            z-index: 99;
+            cursor: pointer;
+        }
+
+        .nome-item:hover {
+            background-color: #e9e9e9
+        }
+
+        #nome {
+            padding: 5px;
+            background-color: #fff; 
+        }
+    </style>
 @stop
 
 @section('js')

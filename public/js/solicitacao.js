@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var urlBase = 'http://localhost:8000/api/';
+    var urlBase = 'http://localhost:8080/api/';
     var usuario = $('#usuario option:first');
 
     async function criaTrToner(impressoraId, impressoraModelo, quantidade) {

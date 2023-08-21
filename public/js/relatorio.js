@@ -1,5 +1,105 @@
+var url = 'http://localhost:8080/api/';
+var valorAnteriorItem;
+
+$("#item").on('change', function() {
+    if ($(this).val() == 'solicitacoes') {
+        $("#tipo").find('option[value="Solicitacao"]').remove();
+    } else if ($(this).val() != 'solicitacoes' && valorAnteriorItem == 'solicitacoes') {
+        $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
+    }
+
+    if($(this).val() == 'entregas') {
+        $("#tipo").find('option[value="Entrega"]').remove();
+    } else if ($(this).val() != 'entregas' && valorAnteriorItem == 'entregas') {
+        $("#tipo").append(new Option('Entrega', 'Entrega'));
+    }
+
+    if($(this).val() == 'usuarios') {
+        $("#tipo").find('option[value="Usuario"]').remove();
+    } else if ($(this).val() != 'usuarios' && valorAnteriorItem == 'usuarios') {
+        $("#tipo").append(new Option('Usuário', 'Usuario'));
+    }
+
+    valorAnteriorItem = $(this).val();
+});
+
+$(document).on('change', '#tipo', function() {
+    if ($(this).val() == 'Solicitacao') {
+        $('#campo').append(new Option('Status', 'status'));
+    } else if ($(this).val() != 'Solicitacao' && $('#campo').find('option[value="status"]').length) {
+        $('#campo').find('option[value="status"]').remove();
+    }
+
+    if($(this).val() == 'Solicitacao' && $(this).val() == 'Entrega') {
+        if($('#campo').find('option[value="status"]').length) {
+            $('#campo').find('option[value="status"]').remove();
+        }
+        $('#campo').find('option[value="nome"]').remove();
+    } else if($(this).val() != 'Solicitacao' && $(this).val() == 'Entrega') {
+        $('#campo').append(new Option('Nome', 'nome'));
+    }
+});
+
+if($('#campo').val() != 'todos') {
+    $('<div class="col-2"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
+}
+
+var valorAnteriorCampo;
+
+$(document).on('change', '#campo', function() {
+    if (($('#campo').val() != 'todos' && $('#campo').val() != 'status') && ($(document).find('#valor').length == 0 || valorAnteriorCampo == 'status')) {
+        if ($(document).find('#valor').length != 0 ) {
+            $(document).find('#valor').parent().remove();
+        }
+        $('<div class="col-2"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
+    } else if ($('#campo').val() == 'status' && ($(document).find('#valor').length == 0 || valorAnteriorCampo != 'status')) {
+        if ($(document).find('#valor').length != 0 ) {
+            $(document).find('#valor').parent().remove();
+        }
+        var div = $('<div>').attr('class', 'col-2');
+        var select = $('<select>').attr('class', 'form-select');
+        var label = $('<label for="status">Valor</label>');
+        select.attr('name', 'valor');
+        select.attr('id', 'valor');
+        select.attr('required');
+
+        select.append(new Option('Todos', 'Todos'));
+        select.append(new Option('Abertos', 'ABERTO'));
+        select.append(new Option('Aguardando', 'AGUARDANDO'));
+        select.append(new Option('Encerrados', 'ENCERRADO'));
+
+        div.append(label);
+        div.append(select);
+        div.insertAfter($('#campo').parent());
+    } else if ($(document).find('#campo').val() == 'todos') {
+        $(document).find('#valor').parent().remove();
+    }
+
+    valorAnteriorCampo = $(this).val();
+});
+
+$(document).on('keyup', '#valor', function() {
+    var valor = $(this).val();
+
+    if (valor.length > 2 && $(document).find('#campo').val() == 'nome') {
+        fetch(
+            url + 'busca/' + $('#tipo').val() + '/' + valor,
+            {method: 'GET', headers: {'Accept': 'application/json'}}
+        ).then(response => response.json()).then(data => {
+            $('#nome').remove();
+            if($(document).find('#valor').val().length > 2) {
+                $('#valor').parent().append('<div id="nome">');
+                data.forEach((item) => {
+                    $('#nome').append('<p class="nome-item">' + item.nome + '</p>');  
+                })
+            }
+        })
+    } else {
+        $('#nome').remove();
+    }
+});
+
 var data = $('#data');
-var campo = $('#campo');
 if(data.val() == 'personalizado') {
     dataInicio = $('<div class="col-2"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
     dataFinal = $('<div class="col-2"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
@@ -29,50 +129,4 @@ $(document).on('change', '#data_inicio', function() {
 
 $(document).on('change', '#data_final', function() {
     $('#data_inicio').attr('max', $(this).val());
-});
-
-$(document).on('change', '#tipo', function() {
-    if ($(this).val() == 'Solicitacao') {
-        campo.append(new Option('Status', 'status'));
-    } else if ($(this).val() != 'Solicitacao' && $('#campo').find('option[value="status"]').length) {
-        $('#campo').find('option[value="status"]').remove();
-    }
-});
-
-if(campo.val() != 'todos') {
-    $('<div class="col-2"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter(campo.parent());
-}
-
-var valorAnterior;
-
-campo.on('change', function() {
-    if ((campo.val() != 'todos' && campo.val() != 'status') && ($(document).find('#valor').length == 0 || valorAnterior == 'status')) {
-        if ($(document).find('#valor').length != 0 ) {
-            $(document).find('#valor').parent().remove();
-        }
-        $('<div class="col-2"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter(campo.parent());
-    } else if (campo.val() == 'status' && ($(document).find('#valor').length == 0 || valorAnterior != 'status')) {
-        if ($(document).find('#valor').length != 0 ) {
-            $(document).find('#valor').parent().remove();
-        }
-        var div = $('<div>').attr('class', 'col-2');
-        var select = $('<select>').attr('class', 'form-select');
-        var label = $('<label for="status">Valor</label>');
-        select.attr('name', 'valor');
-        select.attr('id', 'valor');
-        select.attr('required');
-
-        select.append(new Option('Todos', 'Todos'));
-        select.append(new Option('Abertos', 'ABERTO'));
-        select.append(new Option('Aguardando', 'AGUARDANDO'));
-        select.append(new Option('Encerrados', 'ENCERRADO'));
-
-        div.append(label);
-        div.append(select);
-        div.insertAfter(campo.parent());
-    } else if (campo.val() == 'todos') {
-        $(document).find('#valor').parent().remove();
-    }
-
-    valorAnterior = $(this).val();
 });

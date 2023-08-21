@@ -17,7 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/db/database
+/db/database/
 docker/logs/nginx/error.log
 docker/logs/nginx/access.log
 # Laravel 4 specific

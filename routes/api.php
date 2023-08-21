@@ -6,6 +6,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\DivisaoController;
 use App\Http\Controllers\DiretoriaController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\BuscaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,4 @@ Route::get('/diretorias', [DiretoriaController::class, 'diretorias']);
 Route::get('/divisoes', [DivisaoController::class, 'divisoes']);
 Route::get('/dados-por-diretoria/{diretoriaId}', [DiretoriaController::class, 'dadosPorDiretoria']);
 Route::get('/dados-por-usuario/{usuarioId}', [UsuarioController::class, 'dadosPorUsuario']);
+Route::get('/busca/{item}/{valor}', [BuscaController::class, 'busca']);
