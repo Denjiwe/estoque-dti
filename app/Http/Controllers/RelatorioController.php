@@ -24,6 +24,7 @@ class RelatorioController extends Controller
     }
 
     public function pesquisa(Request $request) {
+        dd($request->all());
         $item = $request->item;
         $tipo = $request->tipo;
         $campo = $request->campo;

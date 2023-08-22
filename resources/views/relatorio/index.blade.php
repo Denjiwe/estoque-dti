@@ -27,7 +27,7 @@
                     <div class="col-2">
                         <label for="tipo">Por</label>
                         <select id="tipo" name="tipo" class="form-select" required>
-                            <option value="" selected>Selecione um valor</option>
+                            <option value="" selected hidden>Selecione um valor</option>
                             <option value="Orgao">Órgão</option>
                             <option value="Diretoria">Diretoria</option>
                             <option value="Divisao">Divisão</option>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-2">
                         <label for="campo">Filtro</label>
-                        <select id="campo" name="campo" class="form-select">
+                        <select id="campo" name="campo" class="form-select" disabled>
                             <option value="todos" selected>Todos</option>
                             <option value="id">ID</option>
                             <option value="nome">Nome</option>
@@ -64,7 +64,9 @@
                             <option value="csv">CSV</option>
                         </select>
                     </div>
-                    <div class="col-2 pt-4 mt-2">
+                </div>
+                <div class="row justify-content-end mt-3">
+                    <div class="col-auto">
                         <button type="submit" class="btn btn-primary">Gerar</button>                 
                     </div>
                 </div>
@@ -76,18 +78,21 @@
 @section('css')
     <style>
         .nome-item {
+            border-left: 1px solid #d4d4d4;
+            border-right: 1px solid #d4d4d4;
             border-bottom: 1px solid #d4d4d4;
+            background-color: #fff;
             z-index: 99;
             cursor: pointer;
         }
 
         .nome-item:hover {
-            background-color: #e9e9e9
+            background-color: #e9e9e9;
         }
 
         #nome {
-            padding: 5px;
-            background-color: #fff; 
+            position: absolute;
+            width: 90%;
         }
     </style>
 @stop

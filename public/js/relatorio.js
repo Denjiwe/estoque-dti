@@ -24,19 +24,26 @@ $("#item").on('change', function() {
 });
 
 $(document).on('change', '#tipo', function() {
+    $('#campo').attr('disabled', false);
     if ($(this).val() == 'Solicitacao') {
         $('#campo').append(new Option('Status', 'status'));
-    } else if ($(this).val() != 'Solicitacao' && $('#campo').find('option[value="status"]').length) {
-        $('#campo').find('option[value="status"]').remove();
-    }
-
-    if($(this).val() == 'Solicitacao' && $(this).val() == 'Entrega') {
+        if($('#campo').find('option[value="nome"]').length) {
+            $('#campo').find('option[value="nome"]').remove();
+        }
+    } else if($(this).val() == 'Entrega') {
+        if($('#campo').find('option[value="nome"]').length) {
+            $('#campo').find('option[value="nome"]').remove();
+        }
         if($('#campo').find('option[value="status"]').length) {
             $('#campo').find('option[value="status"]').remove();
         }
-        $('#campo').find('option[value="nome"]').remove();
-    } else if($(this).val() != 'Solicitacao' && $(this).val() == 'Entrega') {
-        $('#campo').append(new Option('Nome', 'nome'));
+    } else {
+        if($('#campo').find('option[value="status"]').length) {
+            $('#campo').find('option[value="status"]').remove();
+        }
+        if(!$('#campo').find('option[value="nome"]').length) {
+            $('#campo').append(new Option('Nome', 'nome'));
+        }
     }
 });
 
@@ -47,12 +54,12 @@ if($('#campo').val() != 'todos') {
 var valorAnteriorCampo;
 
 $(document).on('change', '#campo', function() {
-    if (($('#campo').val() != 'todos' && $('#campo').val() != 'status') && ($(document).find('#valor').length == 0 || valorAnteriorCampo == 'status')) {
+    if (($('#campo').val() != 'todos' && $('#campo').val() != 'status') && ($(document).find('#valor').length == 0 || valorAnteriorCampo == 'status') && ($('#tipo')).val() != '') {
         if ($(document).find('#valor').length != 0 ) {
             $(document).find('#valor').parent().remove();
         }
         $('<div class="col-2"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
-    } else if ($('#campo').val() == 'status' && ($(document).find('#valor').length == 0 || valorAnteriorCampo != 'status')) {
+    } else if ($('#campo').val() == 'status' && ($(document).find('#valor').length == 0 || valorAnteriorCampo != 'status') && ($('#tipo')).val() != '') {
         if ($(document).find('#valor').length != 0 ) {
             $(document).find('#valor').parent().remove();
         }
@@ -90,13 +97,18 @@ $(document).on('keyup', '#valor', function() {
             if($(document).find('#valor').val().length > 2) {
                 $('#valor').parent().append('<div id="nome">');
                 data.forEach((item) => {
-                    $('#nome').append('<p class="nome-item">' + item.nome + '</p>');  
+                    $('#nome').append('<div class="nome-item">' + item.nome + '</div>');  
                 })
             }
         })
     } else {
         $('#nome').remove();
     }
+});
+
+$(document).on('click', '.nome-item', function() {
+    $('#valor').val($(this).text());
+    $('#nome').remove();
 });
 
 var data = $('#data');
