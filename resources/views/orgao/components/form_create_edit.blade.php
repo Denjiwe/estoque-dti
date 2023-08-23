@@ -14,7 +14,7 @@
 
         <div class="col-6">
             <select name="status" class="form-control">
-                <option selected>-- Selecione o Status --</option>
+                <option selected hidden>-- Selecione o Status --</option>
                 <option value="ATIVO" <?php if(isset($orgao->status) && $orgao->status == 'ATIVO') echo 'selected'?> >Ativo</option> {{-- {{ $orgao->status ? old('status') == $orgao->id ? 'selected' : '' }}   --}}
                 <option value="INATIVO" <?php if(isset($orgao->status) && $orgao->status == 'INATIVO') echo 'selected'?> >Inativo</option>
             </select>

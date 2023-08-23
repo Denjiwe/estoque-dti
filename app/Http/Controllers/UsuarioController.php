@@ -23,7 +23,6 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = $this->usuario->with('diretoria')->with('divisao')->paginate(10);
-        
 
         $data = [
             'usuarios' => $usuarios, 
@@ -62,16 +61,22 @@ class UsuarioController extends Controller
         $id=0;
         $request->validate($this->usuario->rules($id), $this->usuario->feedback());
 
-        $data = $request->except('senha');
-        $data['senha'] = bcrypt($request->senha);
+        $data = $request->except('senha_provisoria');
+        $data['senha_provisoria'] = bcrypt($request->senha_provisoria);
 
         if ($data['divisao_id'] == 0) {
             unset($data['divisao_id']);
         }
         
-        $usuario = $this->usuario->create($data);
+        try {
+            $usuario = $this->usuario->create($data);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors();
+        }
 
-        return redirect()->route('usuarios.index', ['sucesso' => "Usuário $usuario->nome criado com sucesso!"]);
+        $mensagem = 'Usuário cadastrado com sucesso!';
+        $color = 'success';
+        return redirect()->route('usuarios.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -84,7 +89,9 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->with(['diretoria', 'divisao'])->find($id);
         
         if ($usuario == null) {
-            return redirect()->route('usuarios.index', ['error' => 'Usuário não encontrado!']);
+            $mensagem = 'Usuário não encontrado!';
+            $color = 'warning';
+            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
         }
 
         $solicitacoes = Solicitacao::where('usuario_id', $usuario->id)->paginate(10);
@@ -102,7 +109,9 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->with(['diretoria', 'divisao'])->find($id);
 
         if ($usuario == null) {
-            return redirect()->route('usuarios.index', ['error' => 'Usuário não encontrado!']);
+            $mensagem = 'Usuário não encontrado!';
+            $color = 'warning';
+            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
         }
 
         $diretorias = Diretoria::get();
@@ -131,7 +140,9 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->find($id);
 
         if($usuario == null) {
-            return redirect()->route('usuarios.index', ['erro' => 'Usuário não encontrado!']);
+            $mensagem = 'Usuário não encontrado!';
+            $color = 'warning';
+            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
         }
 
         if ($request->divisao_id == 0) {
@@ -144,9 +155,17 @@ class UsuarioController extends Controller
             $data['senha_provisoria'] = bcrypt($request->senha_provisoria);
         }
 
-        $usuario->update($data);
+        try {
+            $usuario->update($data);
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao alterar o usuário.';
+            $color = 'danger';
+            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+        }
 
-        return redirect()->route('usuarios.index', ['sucesso' => "Usuário $usuario->nome alterado com sucesso!"]);
+        $mensagem = 'Usuário alterado com sucesso!';
+        $color = 'success';
+        return redirect()->route('usuarios.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -159,9 +178,29 @@ class UsuarioController extends Controller
     {
         $usuario = $this->usuario->find($id);
 
-        $usuario->delete();
+        if ($usuario == null) {
+            $mensagem = 'Usuário não encontrado!';
+            $color = 'warning';
+            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+        }
 
-        return redirect()->route('usuarios.index');
+        if ($usuario->id == auth()->user()->id) {
+            $mensagem = 'Voce não pode excluir seu próprio usuário!';
+            $color = 'danger';
+            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+        }
+
+        try {
+            $usuario->delete();
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao excluir o usuário.';
+            $color = 'danger';
+            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Usuário excluído com sucesso!';
+        $color = 'success';
+        return redirect()->route('usuarios.index', compact('mensagem', 'color'));
     }
 
     public function senhaEdit($usuarioId) {

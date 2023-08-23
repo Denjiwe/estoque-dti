@@ -21,7 +21,7 @@ class DiretoriaController extends Controller
     public function index()
     {
         $diretorias = $this->diretoria->with('orgao')->paginate(10);
-        $orgaos = Orgao::get();
+        $orgaos = Orgao::orderBy('nome')->get();
 
         return view('diretoria.index', ['diretorias' => $diretorias, 'titulo' => 'Diretorias Cadastradas', 'orgaos' => $orgaos]);
     }
@@ -37,15 +37,26 @@ class DiretoriaController extends Controller
         $id = 0;
         $request->validate($this->diretoria->rules($id), $this->diretoria->feedback());
 
-        $diretoria = $this->diretoria->create($request->all());
-        return redirect()->route('diretorias.index');
+        try {
+            $diretoria = $this->diretoria->create($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao cadastrar Diretoria.';
+            $color = 'danger';
+            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Diretoria cadastrada com sucesso!';
+        $color = 'success';
+        return redirect()->route('diretorias.index', compact('mensagem', 'color'));
     }
 
     public function show($id) {
         $diretoria = $this->diretoria->with(['divisoes', 'usuarios'])->find($id);
 
         if($diretoria == null) {
-            return redirect()->route('diretorias.index');
+            $mensagem = 'Diretoria não encontrada.';
+            $color = 'warning';
+            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
         }
 
         foreach($diretoria->usuarios as $usuario) {
@@ -69,9 +80,24 @@ class DiretoriaController extends Controller
         $request->validate($this->diretoria->rules($id), $this->diretoria->feedback());
 
         $diretoria = $this->diretoria->find($id);
-        $diretoria->update($request->all());
 
-        return redirect()->route('diretorias.index');
+        if($diretoria == null) {
+            $mensagem = 'Diretoria não encontrada.';
+            $color = 'warning';
+            return redirect()->route('diretorias.index');
+        }
+
+        try {
+            $diretoria->update($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao atualizar a diretoria.';
+            $color = 'danger';
+            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Diretoria atualizada com sucesso!';
+        $color = 'success';
+        return redirect()->route('diretorias.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -85,11 +111,22 @@ class DiretoriaController extends Controller
         $diretoria = $this->diretoria->find($id);
 
         if($diretoria == null) {
-            return redirect()->route('diretorias.index');
+            $mensagem = 'Diretoria não encontrada.';
+            $color = 'warning';
+            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
         }
 
-        $diretoria->delete();
-        return redirect()->route('diretorias.index');
+        try {
+            $diretoria->delete();
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao excluir a diretoria.';
+            $color = 'danger';
+            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Diretoria excluida com sucesso!';
+        $color = 'success';
+        return redirect()->route('diretorias.index', compact('mensagem', 'color'));
     }
 
     public function dadosPorDiretoria($diretoriaId) 

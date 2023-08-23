@@ -21,7 +21,7 @@ class DivisaoController extends Controller
     public function index()
     {
         $divisoes = $this->divisao->with('diretoria')->paginate(10);
-        $diretorias = Diretoria::get();
+        $diretorias = Diretoria::orderBy('nome')->get();
 
         return view('divisao.index', ['divisoes' => $divisoes, 'titulo' => 'Divisões Cadastradas', 'diretorias' => $diretorias]);
     }
@@ -37,8 +37,17 @@ class DivisaoController extends Controller
         $id = 0;
         $request->validate($this->divisao->rules($id), $this->divisao->feedback());
 
-        $divisao = $this->divisao->create($request->all());
-        return redirect()->route('divisao.index');
+        try {
+            $divisao = $this->divisao->create($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao cadastrar a Divisão';
+            $color = 'danger';
+            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Divisão cadastrada com sucesso!';
+        $color = 'success';
+        return redirect()->route('divisao.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -51,7 +60,9 @@ class DivisaoController extends Controller
         $divisao = $this->divisao->with(['diretoria','usuarios'])->find($id);
 
         if($divisao == null) {
-            return redirect()->route('divisao.index');
+            $mensagem = 'Divisão não encontrada.';
+            $color = 'warning';
+            return redirect()->route('divisao.index', compact('mensagem', 'color'));
         }
 
         return view('divisao.show', ['divisao' => $divisao]);
@@ -69,9 +80,24 @@ class DivisaoController extends Controller
         $request->validate($this->divisao->rules($id), $this->divisao->feedback());
 
         $divisao = $this->divisao->find($id);
-        $divisao->update($request->all());
 
-        return redirect()->route('divisao.index');
+        if($divisao == null) {
+            $mensagem = 'Divisão não encontrada.';
+            $color = 'warning';
+            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+        }
+
+        try {
+            $divisao->update($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao atualizar a Divisão.';
+            $color = 'danger';
+            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Divisão atualizada com sucesso!';
+        $color = 'success';
+        return redirect()->route('divisao.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -85,11 +111,22 @@ class DivisaoController extends Controller
         $divisao = $this->divisao->find($id);
 
         if($divisao == null) {
-            return redirect()->route('divisao.index');
+            $mensagem = 'Divisão não encontrada.';
+            $color = 'warning';
+            return redirect()->route('divisao.index', compact('mensagem', 'color'));
         }
 
-        $divisao->delete();
-        return redirect()->route('divisao.index');
+        try {
+            $divisao->delete();
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao excluir a Divisão.';
+            $color = 'danger';
+            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Divisão excluída com sucesso!';
+        $color = 'success';
+        return redirect()->route('divisao.index', compact('mensagem', 'color'));
     }
 
     public function pesquisa(Request $request) {

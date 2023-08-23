@@ -54,7 +54,13 @@ class ProdutoController extends Controller
     {
         $request->validate($this->produto->rules($request, 0), $this->produto->feedback());
 
-        $produto = $this->produto->create($request->all());
+        try{
+            $produto = $this->produto->create($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao cadastrar o produto.';
+            $color = 'danger';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+        }
 
         // return response()->json($produto, 201);
         switch ($request->proximo) {
@@ -68,7 +74,9 @@ class ProdutoController extends Controller
                 break;
             case 'nenhum':
                 // caso seja outros
-                return redirect()->route('produtos.index');
+                $mensagem = 'Produto cadastrado com sucesso!';
+                $color = 'success';
+                return redirect()->route('produtos.index', compact('mensagem', 'color'));
                 break;
         }
     }
@@ -84,7 +92,9 @@ class ProdutoController extends Controller
         $produto = $this->produto->with(['suprimentos'])->find($id);
 
         if ($produto == null) {
-            return redirect()->route('produtos.index');
+            $mensagem = 'Produto não encontrado.';
+            $color = 'warning';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
         }
 
         if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO') {
@@ -124,7 +134,9 @@ class ProdutoController extends Controller
         $produto = $this->produto->find($id);
 
         if ($produto == null) {
-            return redirect()->route('produtos.index');
+            $mensagem = 'Produto não encontrado.';
+            $color = 'warning';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
         }
 
         return view('produto.edit', ['produto' => $produto]);
@@ -142,7 +154,9 @@ class ProdutoController extends Controller
         $produto = $this->produto->find($id);
 
         if ($produto == null) {
-            return redirect()->route('produtos.index');
+            $mensagem = 'Produto não encontrado.';
+            $color = 'danger';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
         }
 
         $request->validate($this->produto->rules($request, $produto->id), $this->produto->feedback());
@@ -189,15 +203,23 @@ class ProdutoController extends Controller
                                     Mail::to($divisaoEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDiv, $saudacao));
                                 }
                             }
-                        } catch (\Throwable $th) {
-                            throw $th;
+                        } catch (\Exception $e) {
+                            $mensagem = 'Erro ao enviar e-mail.';
+                            $color = 'danger';
+                            return redirect()->route('produtos.index', compact('mensagem', 'color'));
                         }
                     }
                 }
             }
         }
 
-        $produto->update($request->all());
+        try {
+            $produto->update($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao atualizar o produto.';
+            $color = 'danger';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+        }
 
         // return response()->json($produto, 201);
         switch ($request->proximo) {
@@ -211,7 +233,9 @@ class ProdutoController extends Controller
                 break;
             case 'nenhum':
                 // caso seja outros
-                return redirect()->route('produtos.index');
+                $mensagem = 'Produto alterado com sucesso!';
+                $color = 'success';
+                return redirect()->route('produtos.index', compact('mensagem', 'color'));
                 break;
         }
     }
@@ -226,9 +250,23 @@ class ProdutoController extends Controller
     {
         $produto = $this->produto->find($id);
 
-        $produto->delete();
+        if($produto == null) {
+            $mensagem = 'Produto não encontrado.';
+            $color = 'warning';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+        }
 
-        return redirect()->route('produtos.index');
+        try {
+            $produto->delete();
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao excluir o produto. Provavelmente este produto está vinculado a uma solicitação ou entrega. Por favor, inative o produto ou exclua a(s) solicitação(ões) ou entrega(s).';
+            $color = 'danger';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Produto excluído com sucesso!';
+        $color = 'success';
+        return redirect()->route('produtos.index', compact('mensagem', 'color'));
     }
 
     // /======================================== Funções Manuais ========================================/

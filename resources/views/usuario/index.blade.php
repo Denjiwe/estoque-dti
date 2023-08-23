@@ -7,17 +7,16 @@
 @endsection
 
 @section('content')
-    @if(isset($sucesso))
-        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <symbol id="check-circle-fill" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-            </symbol>
-        </svg>
-        <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert">
-            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Successo:"><use xlink:href="#check-circle-fill"/></svg>
-            <div>
-                <p>{{$sucesso}}</p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+    @if(isset($_GET['color']))
+        <div class="position-fixed top-0 pt-5 mt-3 pe-2 end-0" style="z-index: 11">
+            <div class="toast fade show align-items-center bg-{{$_GET['color']}}" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ $_GET['mensagem'] }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
             </div>
         </div>
     @endif
@@ -149,6 +148,10 @@
             }
         }
 
+        url = new URL(window.location.href);
+        url.searchParams.delete("mensagem");
+        url.searchParams.delete("color");
+        window.history.pushState('object or string', 'Title', url)
     </script>
     <script src="{{asset('js/pesquisaUsuario.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

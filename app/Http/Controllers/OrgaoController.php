@@ -35,15 +35,26 @@ class OrgaoController extends Controller
         $id = 0;
         $request->validate($this->orgao->rules($id), $this->orgao->feedback());
 
-        $orgao = $this->orgao->create($request->all());
-        return redirect()->route('orgaos.index');
+        try {
+            $orgao = $this->orgao->create($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao cadastrar o órgão.';
+            $color = 'danger';
+            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Órgão cadastrado com sucesso!';
+        $color = 'success';
+        return redirect()->route('orgaos.index', compact('mensagem', 'color'));
     }
 
     public function show($id) {
         $orgao = $this->orgao->with('diretorias')->find($id);
 
         if($orgao == null) {
-            return redirect()->route('orgaos.index');
+            $mensagem = 'Órgão não encontrado.';
+            $color = 'warning';
+            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
         }
 
         return view('orgao.show', ['orgao' => $orgao]);
@@ -61,9 +72,24 @@ class OrgaoController extends Controller
         $request->validate($this->orgao->rules($id), $this->orgao->feedback());
 
         $orgao = $this->orgao->find($id);
-        $orgao->update($request->all());
 
-        return redirect()->route('orgaos.index');
+        if($orgao == null) {
+            $messagem = 'Órgão não encontrado.';
+            $color = 'warning';
+            return redirect()->route('orgaos.index', compact('messagem', 'color'));
+        }
+
+        try {
+            $orgao->update($request->all());
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao atualizar o órgão.';
+            $color = 'danger';
+            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+        }
+
+        $mensagem = 'Órgão atualizado com sucesso!';
+        $color = 'success';
+        return redirect()->route('orgaos.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -77,11 +103,22 @@ class OrgaoController extends Controller
         $orgao = $this->orgao->find($id);
 
         if($orgao == null) {
-            return redirect()->route('orgaos.index');
+            $mensagem = 'Órgão não encontrado.';
+            $color = 'warning';
+            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
         }
 
-        $orgao->delete();
-        return redirect()->route('orgaos.index');
+        try {
+            $orgao->delete();
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao excluir o órgão.';
+            $color = 'danger';
+            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+        }
+        
+        $mensagem = 'Órgão excluído com sucesso!';
+        $color = 'success';
+        return redirect()->route('orgaos.index', compact('mensagem', 'color'));
     }
 
     public function pesquisa(Request $request) {

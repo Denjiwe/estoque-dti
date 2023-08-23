@@ -47,7 +47,7 @@ class Usuario extends Authenticatable implements Auditable
             'cpf' => 'required|unique:usuarios,cpf,'.$id.'|min:11|max:20',
             'email' => 'required|email|unique:usuarios,email,'.$id,
             'diretoria_id' => 'exists:diretorias,id',
-            'senha' => 'required|min:4|max:16',
+            'senha_provisoria' => 'required|min:3|max:16',
             'user_interno' => 'required|in:SIM,NAO'
         ];
     }

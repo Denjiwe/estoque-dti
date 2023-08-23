@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            @if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')
+            @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO'))
                 <div class="col-2">
                     <div class="form-floating">
                         <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" readonly>

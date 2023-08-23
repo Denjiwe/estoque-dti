@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Suprimento;
 use App\Models\Produto;
-use App\Models\Divisao;
-use App\Models\Diretoria;
 use Illuminate\Http\Request;
 
 class SuprimentoController extends Controller
 {
-    public function __construct(Produto $produto, Suprimento $suprimento) 
+    public function __construct(Suprimento $suprimento, Produto $produto)
     {
         $this->suprimento = $suprimento;
         $this->produto = $produto;
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -23,16 +20,21 @@ class SuprimentoController extends Controller
      */
     public function create($id)
     {
-        $produto = $this->produto->with('suprimentos')->find($id);
+        $produto = $this->produto->find($id);
 
-        $toners = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'TONER']])->get();
-        $cilindros = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'CILINDRO']])->get();
+        $suprimentos = $this->suprimento->where('suprimento_id',$id)->get();
+        foreach ($suprimentos as $key => $suprimento) {
+            $nome = $this->produto->select('modelo_produto')->find($suprimento->suprimento_id);
+            $suprimento['nome_produto'] = $nome['modelo_produto'];
+        }
+
+        $impressoras = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'IMPRESSORA']])->get();
 
         if ($produto == null) {
             return redirect()->route('produtos.index');
         }
 
-        return view('produto.suprimento', ['produto' => $produto, 'toners' => $toners, 'cilindros' => $cilindros]);
+        return view('produto.impressora', ['produto' => $produto, 'suprimentos' => $suprimentos, 'impressoras' => $impressoras]);
     }
 
     /**
@@ -43,108 +45,120 @@ class SuprimentoController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $produto = $this->produto->find($id);
-        // $suprimentos[$i] sempre será correspondente a $emUsos[$i] quando vem da request
-        $tipos = $request->tipo;
-        $suprimentos = $request->suprimento;
+        $suprimento = $this->produto->find($id);
+        $tipo = $suprimento->tipo_produto;
+        $impressoras = $request->impressora;
         $emUsos = $request->em_uso;
-        for($i = 0;$i < count($suprimentos); $i++)
-        {
-            if($suprimentos[$i] != null)
+
+        try{
+            for($i = 0;$i < count($impressoras); $i++)
             {
-                $this->suprimento->create(
-                    [
-                        'produto_id' => $produto->id,
-                        'suprimento_id' => $suprimentos[$i],
-                        'em_uso' => $emUsos[$i],
-                        'tipo_suprimento' => $tipos[$i]
-                    ]
-                );
+                if($impressoras[$i] != null)
+                {
+                    $this->suprimento->create(
+                        [
+                            'produto_id' => $impressoras[$i],
+                            'suprimento_id' => $suprimento->id,
+                            'em_uso' => $emUsos[$i],
+                            'tipo_suprimento' => $tipo
+                        ]
+                    );
+                }
             }
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao cadastrar suprimento.';
+            $color = 'danger';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
         }
 
-        return redirect()->route('produtos.index');
+        $mensagem = 'Suprimento cadastrado com sucesso!';
+        $color = 'success';
+        return redirect()->route('produtos.index', compact('mensagem', 'color'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ItensProduto  $itensProduto
+     * @param  \App\Models\Suprimento  $suprimento
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $produto = $this->produto->with('suprimentos')->find($id);
-        
-        $tipos = $request->tipo;
-        $suprimentos = $request->suprimento;
+        $suprimento = $this->produto->find($id);
+
+        $produtos = $this->suprimento->select('tipo_suprimento','produto_id','suprimento_id','em_uso')->where('suprimento_id', $suprimento->id)->get();
+        $produtos = $produtos->toArray();
+
+        $tipo = $suprimento->tipo_produto;
+        $impressoras = $request->impressora;
         $emUsos = $request->em_uso;
 
-        $pSuprimentos = array();
+        $pImpressoras = array();
         $pEmUsos = array();
         $pTipos = array();
 
-        foreach($produto->suprimentos->toArray() as $suprimento)
+        foreach($produtos as $produto)
         {
-            $suprimento['suprimento_id'] = strval($suprimento['suprimento_id']);
-            array_push($pSuprimentos,$suprimento['suprimento_id']);
+            $produto['produto_id'] = strval($produto['produto_id']);
+            array_push($pImpressoras,$produto['produto_id']);
 
-            array_push($pTipos,$suprimento['tipo_suprimento']);
+            array_push($pTipos,$produto['tipo_suprimento']);
 
-            array_push($pEmUsos,$suprimento['em_uso']);
+            array_push($pEmUsos,$produto['em_uso']);
         }
-
-        $suprimentosNovos = array_diff_assoc($suprimentos, $pSuprimentos);
-        $tiposNovos = array_diff_assoc($tipos, $pTipos);
+        
+        $impressorasNovas = array_diff_assoc($impressoras, $pImpressoras);
         $emUsosNovos = array_diff_assoc($emUsos, $pEmUsos);
-        $suprimentosExcluidos = array_diff_assoc($pSuprimentos, $suprimentos);
+        $impressorasExcluidas = array_diff_assoc($pImpressoras, $impressoras);
         
-        if($suprimentosExcluidos != [])
-        {
-            foreach($suprimentosExcluidos as $suprimentoExcluido)
+        try {
+            if($impressorasExcluidas != [])
             {
-                $suprimento = $this->suprimento->where('suprimento_id', $suprimentoExcluido);
-                $suprimento->delete();
-            }
-        }
-        
-        if($suprimentosNovos != [])
-        {
-            foreach($suprimentosNovos as $i => $suprimentoNovo)
-            {
-                if($suprimentoNovo != null)
+                foreach($impressorasExcluidas as $impressoraExcluida)
                 {
-                    $dados = [
-                        'produto_id' => $produto->id,
-                        'suprimento_id' => $suprimentoNovo
-                    ];
-                    
-                    if(isset($tiposNovos[$i]))
-                    {
-                        $dados['tipo_suprimento'] = $tiposNovos[$i];
-                    } else {
-                        $dados['tipo_suprimento'] = $tipos[$i];
-                    }
-
-                    if(isset($emUsosNovos[$i])) {
-                        $dados['em_uso'] = $emUsosNovos[$i];
-                    } else {
-                        $dados['em_uso'] = $emUsos[$i];
-                    }
-                    $suprimento = $this->suprimento->create($dados);
+                    $suprimentoExcluido = $this->suprimento->where('produto_id', $impressoraExcluida);
+                    $suprimentoExcluido->delete();
                 }
             }
-        }
+            
+            if($impressorasNovas != [])
+            {
+                foreach($impressorasNovas as $i => $impressoraNova)
+                {
+                    if($impressoraNova != null)
+                    {
+                        $dados = [
+                            'produto_id' => $impressoraNova,
+                            'suprimento_id' => $suprimento->id,
+                            'tipo_suprimento' => $tipo
+                        ];
 
-        if($emUsosNovos != [] && count($emUsosNovos) > count($suprimentosNovos)) {
-            foreach ($emUsosNovos as $i => $emUsoNovo) {
-                $suprimento = $this->suprimento->where('suprimento_id', $suprimentos[$i])->first();
-                $suprimento->em_uso = $emUsoNovo;
-                $suprimento->save();
+                        if(isset($emUsosNovos[$i])) {
+                            $dados['em_uso'] = $emUsosNovos[$i];
+                        } else {
+                            $dados['em_uso'] = $emUsos[$i];
+                        }
+                        $this->suprimento->create($dados);
+                    }
+                }
             }
+
+            if($emUsosNovos != [] && count($emUsosNovos) > count($impressorasNovas)) {
+                foreach ($emUsosNovos as $i => $emUsoNovo) {
+                    $emUsoMudado = $this->suprimento->where([['produto_id', $impressoras[$i]], ['suprimento_id', $suprimento->id]])->first();
+                    $emUsoMudado->em_uso = $emUsoNovo;
+                    $emUsoMudado->save();
+                }
+            }
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao atualizar suprimento.';
+            $color = 'danger';
+            return redirect()->route('produtos.index', compact('mensagem', 'color'));
         }
 
-        return redirect()->route('produtos.index');   
+        $mensagem = 'Suprimento atualizado com sucesso!';
+        $color = 'success';
+        return redirect()->route('produtos.index', compact('mensagem', 'color'));
     }
 }

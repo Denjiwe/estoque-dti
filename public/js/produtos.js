@@ -18,7 +18,6 @@ tipoProduto.addEventListener('change', () => {
             quantidade.disabled = true;
             divTipoProduto.classList.replace('col-12', 'col-9');
             tooltip.style.display = 'flex';
-            descricao.classList.replace('col-6', 'col-5');
 
             // tabs e afins
             locaisLi.style.display = 'flex';
@@ -33,7 +32,6 @@ tipoProduto.addEventListener('change', () => {
             quantidade.disabled = false;
             divTipoProduto.classList.replace('col-9', 'col-12');
             tooltip.style.display = 'none';    
-            descricao.classList.replace('col-5', 'col-6');
 
             // tabs e afins
             locaisLi.style.display = 'none';
@@ -47,7 +45,6 @@ tipoProduto.addEventListener('change', () => {
             quantidade.disabled = false;
             divTipoProduto.classList.replace('col-9', 'col-12');
             tooltip.style.display = 'none';    
-            descricao.classList.replace('col-5', 'col-6');
 
             // tabs e afins
             impressorasLi.style.display = 'none';
@@ -58,6 +55,50 @@ tipoProduto.addEventListener('change', () => {
             break;
     }
 });
+
+switch (tipoProduto.value) {
+    case 'IMPRESSORA':
+        // inputs
+        quantidade.value = 0;
+        quantidade.disabled = true;
+        divTipoProduto.classList.replace('col-12', 'col-9');
+        tooltip.style.display = 'flex';
+
+        // tabs e afins
+        locaisLi.style.display = 'flex';
+        impressorasLi.style.display = 'none';
+        suprimentosLi.style.display = '';
+        primeiroHandle.style.display = '';
+        btnSubmit.style.display = 'none';
+        break;
+    case 'TONER':
+    case'CILINDRO' :
+        // inputs
+        quantidade.disabled = false;
+        divTipoProduto.classList.replace('col-9', 'col-12');
+        tooltip.style.display = 'none';    
+
+        // tabs e afins
+        locaisLi.style.display = 'none';
+        impressorasLi.style.display = 'flex';
+        primeiroHandle.style.display = '';
+        suprimentosLi.style.display = 'none';
+        btnSubmit.style.display = 'none';
+        break;
+    case 'OUTROS' :
+        // inputs
+        quantidade.disabled = false;
+        divTipoProduto.classList.replace('col-9', 'col-12');
+        tooltip.style.display = 'none';    
+
+        // tabs e afins
+        impressorasLi.style.display = 'none';
+        locaisLi.style.display = 'none';
+        suprimentosLi.style.display = 'none';
+        primeiroHandle.style.display = 'none';
+        btnSubmit.style.display = '';
+        break;
+}
 
 $('.handle_aba').on('click', (obj) => {
 

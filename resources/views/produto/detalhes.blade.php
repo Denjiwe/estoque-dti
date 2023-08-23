@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <x-box titulo="{{ucfirst(strtolower($produto->tipo_produto))}} {{$produto->modelo_produto}}" id="content">
+    <x-box titulo="{{$produto->modelo_produto}}" id="content">
         <x-slot:body>
             @include('produto.components.form_detalhes')
         </x-slot:body>

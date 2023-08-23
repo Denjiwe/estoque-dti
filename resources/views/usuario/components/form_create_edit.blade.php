@@ -21,7 +21,7 @@
         <div class="col-2">
             <label for="user_interno" class="fom-label">Funcionário Interno</label>
             <select name="user_interno" id="user_interno" class="form-select @error('user_interno') is-invalid @enderror">
-                <option selected>-- Usuário Interno? --</option>
+                <option selected hidden>-- Usuário Interno? --</option>
                 <option value="SIM" @php if(isset($usuario->user_interno) && $usuario->user_interno == 'SIM') echo 'selected'@endphp >Sim</option>
                 <option value="NAO" @php if(isset($usuario->user_interno) && $usuario->user_interno == 'NAO') echo 'selected'@endphp >Não</option>
             </select>
@@ -45,7 +45,7 @@
         <div class="col-2">
             <label for="status" class="fom-label">Status</label>
             <select name="status" id="status" class="form-select @error('user_interno') is-invalid @enderror">
-                <option selected>-- Selecione o Status --</option>
+                <option selected hidden>-- Selecione o Status --</option>
                 <option value="ATIVO" @php if(isset($usuario->status) && $usuario->status == 'ATIVO') echo 'selected'@endphp >Ativo</option>
                 <option value="INATIVO" @php if(isset($usuario->status) && $usuario->status == 'INATIVO') echo 'selected'@endphp >Inativo</option>
             </select>
@@ -57,7 +57,7 @@
         <div class="col-3">
             <label for="diretoria" class="fom-label">Diretoria</label>
             <select name="diretoria_id" id="diretoria" class="form-select @error('diretoria_id') is-invalid @enderror">
-                <option selected>-- Selecione a Diretoria --</option>
+                <option selected hidden>-- Selecione a Diretoria --</option>
                 @foreach ($diretorias as $diretoria)
                     <option value="{{$diretoria->id}}" @php if(isset($usuario->diretoria->id) && $usuario->diretoria->id == $diretoria->id) echo 'selected'@endphp >{{$diretoria->nome}}</option>
                 @endforeach
@@ -68,7 +68,7 @@
         <div class="col-3">
             <label for="divisao" class="fom-label">Divisão</label>
             <select name="divisao_id" id="divisao" class="form-select @error('divisao_id') is-invalid @enderror">
-                <option value="0" selected>-- Selecione a Divisão --</option>
+                <option value="0" selected>Nenhuma</option>
                 @foreach ($divisoes as $divisao)
                     <option value="{{$divisao->id}}" @if(isset($usuario->divisao->id) && $usuario->divisao->id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
                 @endforeach

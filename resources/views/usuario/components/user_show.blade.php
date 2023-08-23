@@ -91,15 +91,6 @@
                                     </button>
                                 </a>
                             </div>
-                            <div class="col">
-                                {{-- <form id="form_{{$solicitacao->id}}" action="{{route('solicitacoes.destroy', ['solicitacao' => $solicitacao->id])}}" method="post">
-                                @csrf
-                                @method('DELETE') --}}
-                                    <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$solicitacao->id}})" title="Excluir">
-                                        <i class="fa fa-lg fa-fw fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
                         </div>
                     </td>
                 </tr>

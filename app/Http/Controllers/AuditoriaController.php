@@ -94,7 +94,11 @@ class AuditoriaController extends Controller
                     break;
                 case 'Produto':
                     $produto = Produto::find($auditoria->auditable_id);
-                    $model = 'o produto '.$produto->modelo_produto;
+                    if ($produto != null) {
+                        $model = 'o produto '.$produto->modelo_produto;
+                    } else {
+                        $model = 'um produto';
+                    }
                     break;
             }
 
@@ -153,11 +157,14 @@ class AuditoriaController extends Controller
 
         $mensagensFormatadas = array();
         foreach ($mensagens as $mensagem) {
-            $mensagem = str_replace('qntde_estoque', 'quantidade estoque', $mensagem);
-            $mensagem = str_replace('qntde_solicitada', 'quantidade solicitada', $mensagem);
             $mensagem = str_replace('qntde', 'quantidade', $mensagem);
-            $mensagem = str_replace('senha_provisoria', 'senha provisória', $mensagem);
+            $mensagem = str_replace('provisoria', 'provisória', $mensagem);
             $mensagem = str_replace('valor "",', 'valor vazio,', $mensagem);
+            $mensagem = str_replace('valor ""', 'valor vazio ', $mensagem);
+            $mensagem = str_replace('_', ' ', $mensagem);
+            $mensagem = str_replace('descricao', 'descrição', $mensagem);
+            $mensagem = str_replace('SIM', 'Sim', $mensagem);
+            $mensagem = str_replace('NAO', 'Não', $mensagem);
         
             $mensagensFormatadas[] = $mensagem;
         }

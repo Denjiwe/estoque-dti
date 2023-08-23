@@ -55,13 +55,13 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::post('produtos/{id}/locais', [LocalImpressoraController::class, 'store'])->name('locais.store');
     Route::match(['put', 'patch'], 'produtos/{id}/locais', [LocalImpressoraController::class, 'update'])->name('locais.update');
 
-    Route::get('produtos/{id}/suprimentos', [SuprimentoController::class, 'create'])->name('suprimentos.create');
-    Route::post('produtos/{id}/suprimentos', [SuprimentoController::class, 'store'])->name('suprimentos.store');
-    Route::match(['put', 'patch'], 'produtos/{id}/suprimentos', [SuprimentoController::class, 'update'])->name('suprimentos.update');
+    Route::get('produtos/{id}/suprimentos', [ImpressoraController::class, 'create'])->name('suprimentos.create');
+    Route::post('produtos/{id}/suprimentos', [ImpressoraController::class, 'store'])->name('suprimentos.store');
+    Route::match(['put', 'patch'], 'produtos/{id}/suprimentos', [ImpressoraController::class, 'update'])->name('suprimentos.update');
 
-    Route::get('produtos/{id}/impressoras', [ImpressoraController::class, 'create'])->name('impressoras.create');
-    Route::post('produtos/{id}/impressoras', [ImpressoraController::class, 'store'])->name('impressoras.store');
-    Route::match(['put', 'patch'], 'produtos/{id}/impressoras', [ImpressoraController::class, 'update'])->name('impressoras.update');
+    Route::get('produtos/{id}/impressoras', [SuprimentoController::class, 'create'])->name('impressoras.create');
+    Route::post('produtos/{id}/impressoras', [SuprimentoController::class, 'store'])->name('impressoras.store');
+    Route::match(['put', 'patch'], 'produtos/{id}/impressoras', [SuprimentoController::class, 'update'])->name('impressoras.update');
 
     Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
     Route::post('/relatorios/pesquisa', [RelatorioController::class, 'pesquisa'])->name('relatorios.pesquisa');

@@ -7,6 +7,20 @@
 @endsection
 
 @section('content')
+
+    @if(isset($_GET['color']))
+        <div class="position-fixed top-0 pt-5 mt-3 pe-2 end-0" style="z-index: 11">
+            <div class="toast fade show align-items-center bg-{{$_GET['color']}}" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ $_GET['mensagem'] }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    @endif
+
     {{-- Box de pesquisa --}}
     <x-box titulo="Pesquisar" id="searchBox">
         <x-slot:body>
@@ -143,11 +157,15 @@
 @section('js')
     <script> 
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir a diretoria? As divisões e as impressoras ligadas serão excluídas!!!')) {                                                       
+            if (confirm('Tem certeza que quer excluir a diretoria? As divisões e as impressoras ligadas serão excluídas também!!!')) {                                                       
                 document.getElementById('form_'+id).submit()                                                    
             }
         }
 
+        url = new URL(window.location.href);
+        url.searchParams.delete("mensagem");
+        url.searchParams.delete("color");
+        window.history.pushState('object or string', 'Title', url)
     </script>
     <script src="{{asset('js/pesquisa.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
