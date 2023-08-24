@@ -30,7 +30,7 @@
     - No chart de entregas, trazer o dado de % de diferença do mês anterior
 - [X] Fazer botão de toggle entre visualização em log e tabela, renderizando as duas, ocultando com display none
 - [X] Usar toasts para avisar mudanças
-    - Fazer arquivo js para somente importar, realizando a limpeza da url e setInterval da remoção do toast
+    - [X] Fazer arquivo js para somente importar, realizando a limpeza da url e setInterval da remoção do toast
 - Responsividade 🫣
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt

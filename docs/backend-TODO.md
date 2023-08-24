@@ -17,3 +17,6 @@
 
 - [X] Troca do campo em uso de suprimentos não funciona, provavelmente está verificando para alterar somente se a impressora é diferente
 - [X] Troca de suprimentos com a falta do mesmo não está acontecendo
+- Demora nas requisições
+    - Scripts do bootstrap
+    - Gets e posts nas rotas

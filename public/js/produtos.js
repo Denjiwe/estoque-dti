@@ -69,7 +69,6 @@ switch (tipoProduto.value) {
         impressorasLi.style.display = 'none';
         suprimentosLi.style.display = '';
         primeiroHandle.style.display = '';
-        btnSubmit.style.display = 'none';
         break;
     case 'TONER':
     case'CILINDRO' :
@@ -83,7 +82,6 @@ switch (tipoProduto.value) {
         impressorasLi.style.display = 'flex';
         primeiroHandle.style.display = '';
         suprimentosLi.style.display = 'none';
-        btnSubmit.style.display = 'none';
         break;
     case 'OUTROS' :
         // inputs

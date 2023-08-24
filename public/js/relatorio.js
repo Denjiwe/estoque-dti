@@ -97,7 +97,11 @@ $(document).on('keyup', '#valor', function() {
             if($(document).find('#valor').val().length > 2) {
                 $('#valor').parent().append('<div id="nome">');
                 data.forEach((item) => {
-                    $('#nome').append('<div class="nome-item">' + item.nome + '</div>');  
+                    if($(document).find('#valor').val() == item.nome) {
+                        $('#nome').remove();
+                    } else {
+                        $('#nome').append('<div class="nome-item">' + item.nome + '</div>');  
+                    }
                 })
             }
         })

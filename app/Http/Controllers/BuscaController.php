@@ -33,6 +33,9 @@ class BuscaController extends Controller
                     break;
                 case 'Produto':
                     $busca = Produto::where('modelo_produto', 'like', '%'.$valor.'%')->get();
+                    foreach($busca as $b) {
+                        $b->nome = $b->modelo_produto;
+                    }
                     break;
             }
         } else {

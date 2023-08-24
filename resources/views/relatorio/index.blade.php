@@ -82,6 +82,7 @@
             border-right: 1px solid #d4d4d4;
             border-bottom: 1px solid #d4d4d4;
             background-color: #fff;
+            padding-left: 5px;
             z-index: 99;
             cursor: pointer;
         }
@@ -92,7 +93,7 @@
 
         #nome {
             position: absolute;
-            width: 90%;
+            width: 92%;
         }
     </style>
 @stop

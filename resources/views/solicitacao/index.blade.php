@@ -111,12 +111,8 @@
                 document.getElementById('form_'+id).submit()                                                    
             }
         }
-
-        url = new URL(window.location.href);
-        url.searchParams.delete("mensagem");
-        url.searchParams.delete("color");
-        window.history.pushState('object or string', 'Title', url)
-    </script>
+        </script>
+    <script src="{{asset('js/handleToasts.js')}}"></script>
     <script src="{{ asset('js/pesquisaSolicitacao.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @stop
