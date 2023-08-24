@@ -61,6 +61,10 @@
         </div>
 
         <div class="col-2">
+            <label>Quantidade Total Solicitada</label>
+        </div>
+
+        <div class="col-2">
             <label>Quantidade Solicitada</label>
         </div>
 
@@ -81,6 +85,12 @@
             <div class="col-2">
                 <div class="form-group">
                     <input type="text" class="form-control" value="{{$produto->qntde_estoque}}" readonly>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="qntde_total_solicitada[]" value="{{$produto->qntde_solicitada}}" readonly>
                 </div>
             </div>
 

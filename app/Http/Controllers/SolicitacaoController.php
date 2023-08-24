@@ -124,38 +124,46 @@ class SolicitacaoController extends Controller
             $usuario = $request->usuario_id;
         }
 
-        $solicitacao = $this->solicitacao->create([
-            'status'       => 'ABERTO',
-            'observacao'   => $request->observacao,
-            'usuario_id'   => $usuario, 
-            'divisao_id'   => $divisao, 
-            'diretoria_id' => $diretoria, 
-        ]);
+        try {
+            $solicitacao = $this->solicitacao->create([
+                'status'       => 'ABERTO',
+                'observacao'   => $request->observacao,
+                'usuario_id'   => $usuario, 
+                'divisao_id'   => $divisao, 
+                'diretoria_id' => $diretoria, 
+            ]);
 
-        foreach ($request->produto as $i => $produtoId) {
-            $dados = array('produto_id' => $produtoId, 'qntde' => $request->quantidade[$i], 'solicitacao_id' => $solicitacao->id);
+            foreach ($request->produto as $i => $produtoId) {
+                $dados = array('produto_id' => $produtoId, 'qntde' => $request->quantidade[$i], 'solicitacao_id' => $solicitacao->id);
 
-            $validacao = Validator::make($dados, $this->itemSolicitacao->rules(), $this->itemSolicitacao->feedback());
+                $validacao = Validator::make($dados, $this->itemSolicitacao->rules(), $this->itemSolicitacao->feedback());
 
-            if($validacao->fails())
-            {
-                return redirect()->back()->withErrors($validacao->errors())->withInput();
+                if($validacao->fails())
+                {
+                    return redirect()->back()->withErrors($validacao->errors())->withInput();
+                }
+
+                $itemSolicitacao = $this->itemSolicitacao->create($dados);
+
+                $produto = $this->produto->find($produtoId);
+                $produto->qntde_solicitada += $request->quantidade[$i];
+                $produto->save();
+
+                if($produto->qntde_solicitada > $produto->qntde_estoque)
+                {
+                    $solicitacao->status = 'AGUARDANDO';
+                    $solicitacao->save();
+                }
             }
-
-            $itemSolicitacao = $this->itemSolicitacao->create($dados);
-
-            $produto = $this->produto->find($produtoId);
-            $produto->qntde_solicitada += $request->quantidade[$i];
-            $produto->save();
-
-            if($produto->qntde_solicitada > $produto->qntde_estoque)
-            {
-                $solicitacao->status = 'AGUARDANDO';
-                $solicitacao->save();
-            }
+        } catch (\Exception $e) {
+            $mensagem = 'Erro ao cadastrar solicitação!';
+            $color = 'danger';
+            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
         }
 
-        return redirect()->route('solicitacoes.abertas');
+        $mensagem = 'Solicitação #'.$solicitacao->id.' cadastrada com sucesso!';
+        $color = 'success';
+        return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
     }
 
     /**
@@ -264,7 +272,9 @@ class SolicitacaoController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('solicitacoes.abertas');
+            $mensagem = 'Solicitação #'.$solicitacao->id.' atualizada com sucesso!';
+            $color = 'success';
+            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->withErrors($e->getMessage());
@@ -282,7 +292,9 @@ class SolicitacaoController extends Controller
         $solicitacao = $this->solicitacao->with(['produtos', 'entregas', 'itens_solicitacoes'])->find($id);
 
         if($solicitacao === null) {
-            return redirect()->back();
+            $mensagem = 'Solicitação não encontrada!';
+            $color = 'warning';
+            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
         }
 
         DB::beginTransaction();
@@ -310,11 +322,15 @@ class SolicitacaoController extends Controller
             $solicitacao->delete();
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withErrors($e->getMessage());
+            $mensagem = 'Erro ao excluir a solicitação.';
+            $color = 'danger';
+            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
         }
 
         DB::commit();
-        return redirect()->route('solicitacoes.abertas');
+        $mensagem = 'Solicitação #'.$id.' excluída com sucesso!';
+        $color = 'success';
+        return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
     }
 
     public function pesquisa(Request $request) {
