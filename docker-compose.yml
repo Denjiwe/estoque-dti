@@ -12,6 +12,8 @@ services:
       - ./docker/logs/php.log:/usr/local/var/log/
     links:
       - db
+    environment:
+      PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
   db:
     image: mysql:8.0.31
     container_name: mysql

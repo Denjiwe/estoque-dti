@@ -9,7 +9,7 @@
     - Verificar se é possível fazer algo em relação a exclusão direta de uma auditoria no banco de dados
 - [X] Criar um campo de senha provisória, para reset de senhas
 - Finalizar docker
-    - Fazer entrypoints para instalar o projeto do composer, fazendo verificação da pasta vendor
+    - Fazer entrypoints para instalar o projeto do composer, fazendo verificação da pasta vendor (possível criar script que deve ser executado pelo entrypoint, que faz a verificação)
     - Fazer verificação no entrypoint do npm se existe a pasta node_modules, evitando reinstalação em toda a execução
     - Instalar phpmyadmin
 
@@ -17,6 +17,6 @@
 
 - [X] Troca do campo em uso de suprimentos não funciona, provavelmente está verificando para alterar somente se a impressora é diferente
 - [X] Troca de suprimentos com a falta do mesmo não está acontecendo
-- Demora nas requisições
-    - Scripts do bootstrap
-    - Gets e posts nas rotas
+- Demora nas requisições (https://dev.to/tylerlwsmith/speed-up-laravel-in-docker-by-moving-vendor-directory-19b9), laravel sail, laravel octane
+    - [X] Scripts do bootstrap (opcache aparentemente resolveu)
+    - Gets e posts nas rotas (usar nginx e não o artisan deve melhorar)

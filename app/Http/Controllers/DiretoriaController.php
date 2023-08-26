@@ -20,10 +20,74 @@ class DiretoriaController extends Controller
      */
     public function index()
     {
-        $diretorias = $this->diretoria->with('orgao')->paginate(10);
+        $diretorias = $this->diretoria->with('orgao')->get();
         $orgaos = Orgao::orderBy('nome')->get();
 
-        return view('diretoria.index', ['diretorias' => $diretorias, 'titulo' => 'Diretorias Cadastradas', 'orgaos' => $orgaos]);
+        $heads = [
+            'ID',
+            'Nome',
+            'Órgão',
+            'Status',
+            'Data de Criação',
+            'Data de Edição',
+            ['label' => 'Ações', 'no-export' => true, 'width' => '10'],
+        ];
+
+        foreach ($diretorias as $diretoria) 
+        {
+            $dataCriacao = date('d/m/Y',strtotime($diretoria->created_at));
+            $dataEdicao = date('d/m/Y',strtotime($diretoria->updated_at));
+
+            $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$diretoria->id.'" class="btn btn-xs btn-default text-primary mx-1 shadow" type="button" title="Editar">
+                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                        </button>';
+            $btnDelete = 
+                            '<button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$diretoria->id.')" title="Excluir">
+                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                            </button>'
+                        ;
+            $btnDetails = '<a href="'.route("diretorias.show", ["diretoria" => $diretoria->id]).'"><button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Detalhes">
+                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                            </button></a>';
+
+            $data[] = [
+                $diretoria->id,
+                $diretoria->nome,
+                $diretoria->orgao->nome,
+                ucfirst(strtolower($diretoria->status)),
+                $dataCriacao,
+                $dataEdicao,
+                '<nobr>'.$btnEdit.$btnDetails.$btnDelete.'</nobr>'
+            ];
+        }
+
+        $config = [
+            'data' => $data,
+            'dom' => '<"row" <"col-sm-12 d-flex justify-content-start" f>>t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
+            'order' => [[0, 'asc']],
+            'columns' => [null, null, null, null, null, null, ['orderable' => false]],
+            "bLengthChange" => false,
+            'language' => [
+                'sEmptyTable' => "Nenhum registro encontrado",
+                'sInfo' =>	"Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                'sInfoEmpty' =>	"Mostrando 0 até 0 de 0 registros",
+                'sInfoFiltered' =>	"(Filtrados de _MAX_ registros)",
+                "sInfoThousands" => ".",
+                "sLengthMenu" => "_MENU_ resultados por página",
+                "sLoadingRecords" => "Carregando...",
+                "sProcessing" => "Processando...",
+                "sZeroRecords" => "Nenhum registro encontrado",
+                "sSearch" => "Pesquisa rápida: ",
+                "oPaginate" => [
+                    "sNext" => "Próximo",
+                    "sPrevious" =>	"Anterior",
+                    "sFirst" =>	"Primeiro",
+                    "sLast" =>	"Último"
+                ],
+            ]
+        ];
+
+        return view('diretoria.index', ['heads' => $heads, 'config' => $config, 'diretorias' => $diretorias, 'titulo' => 'Diretorias Cadastradas', 'orgaos' => $orgaos]);
     }
 
     /**

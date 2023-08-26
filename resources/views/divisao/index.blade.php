@@ -6,6 +6,8 @@
     <h1>Cadastro de Divisões</h1>
 @endsection
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 @section('content')
 
     @if(isset($_GET['color']))
@@ -52,79 +54,13 @@
     <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             @if (count($divisoes) > 0)
-            <table class="table text-center table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Diretoria</th>
-                        <th>Status</th>
-                        <th>Data de Criação</th>
-                        <th>Data de Atualização</th>
-                        <th colspan="2">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($divisoes as $key => $divisao)
-                    @php
-                        $dataCriacao = strtotime($divisao->created_at);
-                        $dataEdicao = strtotime($divisao->updated_at);
-                    @endphp
-                        <tr>
-                            <td>{{$divisao->id}}</td>
-                            <td>{{$divisao->nome}}</td>
-                            <td>{{$divisao->diretoria->nome}}</td>
-                            <td>{{ucfirst(strtolower($divisao->status))}}</td>
-                            <td>{{(date('d/m/Y', $dataCriacao))}}</td>
-                            <td>{{(date('d/m/Y', $dataEdicao))}}</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col">
-                                        <button data-bs-toggle="modal" data-bs-target="#editarModal{{$divisao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col">
-                                        <a href="{{route('divisao.show', ['divisao' => $divisao->id])}}">
-                                            <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
-                                                <i class="fa fa-lg fa-fw fa-eye"></i>
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <form id="form_{{$divisao->id}}" action="{{route('divisao.destroy', ['divisao' => $divisao->id])}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir({{$divisao->id}})" title="Excluir">
-                                                <i class="fa fa-lg fa-fw fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                <x-adminlte-datatable id="table" :heads="$heads" :config="$config" bordered striped compressed/>
             @endif
         </x-slot:body>
 
         <x-slot:footer>
-            <div class="row mt-3">
-                <div class="col-6">
-                    <x-paginate>
-                        <x-slot:content>
-                            <li class="page-item"><a class="page-link {{ $divisoes->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $divisoes->previousPageUrl() }}">Anterior</a></li>
-                                @for($i = 1; $i <= $divisoes->lastPage(); $i++)
-                                    <li class="page-item {{ $divisoes->currentPage() == $i ? 'active' : ''}}">
-                                        <a class="page-link" href="{{ $divisoes->url($i) }}">{{ $i }}</a>
-                                    </li>
-                                @endfor
-                            <li class="page-item"><a class="page-link {{ $divisoes->currentPage() == $divisoes->lastPage() ? 'disabled' : ''}}" href="{{ $divisoes->nextPageUrl() }}">Próxima</a></li>
-                        </x-slot:content>
-                    </x-paginate>
-                </div>
-                <div class="col-6">
+            <div class="row mt-3 mb-3">
+                <div class="col-12">
                     <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#adicionarModal">Adicionar</button>
                 </div>
             </div>
@@ -158,5 +94,15 @@
     </script>
     <script src="{{asset('js/handleToasts.js')}}"></script>
     <script src="{{asset('js/pesquisa.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@stop
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugin', true)
+
+@section('css')
+    <style scoped>
+        body {
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+    </style>
 @stop

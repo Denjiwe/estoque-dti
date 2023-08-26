@@ -23,7 +23,7 @@
 - [X] Adicionar campo de observação da solicitação ao editar uma solicitação
 - [X] Verificar se vale a pena fazer um paginate dentro do box-input
 - [X] Remover campo de criar nova conta no login, além de criar modal para entrarem em contato (tabela no banco que contém número de telefone, e a assinatura no email)
-- Mudar tabelas para as do adminlte, que possuem troca de ordem dos campos
+- [~X] Mudar tabelas para as do adminlte, que possuem troca de ordem dos campos
     - Fazer o mesmo para modais
 - [X] Colocar mascara em campos de cpf
 - [X] Fazer home, trazendo informações sobre os pedidos e entregas, etc
@@ -42,3 +42,4 @@
 - [X] Solicitacoes.destroy não funciona
 - Dark theme não funciona nos box 
 - [X] Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
+- Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos
