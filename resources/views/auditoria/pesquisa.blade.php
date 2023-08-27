@@ -51,7 +51,7 @@
                                                     {{ $key }}: {{ $value }} <br>
                                                 @endforeach
                                             </td>
-                                            <td>
+                                            <td style='max-width: 300px'>
                                                 @foreach($auditoria->new_values as $key => $value)
                                                     {{ $key }}: {{ $value }} <br>
                                                 @endforeach

@@ -23,10 +23,9 @@
         </div>
     @endif
 
-    {{-- Box de pesquisa --}}
-    <x-box titulo="Pesquisar" id="searchBox">
-        <x-slot:body>
-            <form action="{{ route('orgao.pesquisa') }}" method="GET">
+    <x-adminlte-card  theme="primary" theme-mode="outline">
+        <h3>Pesquisar</h3>
+        <form action="{{ route('orgao.pesquisa') }}" method="GET">
                 <div class="row">
                     <div class="col-2">
                         <label for="campo">Selecione o campo de pesquisa</label>
@@ -47,8 +46,7 @@
                     </div>
                 </div>
             </form>
-        </x-slot:body>
-    </x-box>
+    </x-adminlte-card>
 
     {{-- Box de exibição --}}
     <x-box titulo="Órgãos Cadastrados" id="main">

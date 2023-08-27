@@ -40,6 +40,7 @@
 - [X] Hamburger menu da topbar está muito próximo da sidebar
 - [X] Quando vai adicionar um cilíndro para uma impressora que não possui um cadastrado, adiciona espaço em branco
 - [X] Solicitacoes.destroy não funciona
-- Dark theme não funciona nos box 
+- Dark theme não funciona nos box
+    - Utilizar x-adminlte-card irá resolver
 - [X] Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
 - [X] Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos
