@@ -1,6 +1,6 @@
 $(document).ready(function() {
     let trLocal = document.querySelector('.linha');
-    let url = 'http://localhost:8080/api/';
+    let url = 'http://localhost:80/api/';
 
     $('#adicionar').click(function() {
         var novaLinha = $(trLocal).clone(true);
