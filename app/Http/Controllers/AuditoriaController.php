@@ -74,8 +74,10 @@ class AuditoriaController extends Controller
 
             switch ($model) {
                 case 'Usuario':
-                    $usuario = Usuario::find($auditoria->auditable_id);
-                    $model = 'o usuário '.$usuario->nome.', id';
+                    $usuarioAlvo = Usuario::find($auditoria->auditable_id);
+                    if($usuarioAlvo != null) {
+                        $model = 'o usuário '.$usuarioAlvo->nome.', id';
+                    }                     
                     break;
                 case 'Solicitacao':
                     $model = 'a solicitação';
@@ -152,7 +154,12 @@ class AuditoriaController extends Controller
                     break;
             }
 
-            $mensagens[$key] = '- '.$auditoria->usuario->nome.' '.$acao.' '.$model.' de id '.$auditoria->auditable_id.' com '.$campos.' em '.Carbon::parse($auditoria->created_at)->format('d/m/Y H:i:s');
+            if ($auditoria->usuario == null) {
+                $auditoria->usuario = new Usuario();
+                $auditoria->usuario->nome = 'Sistema';
+            }
+
+            $mensagens[$key] = '- '.$auditoria->usuario->nome.' '.$acao.' '.$model.' de id '.$auditoria->auditable_id.', '.$campos.' em '.Carbon::parse($auditoria->created_at)->format('d/m/Y H:i:s');
         }
 
         $mensagensFormatadas = array();
@@ -165,6 +172,7 @@ class AuditoriaController extends Controller
             $mensagem = str_replace('descricao', 'descrição', $mensagem);
             $mensagem = str_replace('SIM', 'Sim', $mensagem);
             $mensagem = str_replace('NAO', 'Não', $mensagem);
+            $mensagem = str_replace('Usuario', 'usuário', $mensagem);
         
             $mensagensFormatadas[] = $mensagem;
         }

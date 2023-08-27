@@ -41,10 +41,13 @@ class DiretoriaController extends Controller
             $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$diretoria->id.'" class="btn btn-xs btn-default text-primary mx-1 shadow" type="button" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </button>';
-            $btnDelete = 
-                            '<button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$diretoria->id.')" title="Excluir">
+            $btnDelete = '<form action="'.route("diretorias.destroy", ["diretoria" => $diretoria->id]).'" method="POST" id="form_'.$diretoria->id.'" style="display:inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="'.csrf_token().'">
+                            <button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$diretoria->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
-                            </button>'
+                            </button>
+                            </form>'
                         ;
             $btnDetails = '<a href="'.route("diretorias.show", ["diretoria" => $diretoria->id]).'"><button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Detalhes">
                                 <i class="fa fa-lg fa-fw fa-eye"></i>

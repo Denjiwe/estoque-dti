@@ -26,7 +26,7 @@ class UsuarioController extends Controller
 
         $heads = [
             'ID',
-            'Nome',
+            ['label' => 'Nome', 'width' => '15'],
             'Status',
             'Usuário Interno',
             'Diretoria',
@@ -44,11 +44,13 @@ class UsuarioController extends Controller
             $btnEdit = '<a href="'.route("usuarios.edit", ["usuario" => $usuario->id]).'"><button class="btn btn-xs btn-default text-primary mx-1 shadow" type="button" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </button></a>';
-            $btnDelete = 
-                            '<button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$usuario->id.')" title="Excluir">
+            $btnDelete = '<form action="'.route("usuarios.destroy", ["usuario" => $usuario->id]).'" method="POST" id="form_'.$usuario->id.'" style="display:inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="'.csrf_token().'">
+                            <button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$usuario->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
-                            </button>'
-                        ;
+                            </button>
+                            </form>';
             $btnDetails = '<a href="'.route("usuarios.show", ["usuario" => $usuario->id]).'"><button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Detalhes">
                                 <i class="fa fa-lg fa-fw fa-eye"></i>
                             </button></a>';

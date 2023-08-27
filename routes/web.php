@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
 // rotas autenticação
 Route::get('/login', function () {
     if (Auth::check()) {
-        return redirect()->route('minhas-solicitacoes');
+        return redirect()->route('minhas-solicitacoes.abertas');
     } else {
         return view('auth.login');
     }

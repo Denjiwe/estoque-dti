@@ -42,4 +42,4 @@
 - [X] Solicitacoes.destroy não funciona
 - Dark theme não funciona nos box 
 - [X] Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
-- Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos
+- [X] Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos

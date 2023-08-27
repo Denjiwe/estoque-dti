@@ -94,7 +94,7 @@
         var view = new google.visualization.DataView(data);
 
         var options = {
-            title: "Produtos mais entregues no último mês",
+            title: "Produtos mais entregues neste mês",
             height: 412.5,
             legend: { position: "none" },
             hAxis: {

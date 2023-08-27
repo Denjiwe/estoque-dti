@@ -53,7 +53,7 @@
     {{-- Box de exibição --}}
     <x-box titulo="Órgãos Cadastrados" id="main">
         <x-slot:body>
-            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" bordered striped compressed/>
+            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" with-footer footer-theme="dark" bordered striped compressed/>
         </x-slot:body>
 
         <x-slot:footer>

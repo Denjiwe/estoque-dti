@@ -2,11 +2,9 @@ version: "3"
 services:
   php:
     build:
-      context: ./
-      dockerfile: docker/php/Dockerfile
+      context: .
+      dockerfile: docker/php8.2/Dockerfile
     container_name: php
-    ports: 
-      - "8080:8000"
     volumes:
       - ./:/var/www/html/
       - ./docker/logs/php.log:/usr/local/var/log/
@@ -14,6 +12,21 @@ services:
       - db
     environment:
       PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
+    networks:
+      - app-network
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
   db:
     image: mysql:8.0.31
     container_name: mysql
@@ -25,6 +38,8 @@ services:
       - ./db/database/:/var/lib/mysql/
     environment:
       MYSQL_ROOT_PASSWORD: root
+    networks:
+      - app-network
   npm:
     image: node:latest
     container_name: npm
@@ -34,3 +49,9 @@ services:
       - ./:/var/www/html/
     working_dir: /var/www/html/
     entrypoint: /bin/sh -c "npm run dev -- --host"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

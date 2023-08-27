@@ -56,7 +56,7 @@
     <x-box titulo="{{ $titulo }}" id="main">
         <x-slot:body>
             @if (count($produtos) > 0)
-                <x-adminlte-datatable id="table" :heads="$heads" :config="$config" bordered striped compressed/>
+                <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" with-footer footer-theme="dark" bordered striped compressed />
             @endif
         </x-slot:body>
 

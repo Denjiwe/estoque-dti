@@ -69,7 +69,7 @@ class HomeController extends Controller
         }
 
         $produtosEntregues = ItensSolicitacao::withCount(['entregas' => function ($query) {
-            $query->whereDate('created_at', '>=', Carbon::now()->subDays(30));
+            $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
         }])
         ->with('produto')
         ->orderBy('entregas_count', 'desc')
@@ -88,12 +88,10 @@ class HomeController extends Controller
         $entregasFormatadas = "";
 
         foreach ($entregasChart as $key => $entrega) {
-            if($entrega != end($entregasChart)) {
-                $entregasFormatadas .= "['".$key."', ".$entrega."],";
-            } else {
-                $entregasFormatadas .= "['".$key."', ".$entrega."]";
-            }
+            $entregasFormatadas .= "['".$key."', ".$entrega."],";
         }
+
+        $entregasFormatadas = substr($entregasFormatadas, 0, -1);
         
         return view('home', compact('entregas', 'solicitacoes', 'usuarios', 'produtos', 'entregasUserCount', 'solicitacoesUserCount', 'solicitacoesChart', 'entregasFormatadas'));
     }

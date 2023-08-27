@@ -41,11 +41,13 @@ class DivisaoController extends Controller
             $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$divisao->id.'" class="btn btn-xs btn-default text-primary mx-1 shadow" type="button" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </button>';
-            $btnDelete = 
-                            '<button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$divisao->id.')" title="Excluir">
+            $btnDelete ='<form action="'.route("divisao.destroy", ["divisao" => $divisao->id]).'" method="POST" id="form_'.$divisao->id.'" style="display:inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="'.csrf_token().'">
+                            <button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$divisao->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
-                            </button>'
-                        ;
+                            </button>
+                            </form>';
             $btnDetails = '<a href="'.route("divisao.show", ["divisao" => $divisao->id]).'"><button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Detalhes">
                                 <i class="fa fa-lg fa-fw fa-eye"></i>
                             </button></a>';

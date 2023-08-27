@@ -17,6 +17,14 @@
 
 - [X] Troca do campo em uso de suprimentos não funciona, provavelmente está verificando para alterar somente se a impressora é diferente
 - [X] Troca de suprimentos com a falta do mesmo não está acontecendo
-- Demora nas requisições (https://dev.to/tylerlwsmith/speed-up-laravel-in-docker-by-moving-vendor-directory-19b9), laravel sail, laravel octane
-    - [X] Scripts do bootstrap (opcache aparentemente resolveu)
-    - Gets e posts nas rotas (usar nginx e não o artisan deve melhorar)
+- [X] Demora nas requisições (https://dev.to/tylerlwsmith/speed-up-laravel-in-docker-by-moving-vendor-directory-19b9), laravel sail, laravel octane
+    - [X] Scripts do bootstrap (opcache resolveu)
+    - [X] Gets e posts nas rotas (problema era o wsl-2, trocando para hyper-v resulta em reqs de 50ms)
+        - https://www.cloudsigma.com/deploying-laravel-nginx-and-mysql-with-docker-compose        
+        - https://github.com/danielmccoy/alpine-nginx-php-laravel/blob/master/Dockerfile
+        - https://dev.to/jackmiras/laravel-with-php7-4-in-an-alpine-container-3jk6
+        - https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose
+        - https://laracasts.com/discuss/channels/tips/nginx-php8-fpm-docker-image-for-laravel-8-dev-deployment
+        - https://hub.docker.com/r/tangramor/nginx-php8-fpm
+        - https://dop3ch3f.medium.com/dockerize-a-laravel-application-with-nginx-php-fpm-node-js-bonus-deploy-to-cloudrun-cce96dfd2496
+        - https://github.com/joseluisq/alpine-php-fpm/blob/master/8.2-fpm/Dockerfile

@@ -1,4 +1,4 @@
-var url = 'http://localhost:8080/api/';
+var url = 'http://localhost:80/api/';
 var valorAnteriorItem;
 
 $("#item").on('change', function() {
