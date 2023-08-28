@@ -59,7 +59,7 @@ tipoProduto.addEventListener('change', () => {
 switch (tipoProduto.value) {
     case 'IMPRESSORA':
         // inputs
-        quantidade.value = 0;
+        if (quantidade.value == '') quantidade.value = 0;
         quantidade.disabled = true;
         divTipoProduto.classList.replace('col-12', 'col-9');
         tooltip.style.display = 'flex';
