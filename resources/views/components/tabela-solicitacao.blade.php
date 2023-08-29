@@ -12,7 +12,9 @@
             <th>Divisão</th>
             <th>Status</th>
             <th>Data de Criação</th>
-            <th>Ações</th>
+            @if(auth()->user()->user_interno == 'SIM')
+                <th>Ações</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -30,26 +32,28 @@
                 <td>{{$solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma'}}</td>
                 <td>{{ucfirst(strtolower($solicitacao->status))}}</td>
                 <td>{{(date('d/m/Y', $dataCriacao))}}</td>
-                <td>
-                    <div class="row">
-                        <div class="col">
-                            <a href="{{ route('solicitacoes.update', ['id' => $solicitacao->id]) }}">
-                                <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
-                                    <i class="fa fa-lg fa-fw fa-pen"></i>
-                                </button>
-                            </a>
+                @if(auth()->user()->user_interno == 'SIM')
+                    <td>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{ route('solicitacoes.update', ['id' => $solicitacao->id]) }}">
+                                    <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
+                                        <i class="fa fa-lg fa-fw fa-pen"></i>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <form id="form_{{$solicitacao->id}}" action="{{route('solicitacoes.destroy', ['id' => $solicitacao->id])}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                    <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$solicitacao->id}})" title="Excluir">
+                                        <i class="fa fa-lg fa-fw fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col">
-                            <form id="form_{{$solicitacao->id}}" action="{{route('solicitacoes.destroy', ['id' => $solicitacao->id])}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                                <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$solicitacao->id}})" title="Excluir">
-                                    <i class="fa fa-lg fa-fw fa-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </td>
+                    </td>
+                @endif
             </tr>
         @endforeach
     </tbody>

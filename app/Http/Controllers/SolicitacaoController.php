@@ -158,12 +158,20 @@ class SolicitacaoController extends Controller
         } catch (\Exception $e) {
             $mensagem = 'Erro ao cadastrar solicitação!';
             $color = 'danger';
-            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+            if (auth()->user()->user_interno == 'NAO') {
+                return redirect()->route('minhas-solicitacoes.abertas', compact('mensagem', 'color'));
+            } else {
+                return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+            }
         }
 
         $mensagem = 'Solicitação #'.$solicitacao->id.' cadastrada com sucesso!';
         $color = 'success';
-        return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+        if (auth()->user()->user_interno == 'NAO') {
+            return redirect()->route('minhas-solicitacoes.abertas', compact('mensagem', 'color'));
+        } else {
+            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+        }
     }
 
     /**

@@ -24,9 +24,9 @@ class Solicitacao extends Model implements Auditable
     public function rules() {
         return [
             'observacao' => 'nullable|max:100',
-            'usuario_id' => 'required|exists:usuarios,id',
-            'divisao_id' => 'exists:divisoes,id|nullable',
-            'diretoria_id' => 'required|exists:diretorias,id'
+            'usuario_id' => 'nullable|exists:usuarios,id',
+            'divisao_id' => 'nullable|exists:divisoes,id|nullable',
+            'diretoria_id' => 'nullable|exists:diretorias,id'
         ];
     }
 
