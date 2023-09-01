@@ -11,12 +11,12 @@
         <div class="row">
             <div class="col-2">
                 <div class="form-floating">
-                    <select name="tipo_produto" id="tipo_produto" @php if(isset($produto->tipo_produto)) echo 'disabled' @endphp class="form-select @error('tipo_produto') is-invalid @enderror">
+                    <select name="tipo_produto" id="tipo_produto" class="form-select @if(isset($produto->tipo_produto)) form-control @endif @error('tipo_produto') is-invalid @enderror" @if(isset($produto->tipo_produto)) disabled @endif>
                         <option selected hidden>Selecione o Tipo do Produto</option>
-                        <option value="IMPRESSORA" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'IMPRESSORA') echo 'selected'@endphp >Impressora</option>
-                        <option value="TONER" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'TONER') echo 'selected'@endphp >Toner</option>
-                        <option value="CILINDRO" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'CILINDRO') echo 'selected'@endphp >Cilíndro</option>
-                        <option value="OUTROS" @php if(isset($produto->tipo_produto) && $produto->tipo_produto == 'OUTROS') echo 'selected'@endphp >Outros</option>
+                        <option value="IMPRESSORA" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'IMPRESSORA') selected @endif >Impressora</option>
+                        <option value="TONER" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'TONER') selected @endif >Toner</option>
+                        <option value="CILINDRO" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'CILINDRO') selected @endif >Cilíndro</option>
+                        <option value="OUTROS" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'OUTROS') selected @endif >Outros</option>
                     </select>
                     <label for="tipo_produto">Tipo do Produto</label>
                     {{ $errors->has('tipo_produto') ? $errors->first('tipo_produto') : '' }}
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-12" id="divTipoProduto">
                         <div class="form-floating">
-                            <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @php if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') echo 'disabled' @endphp placeholder="Quantidade em estoque" class="form-control @error('qntde_estoque') is-invalid @enderror">
+                            <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') disabled @endif placeholder="Quantidade em estoque" class="form-control @error('qntde_estoque') is-invalid @enderror">
                             <label for="qntde_estoque">Quantidade</label>
                             {{ $errors->has('qntde_estoque') ? $errors->first('qntde_estoque') : '' }}
                         </div>

@@ -12,8 +12,8 @@
         <h3>Pesquisar</h3>
         <form action="{{ route('entregas.pesquisa') }}" method="GET">
             <div class="row">
-                    <div class="col-2">
-                        <label for="campo">Selecione o campo de pesquisa</label>
+                    <div class="col-7 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
+                        <label for="campo">Campo de pesquisa</label>
                         <select id="campo" class="form-select">
                             <option value="id" selected>ID</option>
                             <option value="solicitacao">Código da Solicitação</option>
@@ -25,7 +25,7 @@
                             <option value="created_at">Data de Entrega</option>
                         </select>
                     </div>
-                    <div class="col-2" id="pesquisa">
+                    <div class="col-5 col-sm-5 col-xl-3 col-lg-4 col-xxl-2" id="pesquisa">
                         <label for="id">ID</label>
                         <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                     </div>
@@ -41,7 +41,7 @@
         <h3>{{ $titulo }}</h3>
 
         @if (count($entregas) > 0)
-        <table class="table text-center table-hover table-bordered">
+        <table class="table text-center table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -122,4 +122,8 @@
     </script>
     <script src="{{asset('js/pesquisaEntrega.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
 @stop

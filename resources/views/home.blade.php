@@ -115,10 +115,5 @@
 @endsection
 
 @section('css')
-    <style scoped>
-        body {
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
 @endsection

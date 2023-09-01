@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-2">
                     <label for="campo">Filtro</label>
-                    <select id="campo" name="campo" class="form-select" disabled>
+                    <select id="campo" name="campo" class="form-control form-select" disabled>
                         <option value="todos" selected>Todos</option>
                         <option value="id">ID</option>
                         <option value="nome">Nome</option>
@@ -56,7 +56,7 @@
                     </select>
                 </div>
                 <div id="formato" class="col-2">
-                    <label for="formato">Formato do Arquivo</label>
+                    <label for="formato">Formato</label>
                     <select id="formato" name="formato" class="form-select">
                         <option value="pdf" selected>PDF</option>
                         <option value="xslx">XSLX</option>

@@ -38,17 +38,17 @@ class DivisaoController extends Controller
             $dataCriacao = date('d/m/Y',strtotime($divisao->created_at));
             $dataEdicao = date('d/m/Y',strtotime($divisao->updated_at));
 
-            $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$divisao->id.'" class="btn btn-sm text-primary mx-1 shadow" type="button" title="Editar">
+            $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$divisao->id.'" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </button>';
             $btnDelete ='<form action="'.route("divisao.destroy", ["divisao" => $divisao->id]).'" method="POST" id="form_'.$divisao->id.'" style="display:inline">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="'.csrf_token().'">
-                            <button class="btn btn-sm text-danger mx-1 shadow" type="button" onclick="excluir('.$divisao->id.')" title="Excluir">
+                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$divisao->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>
                             </form>';
-            $btnDetails = '<a href="'.route("divisao.show", ["divisao" => $divisao->id]).'"><button class="btn btn-sm text-teal mx-1 shadow" title="Detalhes">
+            $btnDetails = '<a href="'.route("divisao.show", ["divisao" => $divisao->id]).'"><button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
                                 <i class="fa fa-lg fa-fw fa-eye"></i>
                             </button></a>';
 

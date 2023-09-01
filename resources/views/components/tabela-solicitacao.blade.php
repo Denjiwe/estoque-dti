@@ -3,7 +3,7 @@
     $solicitacoes = htmlspecialchars_decode($solicitacoes);
     $solicitacoes = json_decode($solicitacoes);
 @endphp
-<table class="table text-center table-hover">
+<table class="table text-center">
     <thead>
         <tr>
             <th>Código</th>

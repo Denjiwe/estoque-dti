@@ -88,7 +88,8 @@
 
     <style scoped>
         button.nav-link {
-            background-color: #c3c3c3 !important;
+            background-color: #c2c2c2 !important;
+            color: #2c2c2c !important;
         }
         button.nav-link.active {
             background-color: #0d6efd !important;

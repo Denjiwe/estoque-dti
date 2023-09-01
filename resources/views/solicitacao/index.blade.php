@@ -26,8 +26,8 @@
         <h3>Pesquisar</h3>
         <form action="{{ route('solicitacoes.pesquisa') }}" method="GET">
             <div class="row">
-                <div class="col-2">
-                    <label for="campo">Selecione o campo de pesquisa</label>
+                <div class="col-7 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
+                    <label for="campo">Campo de pesquisa</label>
                     <select id="campo" class="form-select">
                         <option value="id" selected>ID</option>
                         <option value="nome">Nome do Usuário</option>
@@ -38,7 +38,7 @@
                         <option value="updated_at">Data de Atualização</option>
                     </select>
                 </div>
-                <div class="col-2" id="pesquisa">
+                <div class="col-5 col-sm-5 col-xl-3 col-lg-4 col-xxl-2" id="pesquisa">
                     <label for="id">ID</label>
                     <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                 </div>
@@ -93,7 +93,8 @@
 
     <style scoped>
         a.nav-link.solicitacao {
-            background-color: #c3c3c3 !important;
+            background-color: #c2c2c2 !important;
+            color: #2c2c2c !important;
         }
         a.nav-link.active.solicitacao {
             background-color: #0d6efd !important;
