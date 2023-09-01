@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <x-box titulo="Cadastro">
-        <x-slot:body>
-            @include('entrega.components.entrega_show')
-        </x-slot:body>
-    </x-box>
+    <x-adminlte-card theme="primary" theme-mode="outline">
+        <h3>Cadastro</h3>
+
+        @include('entrega.components.entrega_show')
+    </x-adminlte-card>
 @stop

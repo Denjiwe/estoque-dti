@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <x-box titulo="Órgão {{$orgao->nome}}" id="content">
-        <x-slot:body>
-            @include('orgao.components.form_detalhes')
-        </x-slot:body>
-    </x-box>
+    <x-adminlte-card theme="primary" theme-mode="outline">
+        <h3>Órgao {{$orgao->nome}}</h3>
+
+        @include('orgao.components.form_detalhes')
+    </x-adminlte-card>
 @stop

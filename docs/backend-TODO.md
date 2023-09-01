@@ -9,9 +9,10 @@
     - Verificar se é possível fazer algo em relação a exclusão direta de uma auditoria no banco de dados
 - [X] Criar um campo de senha provisória, para reset de senhas
 - Finalizar docker
-    - Fazer entrypoints para instalar o projeto do composer, fazendo verificação da pasta vendor (possível criar script que deve ser executado pelo entrypoint, que faz a verificação)
-    - Fazer verificação no entrypoint do npm se existe a pasta node_modules, evitando reinstalação em toda a execução
+    - [-] Fazer entrypoints para instalar o projeto do composer, fazendo verificação da pasta vendor (possível criar script que deve ser executado pelo entrypoint, que faz a verificação)
+    - [-] Fazer verificação no entrypoint do npm se existe a pasta node_modules, evitando reinstalação em toda a execução
     - Instalar phpmyadmin
+- Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
 
 ## Bugs
 

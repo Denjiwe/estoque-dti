@@ -32,6 +32,7 @@
 - [X] Usar toasts para avisar mudanças
     - [X] Fazer arquivo js para somente importar, realizando a limpeza da url e setInterval da remoção do toast
 - Responsividade 🫣
+- Usar Session::flash para transmitir infromações do toast, tirando nessecidade de manipular url
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 
@@ -40,7 +41,8 @@
 - [X] Hamburger menu da topbar está muito próximo da sidebar
 - [X] Quando vai adicionar um cilíndro para uma impressora que não possui um cadastrado, adiciona espaço em branco
 - [X] Solicitacoes.destroy não funciona
-- Dark theme não funciona nos box
-    - Utilizar x-adminlte-card irá resolver
+- [X] Dark theme não funciona nos box
+    - [X] Utilizar x-adminlte-card irá resolver
+        - [X] x-box-input precisa ser por adminlte-card ou coisa parecida
 - [X] Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
 - [X] Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos

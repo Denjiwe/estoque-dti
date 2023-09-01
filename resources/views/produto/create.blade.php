@@ -7,8 +7,7 @@
 @endsection
 
 @section('content')
-    <x-box>
-        <x-slot:header>
+    <x-adminlte-card theme="primary" theme-mode="outline">
             <ul class="nav nav-tabs" id="Tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active disabled" id="dados-gerais-tab" data_id="1" data-bs-toggle="tab" data-bs-target="#dados-gerais-tab-pane" type="button" role="tab" aria-controls="dados-gerais-tab-pane" aria-selected="true">Dados Gerais</button>
@@ -23,10 +22,7 @@
                     <button class="nav-link disabled" id="impressoras-tab" data-bs-toggle="tab" data_id="4" data-bs-target="#impressoras-tab-pane" type="button" role="tab" aria-controls="impressoras-tab-pane" aria-selected="false">Impressoras</button>
                 </li>
             </ul>
-        </x-slot:header>
 
-        <x-slot:body>
             @include('produto.components.form_create_edit')
-        </x-slot:body>
-    </x-box>
+    </x-adminlte-card>
 @stop

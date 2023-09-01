@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <x-box titulo="Visualizar">
-        <x-slot:body>
-            @include('usuario.components.user_show')
-        </x-slot:body>
-    </x-box>
+    <x-adminlte-card theme="primary" theme-mode="outline">
+        <h3>Visualizar</h3>
+
+        @include('usuario.components.user_show')
+    </x-adminlte-card>
 @stop

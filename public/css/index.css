@@ -1,0 +1,10 @@
+@media (min-height: 947px) {
+    body {
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+}
+.btn-sm {
+    padding-top: 0.20rem !important;
+    padding-bottom: 0.20rem !important;
+}

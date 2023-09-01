@@ -3,13 +3,11 @@
 <div class="box-input mb-4" style="width: 100%;">
     <div class="box-input-header"><h2 class="mt-2">{{$titulo ?? ''}}</h2></div>
 
-    <div class="box-input-body">
+    <x-adminlte-card>
         {{$body}}
-    </div>
 
-    <div class="box-input-footer">
         {{ $footer ?? ''}}
-    </div>
+    </x-adminlte-card>
 </div>
 
 <style scoped>

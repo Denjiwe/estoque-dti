@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <x-box titulo="Diretoria {{$diretoria->nome}}" id="content">
-        <x-slot:body>
-            @include('diretoria.components.form_detalhes')
-        </x-slot:body>
-    </x-box>
+    <x-adminlte-card theme="primary" theme-mode="outline">
+        <h3>Diretoria {{$diretoria->nome}}</h3>
+
+        @include('diretoria.components.form_detalhes')
+    </x-adminlte-card>
 @stop

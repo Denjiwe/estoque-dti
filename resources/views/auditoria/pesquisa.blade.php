@@ -7,76 +7,73 @@
 @endsection
 
 @section('content')
-    <x-box id="main">
-        <x-slot:body>
-            <x-box-input>
-                <x-slot:body>
-                    <div id="log" class="bg-white rounded p-3">
-                        @if(count($mensagens) == 0)
-                            <p>Não há registros de auditoria.</p>
-                        @else
-                            @foreach($mensagens as $mensagem)
-                                <p>{{ $mensagem }}</p>
-                            @endforeach
-                        @endif
-                    </div>
-
-                    <div id="tabela" class="bg-white rounded p-3" style="display: none">
-                        @if(count($mensagens) == 0)
-                            <p>Não há registros de auditoria.</p>
-                        @else
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Usuário</th>
-                                        <th>Operação</th>
-                                        <th>Objeto</th>
-                                        <th>Id do Objeto</th>
-                                        <th>Valores Anteriores</th>
-                                        <th>Valores Novos</th>
-                                        <th>Ip usado na Operação</th>
-                                        <th>Meio usado na Operação</th>
-                                        <th>Data</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($auditorias as $auditoria)
-                                        <tr>
-                                            <td>{{ $auditoria->usuario->nome }} ({{ $auditoria->usuario_id }})</td>
-                                            <td>{{ $auditoria->event }}</td>
-                                            <td>{{ explode('\\', $auditoria->auditable_type)[2] }}</td>
-                                            <td>{{ $auditoria->auditable_id }}</td>
-                                            <td>
-                                                @foreach($auditoria->old_values as $key => $value)
-                                                    {{ $key }}: {{ $value }} <br>
-                                                @endforeach
-                                            </td>
-                                            <td style='max-width: 300px'>
-                                                @foreach($auditoria->new_values as $key => $value)
-                                                    {{ $key }}: {{ $value }} <br>
-                                                @endforeach
-                                            </td>
-                                            <td>{{ $auditoria->ip_address }}</td>
-                                            <td>{{ $auditoria->user_agent }}</td>
-                                            <td>{{ $auditoria->created_at }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                    </div>
-                </x-slot:body>
-            </x-box-input>
-        </x-slot:body>
-        <x-slot:footer>
-            <div class="mt-3 row justify-content-end">
-                <div class="col-auto">
-                    <a href="{{ route('auditorias.index') }}" class="btn btn-secondary me-2">Voltar</a>
-                    <button onclick="toggle()" id="btn-toggle" class="btn btn-primary">Visualização em tabela</button>
+    <x-adminlte-card theme="primary" theme-mode="outline">
+        <x-box-input>
+            <x-slot:body>
+                <div id="log" class="rounded p-3">
+                    @if(count($mensagens) == 0)
+                        <p>Não há registros de auditoria.</p>
+                    @else
+                        @foreach($mensagens as $mensagem)
+                            <p>{{ $mensagem }}</p>
+                        @endforeach
+                    @endif
                 </div>
+
+                <div id="tabela" class="rounded p-3" style="display: none">
+                    @if(count($mensagens) == 0)
+                        <p>Não há registros de auditoria.</p>
+                    @else
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Usuário</th>
+                                    <th>Operação</th>
+                                    <th>Objeto</th>
+                                    <th>Id do Objeto</th>
+                                    <th>Valores Anteriores</th>
+                                    <th>Valores Novos</th>
+                                    <th>Ip usado na Operação</th>
+                                    <th>Meio usado na Operação</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($auditorias as $auditoria)
+                                    <tr>
+                                        <td>{{ $auditoria->usuario->nome }} ({{ $auditoria->usuario_id }})</td>
+                                        <td>{{ $auditoria->event }}</td>
+                                        <td>{{ explode('\\', $auditoria->auditable_type)[2] }}</td>
+                                        <td>{{ $auditoria->auditable_id }}</td>
+                                        <td>
+                                            @foreach($auditoria->old_values as $key => $value)
+                                                {{ $key }}: {{ $value }} <br>
+                                            @endforeach
+                                        </td>
+                                        <td style='max-width: 300px'>
+                                            @foreach($auditoria->new_values as $key => $value)
+                                                {{ $key }}: {{ $value }} <br>
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $auditoria->ip_address }}</td>
+                                        <td>{{ $auditoria->user_agent }}</td>
+                                        <td>{{ $auditoria->created_at }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </x-slot:body>
+        </x-box-input>
+
+        <div class="mt-3 row justify-content-end">
+            <div class="col-auto">
+                <a href="{{ route('auditorias.index') }}" class="btn btn-secondary me-2">Voltar</a>
+                <button onclick="toggle()" id="btn-toggle" class="btn btn-primary">Visualização em tabela</button>
             </div>
-        </x-slot:footer>
-    </x-box>
+        </div>
+    </x-adminlte-card>
 @endsection
 
 @section('js')

@@ -13,7 +13,7 @@
         <div class="col-12" id="locais">
             <x-box-input>
                 <x-slot:body>
-                    <table class="table text-center table-bordered" style="background-color: #f3f3f3;">
+                    <table class="table text-center table-bordered">
                         <thead>
                             <tr>
                                 <th>Impressora</th>

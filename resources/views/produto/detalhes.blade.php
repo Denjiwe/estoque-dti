@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <x-box titulo="{{$produto->modelo_produto}}" id="content">
-        <x-slot:body>
-            @include('produto.components.form_detalhes')
-        </x-slot:body>
-    </x-box>
+    <x-adminlte-card theme="primary" theme-mode="outline">
+        <h3>{{ $produto->modelo_produto }}</h3>
+
+        @include('produto.components.form_detalhes')
+    </x-adminlte-card>
 @stop

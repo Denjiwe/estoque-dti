@@ -35,17 +35,17 @@ class OrgaoController extends Controller
             $dataCriacao = date('d/m/Y',strtotime($orgao->created_at));
             $dataEdicao = date('d/m/Y',strtotime($orgao->updated_at));
 
-            $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$orgao->id.'" class="btn btn-xs btn-default text-primary mx-1 shadow" type="button" title="Editar">
+            $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$orgao->id.'" class="btn btn-sm text-primary mx-1 shadow" type="button" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </button>';
             $btnDelete = '<form action="'.route("orgaos.destroy", ["orgao" => $orgao->id]).'" method="POST" id="form_'.$orgao->id.'" style="display:inline">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="'.csrf_token().'">
-                            <button class="btn btn-xs btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$orgao->id.')" title="Excluir">
+                            <button class="btn btn-sm text-danger mx-1 shadow" type="button" onclick="excluir('.$orgao->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>
                             </form>';
-            $btnDetails = '<a href="'.route("orgaos.show", ["orgao" => $orgao->id]).'"><button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Detalhes">
+            $btnDetails = '<a href="'.route("orgaos.show", ["orgao" => $orgao->id]).'"><button class="btn btn-sm text-teal mx-1 shadow" title="Detalhes">
                                 <i class="fa fa-lg fa-fw fa-eye"></i>
                             </button></a>';
 

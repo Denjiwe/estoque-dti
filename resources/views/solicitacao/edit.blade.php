@@ -7,9 +7,7 @@
 @endsection
 
 @section('content')
-    <x-box>
-        <x-slot:body>
-            @include('solicitacao.components.form_edit')
-        </x-slot:body>
-    </x-box>
+    <x-adminlte-card theme="primary" theme-mode="outline">
+        @include('solicitacao.components.form_edit')
+    </x-adminlte-card>
 @stop

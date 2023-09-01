@@ -6,8 +6,6 @@
     <h1>Cadastro de Órgãos</h1>
 @endsection
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 @section('content')
 
     @if(isset($_GET['color'])) 
@@ -49,19 +47,19 @@
     </x-adminlte-card>
 
     {{-- Box de exibição --}}
-    <x-box titulo="Órgãos Cadastrados" id="main">
-        <x-slot:body>
-            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" with-footer footer-theme="dark" bordered striped compressed/>
-        </x-slot:body>
-
-        <x-slot:footer>
-            <div class="row mt-3 mb-3">
-                <div class="col-12">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#adicionarModal">Adicionar</button>
-                </div>
+    <x-adminlte-card>
+        <h3>Órgãos Cadastrados</h3>
+        
+        @if (count($orgaos) > 0)
+            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" compressed/>
+        @endif
+        
+        <div class="row mt-3 mb-3">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#adicionarModal">Adicionar</button>
             </div>
-        </x-slot:footer>
-    </x-box>
+        </div>
+    </x-adminlte-card>
 
     <x-modal id="adicionarModal" titulo="Adicionar Órgão">
         <x-slot:body>
@@ -96,10 +94,5 @@
 @section('plugins.DatatablesPlugin', true)
 
 @section('css')
-    <style scoped>
-        body {
-            overflow-y: hidden;
-            overflow-x: hidden;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
 @stop
