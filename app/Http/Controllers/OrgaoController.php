@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Orgao;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 class OrgaoController extends Controller
@@ -30,7 +29,7 @@ class OrgaoController extends Controller
             ['label' => 'Ações', 'no-export' => true, 'width' => '10'],
         ];
 
-        foreach ($orgaos as $orgao) 
+        foreach ($orgaos as $orgao)
         {
             $dataCriacao = date('d/m/Y',strtotime($orgao->created_at));
             $dataEdicao = date('d/m/Y',strtotime($orgao->updated_at));
@@ -102,23 +101,23 @@ class OrgaoController extends Controller
         try {
             $orgao = $this->orgao->create($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao cadastrar o órgão.';
-            $color = 'danger';
-            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Erro ao cadastrar o órgão.');
+            session()->flash('color',  'danger');
+            return redirect()->route('orgaos.index');
         }
 
-        $mensagem = 'Órgão cadastrado com sucesso!';
-        $color = 'success';
-        return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+        session()->flash('mensagem',  'Órgão cadastrado com sucesso!');
+        session()->flash('color',  'success');
+        return redirect()->route('orgaos.index');
     }
 
     public function show($id) {
         $orgao = $this->orgao->with('diretorias')->find($id);
 
         if($orgao == null) {
-            $mensagem = 'Órgão não encontrado.';
-            $color = 'warning';
-            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Órgão não encontrado.');
+            session()->flash('color',  'warning');
+            return redirect()->route('orgaos.index');
         }
 
         return view('orgao.show', ['orgao' => $orgao]);
@@ -127,7 +126,7 @@ class OrgaoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  IlluminateHttp\Request  $request
      * @param  \App\Models\Orgao  $orgao
      * @return \Illuminate\Http\Response
      */
@@ -138,22 +137,22 @@ class OrgaoController extends Controller
         $orgao = $this->orgao->find($id);
 
         if($orgao == null) {
-            $messagem = 'Órgão não encontrado.';
-            $color = 'warning';
-            return redirect()->route('orgaos.index', compact('messagem', 'color'));
+            session()->flash('mensagem',  'Órgão não encontrado.');
+            session()->flash('color',  'warning');
+            return redirect()->route('orgaos.index');
         }
 
         try {
             $orgao->update($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao atualizar o órgão.';
-            $color = 'danger';
-            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Erro ao atualizar o órgão.');
+            session()->flash('color',  'danger');
+            return redirect()->route('orgaos.index');
         }
 
-        $mensagem = 'Órgão atualizado com sucesso!';
-        $color = 'success';
-        return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+        session()->flash('mensagem',  'Órgão atualizado com sucesso!');
+        session()->flash('color',  'success');
+        return redirect()->route('orgaos.index');
     }
 
     /**
@@ -167,22 +166,22 @@ class OrgaoController extends Controller
         $orgao = $this->orgao->find($id);
 
         if($orgao == null) {
-            $mensagem = 'Órgão não encontrado.';
-            $color = 'warning';
-            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Órgão não encontrado.');
+            session()->flash('color',  'warning');
+            return redirect()->route('orgaos.index');
         }
 
         try {
             $orgao->delete();
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao excluir o órgão.';
-            $color = 'danger';
-            return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Erro ao excluir o órgão.');
+            session()->flash('color',  'danger');
+            return redirect()->route('orgaos.index');
         }
-        
-        $mensagem = 'Órgão excluído com sucesso!';
-        $color = 'success';
-        return redirect()->route('orgaos.index', compact('mensagem', 'color'));
+
+        session()->flash('mensagem',  'Órgão excluído com sucesso!');
+        session()->flash('color',  'success');
+        return redirect()->route('orgaos.index');
     }
 
     public function pesquisa(Request $request) {

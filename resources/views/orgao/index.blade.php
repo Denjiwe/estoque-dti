@@ -8,12 +8,12 @@
 
 @section('content')
 
-    @if(isset($_GET['color'])) 
+    @if(session()->get('mensagem'))
         <div class="position-fixed top-0 pt-5 mt-3 pe-2 end-0" style="z-index: 11">
-            <div class="toast fade show align-items-center bg-{{$_GET['color']}}" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast fade show align-items-center bg-{{ session()->get('color') }}" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">
-                        {{ $_GET['mensagem'] }}
+                        {{ session()->get('mensagem') }}
                     </div>
                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -40,7 +40,7 @@
                         <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                     </div>
                     <div class="col-3 pt-4 mt-2">
-                        <button type="submit" class="btn btn-primary">Pesquisar</button>                 
+                        <button type="submit" class="btn btn-primary">Pesquisar</button>
                     </div>
                 </div>
             </form>
@@ -49,11 +49,11 @@
     {{-- Box de exibição --}}
     <x-adminlte-card>
         <h3>Órgãos Cadastrados</h3>
-        
+
         @if (count($orgaos) > 0)
             <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" compressed/>
         @endif
-        
+
         <div class="row mt-3 mb-3">
             <div class="col-12">
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#adicionarModal">Adicionar</button>
@@ -76,14 +76,14 @@
             </x-slot:body>
         </x-modal>
     @endforeach
-    
+
 @stop
 
 @section('js')
-    <script> 
+    <script>
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir o órgão? Todas as diretorias criadas nesse órgão serão excluídas, além das divisões e impressoras a elas atreladas!!!')) {                                                       
-                document.getElementById('form_'+id).submit()                                                    
+            if (confirm('Tem certeza que quer excluir o órgão? Todas as diretorias criadas nesse órgão serão excluídas, além das divisões e impressoras a elas atreladas!!!')) {
+                document.getElementById('form_'+id).submit()
             }
         }
     </script>

@@ -8,12 +8,12 @@
 
 @section('content')
 
-    @if(isset($_GET['color']))
+    @if(session()->get('mensagem'))
         <div class="position-fixed top-0 pt-5 mt-3 pe-2 end-0" style="z-index: 11">
-            <div class="toast fade show align-items-center bg-{{$_GET['color']}}" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast fade show align-items-center bg-{{ session()->get('color') }}" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">
-                        {{ $_GET['mensagem'] }}
+                        {{ session()->get('mensagem') }}
                     </div>
                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -41,7 +41,7 @@
                     <input type="number" name="id" min='1' placeholder="Informe o ID" class="form-control" required>
                 </div>
                 <div class="col-3 pt-4 mt-2">
-                    <button type="submit" class="btn btn-primary">Pesquisar</button>                 
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
                 </div>
             </div>
         </form>
@@ -85,10 +85,10 @@
 @stop
 
 @section('js')
-    <script> 
+    <script>
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir a diretoria? As divisões e as impressoras ligadas serão excluídas também!!!')) {                                                       
-                document.getElementById('form_'+id).submit()                                                    
+            if (confirm('Tem certeza que quer excluir a diretoria? As divisões e as impressoras ligadas serão excluídas também!!!')) {
+                document.getElementById('form_'+id).submit()
             }
         }
     </script>

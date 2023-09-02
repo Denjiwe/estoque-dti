@@ -33,7 +33,7 @@ class DiretoriaController extends Controller
             ['label' => 'Ações', 'no-export' => true, 'width' => '10'],
         ];
 
-        foreach ($diretorias as $diretoria) 
+        foreach ($diretorias as $diretoria)
         {
             $dataCriacao = date('d/m/Y',strtotime($diretoria->created_at));
             $dataEdicao = date('d/m/Y',strtotime($diretoria->updated_at));
@@ -107,23 +107,23 @@ class DiretoriaController extends Controller
         try {
             $diretoria = $this->diretoria->create($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao cadastrar Diretoria.';
-            $color = 'danger';
-            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Erro ao cadastrar Diretoria.');
+            session()->flash('color',  'danger');
+            return redirect()->route('diretorias.index');
         }
 
-        $mensagem = 'Diretoria cadastrada com sucesso!';
-        $color = 'success';
-        return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+        session()->flash('mensagem',  'Diretoria cadastrada com sucesso!');
+        session()->flash('color',  'success');
+        return redirect()->route('diretorias.index');
     }
 
     public function show($id) {
         $diretoria = $this->diretoria->with(['divisoes', 'usuarios'])->find($id);
 
         if($diretoria == null) {
-            $mensagem = 'Diretoria não encontrada.';
-            $color = 'warning';
-            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Diretoria não encontrada.');
+            session()->flash('color',  'warning');
+            return redirect()->route('diretorias.index');
         }
 
         foreach($diretoria->usuarios as $usuario) {
@@ -149,22 +149,22 @@ class DiretoriaController extends Controller
         $diretoria = $this->diretoria->find($id);
 
         if($diretoria == null) {
-            $mensagem = 'Diretoria não encontrada.';
-            $color = 'warning';
+            session()->flash('mensagem',  'Diretoria não encontrada.');
+            session()->flash('color',  'warning');
             return redirect()->route('diretorias.index');
         }
 
         try {
             $diretoria->update($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao atualizar a diretoria.';
-            $color = 'danger';
-            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+            session()->flash('mensagem',  'Erro ao atualizar a diretoria.');
+            session()->flash('color',  'danger');
+            return redirect()->route('diretorias.index');
         }
 
-        $mensagem = 'Diretoria atualizada com sucesso!';
-        $color = 'success';
-        return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+        session()->flash('mensagem', 'Diretoria atualizada com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('diretorias.index');
     }
 
     /**
@@ -178,25 +178,25 @@ class DiretoriaController extends Controller
         $diretoria = $this->diretoria->find($id);
 
         if($diretoria == null) {
-            $mensagem = 'Diretoria não encontrada.';
-            $color = 'warning';
-            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Diretoria não encontrada.');
+            session()->flash('color', 'warning');
+            return redirect()->route('diretorias.index');
         }
 
         try {
             $diretoria->delete();
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao excluir a diretoria.';
-            $color = 'danger';
-            return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao excluir a diretoria.');
+            session()->flash('color', 'danger');
+            return redirect()->route('diretorias.index');
         }
 
-        $mensagem = 'Diretoria excluida com sucesso!';
-        $color = 'success';
-        return redirect()->route('diretorias.index', compact('mensagem', 'color'));
+        session()->flash('mensagem', 'Diretoria excluida com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('diretorias.index');
     }
 
-    public function dadosPorDiretoria($diretoriaId) 
+    public function dadosPorDiretoria($diretoriaId)
     {
         $divisoes = Divisao::select('id','nome')->where([['status', 'ATIVO'],['diretoria_id', $diretoriaId]])->get();
         $diretoriaNome = $this->diretoria::select('nome')->find($diretoriaId)->nome;
