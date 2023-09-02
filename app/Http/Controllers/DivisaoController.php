@@ -106,14 +106,14 @@ class DivisaoController extends Controller
         try {
             $divisao = $this->divisao->create($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao cadastrar a Divisão';
-            $color = 'danger';
-            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao cadastrar a Divisão');
+            session()->flash('color', 'danger');
+            return redirect()->route('divisao.index');
         }
 
-        $mensagem = 'Divisão cadastrada com sucesso!';
-        $color = 'success';
-        return redirect()->route('divisao.index', compact('mensagem', 'color'));
+        session()->flash('mensagem', 'Divisão cadastrada com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('divisao.index');
     }
 
     /**
@@ -126,9 +126,9 @@ class DivisaoController extends Controller
         $divisao = $this->divisao->with(['diretoria','usuarios'])->find($id);
 
         if($divisao == null) {
-            $mensagem = 'Divisão não encontrada.';
-            $color = 'warning';
-            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Divisão não encontrada.');
+            session()->flash('color', 'warning');
+            return redirect()->route('divisao.index');
         }
 
         return view('divisao.show', ['divisao' => $divisao]);
@@ -148,22 +148,22 @@ class DivisaoController extends Controller
         $divisao = $this->divisao->find($id);
 
         if($divisao == null) {
-            $mensagem = 'Divisão não encontrada.';
-            $color = 'warning';
-            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Divisão não encontrada.');
+            session()->flash('color', 'warning');
+            return redirect()->route('divisao.index');
         }
 
         try {
             $divisao->update($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao atualizar a Divisão.';
-            $color = 'danger';
-            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao atualizar a Divisão.');
+            session()->flash('color', 'danger');
+            return redirect()->route('divisao.index');
         }
 
-        $mensagem = 'Divisão atualizada com sucesso!';
-        $color = 'success';
-        return redirect()->route('divisao.index', compact('mensagem', 'color'));
+        session()->flash('mensagem', 'Divisão atualizada com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('divisao.index');
     }
 
     /**
@@ -177,22 +177,22 @@ class DivisaoController extends Controller
         $divisao = $this->divisao->find($id);
 
         if($divisao == null) {
-            $mensagem = 'Divisão não encontrada.';
-            $color = 'warning';
-            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Divisão não encontrada.');
+            session()->flash('color', 'warning');
+            return redirect()->route('divisao.index');
         }
 
         try {
             $divisao->delete();
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao excluir a Divisão.';
-            $color = 'danger';
-            return redirect()->route('divisao.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao excluir a Divisão.');
+            session()->flash('color', 'danger');
+            return redirect()->route('divisao.index');
         }
 
-        $mensagem = 'Divisão excluída com sucesso!';
-        $color = 'success';
-        return redirect()->route('divisao.index', compact('mensagem', 'color'));
+        session()->flash('mensagem', 'Divisão excluída com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('divisao.index');
     }
 
     public function pesquisa(Request $request) {

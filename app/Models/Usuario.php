@@ -60,6 +60,7 @@ class Usuario extends Authenticatable implements Auditable
             'status.in' => 'A status deve ser "ATIVO" ou "INATIVO"',
             'cpf.unique' => 'O CPF inserido já foi utilizado',
             'email.email' => 'O email deve ser válido',
+            'email.unique' => 'O email inserido já foi utilizado',
             'diretoria_id.exists' => 'A diretoria não pode ser encontrada',
             'divisao_id.exists' => 'A divisão não pode ser encontrada',
             'user_interno.required' => 'A especificação do usuário deve ser preenchida', 

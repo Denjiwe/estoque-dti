@@ -29,6 +29,8 @@ class ImpressoraController extends Controller
         $cilindros = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'CILINDRO']])->get();
 
         if ($produto == null) {
+            session()->flash('mensagem', 'Produto não encontrado.');
+            session()->flash('color', 'warning');
             return redirect()->route('produtos.index');
         }
 
@@ -64,14 +66,14 @@ class ImpressoraController extends Controller
                 }
             }
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao cadastrar impressora.';
-            $color = 'danger';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao cadastrar impressora.');
+            session()->flash('color', 'danger');
+            return redirect()->route('produtos.index');
         }
 
-        $mensagem = 'Impressora cadastrada com sucesso!';
-        $color = 'success';
-        return redirect()->route('produtos.index', compact('mensagem', 'color'));
+        session()->flash('mensagem', 'Impressora cadastrada com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('produtos.index');
     }
 
     /**
@@ -154,13 +156,13 @@ class ImpressoraController extends Controller
                 }
             }
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao atualizar impressora.';
-            $color = 'danger';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao atualizar impressora.');
+            session()->flash('color', 'danger');
+            return redirect()->route('produtos.index');
         }
 
-        $mensagem = 'Impressora atualizada com sucesso!';
-        $color = 'success';
-        return redirect()->route('produtos.index', compact('mensagem', 'color'));   
+        session()->flash('mensagem', 'Impressora atualizada com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('produtos.index');   
     }
 }

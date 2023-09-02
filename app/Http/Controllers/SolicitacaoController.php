@@ -156,21 +156,22 @@ class SolicitacaoController extends Controller
                 }
             }
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao cadastrar solicitação!';
-            $color = 'danger';
+            session()->flash('mensagem', 'Erro ao cadastrar solicitação!');
+            session()->flash('color', 'danger');
             if (auth()->user()->user_interno == 'NAO') {
-                return redirect()->route('minhas-solicitacoes.abertas', compact('mensagem', 'color'));
+                return redirect()->route('minhas-solicitacoes.abertas');
             } else {
-                return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+                return redirect()->route('solicitacoes.abertas');
             }
         }
 
         $mensagem = 'Solicitação #'.$solicitacao->id.' cadastrada com sucesso!';
-        $color = 'success';
+        session()->flash('mensagem', $mensagem);
+        session()->flash('color', 'success');
         if (auth()->user()->user_interno == 'NAO') {
-            return redirect()->route('minhas-solicitacoes.abertas', compact('mensagem', 'color'));
+            return redirect()->route('minhas-solicitacoes.abertas');
         } else {
-            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+            return redirect()->route('solicitacoes.abertas');
         }
     }
 
@@ -196,7 +197,9 @@ class SolicitacaoController extends Controller
         $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas'])->find($id);
 
         if($solicitacao === null) {
-            return redirect()->back();
+            session()->flash('mensagem', 'Solicitação não encontrada!');
+            session()->flash('color', 'warning');
+            return redirect()->route('solicitacoes.abertas');
         }
 
         foreach($solicitacao->entregas as $entrega) {
@@ -219,7 +222,9 @@ class SolicitacaoController extends Controller
         $solicitacao = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria', 'entregas', 'itens_solicitacoes'])->find($id);
 
         if($solicitacao === null) {
-            return redirect()->back();
+            session()->flash('mensagem', 'Solicitação não encontrada!');
+            session()->flash('color', 'warning');
+            return redirect()->route('solicitacoes.abertas');
         } 
 
         DB::beginTransaction();
@@ -281,8 +286,9 @@ class SolicitacaoController extends Controller
 
             DB::commit();
             $mensagem = 'Solicitação #'.$solicitacao->id.' atualizada com sucesso!';
-            $color = 'success';
-            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+            session()->flash('mensagem', $mensagem);
+            session()->flash('color', 'success');
+            return redirect()->route('solicitacoes.abertas');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->withErrors($e->getMessage());
@@ -300,9 +306,9 @@ class SolicitacaoController extends Controller
         $solicitacao = $this->solicitacao->with(['produtos', 'entregas', 'itens_solicitacoes'])->find($id);
 
         if($solicitacao === null) {
-            $mensagem = 'Solicitação não encontrada!';
-            $color = 'warning';
-            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Solicitação não encontrada!');
+            session()->flash('color', 'warning');
+            return redirect()->route('solicitacoes.abertas');
         }
 
         DB::beginTransaction();
@@ -330,15 +336,16 @@ class SolicitacaoController extends Controller
             $solicitacao->delete();
         } catch (\Exception $e) {
             DB::rollback();
-            $mensagem = 'Erro ao excluir a solicitação.';
-            $color = 'danger';
-            return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao excluir a solicitação.');
+            session()->flash('color', 'danger');
+            return redirect()->route('solicitacoes.abertas');
         }
 
         DB::commit();
         $mensagem = 'Solicitação #'.$id.' excluída com sucesso!';
-        $color = 'success';
-        return redirect()->route('solicitacoes.abertas', compact('mensagem', 'color'));
+        session()->flash('mensagem', $mensagem);
+        session()->flash('color', 'success');
+        return redirect()->route('solicitacoes.abertas');
     }
 
     public function pesquisa(Request $request) {

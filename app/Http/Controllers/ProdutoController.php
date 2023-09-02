@@ -125,9 +125,9 @@ class ProdutoController extends Controller
         try{
             $produto = $this->produto->create($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao cadastrar o produto.';
-            $color = 'danger';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao cadastrar o produto.');
+            session()->flash('color', 'danger');
+            return redirect()->route('produtos.index');
         }
 
         // return response()->json($produto, 201);
@@ -142,9 +142,9 @@ class ProdutoController extends Controller
                 break;
             case 'nenhum':
                 // caso seja outros
-                $mensagem = 'Produto cadastrado com sucesso!';
-                $color = 'success';
-                return redirect()->route('produtos.index', compact('mensagem', 'color'));
+                session()->flash('mensagem', 'Produto cadastrado com sucesso!');
+                session()->flash('color', 'success');
+                return redirect()->route('produtos.index');
                 break;
         }
     }
@@ -160,9 +160,9 @@ class ProdutoController extends Controller
         $produto = $this->produto->with(['suprimentos'])->find($id);
 
         if ($produto == null) {
-            $mensagem = 'Produto não encontrado.';
-            $color = 'warning';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Produto não encontrado.');
+            session()->flash('color', 'warning');
+            return redirect()->route('produtos.index');
         }
 
         if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO') {
@@ -202,9 +202,9 @@ class ProdutoController extends Controller
         $produto = $this->produto->find($id);
 
         if ($produto == null) {
-            $mensagem = 'Produto não encontrado.';
-            $color = 'warning';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Produto não encontrado.');
+            session()->flash('color', 'warning');
+            return redirect()->route('produtos.index');
         }
 
         return view('produto.edit', ['produto' => $produto]);
@@ -222,9 +222,9 @@ class ProdutoController extends Controller
         $produto = $this->produto->find($id);
 
         if ($produto == null) {
-            $mensagem = 'Produto não encontrado.';
-            $color = 'danger';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Produto não encontrado.');
+            session()->flash('color', 'warning');
+            return redirect()->route('produtos.index');
         }
 
         $request->validate($this->produto->rules($request, $produto->id), $this->produto->feedback());
@@ -272,9 +272,9 @@ class ProdutoController extends Controller
                                 }
                             }
                         } catch (\Exception $e) {
-                            $mensagem = 'Erro ao enviar e-mail.';
-                            $color = 'danger';
-                            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+                            session()->flash('mensagem', 'Erro ao enviar e-mail.');
+                            session()->flash('color', 'danger');
+                            return redirect()->route('produtos.index');
                         }
                     }
                 }
@@ -284,9 +284,9 @@ class ProdutoController extends Controller
         try {
             $produto->update($request->all());
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao atualizar o produto.';
-            $color = 'danger';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao atualizar o produto.');
+            session()->flash('color', 'danger');
+            return redirect()->route('produtos.index');
         }
 
         // return response()->json($produto, 201);
@@ -301,9 +301,9 @@ class ProdutoController extends Controller
                 break;
             case 'nenhum':
                 // caso seja outros
-                $mensagem = 'Produto alterado com sucesso!';
-                $color = 'success';
-                return redirect()->route('produtos.index', compact('mensagem', 'color'));
+                session()->flash('mensagem', 'Produto alterado com sucesso!');
+                session()->flash('color', 'success');
+                return redirect()->route('produtos.index');
                 break;
         }
     }
@@ -319,22 +319,23 @@ class ProdutoController extends Controller
         $produto = $this->produto->find($id);
 
         if($produto == null) {
-            $mensagem = 'Produto não encontrado.';
-            $color = 'warning';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Produto não encontrado.');
+            session()->flash('color', 'warning');
+            return redirect()->route('produtos.index');
         }
 
         try {
             $produto->delete();
         } catch (\Exception $e) {
             $mensagem = 'Erro ao excluir o produto. Provavelmente este produto está vinculado a uma solicitação ou entrega. Por favor, inative o produto ou exclua a(s) solicitação(ões) ou entrega(s).';
-            $color = 'danger';
-            return redirect()->route('produtos.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', $mensagem);
+            session()->flash('color', 'danger');
+            return redirect()->route('produtos.index');
         }
 
-        $mensagem = 'Produto excluído com sucesso!';
-        $color = 'success';
-        return redirect()->route('produtos.index', compact('mensagem', 'color'));
+        session()->flash('mensagem', 'Produto excluído com sucesso!');
+        session()->flash('color', 'success');
+        return redirect()->route('produtos.index');
     }
 
     // /======================================== Funções Manuais ========================================/

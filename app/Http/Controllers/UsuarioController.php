@@ -142,13 +142,14 @@ class UsuarioController extends Controller
         
         try {
             $usuario = $this->usuario->create($data);
+            session()->flash('mensagem', 'Usuário cadastrado com sucesso!');
+            session()->flash('color', 'success');
+            return redirect()->route('usuarios.index');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors();
+            session()->flash('mensagem', $e->getMessage());
+            session()->flash('color', 'success');
+            return redirect()->route('usuarios.index');
         }
-
-        $mensagem = 'Usuário cadastrado com sucesso!';
-        $color = 'success';
-        return redirect()->route('usuarios.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -161,9 +162,9 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->with(['diretoria', 'divisao'])->find($id);
         
         if ($usuario == null) {
-            $mensagem = 'Usuário não encontrado!';
-            $color = 'warning';
-            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Usuário não encontrado!');
+            session()->flash('color', 'warning');
+            return redirect()->route('usuarios.index');
         }
 
         $solicitacoes = Solicitacao::where('usuario_id', $usuario->id)->paginate(10);
@@ -181,9 +182,9 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->with(['diretoria', 'divisao'])->find($id);
 
         if ($usuario == null) {
-            $mensagem = 'Usuário não encontrado!';
-            $color = 'warning';
-            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Usuário não encontrado!');
+            session()->flash('color', 'warning');
+            return redirect()->route('usuarios.index');
         }
 
         $diretorias = Diretoria::get();
@@ -212,9 +213,9 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->find($id);
 
         if($usuario == null) {
-            $mensagem = 'Usuário não encontrado!';
-            $color = 'warning';
-            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Usuário não encontrado!');
+            session()->flash('color', 'warning');
+            return redirect()->route('usuarios.index');
         }
 
         if ($request->divisao_id == 0) {
@@ -229,15 +230,14 @@ class UsuarioController extends Controller
 
         try {
             $usuario->update($data);
+            session()->flash('mensagem', 'Usuário alterado com sucesso!');
+            session()->flash('color', 'success');
+            return redirect()->route('usuarios.index');
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao alterar o usuário.';
-            $color = 'danger';
-            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao alterar o usuário.');
+            session()->flash('color', 'danger');
+            return redirect()->route('usuarios.index');
         }
-
-        $mensagem = 'Usuário alterado com sucesso!';
-        $color = 'success';
-        return redirect()->route('usuarios.index', compact('mensagem', 'color'));
     }
 
     /**
@@ -251,35 +251,34 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->find($id);
 
         if ($usuario == null) {
-            $mensagem = 'Usuário não encontrado!';
-            $color = 'warning';
-            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Usuário não encontrado!');
+            session()->flash('color', 'warning');
+            return redirect()->route('usuarios.index');
         }
 
         if ($usuario->id == auth()->user()->id) {
-            $mensagem = 'Voce não pode excluir seu próprio usuário!';
-            $color = 'danger';
-            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Voce não pode excluir seu próprio usuário!');
+            session()->flash('color', 'danger');
+            return redirect()->route('usuarios.index');
         }
 
         try {
             $usuario->delete();
+            session()->flash('mensagem', 'Usuário excluído com sucesso!');
+            session()->flash('color', 'success');
+            return redirect()->route('usuarios.index');
         } catch (\Exception $e) {
-            $mensagem = 'Erro ao excluir o usuário.';
-            $color = 'danger';
-            return redirect()->route('usuarios.index', compact('mensagem', 'color'));
+            session()->flash('mensagem', 'Erro ao excluir o usuário.');
+            session()->flash('color', 'danger');
+            return redirect()->route('usuarios.index');
         }
-
-        $mensagem = 'Usuário excluído com sucesso!';
-        $color = 'success';
-        return redirect()->route('usuarios.index', compact('mensagem', 'color'));
     }
 
     public function senhaEdit($usuarioId) {
         $usuario = $this->usuario->find($usuarioId);
 
         if ($usuario == null) {
-            return redirect()->back();
+            return redirect()->back()->withErrors(['error' => 'Usuário não encontrado!']);
         }
 
         if ($usuario->senha_provisoria == null) {
@@ -293,7 +292,7 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->find($usuarioId);
 
         if ($usuario == null) {
-            return redirect()->back();
+            return redirect()->back()->withErrors(['error' => 'Usuário não encontrado!']);
         }
 
         if($request->password != $request->password_confirmation) {

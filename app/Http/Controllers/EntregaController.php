@@ -68,6 +68,12 @@ class EntregaController extends Controller
     {
         $entrega = $this->entrega->with(['usuario', 'itens_solicitacao', 'solicitacao'])->find($id);
 
+        if ($entrega == null) {
+            session::flash('mensagem', 'Entrega não encontrada!');
+            session::flash('color', 'danger');
+            return redirect()->route('entregas.index');
+        }
+
         return view('entrega.show', ['entrega' => $entrega, 'titulo' => 'Visualizar Entrega '.$entrega->id]);
     }
 
@@ -110,6 +116,8 @@ class EntregaController extends Controller
 
         $entrega->delete();
 
+        session::flash('mensagem', 'Entrega excluída com sucesso!');
+        session::flash('color', 'success');
         return redirect()->route('entregas.index');
     }
 
