@@ -15,7 +15,7 @@ RUN apk upgrade -U && \
     # locales \
     # zip \
     # jpegoptim optipng pngquant gifsicle \
-    # vim \
+    vim \
     # libzip-dev \
     # unzip \
     # git \
@@ -24,10 +24,10 @@ RUN apk upgrade -U && \
     nginx \
     php-fpm \
     php-pdo \
-    php-dom \
-    php-json \
-    php-openssl \
-    php-phar \
+    # php-dom \
+    # php-json \
+    # php-openssl \
+    # php-phar \
     php-mysqli \
     php-pdo_mysql \
     php-curl 
@@ -36,7 +36,7 @@ RUN apk upgrade -U && \
 # RUN apk clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions for php
-RUN docker-php-ext-install pdo_mysql opcache
+RUN docker-php-ext-install opcache
 
 # Install composer (php package manager)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

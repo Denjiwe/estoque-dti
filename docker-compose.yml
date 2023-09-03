@@ -30,8 +30,6 @@ services:
   db:
     image: mysql:8.0.31
     container_name: mysql
-    ports:
-    - "3306:3306"
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
@@ -49,6 +47,16 @@ services:
       - ./:/var/www/html/
     working_dir: /var/www/html/
     entrypoint: /bin/sh -c "npm run dev -- --host"
+    networks:
+      - app-network
+  phpmyadmin:
+    image: 'phpmyadmin:latest'
+    container_name: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      MYSQL_USERNAME: "${DB_USERNAME}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
     networks:
       - app-network
 
