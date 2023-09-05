@@ -1,6 +1,6 @@
 @if (isset($produto->id))
     <form method="post" id="form" action="{{ route('produtos.update', ['produto' => $produto]) }}">
-    @method('PUT') 
+    @method('PUT')
 @else
     <form method="post" id="form" action="{{ route('produtos.store') }}">
 @endif
@@ -9,10 +9,10 @@
     <div class="tab-pane fade show active mt-2" id="dados-gerais-tab-pane" role="tabpanel" aria-labelledby="dados-gerais-tab" tabindex="0">
         <input type="hidden" name="proximo" id="proximoInput" value="nenhum">
         <div class="row">
-            <div class="col-2">
+            <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-sm-0">
                 <div class="form-floating">
                     <select name="tipo_produto" id="tipo_produto" class="form-select @if(isset($produto->tipo_produto)) form-control @endif @error('tipo_produto') is-invalid @enderror" @if(isset($produto->tipo_produto)) disabled @endif>
-                        <option selected hidden>Selecione o Tipo do Produto</option>
+                        <option selected hidden>Selecione o Tipo</option>
                         <option value="IMPRESSORA" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'IMPRESSORA') selected @endif >Impressora</option>
                         <option value="TONER" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'TONER') selected @endif >Toner</option>
                         <option value="CILINDRO" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'CILINDRO') selected @endif >Cilíndro</option>
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-12 col-sm-6 col-md-3 mt-3 mt-sm-0">
                 <div class="form-floating">
                     <input type="text" id="modelo_produto" name="modelo_produto" value="{{ $produto->modelo_produto ?? old('modelo_produto') }}" placeholder="Modelo do Produto" class="form-control @error('modelo_produto') is-invalid @enderror">
                     <label for="modelo_produto">Modelo do Produto</label>
@@ -32,7 +32,7 @@
             </div>
 
             @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO'))
-                <div class="col-2">
+                <div class="col-12 col-sm-6 col-2">
                     <div class="form-floating">
                         <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" readonly>
                         <label for="qntde_solicitada">Quantidade Solicitada</label>
@@ -41,7 +41,7 @@
                 </div>
             @endif
 
-            <div class="col-2">
+            <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
                 <div class="row">
                     <div class="col-12" id="divTipoProduto">
                         <div class="form-floating">
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="col-2">
+            <div class="col-12 col-sm-6 col-md-3 col-xxl-2 mt-3 mt-md-0">
                 <div class="form-floating">
                     <select name="status" id="status" class="form-select @error('status') is-invalid @enderror">
                         <option selected hidden>Selecione o Status</option>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="row mt-3">
-            <div class="col-6" id="divDescricao">
+            <div class="col-12 col-sm-8 col-md-6" id="divDescricao">
                 <div class="form-floating">
                     <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px">{{ $produto->descricao ?? old('descricao') }}</textarea>
                     <label for="descricao">Descrição (opcional)</label>
@@ -82,7 +82,7 @@
 
         <div class="mt-3 row justify-content-end">
             <div class="col-auto">
-                
+
                 <a href="{{url()->previous() == route('produtos.create') || (isset($produto) && route('produtos.edit', ['produto' => $produto->id])) ? route('produtos.index') : url()->previous()}}" class="btn btn-secondary me-2">Voltar</a>
 
                 <button class="btn btn-primary handle_aba me-2" id="primeiro-handle" type="button" @php if(!isset($produto->id) || $produto->tipo_produto == 'OUTROS') echo 'style="display: none;"' @endphp>Próximo</button>
