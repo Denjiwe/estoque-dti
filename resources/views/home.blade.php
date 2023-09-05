@@ -8,18 +8,18 @@
 
 @section('content')
 <div class="row ms-1 me-1">
-    <div class="col-8">
+    <div class="col-12 col-xl-8">
         <div class="row">
-            <div class="col-3">
+            <div class="col-6 col-lg-3">
                 <x-adminlte-info-box title="Entregas" text="{{ $entregas }}" icon="fas fa-lg fa-clipboard-check text-dark" theme="gradient-teal" icon-theme="white"/>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-lg-3">
                 <x-adminlte-info-box title="Solicitações" text="{{ $solicitacoes }}" icon="fas fa-lg fa-clipboard text-dark" theme="danger" icon-theme="white"/>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-lg-3">
                 <x-adminlte-info-box title="Usuários" text="{{ $usuarios }}" icon="fas fa-lg fa-user text-dark" theme="gradient-primary" icon-theme="white"/>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-lg-3">
                 <x-adminlte-info-box title="Produtos" text="{{ $produtos }}" icon="fas fa-lg fa-kaaba text-dark" theme="gradient-secondary" icon-theme="white"/>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div id="solicitacoes_chart"></div>
         </x-adminlte-card>
     </div>
-    <div class="col-4">
+    <div class="col-12 col-xl-4">
         <x-adminlte-profile-widget name="{{ auth()->user()->nome }}" theme="primary">
             <x-adminlte-profile-col-item class="text-primary border-right" icon="fas fa-lg fa-clipboard-check"
             title="Entregas" text="{{ $entregasUserCount }}" size=6 badge="primary"/>

@@ -30,7 +30,7 @@ services:
   db:
     image: mysql:8.0.31
     container_name: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    command: ['--default-authentication-plugin=mysql_native_password', '--lower_case_table_names=2']
     restart: always
     volumes:
       - ./db/database/:/var/lib/mysql/
@@ -55,11 +55,12 @@ services:
     ports:
       - 8080:80
     environment:
-      MYSQL_USERNAME: "${DB_USERNAME}"
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
     networks:
       - app-network
 
 networks:
   app-network:
+    name: app-network
     driver: bridge

@@ -23,20 +23,20 @@ RUN apk upgrade -U && \
     # curl
     nginx \
     php-fpm \
-    php-pdo \
+    # php-pdo \
     # php-dom \
     # php-json \
     # php-openssl \
     # php-phar \
-    php-mysqli \
-    php-pdo_mysql \
+    # php-mysqli \
+    # php-pdo_mysql \
     php-curl 
 
 # # Clear cache
 # RUN apk clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions for php
-RUN docker-php-ext-install opcache
+RUN docker-php-ext-install pdo_mysql opcache
 
 # Install composer (php package manager)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

@@ -24,44 +24,7 @@
                     @if(count($mensagens) == 0)
                         <p>Não há registros de auditoria.</p>
                     @else
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Usuário</th>
-                                    <th>Operação</th>
-                                    <th>Objeto</th>
-                                    <th>Id do Objeto</th>
-                                    <th>Valores Anteriores</th>
-                                    <th>Valores Novos</th>
-                                    <th>Ip usado na Operação</th>
-                                    <th>Meio usado na Operação</th>
-                                    <th>Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($auditorias as $auditoria)
-                                    <tr>
-                                        <td>{{ $auditoria->usuario->nome }} ({{ $auditoria->usuario_id }})</td>
-                                        <td>{{ $auditoria->event }}</td>
-                                        <td>{{ explode('\\', $auditoria->auditable_type)[2] }}</td>
-                                        <td>{{ $auditoria->auditable_id }}</td>
-                                        <td>
-                                            @foreach($auditoria->old_values as $key => $value)
-                                                {{ $key }}: {{ $value }} <br>
-                                            @endforeach
-                                        </td>
-                                        <td style='max-width: 300px'>
-                                            @foreach($auditoria->new_values as $key => $value)
-                                                {{ $key }}: {{ $value }} <br>
-                                            @endforeach
-                                        </td>
-                                        <td>{{ $auditoria->ip_address }}</td>
-                                        <td>{{ $auditoria->user_agent }}</td>
-                                        <td>{{ $auditoria->created_at }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <x-adminlte-datatable id="table" :heads="$heads" :config="$config" compressed/>
                     @endif
                 </div>
             </x-slot:body>
@@ -70,7 +33,9 @@
         <div class="mt-3 row justify-content-end">
             <div class="col-auto">
                 <a href="{{ route('auditorias.index') }}" class="btn btn-secondary me-2">Voltar</a>
-                <button onclick="toggle()" id="btn-toggle" class="btn btn-primary">Visualização em tabela</button>
+                @if(count($mensagens) != 0)
+                    <button onclick="toggle()" id="btn-toggle" class="btn btn-primary">Visualização em tabela</button>
+                @endif
             </div>
         </div>
     </x-adminlte-card>
@@ -95,6 +60,8 @@
         }
     </script>
 @endsection
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugin', true)
 
 @section('css')
     <style scoped>

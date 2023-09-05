@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => $makeCardClass()]) }}>
+<div {{ $attributes->merge(['class' => $makeCardClass().' ms-1 me-1']) }}>
 
     {{-- Card header --}}
     @if(! $isCardHeaderEmpty(isset($toolsSlot)))

@@ -34,7 +34,71 @@ class EntregaController extends Controller
             $entrega->solicitacao->usuario = $usuarioSolicitante;
         }
 
-        return view('entrega.index', ['entregas' => $entregas, 'titulo' => 'Entregas']);
+        $heads = [
+            'ID',
+            'Código da Solicitação',
+            'Funcionário Interno',
+            'Funcionário Solicitante',
+            'Produto',
+            'Quantidade',
+            'Data de Entrega',
+            ['label' => 'Ações', 'no-export' => true, 'width' => '10'],
+        ];
+
+        foreach ($entregas as $entrega) 
+        {
+            $dataCriacao = date('d/m/Y',strtotime($entrega->created_at));
+
+            $btnDetails = '<a href="'.route("entregas.show", ["entrega" => $entrega->id]).'"><button class="btn btn-sm btn-default text-teal mx-1 shadow" type="button" title="Editar">
+                            <i class="fa fa-lg fa-fw fa-eye"></i>
+                        </button></a>';
+            $btnDelete = '<form action="'.route("entregas.destroy", ["entrega" => $entrega->id]).'" method="POST" id="form_'.$entrega->id.'" style="display:inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="'.csrf_token().'">
+                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$entrega->id.')" title="Excluir">
+                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                            </button>
+                            </form>';
+
+            $data[] = [
+                $entrega->id,
+                '<a href="'.route("entregas.show", ["entrega" => $entrega->id]).'">#'.$entrega->solicitacao->id.'</a>',
+                $entrega->usuario->nome,
+                $entrega->solicitacao->usuario->nome,
+                $entrega->produto->modelo_produto,
+                $entrega->qntde,
+                $dataCriacao,
+                '<nobr>'.$btnDetails.$btnDelete.'</nobr>'
+            ];
+        }
+
+        $config = [
+            'data' => $data,
+            'dom' => '<"row" <"col-sm-12 d-flex justify-content-start" f>>t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
+            'order' => [[0, 'asc']],
+            'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+            "bLengthChange" => false,
+            'language' => [
+                'sEmptyTable' => "Nenhum registro encontrado",
+                'sInfo' =>	"Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                'sInfoEmpty' =>	"Mostrando 0 até 0 de 0 registros",
+                'sInfoFiltered' =>	"(Filtrados de _MAX_ registros)",
+                "sInfoThousands" => ".",
+                "sLengthMenu" => "_MENU_ resultados por página",
+                "sLoadingRecords" => "Carregando...",
+                "sProcessing" => "Processando...",
+                "sZeroRecords" => "Nenhum registro encontrado",
+                "sSearch" => "Pesquisa rápida: ",
+                "oPaginate" => [
+                    "sNext" => "Próximo",
+                    "sPrevious" =>	"Anterior",
+                    "sFirst" =>	"Primeiro",
+                    "sLast" =>	"Último"
+                ],
+            ]
+        ];
+
+        return view('entrega.index', ['entregas' => $entregas, 'titulo' => 'Entregas', 'heads' => $heads, 'config' => $config]);
     }
 
     /**

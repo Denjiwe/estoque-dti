@@ -160,6 +160,31 @@ class AuditoriaController extends Controller
             }
 
             $mensagens[$key] = '- '.$auditoria->usuario->nome.' '.$acao.' '.$model.' de id '.$auditoria->auditable_id.', '.$campos.' em '.Carbon::parse($auditoria->created_at)->format('d/m/Y H:i:s');
+
+            $dataCriacao = date('d/m/Y',strtotime($auditoria->created_at));
+
+            $oldValues = [];
+            $newValues = [];
+
+            foreach($auditoria->old_values as $key => $value){
+                $oldValues[] = '<br>'.$key.': '.$value;
+            }
+
+            foreach($auditoria->new_values as $key => $value){
+                $newValues[] = '<br>'.$key.': '.$value;
+            }
+
+            $data[] = [
+                $auditoria->usuario->nome.'(#'.$auditoria->usuario_id.')',
+                $auditoria->event,
+                explode('\\', $auditoria->auditable_type)[2],
+                $auditoria->auditable_id,
+                $oldValues,
+                $newValues,
+                $auditoria->ip_address,
+                $auditoria->user_agent,
+                $dataCriacao,
+            ];
         }
 
         $mensagensFormatadas = array();
@@ -176,7 +201,25 @@ class AuditoriaController extends Controller
         
             $mensagensFormatadas[] = $mensagem;
         }
-        
-        return view('auditoria.pesquisa', ['mensagens' => $mensagensFormatadas, 'auditorias' => $auditorias]);
+
+        $heads = [
+            'Usuário',
+            'Operação',	
+            'Objeto',
+            'Id do Objeto',
+            'Valores Anteriores',
+            'Valores Novos',
+            'Ip Usado na Operação',
+            'Data',
+        ];
+
+        $config = [
+            'data' => $data,
+            'dom' => '',
+            'order' => [[0, 'asc']],
+            'responsive' => false,
+            "bLengthChange" => false,
+        ];
+        return view('auditoria.pesquisa', ['mensagens' => $mensagensFormatadas, 'heads' => $heads, 'config' => $config]);
     }
 }
