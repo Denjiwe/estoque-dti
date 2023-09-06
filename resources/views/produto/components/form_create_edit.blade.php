@@ -32,7 +32,7 @@
             </div>
 
             @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO'))
-                <div class="col-12 col-sm-6 col-2">
+                <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
                     <div class="form-floating">
                         <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" readonly>
                         <label for="qntde_solicitada">Quantidade Solicitada</label>
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-3 col-xxl-2 mt-3 mt-md-0">
+            <div class="col-12 col-sm-6 col-md-3 col-xxl-2 mt-3 mt-md-0 @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')) mt-md-3 mt-xl-0 @endif">
                 <div class="form-floating">
                     <select name="status" id="status" class="form-select @error('status') is-invalid @enderror">
                         <option selected hidden>Selecione o Status</option>

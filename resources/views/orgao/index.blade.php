@@ -61,20 +61,20 @@
         </div>
     </x-adminlte-card>
 
-    <x-modal id="adicionarModal" titulo="Adicionar Órgão">
-        <x-slot:body>
-            @component('orgao.components.form_create_edit')
-            @endcomponent
-        </x-slot:body>
-    </x-modal>
+    <x-adminlte-modal id="adicionarModal" title="Adicionar Órgão" v-centered>
+        @component('orgao.components.form_create_edit')
+        @endcomponent
+        <x-slot name="footerSlot">
+        </x-slot>
+    </x-adminlte-modal>
 
     @foreach($orgaos as $orgao)
-        <x-modal id="editarModal{{$orgao->id}}" titulo="Editar {{$orgao->nome}}">
-            <x-slot:body>
-                @component('orgao.components.form_create_edit', ['orgao' => $orgao])
-                @endcomponent
-            </x-slot:body>
-        </x-modal>
+        <x-adminlte-modal id="editarModal{{$orgao->id}}" title="Editar {{$orgao->nome}}" v-centered>
+            @component('orgao.components.form_create_edit', ['orgao' => $orgao])
+            @endcomponent
+            <x-slot name="footerSlot">
+            </x-slot>
+        </x-adminlte-modal>
     @endforeach
 
 @stop

@@ -217,8 +217,9 @@ class AuditoriaController extends Controller
             'data' => $data,
             'dom' => '',
             'order' => [[0, 'asc']],
-            'responsive' => false,
+            'responsive' => true,
             "bLengthChange" => false,
+            'pageLength' => 1000
         ];
         return view('auditoria.pesquisa', ['mensagens' => $mensagensFormatadas, 'heads' => $heads, 'config' => $config]);
     }

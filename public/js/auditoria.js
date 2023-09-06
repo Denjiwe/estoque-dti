@@ -1,7 +1,7 @@
 var data = $('#data');
 if(data.val() == 'personalizado') {
-    dataInicio = $('<div class="col-2"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
-    dataFinal = $('<div class="col-2"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
+    dataInicio = $('<div class="col-6 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
+    dataFinal = $('<div class="col-6 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
     var dataDiv = $('#dataDiv');
     dataFinal.insertAfter(dataDiv);
     dataInicio.insertAfter(dataDiv);
@@ -9,8 +9,8 @@ if(data.val() == 'personalizado') {
 
 data.on('change', function() {
     if(data.val() == 'personalizado') {
-        dataInicio = $('<div class="col-2"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
-        dataFinal = $('<div class="col-2"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
+        dataInicio = $('<div class="col-6 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
+        dataFinal = $('<div class="col-6 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
         var dataDiv = $('#dataDiv');
         dataFinal.insertAfter(dataDiv);
         dataInicio.insertAfter(dataDiv);

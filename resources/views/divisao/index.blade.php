@@ -62,20 +62,20 @@
         </div>
     </x-adminlte-card>
 
-    <x-modal id="adicionarModal" titulo="Adicionar Divisão">
-        <x-slot:body>
-            @component('divisao.components.form_create_edit', ['diretorias' => $diretorias])
-            @endcomponent
-        </x-slot:body>
-    </x-modal>
+    <x-adminlte-modal id="adicionarModal" title="Adicionar Divisão" v-centered>
+        @component('divisao.components.form_create_edit', ['diretorias' => $diretorias])
+        @endcomponent
+        <x-slot name="footerSlot">
+        </x-slot>
+    </x-adminlte-modal>
 
     @foreach($divisoes as $divisao)
-        <x-modal id="editarModal{{$divisao->id}}" titulo="Editar {{$divisao->nome}}">
-            <x-slot:body>
-                @component('divisao.components.form_create_edit', ['divisao' => $divisao, 'diretorias' => $diretorias])
-                @endcomponent
-            </x-slot:body>
-        </x-modal>
+        <x-adminlte-modal id="editarModal{{$divisao->id}}" title="Editar {{$divisao->nome}}" v-centered>
+            @component('divisao.components.form_create_edit', ['divisao' => $divisao, 'diretorias' => $diretorias])
+            @endcomponent
+            <x-slot name="footerSlot">
+            </x-slot>
+        </x-adminlte-modal>
     @endforeach
 @stop
 

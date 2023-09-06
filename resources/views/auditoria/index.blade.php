@@ -11,7 +11,7 @@
         <form action="{{ route('auditorias.pesquisa') }}" method="POST">
             @csrf
             <div class="row ">
-                <div class="col-2">
+                <div class="col-6 col-sm-4 col-md-2">
                     <label for="tipo">Tipo</label>
                     <select id="tipo" name="tipo" class="form-select">
                         <option value="Todos" selected>Todos</option>
@@ -24,7 +24,7 @@
                         <option value="Produto">Produto</option>
                     </select>
                 </div>
-                <div class="col-2">
+                <div class="col-6 col-sm-4 col-md-2">
                     <label for="acao">Ação</label>
                     <select id="acao" name="acao" class="form-select">
                         <option value="Todos" selected>Todos</option>
@@ -33,7 +33,7 @@
                         <option value="deleted">Exclusão</option>
                     </select>
                 </div>
-                <div id="dataDiv" class="col-2">
+                <div id="dataDiv" class="col-6 col-sm-4 col-md-2 mt-3 mt-sm-0">
                     <label for="data">Data</label>
                     <select id="data" name="data" class="form-select">
                         <option value="hoje" selected>Hoje</option>
@@ -44,7 +44,7 @@
                         <option value="personalizado">Personalizado</option>
                     </select>
                 </div>
-                <div class="col-2 pt-4 mt-2">
+                <div class="col-6 col-sm-2 pt-4 mt-4 mt-md-2">
                     <button type="submit" class="btn btn-primary">Pesquisar</button>                 
                 </div>
             </div>
