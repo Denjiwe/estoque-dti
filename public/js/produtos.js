@@ -58,17 +58,20 @@ tipoProduto.addEventListener('change', () => {
 
 switch (tipoProduto.value) {
     case 'IMPRESSORA':
-        // inputs
-        if (quantidade.value == '') quantidade.value = 0;
-        quantidade.disabled = true;
-        divTipoProduto.classList.replace('col-12', 'col-9');
-        tooltip.style.display = 'flex';
+        console.log(quantidade.value);
+        if (quantidade.value == '' || quantidade.value == 0 || quantidade.value == null) {
+            // inputs
+            if (quantidade.value == '') quantidade.value = 0;
+            quantidade.disabled = true;
+            divTipoProduto.classList.replace('col-12', 'col-9');
+            tooltip.style.display = 'flex';
 
-        // tabs e afins
-        locaisLi.style.display = 'flex';
-        impressorasLi.style.display = 'none';
-        suprimentosLi.style.display = '';
-        primeiroHandle.style.display = '';
+            // tabs e afins
+            locaisLi.style.display = 'flex';
+            impressorasLi.style.display = 'none';
+            suprimentosLi.style.display = '';
+            primeiroHandle.style.display = '';
+        }
         break;
     case 'TONER':
     case'CILINDRO' :

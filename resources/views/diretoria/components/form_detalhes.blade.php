@@ -50,7 +50,7 @@
                             <td>{{ $divisao->id }}</td>
                             <td>{{ $divisao->nome }}</td>
                             <td>{{ ucfirst(strtolower($divisao->status)) }}</td>
-                            <td style="max-width: 150px">
+                            <td style="width: 150px">
                                 <div class="row">
                                     <div class="col">
                                         <a href="{{route('divisao.index')}}">

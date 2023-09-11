@@ -43,7 +43,7 @@
                             <td>{{ $diretoria->id }}</td>
                             <td>{{ $diretoria->nome }}</td>
                             <td>{{ ucfirst(strtolower($diretoria->status)) }}</td>
-                            <td style="width: 250px">
+                            <td style="width: 150px">
                                 <div class="row">
                                     <div class="col">
                                         <a href="{{route('diretorias.index')}}">

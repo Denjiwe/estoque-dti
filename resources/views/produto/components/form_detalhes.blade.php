@@ -1,7 +1,7 @@
 <div class="mt-2" id="dados-gerais">
     <input type="hidden" name="proximo" id="proximoInput" value="nenhum">
     <div class="row">
-        <div class="col-2">
+        <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-sm-0">
             <div class="form-floating">
                 <input type="text" value="{{ucfirst(strtolower($produto->tipo_produto))}}" class="form-control" disabled>
                 <label for="tipo_produto">Tipo do Produto</label>
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-12 col-sm-6 col-md-3 mt-3 mt-sm-0">
             <div class="form-floating">
                 <input type="text" id="modelo_produto" name="modelo_produto" value="{{ $produto->modelo_produto }}" class="form-control" disabled>
                 <label for="modelo_produto">Modelo do Produto</label>
@@ -18,7 +18,7 @@
         </div>
 
         @if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')
-            <div class="col-2">
+            <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
                 <div class="form-floating">
                     <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" readonly>
                     <label for="qntde_solicitada">Quantidade Solicitada</label>
@@ -27,7 +27,7 @@
             </div>
         @endif
 
-        <div class="col-2">
+        <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
             <div class="row">
                 <div class="col-12" id="divTipoProduto">
                     <div class="form-floating">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-12 col-sm-6 col-md-3 col-xxl-2 mt-3 mt-md-0 @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')) mt-md-3 mt-xl-0 @endif">
             <div class="form-floating">
                 <select name="status" id="status" class="form-control" disabled>
                     <option selected hidden>Selecione o Status</option>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="row mt-3">
-        <div class="col-6" id="divDescricao">
+        <div class="col-12 col-sm-8 col-md-6" id="divDescricao">
             <div class="form-floating">
                 <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px" disabled>{{ $produto->descricao ?? old('descricao') }}</textarea>
                 <label for="descricao">Descrição (opcional)</label>

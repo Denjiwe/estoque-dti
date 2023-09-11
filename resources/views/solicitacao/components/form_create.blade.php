@@ -3,7 +3,7 @@
     <h3 style="color: red">{{$errors != []? $errors->first() : ''}}</h3>
     @if(auth()->user()->user_interno == 'SIM')
         <div class="row justify-content-center">
-            <div class="col-4">
+            <div class="col-12 col-sm-6 col-md-4 mt-3 mt-sm-0">
                 <label for="diretoria">Diretoria</label>
                 <select name="diretoria_id" id="diretoria" class="form-select">
                     @foreach($diretorias as $diretoria)
@@ -12,7 +12,7 @@
                 </select>
             </div>
 
-            <div class="col-4">
+            <div class="col-12 col-sm-6 col-md-4 mt-3 mt-sm-0">
                 <label for="divisao">Divisão</label>
                 <select name="divisao_id" id="divisao" class="form-select">
                     <option value="">Nenhuma</option>
@@ -22,7 +22,7 @@
                 </select>
             </div>
 
-            <div class="col-4">
+            <div class="col-12 col-md-4 mt-3 mt-md-0">
                 <label for="usuario">Usuario</label>
                 <select name="usuario_id" id="usuario" class="form-select">
                     <option value="{{$usuario->id}}">{{$usuario->nome}}</option>
@@ -37,8 +37,8 @@
     @endif
 
     <div class="row justify-content-center mt-3">
-        <div class="col-4">
-            <label for="impressora" class="fom-label">Selecione o modelo da impressora</label>
+        <div class="col-6 col-md-4">
+            <label for="impressora" class="fom-label">Modelo da impressora</label>
             <select id="impressora" class="form-select">
                 <option value="0" selected hidden>-- Impressora --</option>
                 @foreach ($impressoras as $impressora)
@@ -48,8 +48,8 @@
             {{ $errors->has('impressora') ? $errors->first('impressora') : '' }}
         </div>
 
-        <div class="col-3">
-            <label for="suprimento" class="fom-label">Selecione o tipo do suprimento</label>
+        <div class="col-6 col-md-3">
+            <label for="suprimento" class="fom-label">Tipo do suprimento</label>
             <select id="suprimento" class="form-select">
                 <option value="0" selected hidden>-- Suprimento --</option>
                 <option value="TONER">Toner</option>
@@ -58,12 +58,12 @@
             </select>
         </div>
         
-        <div class="col-3">
+        <div class="col-6 col-md-3 mt-3 mt-md-0">
             <label for="quantidade" class="form-label">Informe a quatidade</label>
             <input type="number" name="quantidade" min="1" max="2" id="quantidade" class="form-control">
         </div>
 
-        <div class="col-2 mt-2">
+        <div class="col-6 col-md-2 mt-4 mt-md-2">
             <button type="button" class="btn btn-primary mt-4" id="adicionar">Adicionar</button>
         </div>
     </div>
