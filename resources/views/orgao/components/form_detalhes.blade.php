@@ -10,11 +10,11 @@
 <div class="tab-content" id="TabContent">
     <div class="tab-pane fade show active mt-2" id="dados-gerais-tab-pane" role="tabpanel" aria-labelledby="dados-gerais-tab" tabindex="0">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-sm-6 mt-2 mt-sm-0">
                 <label for="nome" class="fom-label">Nome</label>
                 <input type="text" id="nome" name="nome" value="{{ $orgao->nome ?? old('nome') }}" placeholder="Nome" class="form-control" disabled>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-sm-6 mt-2 mt-sm-0">
                 <label for="status" class="fom-label">Status</label>
                 <input type="text" id="status" name="status" value="{{ ucfirst(strtolower($orgao->status)) ?? old('status') }}" placeholder="status" class="form-control" disabled>
             </div>
@@ -37,7 +37,7 @@
                     <tr>
                         <td colspan="4">Nenhuma divisão cadastrada</td>
                     </tr>
-                @else 
+                @else
                     @foreach($orgao->diretorias as $diretoria)
                         <tr>
                             <td>{{ $diretoria->id }}</td>

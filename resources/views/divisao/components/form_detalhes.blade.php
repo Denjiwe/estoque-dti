@@ -10,15 +10,15 @@
 <div class="tab-content" id="TabContent">
     <div class="tab-pane fade show active mt-2" id="dados-gerais-tab-pane" role="tabpanel" aria-labelledby="dados-gerais-tab" tabindex="0">
         <div class="row">
-            <div class="col-4">
+            <div class="col-12 col-sm-4 mt-2 mt-sm-0">
                 <label for="nome" class="fom-label">Nome</label>
                 <input type="text" id="nome" name="nome" value="{{ $divisao->nome ?? old('nome') }}" placeholder="Nome" class="form-control" disabled>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-sm-4 mt-2 mt-sm-0">
                 <label for="status" class="fom-label">E-mail</label>
                 <input type="text" id="status" name="status" value="{{ $divisao->email ?? old('email') }}" placeholder="Nenhum" class="form-control" disabled>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-sm-4 mt-2 mt-sm-0">
                 <label for="status" class="fom-label">Status</label>
                 <input type="text" id="status" name="status" value="{{ ucfirst(strtolower($divisao->status)) ?? old('status') }}" placeholder="Status" class="form-control" disabled>
             </div>
@@ -41,7 +41,7 @@
                     <tr>
                         <td colspan="4">Nenhum usuário cadastrado</td>
                     </tr>
-                @else 
+                @else
                     @foreach($divisao->usuarios as $usuario)
                         <tr>
                             <td>{{ $usuario->id }}</td>

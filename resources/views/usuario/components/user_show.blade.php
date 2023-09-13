@@ -48,67 +48,14 @@
     </div>
 
     <div class="tab-pane fade mt-2" id="solicitacoes-tab-pane" role="tabpanel" aria-labelledby="solicitacoes-tab" tabindex="0">
-    @if ($solicitacoes == null)
+    @if ($config['data'] == [])
         <h3>O usuário não criou nenhuma solicitação!</h3>
     @else
-        <table class="table text-center table-hover responsive">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Divisão</th>
-                    <th>Diretoria</th>
-                    <th>Status</th>
-                    <th>Data de Criação</th>
-                    <th>Data de Atualização</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($solicitacoes as $solicitacao)
-                @php
-                    $dataCriacao = strtotime($solicitacao->created_at);
-                    $dataEdicao = strtotime($solicitacao->updated_at);
-                    $liberado = false;
-                @endphp
-                <tr>
-                    <td>{{$solicitacao->id}}</td>
-                    <td>{{$solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma'}}</td>
-                    <td>{{$solicitacao->diretoria->nome}}</td>
-                    <td>{{ucfirst(strtolower($solicitacao->status))}}</td>
-                    <td>{{(date('d/m/Y', $dataCriacao))}}</td>
-                    <td>{{(date('d/m/Y', $dataEdicao))}}</td>
-                    <td>
-                        <div class="row">
-                            <div class="col">
-                                <a href="{{ route('solicitacoes.update', ['id' => $solicitacao->id]) }}">
-                                    <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
-                                        <i class="fa fa-lg fa-fw fa-pen"></i>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-        @endif
+        <x-adminlte-datatable id="table" :heads="$heads" :config="$config" compressed/>
+    @endif
     </div>
 
     <div class="mt-3 row">
-        <div class="col-6" id="paginate" style="display: none">
-            <x-paginate>
-                <x-slot:content>
-                    <li class="page-item"><a class="page-link {{ $solicitacoes->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $solicitacoes->previousPageUrl() }}">Anterior</a></li>
-                        @for($i = 1; $i <= $solicitacoes->lastPage(); $i++)
-                            <li class="page-item {{ $solicitacoes->currentPage() == $i ? 'active' : ''}}">
-                                <a class="page-link" href="{{ $solicitacoes->url($i) }}">{{ $i }}</a>
-                            </li>
-                        @endfor
-                    <li class="page-item"><a class="page-link {{ $solicitacoes->currentPage() == $solicitacoes->lastPage() ? 'disabled' : ''}}" href="{{ $solicitacoes->nextPageUrl() }}">Próxima</a></li>
-                </x-slot:content>
-            </x-paginate>
-        </div>
         <div class="col-12" id='voltarDiv'>
             <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}"><button class="btn btn-primary float-end" id="btnSubmit" type="submit">Editar</button></a>
             <a href="{{ route('usuarios.index') }}"><button type="button" class="btn btn-secondary float-end me-2">Voltar</button></a>
@@ -129,5 +76,7 @@
             $('#voltarDiv').removeClass('col-6').addClass('col-12');
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @stop
+
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugin', true)

@@ -33,7 +33,7 @@ services:
     command: ['--default-authentication-plugin=mysql_native_password', '--lower_case_table_names=2']
     restart: always
     volumes:
-      - ./db/database/:/var/lib/mysql/
+      - ./db/db/:/var/lib/mysql/
     environment:
       MYSQL_ROOT_PASSWORD: root
     networks:

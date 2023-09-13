@@ -36,7 +36,7 @@ class UsuarioController extends Controller
             ['label' => 'Ações', 'no-export' => true, 'width' => '10'],
         ];
 
-        foreach ($usuarios as $usuario) 
+        foreach ($usuarios as $usuario)
         {
             $dataCriacao = date('d/m/Y',strtotime($usuario->created_at));
             $dataEdicao = date('d/m/Y',strtotime($usuario->updated_at));
@@ -97,7 +97,7 @@ class UsuarioController extends Controller
         $itens = [
             'heads' => $heads,
             'config' => $config,
-            'usuarios' => $usuarios, 
+            'usuarios' => $usuarios,
             'titulo' => 'Cadastro de Usuários',
         ];
 
@@ -139,7 +139,7 @@ class UsuarioController extends Controller
         if ($data['divisao_id'] == 0) {
             unset($data['divisao_id']);
         }
-        
+
         try {
             $usuario = $this->usuario->create($data);
             session()->flash('mensagem', 'Usuário cadastrado com sucesso!');
@@ -160,17 +160,74 @@ class UsuarioController extends Controller
     public function show($id)
     {
         $usuario = $this->usuario->with(['diretoria', 'divisao'])->find($id);
-        
+
         if ($usuario == null) {
             session()->flash('mensagem', 'Usuário não encontrado!');
             session()->flash('color', 'warning');
             return redirect()->route('usuarios.index');
         }
 
-        $solicitacoes = Solicitacao::where('usuario_id', $usuario->id)->paginate(10);
+        $solicitacoes = Solicitacao::where('usuario_id', $usuario->id)->get();
 
-        return view('usuario.detalhes', ['usuario' => $usuario, 'solicitacoes' => $solicitacoes]);
-    }   
+        $heads = [
+            ['label' => 'ID', 'classes' => 'text-center'],
+            ['label' => 'Diretoria', 'classes' => 'text-center'],
+            ['label' => 'Divisão', 'classes' => 'text-center'],
+            ['label' => 'Status', 'classes' => 'text-center'],
+            ['label' => 'Data de Criação', 'classes' => 'text-center'],
+            'Data de Edição',
+            ['label' => 'Ações', 'no-export' => true, 'width' => '5'],
+        ];
+
+        $data = [];
+        foreach ($solicitacoes as $solicitacao)
+        {
+            $dataCriacao = date('d/m/Y',strtotime($solicitacao->created_at));
+            $dataEdicao = date('d/m/Y',strtotime($solicitacao->updated_at));
+
+            $btnEdit = '<a href="'.route("solicitacoes.edit", ["id" => $solicitacao->id]).'"><button class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
+                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                        </button></a>';
+
+            $data[] = [
+                $solicitacao->id,
+                $solicitacao->diretoria->nome,
+                $solicitacao->divisao != null ? $solicitacao->divisao->nome : 'Nenhuma',
+                ucfirst(strtolower($solicitacao->status)),
+                $dataCriacao,
+                $dataEdicao,
+                '<nobr>'.$btnEdit.'</nobr>'
+            ];
+        }
+
+        $config = [
+            'data' => $data,
+            'dom' => '<"row">t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
+            'order' => [[0, 'asc']],
+            'columns' => [null, null, null, null, null, null, ['orderable' => false]],
+            "bLengthChange" => false,
+            'language' => [
+                'sEmptyTable' => "Nenhum registro encontrado",
+                'sInfo' =>	"Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                'sInfoEmpty' =>	"Mostrando 0 até 0 de 0 registros",
+                'sInfoFiltered' =>	"(Filtrados de _MAX_ registros)",
+                "sInfoThousands" => ".",
+                "sLengthMenu" => "_MENU_ resultados por página",
+                "sLoadingRecords" => "Carregando...",
+                "sProcessing" => "Processando...",
+                "sZeroRecords" => "Nenhum registro encontrado",
+                "sSearch" => "Pesquisa rápida: ",
+                "oPaginate" => [
+                    "sNext" => "Próximo",
+                    "sPrevious" =>	"Anterior",
+                    "sFirst" =>	"Primeiro",
+                    "sLast" =>	"Último"
+                ],
+            ]
+        ];
+
+        return view('usuario.detalhes', ['usuario' => $usuario, 'heads' => $heads, 'config' => $config]);
+    }
 
     /**
      *
