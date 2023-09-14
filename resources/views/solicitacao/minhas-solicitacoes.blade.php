@@ -22,8 +22,7 @@
     @endif
 
     {{-- Box de pesquisa --}}
-    <x-box titulo="Pesquisar" id="searchBox">
-        <x-slot:body>
+    <x-adminlte-card theme="primary" theme-mode="outline" title="Pesquisar" collapsible>
             <div class="row">
                 <div class="col-3">
                     <label for="IdOrgao">Id da Solicitação</label>
@@ -34,16 +33,14 @@
                     <input type="text" id="nomeOrgao" class="form-control">
                 </div>
                 <div class="col-3 pt-4 mt-2">
-                    <button type="submit" class="btn btn-primary">Pesquisar</button>                 
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
                 </div>
             </div>
-
-        </x-slot:body>
-    </x-box>
+    </x-adminlte-card>
 
     {{-- Box de exibição --}}
-    <x-box titulo="{{ $titulo }}" id="main">
-        <x-slot:body>
+    <x-adminlte-card>
+        <h3>{{$titulo}}</h3>
             <nav class="nav nav-pills nav-justified mt-3 mb-3">
                 <button class="nav-link active me-3" id="nav-abertos-tab" data-bs-toggle="tab" data-bs-target="#nav-abertos" type="button" role="tab" aria-controls="nav-abertos" aria-selected="true">Abertos/Liberados</button>
                 <button class="nav-link me-3" id="nav-aguardando-tab" data-bs-toggle="tab" data-bs-target="#nav-aguardando" type="button" role="tab" aria-controls="nav-aguardando" aria-selected="false">Aguardando</button>
@@ -62,9 +59,7 @@
                     </div>
                 </div>
             @endif
-        </x-slotbody>
 
-        <x-slot:footer>
             <div class="row mt-3">
                 <div class="col-6">
                     <x-paginate>
@@ -83,8 +78,7 @@
                     <a href="{{ route('solicitacoes.store') }}"><button type="button" class="btn btn-primary float-end" >Criar</button></a>
                 </div>
             </div>
-        </x-slot:footer>
-    </x-box>
+    </x-adminlte-card>
 
     <style scoped>
         button.nav-link {
@@ -98,10 +92,10 @@
 @stop
 
 @section('js')
-    <script> 
+    <script>
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir a solicitação? As entregas feitas serão excluídas também e o estoque será atualizado')) {                                                       
-                document.getElementById('form_'+id).submit()                                                    
+            if (confirm('Tem certeza que quer excluir a solicitação? As entregas feitas serão excluídas também e o estoque será atualizado')) {
+                document.getElementById('form_'+id).submit()
             }
         }
         </script>

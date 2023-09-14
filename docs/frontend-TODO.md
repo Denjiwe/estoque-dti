@@ -47,4 +47,5 @@
 - [X] Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
 - [X] Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos
 - Falta buscar as divisões com base nas diretorias no cadastro de locais
+    - Erro ao salvar a diretoria
 - De md para baixo o menu bar não funciona

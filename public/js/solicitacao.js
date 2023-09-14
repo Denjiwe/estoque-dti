@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var urlBase = 'http://localhost:80/api/';
     var usuario = $('#usuario option:first');
 
     async function criaTrToner(impressoraId, impressoraModelo, quantidade) {
@@ -25,11 +24,11 @@ $(document).ready(function() {
                 row.append(tonerTd);
             })
             .catch(data => console.log(data))
-        
+
         if(row.find('td').eq(1).find('input').val() === 'undefined' && !$('#suprimento').hasClass('is-invalid')) {
             $('#suprimento').addClass('is-invalid');
             $('#suprimento').after($('<div>').addClass('invalid-feedback').text('A impressora selecionada não possui toner cadastrado.'));
-            
+
             return;
         } else if (row.find('td').eq(1).find('input').val() === 'undefined' && $('#suprimento').hasClass('is-invalid')) {
             return;
@@ -68,11 +67,11 @@ $(document).ready(function() {
                 cilindroTd.append(`<input style="display:none;" value="${cilindroId}" name="produto[]">`)
                 row.append(cilindroTd);
             });
-        
+
         if(row.find('td').eq(1).find('input').val() === 'undefined' && !$('#suprimento').hasClass('is-invalid')) {
             $('#suprimento').addClass('is-invalid');
             $('#suprimento').after($('<div>').addClass('invalid-feedback').text('A impressora selecionada não possui cilindro cadastrado.'));
-            
+
             return;
         } else if (row.find('td').eq(1).find('input').val() === 'undefined' && $('#suprimento').hasClass('is-invalid')) {
             return;
@@ -233,7 +232,7 @@ $(document).ready(function() {
     $('#quantidade').on('change', function(){
         if ($('#quantidade').hasClass('is-invalid')) {
             $('#quantidade').removeClass('is-invalid');
-            $('#quantidade').next().remove();   
+            $('#quantidade').next().remove();
         }
     });
 

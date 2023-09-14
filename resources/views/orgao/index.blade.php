@@ -21,8 +21,7 @@
         </div>
     @endif
 
-    <x-adminlte-card  theme="primary" theme-mode="outline">
-        <h3>Pesquisar</h3>
+    <x-adminlte-card  theme="primary" theme-mode="outline" title="Pesquisar" collapsible>
         <form action="{{ route('orgao.pesquisa') }}" method="GET">
                 <div class="row">
                     <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">

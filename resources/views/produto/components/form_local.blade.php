@@ -32,7 +32,7 @@
                                                     <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                                 </td>
                                                 <td style="width:33%;">
-                                                    <select name="diretoria[]" id="diretoria" class="form-select w-auto">
+                                                    <select name="diretoria[]" id="diretoria" class="form-select w-auto diretoria">
                                                         <option value="" selected hidden>Selecione a Diretoria</option>
                                                         @foreach($diretorias as $diretoria)
                                                             <option value="{{$diretoria->id}}" @if($local->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>

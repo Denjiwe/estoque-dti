@@ -60,7 +60,7 @@ class LocalImpressoraController extends Controller
                 );
             }
 
-            if ($request->diretoria[$i] != null && $request->divisao[$i] == null) 
+            if ($request->diretoria[$i] != null && $request->divisao[$i] == null)
             {
                 $this->local->create(
                     [
@@ -140,7 +140,7 @@ class LocalImpressoraController extends Controller
         {
             foreach($diretoriasExcluidas as $diretoriaExcluida)
             {
-                if($diretoriaExcluida != null) 
+                if($diretoriaExcluida != null)
                 {
                     $local = $this->local->where('diretoria_id', $diretoriaExcluida);
                     $local->delete();
@@ -148,11 +148,12 @@ class LocalImpressoraController extends Controller
             }
         }
         $diretoriasNovas = array_diff($diretorias, $pDiretorias); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
+        dd($diretoriasNovas, $diretorias, $pDiretorias);
         if($diretoriasNovas != [])
         {
             foreach($diretoriasNovas as $diretoriaNova)
             {
-                if($diretoriaNova != null) 
+                if($diretoriaNova != null)
                 {
                     $this->local->create([
                         'produto_id' => $produto->id,

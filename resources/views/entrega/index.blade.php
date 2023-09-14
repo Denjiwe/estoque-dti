@@ -22,8 +22,7 @@
     @endif
 
     {{-- Box de pesquisa --}}
-    <x-adminlte-card theme="primary" theme-mode="outline">
-        <h3>Pesquisar</h3>
+    <x-adminlte-card theme="primary" theme-mode="outline" title="Pesquisar" collapsible>
         <form action="{{ route('entregas.pesquisa') }}" method="GET">
             <div class="row">
                     <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
@@ -44,7 +43,7 @@
                         <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                     </div>
                 <div class="col-3 pt-4 mt-2">
-                    <button type="submit" class="btn btn-primary">Pesquisar</button>                 
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
                 </div>
             </div>
         </form>
@@ -61,10 +60,10 @@
 @stop
 
 @section('js')
-    <script> 
+    <script>
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir a entrega? O estoque será atualizado!')) {                                                       
-                document.getElementById('form_'+id).submit()                                                    
+            if (confirm('Tem certeza que quer excluir a entrega? O estoque será atualizado!')) {
+                document.getElementById('form_'+id).submit()
             }
         }
     </script>

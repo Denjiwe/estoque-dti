@@ -23,8 +23,7 @@
     @endif
 
     {{-- Box de pesquisa --}}
-    <x-adminlte-card theme="primary" theme-mode="outline">
-        <h3>Pesquisar</h3>
+    <x-adminlte-card theme="primary" theme-mode="outline" title="Pesquisar" collapsible>
         <form action="{{ route('solicitacoes.pesquisa') }}" method="GET">
             <div class="row">
                 <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
@@ -44,7 +43,7 @@
                     <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                 </div>
                 <div class="col-3 pt-4 mt-2">
-                    <button type="submit" class="btn btn-primary">Pesquisar</button>                 
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
                 </div>
             </div>
         </form>
@@ -66,42 +65,42 @@
         @endif
         <ul class="nav nav-pills nav-justified mt-3 mb-3" id="Tab" role="tablist">
             <li class="nav-item me-0 me-sm-3" role="presentation">
-                <button 
+                <button
                     class="nav-link active solicitacao"
                     id='abertas'
-                    data-bs-toggle="tab" 
-                    data-bs-target="#abertas-tab-pane" 
-                    type="button" 
-                    role="tab" 
-                    aria-controls="abertas-tab-pane" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#abertas-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="abertas-tab-pane"
                     aria-selected="true"
                 >
                     Abertos/Liberados
                 </button>
             </li>
             <li class="nav-item me-0 me-sm-3" role="presentation">
-                <button 
+                <button
                     class="nav-link solicitacao"
                     id='aguardando'
-                    data-bs-toggle="tab" 
-                    data-bs-target="#aguardando-tab-pane" 
-                    type="button" 
-                    role="tab" 
-                    aria-controls="aguardando-tab-pane" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#aguardando-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="aguardando-tab-pane"
                     aria-selected="true"
                 >
                     Aguardando
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button 
+                <button
                     class="nav-link solicitacao"
                     id='encerradas'
-                    data-bs-toggle="tab" 
-                    data-bs-target="#encerradas-tab-pane" 
-                    type="button" 
-                    role="tab" 
-                    aria-controls="encerradas-tab-pane" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#encerradas-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="encerradas-tab-pane"
                     aria-selected="true"
                 >
                     Encerradas
@@ -142,10 +141,10 @@
 @stop
 
 @section('js')
-    <script> 
+    <script>
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir a solicitação? As entregas feitas serão excluídas também e o estoque será atualizado')) {                                                       
-                document.getElementById('form_'+id).submit()                                                    
+            if (confirm('Tem certeza que quer excluir a solicitação? As entregas feitas serão excluídas também e o estoque será atualizado')) {
+                document.getElementById('form_'+id).submit()
             }
         }
         </script>

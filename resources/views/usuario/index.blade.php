@@ -22,7 +22,7 @@
     @endif
 
     {{-- Box de pesquisa --}}
-    <x-adminlte-card theme="primary" theme-mode="outline"> 
+    <x-adminlte-card theme="primary" theme-mode="outline" title="Pesquisar" collapsible>
         <form action="{{ route('usuarios.pesquisa') }}" method="GET">
             <div class="row">
                 <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
@@ -42,7 +42,7 @@
                     <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                 </div>
                 <div class="col-3 pt-4 mt-2">
-                    <button type="submit" class="btn btn-primary">Pesquisar</button>                 
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
                 </div>
             </div>
         </form>
@@ -55,7 +55,7 @@
         @if (count($usuarios) > 0)
             <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" compressed/>
         @endif
-        
+
         <div class="row mt-3 mb-3">
             <div class="col-12">
                 <a href="{{route('usuarios.create')}}"><button type="button" class="btn btn-primary float-end">Adicionar</button></a>
@@ -65,10 +65,10 @@
 @stop
 
 @section('js')
-    <script> 
+    <script>
         function excluir(id) {
-            if (confirm('Tem certeza que quer excluir o usuário?')) {                                                       
-                document.getElementById('form_'+id).submit()                                                    
+            if (confirm('Tem certeza que quer excluir o usuário?')) {
+                document.getElementById('form_'+id).submit()
             }
         }
     </script>

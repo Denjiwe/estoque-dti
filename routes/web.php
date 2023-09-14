@@ -27,7 +27,7 @@ use App\Http\Controllers\AuditoriaController;
 */
 
 // rotas user_interno
-Route::middleware(['auth', 'user_interno'])->group(function () {  
+Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::get('usuarios/pesquisa', [UsuarioController::class, 'pesquisa'])->name('usuarios.pesquisa');
     Route::resource('usuarios', UsuarioController::class);
     Route::get('orgaos/pesquisa', [OrgaoController::class, 'pesquisa'])->name('orgao.pesquisa');
@@ -40,7 +40,7 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::resource('produtos', ProdutoController::class);
     Route::get('entregas/pesquisa', [EntregaController::class, 'pesquisa'])->name('entregas.pesquisa');
     Route::resource('entregas', EntregaController::class);
-    
+
     Route::get('solicitacoes/pesquisa', [SolicitacaoController::class, 'pesquisa'])->name('solicitacoes.pesquisa');
     Route::get('solicitacoes', [SolicitacaoController::class, 'index'])->name('solicitacoes.abertas');
     Route::get('solicitacoes/{id}', [SolicitacaoController::class, 'edit'])->name('solicitacoes.edit');
@@ -74,7 +74,7 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('solicitar/', [SolicitacaoController::class, 'create'])->name('solicitacoes.create');
     Route::post('solicitar/', [SolicitacaoController::class, 'store'])->name('solicitacoes.store');
-    Route::get('minhas-solicitacoes', 'App\Http\Controllers\SolicitacaoController@index')->name('minhas-solicitacoes.index');
+    Route::get('minhas-solicitacoes', [SolicitacaoController::class, 'index'])->name('minhas-solicitacoes.index');
     Route::get('/sem-permissao', function() {
         return view('sem-permissao');
     })->name('sem-permissao');
