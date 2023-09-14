@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+    {{-- @dd($heads, $titulo, $configAbertas, $configAguardando, $configEncerradas, $rota) --}}
 
     @if(session()->get('mensagem'))
         <div class="position-fixed top-0 pt-5 mt-3 pe-2 end-0" style="z-index: 11">
@@ -26,7 +27,7 @@
         <h3>Pesquisar</h3>
         <form action="{{ route('solicitacoes.pesquisa') }}" method="GET">
             <div class="row">
-                <div class="col-7 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
+                <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
                     <label for="campo">Campo de pesquisa</label>
                     <select id="campo" class="form-select">
                         <option value="id" selected>ID</option>
@@ -38,7 +39,7 @@
                         <option value="updated_at">Data de Atualização</option>
                     </select>
                 </div>
-                <div class="col-5 col-sm-5 col-xl-3 col-lg-4 col-xxl-2" id="pesquisa">
+                <div class="col-12 col-sm-5 col-xl-3 col-lg-4 col-xxl-2 mt-2 mt-sm-0" id="pesquisa">
                     <label for="id">ID</label>
                     <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                 </div>
@@ -63,40 +64,78 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <nav class="nav nav-pills nav-justified mt-3 mb-3">
-            <a href="{{$rota == 'todas' ?  route('solicitacoes.abertas') : route('minhas-solicitacoes.abertas')}}" class="nav-link @if($ativo == 'abertas') active @endif me-3 solicitacao">Abertos/Liberados</a>
-            <a href="{{$rota == 'todas' ? route('solicitacoes.aguardando') : route('minhas-solicitacoes.aguardando')}}" class="nav-link @if($ativo == 'aguardando') active @endif me-3 solicitacao">Aguardando</a>
-            <a href="{{$rota == 'todas' ? route('solicitacoes.encerradas') : route('minhas-solicitacoes.encerradas')}}" class="nav-link @if($ativo == 'encerradas') active @endif solicitacao">Encerrados</a>
-        </nav>
+        <ul class="nav nav-pills nav-justified mt-3 mb-3" id="Tab" role="tablist">
+            <li class="nav-item me-0 me-sm-3" role="presentation">
+                <button 
+                    class="nav-link active solicitacao"
+                    id='abertas'
+                    data-bs-toggle="tab" 
+                    data-bs-target="#abertas-tab-pane" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="abertas-tab-pane" 
+                    aria-selected="true"
+                >
+                    Abertos/Liberados
+                </button>
+            </li>
+            <li class="nav-item me-0 me-sm-3" role="presentation">
+                <button 
+                    class="nav-link solicitacao"
+                    id='aguardando'
+                    data-bs-toggle="tab" 
+                    data-bs-target="#aguardando-tab-pane" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="aguardando-tab-pane" 
+                    aria-selected="true"
+                >
+                    Aguardando
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button 
+                    class="nav-link solicitacao"
+                    id='encerradas'
+                    data-bs-toggle="tab" 
+                    data-bs-target="#encerradas-tab-pane" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="encerradas-tab-pane" 
+                    aria-selected="true"
+                >
+                    Encerradas
+                </button>
+            </li>
+        </ul>
 
-        <x-tabela-solicitacao solicitacoes='{{ json_encode($solicitacoes) }}'></x-tabela-solicitacao>
+        <div class="tab-content" id="TabContent">
+            <div class="tab-pane fade show active mt-2" id="abertas-tab-pane" role="tabpanel" aria-labelledby="abertas-tab" tabindex="0">
+                <x-adminlte-datatable id="tableAbertas" :heads="$heads" :config="$configAbertas" compressed beautify/>
+            </div>
+
+            <div class="tab-pane fade mt-2" id="aguardando-tab-pane" role="tabpanel" aria-labelledby="aguardando-tab" tabindex="0">
+                <x-adminlte-datatable id="tableAguardando" :heads="$heads" :config="$configAguardando" compressed beautify/>
+            </div>
+
+            <div class="tab-pane fade mt-2" id="encerradas-tab-pane" role="tabpanel" aria-labelledby="encerradas-tab" tabindex="0">
+                <x-adminlte-datatable id="tableEncerradas" :heads="$heads" :config="$configEncerradas" compressed beautify/>
+            </div>
+        </div>
 
         <div class="row mt-3">
-            <div class="col-6">
-                <x-paginate>
-                    <x-slot:content>
-                        <li class="page-item"><a class="page-link {{ $solicitacoes->currentPage() == 1 ? 'disabled' : ''}}" href="{{ $solicitacoes->previousPageUrl() }}">Anterior</a></li>
-                            @for($i = 1; $i <= $solicitacoes->lastPage(); $i++)
-                                <li class="page-item {{ $solicitacoes->currentPage() == $i ? 'active' : ''}}">
-                                    <a class="page-link" href="{{ $solicitacoes->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-                        <li class="page-item"><a class="page-link {{ $solicitacoes->currentPage() == $solicitacoes->lastPage() ? 'disabled' : ''}}" href="{{ $solicitacoes->nextPageUrl() }}">Próxima</a></li>
-                    </x-slot:content>
-                </x-paginate>
-            </div>
-            <div class="col-6">
+            <div class="col-12">
                 <a href="{{ route('solicitacoes.store') }}"><button type="button" class="btn btn-primary float-end" >Criar</button></a>
             </div>
         </div>
     </x-adminlte-card>
 
     <style scoped>
-        a.nav-link.solicitacao {
+        button.nav-link.solicitacao {
             background-color: #c2c2c2 !important;
             color: #2c2c2c !important;
         }
-        a.nav-link.active.solicitacao {
+        button.nav-link.active.solicitacao {
             background-color: #0d6efd !important;
         }
     </style>
@@ -113,3 +152,5 @@
     <script src="{{asset('js/handleToasts.js')}}"></script>
     <script src="{{ asset('js/pesquisaSolicitacao.js') }}"></script>
 @stop
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugin', true)

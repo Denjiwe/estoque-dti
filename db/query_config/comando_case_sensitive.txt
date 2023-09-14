@@ -1,0 +1,8 @@
+configurar para funcionar no linux;
+
+remover todos arquivos da pasta do banco;
+
+ir com cmd administrador na pastado do banco e rodar:
+fsutil file setCaseSensitiveInfo ./ enable
+
+voltar arquivos do banco e pronto.

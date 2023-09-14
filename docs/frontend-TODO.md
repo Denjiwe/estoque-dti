@@ -31,8 +31,8 @@
 - [X] Fazer botão de toggle entre visualização em log e tabela, renderizando as duas, ocultando com display none
 - [X] Usar toasts para avisar mudanças
     - [X] Fazer arquivo js para somente importar, realizando a limpeza da url e setInterval da remoção do toast
-- Responsividade 🫣
-- Usar Session::flash para transmitir infromações do toast, tirando nessecidade de manipular url
+- [X] Responsividade 🫣
+- [X] Usar Session::flash para transmitir infromações do toast, tirando nessecidade de manipular url
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 
@@ -46,3 +46,5 @@
         - [X] x-box-input precisa ser por adminlte-card ou coisa parecida
 - [X] Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
 - [X] Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos
+- Falta buscar as divisões com base nas diretorias no cadastro de locais
+- De md para baixo o menu bar não funciona

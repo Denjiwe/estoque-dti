@@ -24,38 +24,161 @@ class SolicitacaoController extends Controller
         $this->entrega = $entrega;
     }
     
-    public function abertas() {
-        if (!Route::currentRouteNamed('minhas-solicitacoes.abertas')) {
-            $solicitacoesAbertas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ABERTO')->orWhere('status', 'LIBERADO')->orderBy('created_at', 'desc')->paginate(8);
+    public function index() {
+        if (!Route::currentRouteNamed('minhas-solicitacoes.index')) {
+            $solicitacoesAbertas = $this->solicitacao
+                ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
+                ->where('status', 'ABERTO')
+                ->orWhere('status', 'LIBERADO')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $solicitacoesAguardando = $this->solicitacao
+                ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
+                ->where('status', 'AGUARDANDO')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $solicitacoesEncerradas = $this->solicitacao
+                ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
+                ->where('status', 'ENCERRADO')
+                ->orderBy('created_at', 'desc')
+                ->get();
             $rota = 'todas';
         } else {
-            $solicitacoesAbertas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where([['status', 'ABERTO'], ['usuario_id', auth()->user()->id]])->orWhere([['status', 'LIBERADO'],['usuario_id', auth()->user()->id]])->orderBy('created_at', 'desc')->paginate(8);
+            $solicitacoesAbertas = $this->solicitacao
+                ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
+                ->where([['status', 'ABERTO'], ['usuario_id', auth()->user()->id]])
+                ->orWhere([['status', 'LIBERADO'],['usuario_id', auth()->user()->id]])
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $solicitacoesAguardando = $this->solicitacao
+                ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
+                ->where([['status', 'AGUARDANDO'], ['usuario_id', auth()->user()->id]])
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $solicitacoesEncerradas = $this->solicitacao
+                ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
+                ->where([['status', 'ENCERRADO'], ['usuario_id', auth()->user()->id]])
+                ->orderBy('created_at', 'desc')
+                ->get();
             $rota = 'minhas';
         }
 
-        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAbertas, 'titulo' => 'Solicitações Abertas', 'ativo' => 'abertas', 'rota' => $rota]);
+        $solicitacoes = array('abertas' => $solicitacoesAbertas, 'aguardando' => $solicitacoesAguardando, 'encerradas' => $solicitacoesEncerradas);
+        $heads = [
+            'Código',
+            'Nome do Usuário',
+            'Diretoria',
+            'Divisão',
+            'Status',
+            'Data de Criação',
+            auth()->user()->user_interno == 'SIM' ? 'Ações' : null
+        ];
+
+        foreach ($solicitacoes as $index => $tipoSolicitacoes)
+        {
+            foreach ($tipoSolicitacoes as $solicitacao) 
+            {
+                $dataCriacao = date('d/m/Y',strtotime($solicitacao->created_at));
+                $primeiroNome = explode(' ', $solicitacao->usuario->nome)[0];
+
+                $btnEdit = '<a href="'.route("solicitacoes.update", ["id" => $solicitacao->id]).'"><button class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
+                                <i class="fa fa-lg fa-fw fa-pen"></i>
+                            </button></a>';
+                $btnDelete = '<form action="'.route("solicitacoes.destroy", ["id" => $solicitacao->id]).'" method="POST" id="form_'.$solicitacao->id.'" style="display:inline">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="'.csrf_token().'">
+                                <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$solicitacao->id.')" title="Excluir">
+                                    <i class="fa fa-lg fa-fw fa-trash"></i>
+                                </button>
+                                </form>';
+
+                switch ($index) {
+                    case 'abertas':
+                        $dataAbertas[] = [
+                            $solicitacao->id,
+                            $primeiroNome,
+                            $solicitacao->divisao ? $solicitacao->divisao->nome : 'Nenhuma',
+                            $solicitacao->diretoria->nome,
+                            $solicitacao->status,
+                            $dataCriacao,
+                            auth()->user()->user_interno == 'SIM' ? '<nobr>'.$btnEdit.$btnDelete.'</nobr>' : null
+                        ];
+                        break;
+                    case 'aguardando':
+                        $dataAguardando[] = [
+                            $solicitacao->id,
+                            $primeiroNome,
+                            $solicitacao->divisao ? $solicitacao->divisao->nome : 'Nenhuma',
+                            $solicitacao->diretoria->nome,
+                            $solicitacao->status,
+                            $dataCriacao,
+                            auth()->user()->user_interno == 'SIM' ? '<nobr>'.$btnEdit.$btnDelete.'</nobr>' : null
+                        ];
+                        break;
+                    case 'encerradas':
+                        $dataEncerradas[] = [
+                            $solicitacao->id,
+                            $primeiroNome,
+                            $solicitacao->divisao ? $solicitacao->divisao->nome : 'Nenhuma',
+                            $solicitacao->diretoria->nome,
+                            $solicitacao->status,
+                            $dataCriacao,
+                            auth()->user()->user_interno == 'SIM' ? '<nobr>'.$btnEdit.$btnDelete.'</nobr>' : null
+                        ];
+                        break;
+                }
+            }
+        }
+
+        $config = [
+            'dom' => '<"row">t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
+            'order' => [[0, 'asc']],
+            'columns' => [null, null, null, null, null, null, ['orderable' => false]],
+            "bLengthChange" => false,
+            'language' => [
+                'sEmptyTable' => "Nenhum registro encontrado",
+                'sInfo' =>	"Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                'sInfoEmpty' =>	"Mostrando 0 até 0 de 0 registros",
+                'sInfoFiltered' =>	"(Filtrados de _MAX_ registros)",
+                "sInfoThousands" => ".",
+                "sLengthMenu" => "_MENU_ resultados por página",
+                "sLoadingRecords" => "Carregando...",
+                "sProcessing" => "Processando...",
+                "sZeroRecords" => "Nenhum registro encontrado",
+                "sSearch" => "Pesquisa rápida: ",
+                "oPaginate" => [
+                    "sNext" => "Próximo",
+                    "sPrevious" =>	"Anterior",
+                    "sFirst" =>	"Primeiro",
+                    "sLast" =>	"Último"
+                ],
+            ]
+        ];
+
+        $configAbertas = [...$config, 'data' => $dataAbertas];
+        $configAguardando = [...$config, 'data' => $dataAguardando];
+        $configEncerradas = [...$config, 'data' => $dataEncerradas];
+
+        $itens = [
+            'heads' => $heads,
+            'titulo' => 'Solicitações',
+            'ativo' => 'abertas',
+            'configAbertas' => $configAbertas,
+            'configAguardando' => $configAguardando,
+            'configEncerradas' => $configEncerradas,
+            'rota' => $rota
+        ];
+
+        return view('solicitacao.index', $itens);
     }
 
     public function aguardando() {
-        if (!Route::currentRouteNamed('minhas-solicitacoes.aguardando')) {
-            $solicitacoesAguardando = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'AGUARDANDO')->orderBy('created_at', 'desc')->paginate(8);
-            $rota = 'todas';
-        } else {
-            $solicitacoesAguardando = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where([['status', 'AGUARDANDO'], ['usuario_id', auth()->user()->id]])->orderBy('created_at', 'desc')->paginate(8);
-            $rota = 'minhas';
-        }
+        
 
         return view('solicitacao.index', ['solicitacoes' => $solicitacoesAguardando, 'titulo' => 'Solicitações Aguardando', 'ativo' => 'aguardando', 'rota' => $rota]);
     }
 
     public function encerradas() {
-        if (!Route::currentRouteNamed('minhas-solicitacoes.encerradas')) {
-            $solicitacoesEncerradas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where('status', 'ENCERRADO')->orderBy('created_at', 'desc')->paginate(8);
-            $rota = 'todas';
-        } else {
-            $solicitacoesEncerradas = $this->solicitacao->with(['produtos', 'usuario', 'divisao', 'diretoria'])->where([['status', 'ENCERRADO'], ['usuario_id', auth()->user()->id]])->orderBy('created_at', 'desc')->paginate(8);
-            $rota = 'minhas';
-        }
 
         return view('solicitacao.index', ['solicitacoes' => $solicitacoesEncerradas, 'titulo' => 'Solicitações Encerradas', 'ativo' => 'encerradas', 'rota' => $rota]);
     }

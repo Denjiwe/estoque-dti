@@ -30,7 +30,7 @@ services:
   db:
     image: mysql:8.0.31
     container_name: mysql
-    command: ['--default-authentication-plugin=mysql_native_password', '--lower_case_table_names=2']
+    command: ['--authentication_policy=mysql_native_password', '--lower_case_table_names=2']
     restart: always
     volumes:
       - ./db/db/:/var/lib/mysql/

@@ -352,27 +352,27 @@ return [
             'submenu' => [
                 [
                     'text' => 'Produtos',
-                    'url'  => 'produtos/',
+                    'url'  => 'produtos',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Órgãos',
-                    'url'  => 'orgaos/',
+                    'url'  => 'orgaos',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Diretorias',
-                    'url'  => 'diretorias/',
+                    'url'  => 'diretorias',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Divisões',
-                    'url'  => 'divisao/',
+                    'url'  => 'divisao',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Usuários',
-                    'url'  => 'usuarios/',
+                    'url'  => 'usuarios',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 // [
@@ -403,24 +403,24 @@ return [
         ],
         [
             'text' => 'Solicitações',
-            'url' => 'solicitacoes/abertas',
+            'url' => 'solicitacoes',
             'icon' => 'fas fa-fw fa-clipboard-list',
             'can' => 'user_interno'
         ],
         [
             'text' => 'Entregas',
-            'url' => 'entregas/',
+            'url' => 'entregas',
             'icon' => 'fas fa-fw fa-clipboard-check',
             'can' => 'user_interno'
         ],
         [
             'text' => 'Solicitar',
-            'url' => 'solicitar/',
+            'url' => 'solicitar',
             'icon' => 'fas fa-fw fa-clipboard'
         ],
         [
             'text' => 'Minhas Solicitações',
-            'url' => 'minhas-solicitacoes/abertas',
+            'url' => 'minhas-solicitacoes',
             'icon' => 'fas fa-fw fa-folder'
         ],
         [
@@ -431,7 +431,7 @@ return [
         ],
         [
             'text' => 'Auditoria',
-            'url' => 'auditoria/',
+            'url' => 'auditoria',
             'icon' => 'fas fa-fw fa-suitcase',
             'can' => 'user_interno'
         ],

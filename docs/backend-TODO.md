@@ -8,12 +8,12 @@
 - [X] Verificar auditoria com laravel auditoring
     - Verificar se é possível fazer algo em relação a exclusão direta de uma auditoria no banco de dados
 - [X] Criar um campo de senha provisória, para reset de senhas
-- Finalizar docker
+- [X] Finalizar docker
     - [-] Fazer entrypoints para instalar o projeto do composer, fazendo verificação da pasta vendor (possível criar script que deve ser executado pelo entrypoint, que faz a verificação)
     - [-] Fazer verificação no entrypoint do npm se existe a pasta node_modules, evitando reinstalação em toda a execução
     - [X] Instalar phpmyadmin
 - Permitir pesquisas por cpf e email de usuários
-- Fazer dump do banco e refaze-lo, com lower_case_table_names=0 para ser compatível com aambiente de desenvolvimento linux
+- [X] Fazer dump do banco e refaze-lo, com lower_case_table_names=0 para ser compatível com aambiente de desenvolvimento linux
 - Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
 
 ## Bugs

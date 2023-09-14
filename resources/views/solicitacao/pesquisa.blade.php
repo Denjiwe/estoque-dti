@@ -21,7 +21,7 @@
             </div>
         @endif
 
-        <table class="table text-center table-hover">
+        <table class="table text-center">
             <thead>
                 <tr>
                     <th>Código</th>

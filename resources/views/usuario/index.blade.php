@@ -25,7 +25,7 @@
     <x-adminlte-card theme="primary" theme-mode="outline"> 
         <form action="{{ route('usuarios.pesquisa') }}" method="GET">
             <div class="row">
-                <div class="col-7 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
+                <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
                     <label for="campo">Campo de pesquisa</label>
                     <select id="campo" class="form-select">
                         <option value="id" selected>ID</option>
@@ -37,7 +37,7 @@
                         <option value="updated_at">Data de Atualização</option>
                     </select>
                 </div>
-                <div class="col-5 col-sm-5 col-xl-3 col-lg-4 col-xxl-2" id="pesquisa">
+                <div class="col-12 col-sm-5 col-xl-3 col-lg-4 col-xxl-2 mt-2 mt-sm-0" id="pesquisa">
                     <label for="id">ID</label>
                     <input type="number" name="id" min="1" placeholder="Informe o ID" class="form-control" required>
                 </div>
