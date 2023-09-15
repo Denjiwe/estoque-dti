@@ -1,10 +1,11 @@
 let trLocal = document.querySelector('.linha');
 var urlBase = 'http://localhost:80/api/';
+let form = document.querySelector('#form');
 
 $('#adicionar').click(function() {
     var novaLinha = $(trLocal).clone(true);
-    novaLinha.find('select[id="divisao"]').val('');
-    novaLinha.find('select[id="diretoria"]').val('');
+    novaLinha.find('select[id="divisao"]').val('').removeAttr('disabled').removeClass('form-control').addClass('form-select');
+    novaLinha.find('select[id="diretoria"]').val('').removeAttr('disabled').removeClass('form-control').addClass('form-select').attr('required');
     novaLinha.appendTo('#tbody');
 
 });
@@ -46,4 +47,14 @@ $(document).on('click', '.remover',function() {
         novaLinha.find('select[id="diretoria"]').val('');
         novaLinha.appendTo('#tbody');
     }
+});
+
+$('.handle_aba').on('click', (obj) => {
+
+    obj.preventDefault();
+    
+    $(document).find('.divisao').each(function() {$(this).removeAttr('disabled')});
+    $(document).find('.diretoria').each(function() {$(this).removeAttr('disabled')});
+
+    form.submit();
 });

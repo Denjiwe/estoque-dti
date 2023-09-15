@@ -15,6 +15,7 @@
 - Permitir pesquisas por cpf e email de usuários
 - [X] Fazer dump do banco e refaze-lo, com lower_case_table_names=0 para ser compatível com aambiente de desenvolvimento linux
 - Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
+- Alterar autenticação para o sanctum (pesquisar como funciona para ser o mais automático possível)
 
 ## Bugs
 

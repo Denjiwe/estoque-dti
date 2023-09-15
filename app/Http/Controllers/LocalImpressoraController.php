@@ -47,25 +47,23 @@ class LocalImpressoraController extends Controller
     {
         $produto = $this->produto->find($id);
 
-        for($i = 0;$i < count($request->divisao); $i++)
+        if ($produto == null) {
+            session()->flash('mensagem', 'Produto não encontrado.');
+            session()->flash('color', 'warning');
+            return redirect()->route('produtos.index');
+        }
+
+        for($i = 0;$i < count($request->diretoria); $i++)
         {
             $request->validate($this->local->rules($request->divisao[$i], $request->diretoria[$i]), $this->local->feedback($i));
-            if ($request->divisao[$i] != null)
-            {
-                $this->local->create(
-                    [
-                        'produto_id' => $produto->id,
-                        'divisao_id' => $request->divisao[$i]
-                    ]
-                );
-            }
 
-            if ($request->diretoria[$i] != null && $request->divisao[$i] == null)
+            if ($request->diretoria[$i] != null)
             {
                 $this->local->create(
                     [
                         'produto_id' => $produto->id,
-                        'diretoria_id' => $request->diretoria[$i]
+                        'diretoria_id' => $request->diretoria[$i],
+                        'divisao_id' => $request->divisao[$i]
                     ]
                 );
             }
@@ -88,6 +86,12 @@ class LocalImpressoraController extends Controller
     {
         $produto = $this->produto->with('locais')->find($id);
 
+        if ($produto == null) {
+            session()->flash('mensagem', 'Produto não encontrado.');
+            session()->flash('color', 'warning');
+            return redirect()->route('produtos.index');
+        }
+
         for($i = 0;$i < count($request->divisao); $i++)
         {
             $request->validate($this->local->rules($request->divisao[$i], $request->diretoria[$i]), $this->local->feedback($i));
@@ -108,56 +112,35 @@ class LocalImpressoraController extends Controller
             array_push($pDiretorias,$local['diretoria_id']);
         }
 
-        $divisoesExcluidas = array_diff($pDivisoes, $divisoes); // verifica quais elementos não estão mais presentes comparando as divs do produto com o que veio na request e os remove
-        if($divisoesExcluidas != [])
+        $divisoesExcluidas = array_diff_assoc($pDivisoes, $divisoes); // verifica quais elementos não estão mais presentes comparando as divs do produto com o que veio na request e os remove
+        $divisoesNovas = array_diff_assoc($divisoes, $pDivisoes); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
+
+        $diretoriasExcluidas = array_diff_assoc($pDiretorias, $diretorias); // verifica quais elementos não estão mais presentes comparando as dirs do produto com o que veio na request e os remove
+        $diretoriasNovas = array_diff_assoc($diretorias, $pDiretorias); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
+
+
+        if($diretoriasExcluidas != [])
         {
-            foreach($divisoesExcluidas as $divisaoExcluida)
+            foreach($diretoriasExcluidas as $index => $diretoriaExcluida)
             {
-                if($divisaoExcluida != null)
+                if($diretoriaExcluida != null)
                 {
-                    $local = $this->local->where('divisao_id', $divisaoExcluida);
+                    $local = $this->local->where([['diretoria_id', $diretoriaExcluida],['divisao_id', $divisoesExcluidas[$index]],['produto_id', $produto->id]])->first();
                     $local->delete();
-                }
-            }
-        }
-        $divisoesNovas = array_diff($divisoes, $pDivisoes); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
-        if($divisoesNovas != [])
-        {
-            foreach($divisoesNovas as $divisaoNova)
-            {
-                if($divisaoNova != null)
-                {
-                    $this->local->create([
-                        'produto_id' => $produto->id,
-                        'divisao_id' => $divisaoNova
-                    ]);
                 }
             }
         }
 
-        $diretoriasExcluidas = array_diff($pDiretorias, $diretorias); // verifica quais elementos não estão mais presentes comparando as dirs do produto com o que veio na request e os remove
-        if($diretoriasExcluidas != [])
-        {
-            foreach($diretoriasExcluidas as $diretoriaExcluida)
-            {
-                if($diretoriaExcluida != null)
-                {
-                    $local = $this->local->where('diretoria_id', $diretoriaExcluida);
-                    $local->delete();
-                }
-            }
-        }
-        $diretoriasNovas = array_diff($diretorias, $pDiretorias); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
-        dd($diretoriasNovas, $diretorias, $pDiretorias);
         if($diretoriasNovas != [])
         {
-            foreach($diretoriasNovas as $diretoriaNova)
+            foreach($diretoriasNovas as $index => $diretoriaNova)
             {
                 if($diretoriaNova != null)
                 {
                     $this->local->create([
                         'produto_id' => $produto->id,
-                        'diretoria_id' => $diretoriaNova
+                        'diretoria_id' => $diretoriaNova,
+                        'divisao_id' => $divisoesNovas[$index]
                     ]);
                 }
             }
