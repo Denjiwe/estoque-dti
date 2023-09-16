@@ -42,5 +42,42 @@ class RelatorioController extends Controller
             $data_final = null;
         }
         $formato = $request->formato;
+
+        switch ($item) {
+            case 'entregas':
+                switch ($tipo) {
+                    case 'Orgao':
+                        $entregas = Entrega::where('orgao_id', $valor)->get();
+                        break;
+                    case 'Diretoria':
+                        $entregas = Entrega::where('diretoria_id', $valor)->get();
+                        break;
+                    case 'Divisao':
+                        $entregas = Entrega::where('divisao_id', $valor)->get();
+                        break;
+                    case 'Usuario':
+                        $entregas = Entrega::where('usuario_id', $valor)->get();
+                        break;
+                    case 'Solicitacao':
+                        $entregas = Entrega::where('solicitacao_id', $valor)->get();
+                        break;
+                    case 'Entrega':
+                        $entregas = Entrega::where('id', $valor)->get();
+                        break;
+                    case 'Produto':
+                        $entregas = Entrega::where('produto_id', $valor)->get();
+                }
+                break;
+            case 'impressoras':
+                break;
+            case 'produtos':
+                break;
+            case 'usuarios':
+                break;
+            case 'solicitacoes':
+                break;
+            default:
+                break;
+        }
     }
 }

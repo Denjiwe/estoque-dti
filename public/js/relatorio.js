@@ -1,4 +1,5 @@
-var url = 'http://localhost:80/api/';
+import { urlBase } from './urlBase.js';
+
 var valorAnteriorItem;
 
 $("#item").on('change', function() {
@@ -90,7 +91,7 @@ $(document).on('keyup', '#valor', function() {
 
     if (valor.length > 2 && $(document).find('#campo').val() == 'nome') {
         fetch(
-            url + 'busca/' + $('#tipo').val() + '/' + valor,
+            urlBase + 'busca/' + $('#tipo').val() + '/' + valor,
             {method: 'GET', headers: {'Accept': 'application/json'}}
         ).then(response => response.json()).then(data => {
             $('#nome').remove();
@@ -100,7 +101,7 @@ $(document).on('keyup', '#valor', function() {
                     if($(document).find('#valor').val() == item.nome) {
                         $('#nome').remove();
                     } else {
-                        $('#nome').append('<div class="nome-item">' + item.nome + '</div>');  
+                        $('#nome').append('<div class="nome-item">' + item.nome + '</div>');
                     }
                 })
             }
@@ -117,8 +118,8 @@ $(document).on('click', '.nome-item', function() {
 
 var data = $('#data');
 if(data.val() == 'personalizado') {
-    dataInicio = $('<div class="col-2"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
-    dataFinal = $('<div class="col-2"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
+    var dataInicio = $('<div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
+    var dataFinal = $('<div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
     var dataDiv = $('#dataDiv');
     dataFinal.insertAfter(dataDiv);
     dataInicio.insertAfter(dataDiv);
@@ -126,8 +127,8 @@ if(data.val() == 'personalizado') {
 
 data.on('change', function() {
     if(data.val() == 'personalizado') {
-        dataInicio = $('<div class="col-2"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
-        dataFinal = $('<div class="col-2"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
+        var dataInicio = $('<div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Data de Inicio</label><input id="data_inicio" name="data_inicio" type="date" class="form-control" required></div>');
+        var dataFinal = $('<div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Data de Fim</label><input id="data_final" name="data_final" type="date" class="form-control" required></div>');
         var dataDiv = $('#dataDiv');
         dataFinal.insertAfter(dataDiv);
         dataInicio.insertAfter(dataDiv);

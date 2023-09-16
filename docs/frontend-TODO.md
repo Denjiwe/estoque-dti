@@ -23,8 +23,8 @@
 - [X] Adicionar campo de observação da solicitação ao editar uma solicitação
 - [X] Verificar se vale a pena fazer um paginate dentro do box-input
 - [X] Remover campo de criar nova conta no login, além de criar modal para entrarem em contato (tabela no banco que contém número de telefone, e a assinatura no email)
-- [~X] Mudar tabelas para as do adminlte, que possuem troca de ordem dos campos
-    - Fazer o mesmo para modais
+- [X] Mudar tabelas para as do adminlte, que possuem troca de ordem dos campos
+    - [X] Fazer o mesmo para modais
 - [X] Colocar mascara em campos de cpf
 - [X] Fazer home, trazendo informações sobre os pedidos e entregas, etc
     - No chart de entregas, trazer o dado de % de diferença do mês anterior
@@ -46,6 +46,6 @@
         - [X] x-box-input precisa ser por adminlte-card ou coisa parecida
 - [X] Verificar como o paginate das solicitações está funcionando, pois cada tab deveria ter sua paginação
 - [X] Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos
-- Falta buscar as divisões com base nas diretorias no cadastro de locais
-    - Erro ao salvar a diretoria
+- [X] Falta buscar as divisões com base nas diretorias no cadastro de locais
+    - [X] Erro ao salvar a diretoria
 - De md para baixo o menu bar não funciona

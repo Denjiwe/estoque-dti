@@ -57,7 +57,7 @@
                 <option value="CONJUNTO">Conjunto</option>
             </select>
         </div>
-        
+
         <div class="col-6 col-md-3 mt-3 mt-md-0">
             <label for="quantidade" class="form-label">Informe a quatidade</label>
             <input type="number" name="quantidade" min="1" max="2" id="quantidade" class="form-control">
@@ -95,6 +95,5 @@
 </form>
 
 @section('js')
-    <script src="{{asset('js/solicitacao.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{asset('js/solicitacao.js')}}" type="module"></script>
 @stop

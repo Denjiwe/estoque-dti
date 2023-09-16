@@ -1,5 +1,5 @@
+import { urlBase } from './urlBase.js';
 let trLocal = document.querySelector('.linha');
-var urlBase = 'http://localhost:80/api/';
 let form = document.querySelector('#form');
 
 $('#adicionar').click(function() {
@@ -15,7 +15,7 @@ async function divisoes(diretoriaId, selectDivisao){
     selectDivisao.empty();
     selectDivisao.append($('<option>').val('').text('Nenhuma'));
 
-    url = urlBase+'dados-por-diretoria/'+diretoriaId;
+    var url = urlBase+'dados-por-diretoria/'+diretoriaId;
 
     await fetch(url,{
         method: 'GET',
@@ -52,7 +52,7 @@ $(document).on('click', '.remover',function() {
 $('.handle_aba').on('click', (obj) => {
 
     obj.preventDefault();
-    
+
     $(document).find('.divisao').each(function() {$(this).removeAttr('disabled')});
     $(document).find('.diretoria').each(function() {$(this).removeAttr('disabled')});
 

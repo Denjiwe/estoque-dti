@@ -31,15 +31,15 @@
                                         <td style="width:20%;">
                                             <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                         </td>
-                                        <td>
-                                            <select name="tipo[]" id="tipo" class="form-select w-auto">
+                                        <td style="width:25%;">
+                                            <select name="tipo[]" id="tipo" class="form-select w-100" required>
                                                 <option value="" selected hidden>Selecione o Tipo do Suprimento</option>
                                                 <option value="TONER" @php if($suprimento->tipo_suprimento == 'TONER') echo 'selected'@endphp >Toner</option>
                                                 <option value="CILINDRO" @php if($suprimento->tipo_suprimento == 'CILINDRO') echo 'selected'@endphp >Cilíndro</option>
                                             </select>
                                         </td>
-                                        <td style="width:20%;">
-                                            <select name="suprimento[]" id="suprimento" class="form-select w-auto">
+                                        <td style="width:25%;">
+                                            <select name="suprimento[]" id="suprimento" class="form-select w-100" required>
                                                 <option value="">Selecione o suprimento</option>
                                                 @if ($suprimento->tipo_suprimento == 'TONER')
                                                     @foreach ($toners as $toner)
@@ -52,8 +52,8 @@
                                                 @endif
                                             </select>
                                         </td>
-                                        <td>
-                                            <select name="em_uso[]" id="em_uso" class="form-select w-auto">
+                                        <td style="width:15%;">
+                                            <select name="em_uso[]" id="em_uso" class="form-select w-100">
                                                 <option value="SIM" @php if($suprimento->em_uso == 'SIM') echo 'selected'@endphp>Sim</option>
                                                 <option value="NAO" @php if($suprimento->em_uso == 'NAO') echo 'selected'@endphp>Não</option>
                                             </select>
@@ -66,20 +66,20 @@
                                         <td style="width:20%;">
                                             <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                         </td>
-                                        <td>
-                                            <select name="tipo[]" id="tipo" class="form-select w-auto">
+                                        <td style="width:25%;">
+                                            <select name="tipo[]" id="tipo" class="form-select w-100" required>
                                                 <option value="" selected hidden>Selecione o Tipo do Suprimento</option>
                                                 <option value="TONER">Toner</option>
                                                 <option value="CILINDRO">Cilíndro</option>
                                             </select>
                                         </td>
-                                        <td style="width:20%;">
-                                            <select name="suprimento[]" id="suprimento" class="form-select w-auto">
+                                        <td style="width:25%;">
+                                            <select name="suprimento[]" id="suprimento" class="form-select w-100" required>
                                                 <option value="">Selecione o suprimento</option>
                                             </select>
                                         </td>
-                                        <td>
-                                            <select name="em_uso[]" id="em_uso" class="form-select w-auto">
+                                        <td style="width:15%;">
+                                            <select name="em_uso[]" id="em_uso" class="form-select w-100">
                                                 <option value="SIM">Sim</option>
                                                 <option value="NAO" selected>Não</option>
                                             </select>
@@ -112,6 +112,5 @@
 </div>
 
 @section('js')
-    <script src="{{ asset('js/suprimentos.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/suprimentos.js')}}" type="module"></script>
 @stop

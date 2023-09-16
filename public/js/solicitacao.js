@@ -1,3 +1,5 @@
+import { urlBase } from './urlBase.js';
+
 $(document).ready(function() {
     var usuario = $('#usuario option:first');
 

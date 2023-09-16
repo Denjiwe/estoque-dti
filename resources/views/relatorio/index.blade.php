@@ -11,11 +11,10 @@
         <form action="{{ route('relatorios.pesquisa') }}" method="POST">
             @csrf
             <div class="row ">
-                <div class="col-2">
+                <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="item">Item do Relatório</label>
-                    <select id="item" name="item" class="form-select">
-                        <option value="todos" selected>Todos</option>
-                        <option value="suprimentos">Suprimentos</option>
+                    <select id="item" name="item" class="form-select" required>
+                        <option value="" selected hidden>-- Selecione --</option>
                         <option value="entregas">Entregas</option>
                         <option value="impressoras">Impressoras</option>
                         <option value="produtos">Produtos</option>
@@ -23,10 +22,10 @@
                         <option value="solicitacoes">Solicitações</option>
                     </select>
                 </div>
-                <div class="col-2">
+                <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="tipo">Por</label>
                     <select id="tipo" name="tipo" class="form-select" required>
-                        <option value="" selected hidden>Selecione um valor</option>
+                        <option value="" selected hidden>-- Selecione --</option>
                         <option value="Orgao">Órgão</option>
                         <option value="Diretoria">Diretoria</option>
                         <option value="Divisao">Divisão</option>
@@ -36,7 +35,7 @@
                         <option value="Produto">Produto</option>
                     </select>
                 </div>
-                <div class="col-2">
+                <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="campo">Filtro</label>
                     <select id="campo" name="campo" class="form-control form-select" disabled>
                         <option value="todos" selected>Todos</option>
@@ -44,7 +43,7 @@
                         <option value="nome">Nome</option>
                     </select>
                 </div>
-                <div id="dataDiv" class="col-2">
+                <div id="dataDiv" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0">
                     <label for="data">Data</label>
                     <select id="data" name="data" class="form-select">
                         <option value="hoje" selected>Hoje</option>
@@ -55,7 +54,7 @@
                         <option value="personalizado">Personalizado</option>
                     </select>
                 </div>
-                <div id="formato" class="col-2">
+                <div id="formato" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0">
                     <label for="formato">Formato</label>
                     <select id="formato" name="formato" class="form-select">
                         <option value="pdf" selected>PDF</option>
@@ -66,7 +65,7 @@
             </div>
             <div class="row justify-content-end mt-3">
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Gerar</button>                 
+                    <button type="submit" class="btn btn-primary">Gerar</button>
                 </div>
             </div>
         </form>
@@ -97,5 +96,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/relatorio.js') }}"></script>
+    <script src="{{ asset('js/relatorio.js') }}" type="module"></script>
 @stop

@@ -13,7 +13,7 @@
     - [-] Fazer verificação no entrypoint do npm se existe a pasta node_modules, evitando reinstalação em toda a execução
     - [X] Instalar phpmyadmin
 - Permitir pesquisas por cpf e email de usuários
-- [X] Fazer dump do banco e refaze-lo, com lower_case_table_names=0 para ser compatível com aambiente de desenvolvimento linux
+- [X] Fazer dump do banco e refaze-lo, com lower_case_table_names=0 para ser compatível com ambiente de desenvolvimento linux
 - Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
 - Alterar autenticação para o sanctum (pesquisar como funciona para ser o mais automático possível)
 
@@ -32,4 +32,4 @@
         - https://hub.docker.com/r/tangramor/nginx-php8-fpm
         - https://dop3ch3f.medium.com/dockerize-a-laravel-application-with-nginx-php-fpm-node-js-bonus-deploy-to-cloudrun-cce96dfd2496
         - https://github.com/joseluisq/alpine-php-fpm/blob/master/8.2-fpm/Dockerfile
-- Verificar a existência do nome da divisão na hora de mandar email
+- [X] Verificar a existência do nome da divisão na hora de mandar email

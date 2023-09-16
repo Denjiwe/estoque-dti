@@ -42,7 +42,7 @@ class ProdutoController extends Controller
             ['label' => 'Ações', 'no-export' => true, 'width' => '10'],
         ];
 
-        foreach ($produtos as $produto) 
+        foreach ($produtos as $produto)
         {
             $dataCriacao = date('d/m/Y',strtotime($produto->created_at));
             $dataEdicao = date('d/m/Y',strtotime($produto->updated_at));
@@ -181,11 +181,11 @@ class ProdutoController extends Controller
         $impressoras = $this->produto->where([['status', 'ATIVO'],['tipo_produto', 'IMPRESSORA']])->get();
 
         return view('produto.detalhes', [
-            'produto' => $produto, 
-            'diretorias' => $diretorias, 
-            'divisoes' => $divisoes, 
-            'suprimentos' => $suprimentos, 
-            'toners' => $toners, 
+            'produto' => $produto,
+            'diretorias' => $diretorias,
+            'divisoes' => $divisoes,
+            'suprimentos' => $suprimentos,
+            'toners' => $toners,
             'cilindros' => $cilindros,
             'impressoras' => $impressoras
         ]);
@@ -241,7 +241,6 @@ class ProdutoController extends Controller
                         try {
                             $primeiroNome = explode(' ', $solicitacao->usuario->nome)[0];
                             $nomeDir = $solicitacao->diretoria->nome;
-                            $nomeDiv = $solicitacao->divisao->nome;
 
                             $horario = date('G');
 
@@ -264,8 +263,9 @@ class ProdutoController extends Controller
                             if ($diretoriaEmail != null && $diretoriaEmail != $usuarioEmail) {
                                 Mail::to($diretoriaEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDir, $saudacao));
                             }
-                        
+
                             if ($solicitacao->divisao_id != null) {
+                                $nomeDiv = $solicitacao->divisao->nome;
                                 $divisaoEmail = Divisao::find($solicitacao->divisao_id)->email;
                                 if ($divisaoEmail != null && $divisaoEmail != $diretoriaEmail && $divisaoEmail != $usuarioEmail) {
                                     Mail::to($divisaoEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDiv, $saudacao));
@@ -346,7 +346,7 @@ class ProdutoController extends Controller
 
         return response()->json($toners, 200);
     }
-    
+
     public function cilindros()
     {
         $cilindros = $this->produto->select('id','modelo_produto', 'qntde_estoque')->where([['tipo_produto', 'CILINDRO'], ['status', 'ATIVO']])->get();
@@ -375,7 +375,7 @@ class ProdutoController extends Controller
             ->orderBy('qntde_estoque', 'desc')->first();
 
         return response()->json($cilindro, 200);
-    }       
+    }
 
     public function pesquisa(Request $request) {
         switch (true) {
