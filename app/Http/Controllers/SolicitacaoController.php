@@ -132,7 +132,7 @@ class SolicitacaoController extends Controller
 
         $config = [
             'dom' => '<"row">t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
-            'order' => [[0, 'asc']],
+            'order' => [[0, 'desc']],
             'columns' => [null, null, null, null, null, null, ['orderable' => false]],
             "bLengthChange" => false,
             'language' => [

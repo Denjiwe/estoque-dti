@@ -11,60 +11,62 @@
     <x-adminlte-card theme="primary" theme-mode="outline">
         <h3>{{ $titulo }}</h3>
         @if (count($divisoes) > 0)
-        <table class="table text-center table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Diretoria</th>
-                    <th>Status</th>
-                    <th>Data de Criação</th>
-                    <th>Data de Atualização</th>
-                    <th colspan="2">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($divisoes as $key => $divisao)
-                @php
-                    $dataCriacao = strtotime($divisao->created_at);
-                    $dataEdicao = strtotime($divisao->updated_at);
-                @endphp
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead>
                     <tr>
-                        <td>{{$divisao->id}}</td>
-                        <td>{{$divisao->nome}}</td>
-                        <td>{{$divisao->diretoria->nome}}</td>
-                        <td>{{ucfirst(strtolower($divisao->status))}}</td>
-                        <td>{{(date('d/m/Y', $dataCriacao))}}</td>
-                        <td>{{(date('d/m/Y', $dataEdicao))}}</td>
-                        <td>
-                            <div class="row">
-                                <div class="col">
-                                    <button data-bs-toggle="modal" data-bs-target="#editarModal{{$divisao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
-                                        <i class="fa fa-lg fa-fw fa-pen"></i>
-                                    </button>
-                                </div>
-                                <div class="col">
-                                    <a href="{{route('divisao.show', ['divisao' => $divisao->id])}}">
-                                        <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
-                                            <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <form id="form_{{$divisao->id}}" action="{{route('divisao.destroy', ['divisao' => $divisao->id])}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                        <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir({{$divisao->id}})" title="Excluir">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Diretoria</th>
+                        <th>Status</th>
+                        <th>Data de Criação</th>
+                        <th>Data de Atualização</th>
+                        <th colspan="2">Ações</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($divisoes as $key => $divisao)
+                    @php
+                        $dataCriacao = strtotime($divisao->created_at);
+                        $dataEdicao = strtotime($divisao->updated_at);
+                    @endphp
+                        <tr>
+                            <td>{{$divisao->id}}</td>
+                            <td>{{$divisao->nome}}</td>
+                            <td>{{$divisao->diretoria->nome}}</td>
+                            <td>{{ucfirst(strtolower($divisao->status))}}</td>
+                            <td>{{(date('d/m/Y', $dataCriacao))}}</td>
+                            <td>{{(date('d/m/Y', $dataEdicao))}}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col">
+                                        <button data-bs-toggle="modal" data-bs-target="#editarModal{{$divisao->id}}" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
+                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <a href="{{route('divisao.show', ['divisao' => $divisao->id])}}">
+                                            <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
+                                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <form id="form_{{$divisao->id}}" action="{{route('divisao.destroy', ['divisao' => $divisao->id])}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir({{$divisao->id}})" title="Excluir">
+                                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @endif
 
         <div class="row mt-3">

@@ -26,7 +26,7 @@ class EntregaController extends Controller
      */
     public function index()
     {
-        $entregas = $this->entrega->with(['usuario', 'itens_solicitacao', 'solicitacao'])->orderBy('created_at', 'desc')->paginate(10);
+        $entregas = $this->entrega->with(['usuario', 'itens_solicitacao', 'solicitacao'])->orderBy('created_at', 'desc')->get();
 
         foreach($entregas as $entrega) {
             $usuarioSolicitante = Usuario::find($entrega->solicitacao->usuario_id);
@@ -62,7 +62,7 @@ class EntregaController extends Controller
 
             $data[] = [
                 $entrega->id,
-                '<a href="'.route("entregas.show", ["entrega" => $entrega->id]).'">#'.$entrega->solicitacao->id.'</a>',
+                '<a href="'.route("solicitacoes.update", ["id" => $entrega->solicitacao->id]).'">#'.$entrega->solicitacao->id.'</a>',
                 $entrega->usuario->nome,
                 $entrega->solicitacao->usuario->nome,
                 $entrega->produto->modelo_produto,

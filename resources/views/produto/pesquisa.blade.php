@@ -11,64 +11,66 @@
     <x-adminlte-card>
         <h3>{{ $titulo }}</h3>
         @if (count($produtos) > 0)
-        <table class="table text-center table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tipo</th>
-                    <th>Modelo</th>
-                    <th>Quantidade</th>
-                    <th>Status</th>
-                    <th>Data de Criação</th>
-                    <th>Data de Atualização</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($produtos as $key => $produto)
-                @php
-                    $dataCriacao = strtotime($produto->created_at);
-                    $dataEdicao = strtotime($produto->updated_at);
-                @endphp
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead>
                     <tr>
-                        <td>{{$produto->id}}</td>
-                        <td>{{ucfirst(strtolower($produto->tipo_produto))}}</td>
-                        <td>{{$produto->modelo_produto}}</td>
-                        <td>{{$produto->qntde_estoque}}</td>
-                        <td>{{ucfirst(strtolower($produto->status))}}</td>
-                        <td>{{(date('d/m/Y', $dataCriacao))}}</td>
-                        <td>{{(date('d/m/Y', $dataEdicao))}}</td>
-                        <td>
-                            <div class="row">
-                                <div class="col">
-                                    <a href="{{route('produtos.edit', ['produto' => $produto->id])}}">
-                                        <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <a href="{{route('produtos.show', ['produto' => $produto->id])}}">
-                                        <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
-                                            <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <form id="form_{{$produto->id}}" action="{{route('produtos.destroy', ['produto' => $produto->id])}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                        <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$produto->id}})" title="Excluir">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Modelo</th>
+                        <th>Quantidade</th>
+                        <th>Status</th>
+                        <th>Data de Criação</th>
+                        <th>Data de Atualização</th>
+                        <th>Ações</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($produtos as $key => $produto)
+                    @php
+                        $dataCriacao = strtotime($produto->created_at);
+                        $dataEdicao = strtotime($produto->updated_at);
+                    @endphp
+                        <tr>
+                            <td>{{$produto->id}}</td>
+                            <td>{{ucfirst(strtolower($produto->tipo_produto))}}</td>
+                            <td>{{$produto->modelo_produto}}</td>
+                            <td>{{$produto->qntde_estoque}}</td>
+                            <td>{{ucfirst(strtolower($produto->status))}}</td>
+                            <td>{{(date('d/m/Y', $dataCriacao))}}</td>
+                            <td>{{(date('d/m/Y', $dataEdicao))}}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="{{route('produtos.edit', ['produto' => $produto->id])}}">
+                                            <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
+                                                <i class="fa fa-lg fa-fw fa-pen"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="{{route('produtos.show', ['produto' => $produto->id])}}">
+                                            <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
+                                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <form id="form_{{$produto->id}}" action="{{route('produtos.destroy', ['produto' => $produto->id])}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                            <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$produto->id}})" title="Excluir">
+                                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @endif
 
         <div class="row mt-3">

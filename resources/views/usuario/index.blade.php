@@ -22,7 +22,7 @@
     @endif
 
     {{-- Box de pesquisa --}}
-    <x-adminlte-card theme="primary" theme-mode="outline" title="Pesquisar" collapsible>
+    <x-adminlte-card theme="primary" theme-mode="outline" title="Pesquisar" collapsible="collapsed">
         <form action="{{ route('usuarios.pesquisa') }}" method="GET">
             <div class="row">
                 <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">

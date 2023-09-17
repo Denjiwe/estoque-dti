@@ -28,31 +28,33 @@
                                     @if (count($produto->locais) != 0)
                                         @foreach ($produto->locais as $i => $local)
                                             <tr class="linha">
-                                                <td style="width:18%;">
-                                                    <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-100">
+                                                <td>
+                                                    <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                                 </td>
-                                                <td style="width:28%;">
-                                                    <select name="diretoria[]" id="diretoria" disabled class="form-control w-100 diretoria" required>
+                                                <td>
+                                                    <select name="diretoria[]" id="diretoria" disabled class="form-control w-auto diretoria" required>
                                                         <option value="" selected hidden>Selecione a Diretoria</option>
                                                         @foreach($diretorias as $diretoria)
                                                             <option value="{{$diretoria->id}}" @if($local->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td style="width:28%;">
-                                                    <select name="divisao[]" id="divisao" disabled class="form-control w-100 divisao">
+                                                <td>
+                                                    <select name="divisao[]" id="divisao" disabled class="form-control w-auto divisao">
                                                         <option value="" selected>Nenhuma</option>
                                                         @foreach($divisoes as $divisao)
                                                             <option value="{{$divisao->id}}" @if($local->divisao_id == $divisao->id)selected @endif>{{$divisao->nome}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td style="width: 10%"><a class="btn btn-danger remover">Remover</a></td>
+                                                <td><a class="btn btn-danger remover">Remover</a></td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr class="linha">
-                                            <td style="width:30%;"><input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control"></td>
+                                            <td>
+                                                <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
+                                            </td>
                                             <td>
                                                 <select name="diretoria[]" id="diretoria" class="form-select w-auto" required>
                                                     <option value="" selected hidden>Selecione a Diretoria</option>
@@ -69,7 +71,7 @@
                                                     @endforeach
                                                 </select>
                                             </td>
-                                            <td style="width: 10%"><a class="btn btn-danger remover">Remover</a></td>
+                                            <td><a class="btn btn-danger remover">Remover</a></td>
                                         </tr>
                                     @endif
                                 </tbody>

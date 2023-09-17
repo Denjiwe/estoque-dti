@@ -44,4 +44,8 @@ class Divisao extends Model implements Auditable
     public function usuarios() {
         return $this->hasMany('App\Models\Usuario');
     }
+
+    public function orgao() {
+        return $this->hasOneThrough('App\Models\Orgao', 'App\Models\Diretoria');
+    }
 }

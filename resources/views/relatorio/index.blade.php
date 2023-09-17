@@ -7,6 +7,20 @@
 @endsection
 
 @section('content')
+
+    @if(session()->get('mensagem'))
+        <div class="position-fixed top-0 pt-5 mt-3 pe-2 end-0" style="z-index: 11">
+            <div class="toast fade show align-items-center bg-{{ session()->get('color') }}" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ session()->get('mensagem') }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <x-adminlte-card theme="primary" theme-mode="outline">
         <form action="{{ route('relatorios.pesquisa') }}" method="POST">
             @csrf
@@ -46,7 +60,8 @@
                 <div id="dataDiv" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0">
                     <label for="data">Data</label>
                     <select id="data" name="data" class="form-select">
-                        <option value="hoje" selected>Hoje</option>
+                        <option value="qualquer" selected>Qualquer</option>
+                        <option value="hoje">Hoje</option>
                         <option value="ontem">Ontem</option>
                         <option value="semana">Última Semana</option>
                         <option value="mes">Últimos 30 dias</option>
@@ -97,4 +112,5 @@
 
 @section('js')
     <script src="{{ asset('js/relatorio.js') }}" type="module"></script>
+    <script src="{{asset('js/handleToasts.js')}}"></script>
 @stop

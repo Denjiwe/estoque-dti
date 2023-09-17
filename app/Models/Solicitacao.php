@@ -52,6 +52,10 @@ class Solicitacao extends Model implements Auditable
         return $this->belongsTo('App\Models\Diretoria');
     }
 
+    public function orgao() {
+        return $this->hasOneThrough('App\Models\Orgao', 'App\Models\Diretoria', 'id', 'id', 'diretoria_id', 'orgao_id');
+    }
+
     public function usuario() {
         return $this->belongsTo('App\Models\Usuario');
     }

@@ -12,66 +12,68 @@
         <h3>{{ $titulo }}</h3>
 
         @if (count($usuarios) > 0)
-        <table class="table text-center table-hover table-bordered" >
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Status</th>
-                    <th>Usuário Interno</th>
-                    <th>Diretoria</th>
-                    <th>Divisão</th>
-                    <th>Data de Criação</th>
-                    <th>Data de Atualização</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($usuarios as $key => $usuario)
-                @php
-                    $dataCriacao = strtotime($usuario->created_at);
-                    $dataEdicao = strtotime($usuario->updated_at);
-                @endphp
+        <div class="table-responsive">
+            <table class="table text-center" >
+                <thead>
                     <tr>
-                        <td>{{$usuario->id}}</td>
-                        <td>{{$usuario->nome}}</td>
-                        <td>{{ucfirst(strtolower($usuario->status))}}</td>
-                        <td>{{$usuario->user_interno == 'SIM' ? 'Sim' : 'Não'}}</td>
-                        <td>{{$usuario->diretoria->nome}}</td>
-                        <td>{{$usuario->divisao ? $usuario->divisao->nome : 'Não possui'}}</td>
-                        <td>{{(date('d/m/Y', $dataCriacao))}}</td>
-                        <td>{{(date('d/m/Y', $dataEdicao))}}</td>
-                        <td>
-                            <div class="row">
-                                <div class="col">
-                                    <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}">
-                                        <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <a href="{{route('usuarios.show', ['usuario' => $usuario->id])}}">
-                                        <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
-                                            <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <form id="form_{{$usuario->id}}" action="{{route('usuarios.destroy', ['usuario' => $usuario->id])}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                        <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$usuario->id}})" title="Excluir">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Status</th>
+                        <th>Usuário Interno</th>
+                        <th>Diretoria</th>
+                        <th>Divisão</th>
+                        <th>Data de Criação</th>
+                        <th>Data de Atualização</th>
+                        <th>Ações</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($usuarios as $key => $usuario)
+                    @php
+                        $dataCriacao = strtotime($usuario->created_at);
+                        $dataEdicao = strtotime($usuario->updated_at);
+                    @endphp
+                        <tr>
+                            <td>{{$usuario->id}}</td>
+                            <td>{{$usuario->nome}}</td>
+                            <td>{{ucfirst(strtolower($usuario->status))}}</td>
+                            <td>{{$usuario->user_interno == 'SIM' ? 'Sim' : 'Não'}}</td>
+                            <td>{{$usuario->diretoria->nome}}</td>
+                            <td>{{$usuario->divisao ? $usuario->divisao->nome : 'Não possui'}}</td>
+                            <td>{{(date('d/m/Y', $dataCriacao))}}</td>
+                            <td>{{(date('d/m/Y', $dataEdicao))}}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}">
+                                            <button class="btn btn-sm btn-default text-primary shadow" type="button" title="Editar">
+                                                <i class="fa fa-lg fa-fw fa-pen"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="{{route('usuarios.show', ['usuario' => $usuario->id])}}">
+                                            <button class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detalhes">
+                                                <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <form id="form_{{$usuario->id}}" action="{{route('usuarios.destroy', ['usuario' => $usuario->id])}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                            <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir({{$usuario->id}})" title="Excluir">
+                                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @endif
 
         <div class="row mt-3">
