@@ -31,7 +31,6 @@
                         <option value="" selected hidden>-- Selecione --</option>
                         <option value="entregas">Entregas</option>
                         <option value="impressoras">Impressoras</option>
-                        <option value="produtos">Produtos</option>
                         <option value="usuarios">Usuários</option>
                         <option value="solicitacoes">Solicitações</option>
                     </select>

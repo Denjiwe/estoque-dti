@@ -48,4 +48,8 @@ class Divisao extends Model implements Auditable
     public function orgao() {
         return $this->hasOneThrough('App\Models\Orgao', 'App\Models\Diretoria');
     }
+
+    public function impressoras() {
+        return $this->hasMany('App\Models\LocalImpressora');
+    }
 }

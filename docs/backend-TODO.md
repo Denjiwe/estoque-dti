@@ -33,3 +33,4 @@
         - https://dop3ch3f.medium.com/dockerize-a-laravel-application-with-nginx-php-fpm-node-js-bonus-deploy-to-cloudrun-cce96dfd2496
         - https://github.com/joseluisq/alpine-php-fpm/blob/master/8.2-fpm/Dockerfile
 - [X] Verificar a existência do nome da divisão na hora de mandar email
+- Remoção de elementos de locais impressoras está bugando, não excluíndo corretamente

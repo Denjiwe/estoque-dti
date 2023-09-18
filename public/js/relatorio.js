@@ -21,6 +21,16 @@ $("#item").on('change', function() {
         $("#tipo").append(new Option('Usuário', 'Usuario'));
     }
 
+    if($(this).val() == 'impressoras') {
+        $("#tipo").find('option[value="Usuario"]').remove();
+        $("#tipo").find('option[value="Solicitacao"]').remove();
+        $("#tipo").find('option[value="Entrega"]').remove();
+    } else if ($(this).val() != 'impressoras' && valorAnteriorItem == 'impressoras') {
+        $("#tipo").append(new Option('Usuário', 'Usuario'));
+        $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
+        $("#tipo").append(new Option('Entrega', 'Entrega'));
+    }
+
     valorAnteriorItem = $(this).val();
 });
 

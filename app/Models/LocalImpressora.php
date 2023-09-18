@@ -28,4 +28,16 @@ class LocalImpressora extends Model implements Auditable
             'divisao_id.exists' => 'Uma ou mais das divisões inseridas não foi encontrada',
         ];
     }
+
+    public function produto() {
+        return $this->belongsTo('App\Models\Produto');
+    }
+
+    public function diretoria() {
+        return $this->belongsTo('App\Models\Diretoria');
+    }
+
+    public function divisao() {
+        return $this->belongsTo('App\Models\Divisao');
+    }
 }

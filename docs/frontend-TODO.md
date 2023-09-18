@@ -48,4 +48,5 @@
 - [X] Com a nova mudança para x-adminlte-datatable, resolver a exclusão de elementos
 - [X] Falta buscar as divisões com base nas diretorias no cadastro de locais
     - [X] Erro ao salvar a diretoria
+- Em pesquisa de relatórios, caso um dois tipos removam o mesmo filtro,  fitro que deveria ser removido por ambos continua
 - De md para baixo o menu bar não funciona

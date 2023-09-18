@@ -61,12 +61,6 @@ class RelatorioController extends Controller
                         $dados = $dados->groupBy(function ($entrega) {
                             return $entrega->solicitacao->orgao->nome;
                         });
-
-                        if($dados->toArray() == []) {
-                            session()->flash('mensagem', 'Nenhum resultado encontrado.');
-                            session()->flash('color', 'warning');
-                            return redirect()->route('relatorios.index');
-                        }
                         break;
                     case 'Diretoria':
                         if ($campo == 'todos') {
@@ -80,16 +74,12 @@ class RelatorioController extends Controller
                         $dados = $dados->groupBy(function ($entrega) {
                             return $entrega->solicitacao->diretoria->nome;
                         });
-
-                        if($dados->toArray() == []) {
-                            session()->flash('mensagem', 'Nenhum resultado encontrado.');
-                            session()->flash('color', 'warning');
-                            return redirect()->route('relatorios.index');
-                        }
                         break;
                     case 'Divisao':
                         if ($campo == 'todos') {
-                            $dados = $dados->get();
+                            $dados = $dados->whereHas('solicitacao.divisao', function ($query) use ($campo, $valor) {
+                                $query->where('divisoes.id', '!=', null);
+                            })->get();
                         } else {
                             $dados = $dados->whereHas('solicitacao.divisao', function ($query) use ($campo, $valor) {
                                 $query->where('divisoes.'.$campo, $valor);
@@ -97,14 +87,12 @@ class RelatorioController extends Controller
                         } 
 
                         $dados = $dados->groupBy(function ($entrega) {
-                            return $entrega->solicitacao->divisao->nome;
+                            if ($entrega->solicitacao->divisao_id != null) {
+                                return $entrega->solicitacao->divisao->nome;
+                            } else {
+                                return 'N/D';
+                            }
                         });
-
-                        if($dados->toArray() == []) {
-                            session()->flash('mensagem', 'Nenhum resultado encontrado.');
-                            session()->flash('color', 'warning');
-                            return redirect()->route('relatorios.index');
-                        }
                         break;
                     case 'Usuario':
                         if ($campo == 'todos') {
@@ -118,12 +106,6 @@ class RelatorioController extends Controller
                         $dados = $dados->groupBy(function ($entrega) {
                             return $entrega->solicitacao->usuario->nome;
                         });
-
-                        if($dados->toArray() == []) {
-                            session()->flash('mensagem', 'Nenhum resultado encontrado.');
-                            session()->flash('color', 'warning');
-                            return redirect()->route('relatorios.index');
-                        }
                         break;
                     case 'Solicitacao':
                         if ($campo == 'todos') {
@@ -137,12 +119,6 @@ class RelatorioController extends Controller
                         $dados = $dados->groupBy(function ($entrega) {
                             return '#'.$entrega->solicitacao->id;
                         });
-
-                        if($dados->toArray() == []) {
-                            session()->flash('mensagem', 'Nenhum resultado encontrado.');
-                            session()->flash('color', 'warning');
-                            return redirect()->route('relatorios.index');
-                        }
                         break;
                     case 'Produto':
                         if ($campo == 'todos') {
@@ -154,20 +130,63 @@ class RelatorioController extends Controller
                         } 
 
                         $dados = $dados->groupBy(function ($entrega) {
-                            return $entrega->produtos->modelo_produto;
+                            return $entrega->produto->modelo_produto;
                         });
-
-                        if($dados->toArray() == []) {
-                            session()->flash('mensagem', 'Nenhum resultado encontrado.');
-                            session()->flash('color', 'warning');
-                            return redirect()->route('relatorios.index');
-                        }
+                        break;
+                    default:
+                        session()->flash('mensagem', 'Informe um campo de filtro válido.');
+                        session()->flash('color', 'warning');
                         break;
                 }
                 break;
             case 'impressoras':
-                break;
-            case 'produtos':
+                $dados = LocalImpressora::whereHas('produto', function ($query) {
+                    $query->where('tipo_produto', 'IMPRESSORA');
+                })->with('produto');
+
+                $dados = $this->filtroData($request, $dados);
+
+                switch ($tipo) {
+                    case 'Orgao':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            $dados = $dados->whereHas('diretoria.orgao', function ($query) use ($campo, $valor) {
+                                $query->where('orgaos.'.$campo, $valor);
+                            })->get();                        
+                        } 
+
+                        $dados = $dados->groupBy(function ($impressora) {
+                            return $impressora->diretoria->orgao->nome;
+                        });
+                        break;
+                    case 'Diretoria':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            $dados = $dados->whereHas('diretoria', function ($query) use ($campo, $valor) {
+                                $query->where('diretorias.'.$campo, $valor);
+                            })->get();                        
+                        } 
+                        $dados = $dados->groupBy(function ($impressora) {
+                            return $impressora->diretoria->nome;
+                        });
+                        break;
+                    case 'Divisao':
+                        if ($campo == 'todos') {
+                            $dados = $dados->whereHas('divisao', function ($query) use ($campo, $valor) {
+                                $query->where('divisoes.id', '!=', null);
+                            })->get();                        
+                        } else {
+                            $dados = $dados->whereHas('divisao', function ($query) use ($campo, $valor) {
+                                $query->where('divisoes.'.$campo, $valor);
+                            })->get();                        
+                        } 
+                        $dados = $dados->groupBy(function ($impressora) {
+                            return $impressora->divisao->nome;
+                        });
+                        break;
+                }
                 break;
             case 'usuarios':
                 break;
@@ -176,7 +195,16 @@ class RelatorioController extends Controller
             default:
                 break;
         }
-        dd($dados->toArray());
+
+        $dados = $dados->toArray();
+
+        if($dados == []) {
+            session()->flash('mensagem', 'Nenhum resultado encontrado.');
+            session()->flash('color', 'warning');
+            return redirect()->route('relatorios.index');
+        }
+
+        dd($dados);
     }
 
     public function filtroData(Request $request, $dados) {
