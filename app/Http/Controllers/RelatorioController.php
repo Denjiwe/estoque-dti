@@ -77,7 +77,7 @@ class RelatorioController extends Controller
                         break;
                     case 'Divisao':
                         if ($campo == 'todos') {
-                            $dados = $dados->whereHas('solicitacao.divisao', function ($query) use ($campo, $valor) {
+                            $dados = $dados->whereHas('solicitacao.divisao', function ($query) {
                                 $query->where('divisoes.id', '!=', null);
                             })->get();
                         } else {
@@ -174,7 +174,7 @@ class RelatorioController extends Controller
                         break;
                     case 'Divisao':
                         if ($campo == 'todos') {
-                            $dados = $dados->whereHas('divisao', function ($query) use ($campo, $valor) {
+                            $dados = $dados->whereHas('divisao', function ($query) {
                                 $query->where('divisoes.id', '!=', null);
                             })->get();                        
                         } else {
@@ -189,8 +189,121 @@ class RelatorioController extends Controller
                 }
                 break;
             case 'usuarios':
+                $dados = Usuario::with(['diretoria.orgao', 'divisao']);
+
+                $dados = $this->filtroData($request, $dados);
+
+                switch ($tipo) {
+                    case 'Orgao':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            $dados = $dados->whereHas('diretoria.orgao', function ($query) use ($campo, $valor) {
+                                $query->where('orgaos.'.$campo, $valor);
+                            })->get();                        
+                        }
+                        $dados = $dados->groupBy(function ($usuario) {
+                            return $usuario->diretoria->orgao->nome;
+                        });
+                        break;
+                    case 'Diretoria':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            $dados = $dados->whereHas('diretoria', function ($query) use ($campo, $valor) {
+                                $query->where('diretorias.'.$campo, $valor);
+                            });
+                        }
+                        $dados = $dados->groupBy(function ($usuario) {
+                            return $usuario->diretoria->nome;
+                        });
+                        break;
+                    case 'Divisao':
+                        if ($campo == 'todos') {
+                            $dados = $dados->whereHas('divisao', function ($query) {
+                                $query->where('divisoes.id', '!=', null);
+                            })->get();
+                        } else {
+                            $dados = $dados->whereHas('divisao', function ($query) use ($campo, $valor) {
+                                $query->where('divisoes.'.$campo, $valor);
+                            })->get();
+                        }
+                        $dados = $dados->groupBy(function ($usuario) {
+                            return $usuario->divisao->nome;
+                        });
+                        break;
+                }
                 break;
             case 'solicitacoes':
+                $dados = Solicitacao::with(['diretoria', 'divisao', 'usuario', 'produtos']);
+
+                $dados = $this->filtroData($request, $dados);
+
+                switch ($tipo) {
+                    case 'Orgao':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            $dados = $dados->whereHas('diretoria.orgao', function ($query) use ($campo, $valor) {
+                                $query->where('orgaos.'.$campo, $valor);
+                            })->get();
+                        }
+                        $dados = $dados->groupBy(function ($solicitacao) {
+                            return $solicitacao->diretoria->orgao->nome;
+                        });
+                        break;
+                    case 'Diretoria':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            $dados = $dados->whereHas('diretoria', function ($query) use ($campo, $valor) {
+                                $query->where('diretorias.'.$campo, $valor);
+                            })->get();
+                        }
+                        $dados = $dados->groupBy(function ($solicitacao) {
+                            return $solicitacao->diretoria->nome;
+                        });
+                        break;
+                    case 'Divisao':
+                        if ($campo == 'todos') {
+                            $dados = $dados->whereHas('divisao', function ($query) {
+                                $query->where('divisoes.id', '!=', null);
+                            })->get();
+                        } else {
+                            $dados = $dados->whereHas('divisao', function ($query) use ($campo, $valor) {
+                                $query->where('divisoes.'.$campo, $valor);
+                            })->get();
+                        }
+                        $dados = $dados->groupBy(function ($solicitacao) {
+                            return $solicitacao->divisao->nome;
+                        });
+                        break;
+                    case 'Usuario':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            $dados = $dados->whereHas('usuario', function ($query) use ($campo, $valor) {
+                                $query->where('usuario.'.$campo, $valor);
+                            })->get();
+                        }
+                        $dados = $dados->groupBy(function ($solicitacao) {
+                            return $solicitacao->usuario->nome;
+                        });
+                        break;
+                    case 'Produto':
+                        if ($campo == 'todos') {
+                            $dados = $dados->get();
+                        } else {
+                            if ($campo == 'nome') $campo = 'modelo_produto';
+                            $dados = $dados->whereHas('produtos', function ($query) use ($campo, $valor) {
+                                $query->where('produtos.'.$campo, $valor);
+                            })->get();
+                        }
+                        $dados = $dados->groupBy(function ($solicitacao) {
+                            return $solicitacao->produtos[0]->modelo_produto;
+                        });
+                        break;
+                }
                 break;
             default:
                 break;

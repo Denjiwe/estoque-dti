@@ -46,7 +46,7 @@ services:
     volumes:
       - ./:/var/www/html/
     working_dir: /var/www/html/
-    entrypoint: /bin/sh -c "npm run dev -- --host"
+    entrypoint: /bin/sh -c "npm install && npm run dev -- --host"
     networks:
       - app-network
   phpmyadmin:

@@ -46,7 +46,8 @@ class Usuario extends Authenticatable implements Auditable
             'status' => 'required|in:ATIVO,INATIVO',
             'cpf' => 'required|unique:usuarios,cpf,'.$id.'|min:11|max:20',
             'email' => 'required|email|unique:usuarios,email,'.$id,
-            'diretoria_id' => 'exists:diretorias,id',
+            'diretoria_id' => 'required|exists:diretorias,id',
+            'divisao_id' => 'nullable|exists:divisoes,id',
             'senha_provisoria' => 'required|min:3|max:16',
             'user_interno' => 'required|in:SIM,NAO'
         ];
@@ -74,6 +75,10 @@ class Usuario extends Authenticatable implements Auditable
 
     public function divisao() {
         return $this->belongsTo('App\Models\Divisao');
+    }
+
+    public function orgao() {
+        return $this->hasOneThrough('App\Models\Orgao', 'App\Models\Diretoria');
     }
 
     public function solicitacoes() {

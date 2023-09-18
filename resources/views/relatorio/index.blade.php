@@ -45,7 +45,6 @@
                         <option value="Usuario">Usuário</option>
                         <option value="Solicitacao">Solicitação</option>
                         <option value="Entrega">Entrega</option>
-                        <option value="Produto">Produto</option>
                     </select>
                 </div>
                 <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">

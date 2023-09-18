@@ -5,8 +5,12 @@ var valorAnteriorItem;
 $("#item").on('change', function() {
     if ($(this).val() == 'solicitacoes') {
         $("#tipo").find('option[value="Solicitacao"]').remove();
+        $("#tipo").find('option[value="Entrega"]').remove();
+        $("#tipo").append(new Option('Produto', 'Produto'));
     } else if ($(this).val() != 'solicitacoes' && valorAnteriorItem == 'solicitacoes') {
         $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
+        $("#tipo").append(new Option('Entrega', 'Entrega'));
+        $("#tipo").find('option[value="Produto"]').remove();
     }
 
     if($(this).val() == 'entregas') {
@@ -17,8 +21,12 @@ $("#item").on('change', function() {
 
     if($(this).val() == 'usuarios') {
         $("#tipo").find('option[value="Usuario"]').remove();
+        $("#tipo").find('option[value="Solicitacao"]').remove();
+        $("#tipo").find('option[value="Entrega"]').remove();
     } else if ($(this).val() != 'usuarios' && valorAnteriorItem == 'usuarios') {
         $("#tipo").append(new Option('Usuário', 'Usuario'));
+        $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
+        $("#tipo").append(new Option('Entrega', 'Entrega'));
     }
 
     if($(this).val() == 'impressoras') {
@@ -59,7 +67,8 @@ $(document).on('change', '#tipo', function() {
 });
 
 if($('#campo').val() != 'todos') {
-    $('<div class="col-2"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
+    $('<div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
+    $('#dataDiv').removeClass('mt-md-0').addClass('mt-xl-0');
 }
 
 var valorAnteriorCampo;
@@ -68,14 +77,17 @@ $(document).on('change', '#campo', function() {
     if (($('#campo').val() != 'todos' && $('#campo').val() != 'status') && ($(document).find('#valor').length == 0 || valorAnteriorCampo == 'status') && ($('#tipo')).val() != '') {
         if ($(document).find('#valor').length != 0 ) {
             $(document).find('#valor').parent().remove();
+            $('#dataDiv').removeClass('mt-md-0').addClass('mt-xl-0');
         }
-        $('<div class="col-2"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
+        $('#dataDiv').removeClass('mt-md-0').addClass('mt-xl-0');
+        $('<div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
     } else if ($('#campo').val() == 'status' && ($(document).find('#valor').length == 0 || valorAnteriorCampo != 'status') && ($('#tipo')).val() != '') {
         if ($(document).find('#valor').length != 0 ) {
             $(document).find('#valor').parent().remove();
+            $('#dataDiv').removeClass('mt-xl-0').addClass('mt-md-0');
         }
-        var div = $('<div>').attr('class', 'col-2');
-        var select = $('<select>').attr('class', 'form-select');
+        var div = $('<div>').addClass('col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0');
+        var select = $('<select>').addClass('form-select');
         var label = $('<label for="status">Valor</label>');
         select.attr('name', 'valor');
         select.attr('id', 'valor');
@@ -89,8 +101,10 @@ $(document).on('change', '#campo', function() {
         div.append(label);
         div.append(select);
         div.insertAfter($('#campo').parent());
+        $('#dataDiv').removeClass('mt-md-0').addClass('mt-xl-0');
     } else if ($(document).find('#campo').val() == 'todos') {
         $(document).find('#valor').parent().remove();
+        $('#dataDiv').removeClass('mt-xl-0').addClass('mt-md-0');
     }
 
     valorAnteriorCampo = $(this).val();

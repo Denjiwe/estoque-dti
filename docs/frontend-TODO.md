@@ -49,4 +49,5 @@
 - [X] Falta buscar as divisões com base nas diretorias no cadastro de locais
     - [X] Erro ao salvar a diretoria
 - Em pesquisa de relatórios, caso um dois tipos removam o mesmo filtro,  fitro que deveria ser removido por ambos continua
+    - Também ao recarregar a página, a seleção de campos fica toda bugada
 - De md para baixo o menu bar não funciona
