@@ -33,6 +33,8 @@
                         <option value="diretoria">Nome da Diretoria</option>
                         <option value="divisao">Nome da Divisão</option>
                         <option value="status">Status</option>
+                        <option value="cpf">CPF</option>
+                        <option value="email">E-mail</option>
                         <option value="created_at">Data de Criação</option>
                         <option value="updated_at">Data de Atualização</option>
                     </select>

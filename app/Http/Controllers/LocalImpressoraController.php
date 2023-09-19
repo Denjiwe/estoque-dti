@@ -105,7 +105,7 @@ class LocalImpressoraController extends Controller
 
         foreach($produto->locais->toArray() as $local) // faz com que as divisões e diretorias sejam um array para serem comparados
         {
-            if($local['divisao_id'] != null) $local['divisao_id'] = strval($local['divisao_id']);
+            if($local['divisao_id'] != null) $local['divisao_id'] = strval($local['divisao_id']); else $local['divisao_id'] = null;
             array_push($pDivisoes,$local['divisao_id']);
 
             if($local['diretoria_id'] != null) $local['diretoria_id'] = strval($local['diretoria_id']);
@@ -115,9 +115,8 @@ class LocalImpressoraController extends Controller
         $divisoesExcluidas = array_diff_assoc($pDivisoes, $divisoes); // verifica quais elementos não estão mais presentes comparando as divs do produto com o que veio na request e os remove
         $divisoesNovas = array_diff_assoc($divisoes, $pDivisoes); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
 
-        $diretoriasExcluidas = array_diff_assoc($pDiretorias, $diretorias); // verifica quais elementos não estão mais presentes comparando as dirs do produto com o que veio na request e os remove
-        $diretoriasNovas = array_diff_assoc($diretorias, $pDiretorias); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
-
+        $diretoriasExcluidas = array_diff($pDiretorias, $diretorias); // verifica quais elementos não estão mais presentes comparando as dirs do produto com o que veio na request e os remove
+        $diretoriasNovas = array_diff($diretorias, $pDiretorias); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
 
         if($diretoriasExcluidas != [])
         {

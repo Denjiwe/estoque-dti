@@ -1,45 +1,33 @@
 import { urlBase } from './urlBase.js';
 
-var valorAnteriorItem;
-
 $("#item").on('change', function() {
     if ($(this).val() == 'solicitacoes') {
-        $("#tipo").find('option[value="Solicitacao"]').remove();
-        $("#tipo").find('option[value="Entrega"]').remove();
+        $('#tipo').empty();
+        $('#tipo').attr('disabled', false);
+        $("#tipo").append(new Option('Órgão', 'Orgao'));
+        $("#tipo").append(new Option('Diretoria', 'Diretoria'));
+        $("#tipo").append(new Option('Divisão', 'Divisao'));
+        $("#tipo").append(new Option('Usuário', 'Usuario'));
         $("#tipo").append(new Option('Produto', 'Produto'));
-    } else if ($(this).val() != 'solicitacoes' && valorAnteriorItem == 'solicitacoes') {
-        $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
-        $("#tipo").append(new Option('Entrega', 'Entrega'));
-        $("#tipo").find('option[value="Produto"]').remove();
-    }
+    } 
 
     if($(this).val() == 'entregas') {
-        $("#tipo").find('option[value="Entrega"]').remove();
-    } else if ($(this).val() != 'entregas' && valorAnteriorItem == 'entregas') {
-        $("#tipo").append(new Option('Entrega', 'Entrega'));
-    }
-
-    if($(this).val() == 'usuarios') {
-        $("#tipo").find('option[value="Usuario"]').remove();
-        $("#tipo").find('option[value="Solicitacao"]').remove();
-        $("#tipo").find('option[value="Entrega"]').remove();
-    } else if ($(this).val() != 'usuarios' && valorAnteriorItem == 'usuarios') {
+        $('#tipo').empty();
+        $('#tipo').attr('disabled', false);
+        $("#tipo").append(new Option('Órgão', 'Orgao'));
+        $("#tipo").append(new Option('Diretoria', 'Diretoria'));
+        $("#tipo").append(new Option('Divisão', 'Divisao'));
         $("#tipo").append(new Option('Usuário', 'Usuario'));
         $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
-        $("#tipo").append(new Option('Entrega', 'Entrega'));
-    }
+    } 
 
-    if($(this).val() == 'impressoras') {
-        $("#tipo").find('option[value="Usuario"]').remove();
-        $("#tipo").find('option[value="Solicitacao"]').remove();
-        $("#tipo").find('option[value="Entrega"]').remove();
-    } else if ($(this).val() != 'impressoras' && valorAnteriorItem == 'impressoras') {
-        $("#tipo").append(new Option('Usuário', 'Usuario'));
-        $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
-        $("#tipo").append(new Option('Entrega', 'Entrega'));
-    }
-
-    valorAnteriorItem = $(this).val();
+    if($(this).val() == 'usuarios' || $(this).val() == 'impressoras') {
+        $('#tipo').empty();
+        $('#tipo').attr('disabled', false);
+        $("#tipo").append(new Option('Órgão', 'Orgao'));
+        $("#tipo").append(new Option('Diretoria', 'Diretoria'));
+        $("#tipo").append(new Option('Divisão', 'Divisao'));
+    } 
 });
 
 $(document).on('change', '#tipo', function() {
@@ -69,7 +57,31 @@ $(document).on('change', '#tipo', function() {
 if($('#campo').val() != 'todos') {
     $('<div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0"><label>Valor</label><input name="valor" id="valor" type="text" placeholder="Insira o valor do campo" class="form-control" required></div>').insertAfter($('#campo').parent());
     $('#dataDiv').removeClass('mt-md-0').addClass('mt-xl-0');
-}
+} 
+
+if ($('#item').val() == 'solicitacoes') {
+    $('#tipo').empty();
+    $('#tipo').attr('disabled', false);
+    $("#tipo").append(new Option('Órgão', 'Orgao'));
+    $("#tipo").append(new Option('Diretoria', 'Diretoria'));
+    $("#tipo").append(new Option('Divisão', 'Divisao'));
+    $("#tipo").append(new Option('Usuário', 'Usuario'));
+    $("#tipo").append(new Option('Produto', 'Produto'));
+} else if($('#item').val() == 'entregas') {
+    $('#tipo').empty();
+    $('#tipo').attr('disabled', false);
+    $("#tipo").append(new Option('Órgão', 'Orgao'));
+    $("#tipo").append(new Option('Diretoria', 'Diretoria'));
+    $("#tipo").append(new Option('Divisão', 'Divisao'));
+    $("#tipo").append(new Option('Usuário', 'Usuario'));
+    $("#tipo").append(new Option('Solicitacão', 'Solicitacao'));
+} else if($('#item').val() == 'usuarios' || $('#item').val() == 'impressoras') {
+    $('#tipo').empty();
+    $('#tipo').attr('disabled', false);
+    $("#tipo").append(new Option('Órgão', 'Orgao'));
+    $("#tipo").append(new Option('Diretoria', 'Diretoria'));
+    $("#tipo").append(new Option('Divisão', 'Divisao'));
+} 
 
 var valorAnteriorCampo;
 

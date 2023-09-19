@@ -27,7 +27,7 @@ $('#campo').on('change', function() {
 
             var newInput = $('<input name="nome" type="text" placeholder="Insira o nome do usuário" class="form-control" required>');
 
-            var label = $('<label for="id">Nome</label>');
+            var label = $('<label for="nome">Nome</label>');
 
             pesquisaDiv.append(label);
             pesquisaDiv.append(newInput);
@@ -58,6 +58,36 @@ $('#campo').on('change', function() {
             var newInput = $('<input name="divisao" type="text" placeholder="Insira o nome da divisão" class="form-control" required>');
 
             var label = $('<label for="divisao">Nome da Divisão</label>');
+
+            pesquisaDiv.append(label);
+            pesquisaDiv.append(newInput);
+            break;
+        case 'cpf':
+            $('#pesquisa').empty();
+            var pesquisaDiv = $('#pesquisa');
+
+            if($('#pesquisa').hasClass('col-6')) {
+                $('#pesquisa').removeClass('col-6').addClass('col-2');
+            }
+
+            var newInput = $('<input name="cpf" type="text" placeholder="Insira o CPF do usuário" class="form-control" required>');
+
+            var label = $('<label for="cpf">CPF</label>');
+
+            pesquisaDiv.append(label);
+            pesquisaDiv.append(newInput);
+            break;
+        case 'email':
+            $('#pesquisa').empty();
+            var pesquisaDiv = $('#pesquisa');
+
+            if($('#pesquisa').hasClass('col-6')) {
+                $('#pesquisa').removeClass('col-6').addClass('col-2');
+            }
+
+            var newInput = $('<input name="email" type="text" placeholder="Insira o e-mail do usuário" class="form-control" required>');
+
+            var label = $('<label for="email">E-mail</label>');
 
             pesquisaDiv.append(label);
             pesquisaDiv.append(newInput);

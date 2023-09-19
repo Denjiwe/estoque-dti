@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="tipo">Por</label>
-                    <select id="tipo" name="tipo" class="form-select" required>
+                    <select id="tipo" name="tipo" class="form-select" disabled required>
                         <option value="" selected hidden>-- Selecione --</option>
                         <option value="Orgao">Órgão</option>
                         <option value="Diretoria">Diretoria</option>

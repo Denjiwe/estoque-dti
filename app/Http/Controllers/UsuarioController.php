@@ -407,6 +407,14 @@ class UsuarioController extends Controller
                 $usuarios = $this->usuario->where('status', $request->status)->paginate(10);
                 $resposta = 'Resultado da Pesquisa por Status '.ucfirst(strtolower($request->status));
                 break;
+            case isset($request->cpf):
+                $usuarios = $this->usuario->where('cpf', 'like', '%'.$request->cpf.'%')->paginate(10);
+                $resposta = 'Resultado da Pesquisa por CPF '.$request->cpf;
+                break;
+            case isset($request->email):
+                $usuarios = $this->usuario->where('email', 'like', '%'.$request->email.'%')->paginate(10);
+                $resposta = 'Resultado da Pesquisa por E-mail '.$request->email;
+                break;
             case isset($request->data_criacao_inicio):
                 if(!isset($request->data_criacao_fim)) {
                     $timestamp = Carbon::createFromFormat('Y-m-d', $request->data_criacao_inicio)->startOfDay();
