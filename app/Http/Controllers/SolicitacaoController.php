@@ -99,7 +99,7 @@ class SolicitacaoController extends Controller
                             $primeiroNome,
                             $solicitacao->divisao ? $solicitacao->divisao->nome : 'Nenhuma',
                             $solicitacao->diretoria->nome,
-                            $solicitacao->status,
+                            ucfirst(strtolower($solicitacao->status)),
                             $dataCriacao,
                             auth()->user()->user_interno == 'SIM' ? '<nobr>'.$btnEdit.$btnDelete.'</nobr>' : null
                         ];
@@ -110,7 +110,7 @@ class SolicitacaoController extends Controller
                             $primeiroNome,
                             $solicitacao->divisao ? $solicitacao->divisao->nome : 'Nenhuma',
                             $solicitacao->diretoria->nome,
-                            $solicitacao->status,
+                            ucfirst(strtolower($solicitacao->status)),
                             $dataCriacao,
                             auth()->user()->user_interno == 'SIM' ? '<nobr>'.$btnEdit.$btnDelete.'</nobr>' : null
                         ];
@@ -121,7 +121,7 @@ class SolicitacaoController extends Controller
                             $primeiroNome,
                             $solicitacao->divisao ? $solicitacao->divisao->nome : 'Nenhuma',
                             $solicitacao->diretoria->nome,
-                            $solicitacao->status,
+                            ucfirst(strtolower($solicitacao->status)),
                             $dataCriacao,
                             auth()->user()->user_interno == 'SIM' ? '<nobr>'.$btnEdit.$btnDelete.'</nobr>' : null
                         ];
@@ -132,7 +132,7 @@ class SolicitacaoController extends Controller
 
         $config = [
             'dom' => '<"row">t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
-            'order' => [[0, 'desc']],
+            'order' => [[0, 'asc']],
             'columns' => [null, null, null, null, null, null, ['orderable' => false]],
             "bLengthChange" => false,
             'language' => [

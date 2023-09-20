@@ -44,12 +44,15 @@ class RelatorioController extends Controller
 
         switch ($item) {
             case 'entregas':
-                $dados = Entrega::with('produto');
+                $dados = Entrega::with('produto', 'usuario', 'solicitacao.usuario', 'solicitacao.diretoria', 'solicitacao.divisao');
 
                 $dados = $this->filtroData($request, $dados);
+                $nome = 'Entregas';
+                $nomeFile = 'entregas';
 
                 switch ($tipo) {
                     case 'Orgao':
+                        $filtro = 'Órgão';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -63,6 +66,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Diretoria':
+                        $filtro = 'Diretoria';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -76,6 +80,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Divisao':
+                        $filtro = 'Divisão';
                         if ($campo == 'todos') {
                             $dados = $dados->whereHas('solicitacao.divisao', function ($query) {
                                 $query->where('divisoes.id', '!=', null);
@@ -95,6 +100,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Usuario':
+                        $filtro = '';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -108,6 +114,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Solicitacao':
+                        $filtro = 'Solicitação';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -121,6 +128,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Produto':
+                        $filtro = 'Produto';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -142,12 +150,15 @@ class RelatorioController extends Controller
             case 'impressoras':
                 $dados = LocalImpressora::whereHas('produto', function ($query) {
                     $query->where('tipo_produto', 'IMPRESSORA');
-                })->with('produto');
+                })->with('produto', 'divisao', 'diretoria');
 
                 $dados = $this->filtroData($request, $dados);
+                $nome = 'Impressoras';                    
+                $nomeFile = 'impressoras';                    
 
                 switch ($tipo) {
                     case 'Orgao':
+                        $filtro = 'Órgão';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -161,6 +172,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Diretoria':
+                        $filtro = 'Diretoria';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -173,6 +185,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Divisao':
+                        $filtro = 'Divisão';
                         if ($campo == 'todos') {
                             $dados = $dados->whereHas('divisao', function ($query) {
                                 $query->where('divisoes.id', '!=', null);
@@ -186,15 +199,22 @@ class RelatorioController extends Controller
                             return $impressora->divisao->nome;
                         });
                         break;
+                    default:
+                        session()->flash('mensagem', 'Informe um campo de filtro válido.');
+                        session()->flash('color', 'warning');
+                        break;
                 }
                 break;
             case 'usuarios':
                 $dados = Usuario::with(['diretoria.orgao', 'divisao']);
 
                 $dados = $this->filtroData($request, $dados);
+                $nome = 'Usuários';
+                $nomeFile = 'usuarios';
 
                 switch ($tipo) {
                     case 'Orgao':
+                        $filtro = 'Órgão';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -207,6 +227,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Diretoria':
+                        $filtro = 'Diretoria';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -219,6 +240,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Divisao':
+                        $filtro = 'Divisão';
                         if ($campo == 'todos') {
                             $dados = $dados->whereHas('divisao', function ($query) {
                                 $query->where('divisoes.id', '!=', null);
@@ -232,15 +254,22 @@ class RelatorioController extends Controller
                             return $usuario->divisao->nome;
                         });
                         break;
+                    default:
+                        session()->flash('mensagem', 'Informe um campo de filtro válido.');
+                        session()->flash('color', 'warning');
+                        break;
                 }
                 break;
             case 'solicitacoes':
                 $dados = Solicitacao::with(['diretoria', 'divisao', 'usuario', 'produtos']);
 
                 $dados = $this->filtroData($request, $dados);
+                $nome = 'Solicitações';
+                $nomeFile = 'solicitacoes';
 
                 switch ($tipo) {
                     case 'Orgao':
+                        $filtro = 'Órgão';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -253,6 +282,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Diretoria':
+                        $filtro = 'Diretoria';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -265,6 +295,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Divisao':
+                        $filtro = 'Divisão';
                         if ($campo == 'todos') {
                             $dados = $dados->whereHas('divisao', function ($query) {
                                 $query->where('divisoes.id', '!=', null);
@@ -279,6 +310,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Usuario':
+                        $filtro = '';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -291,6 +323,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Produto':
+                        $filtro = 'Produto';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -303,9 +336,16 @@ class RelatorioController extends Controller
                             return $solicitacao->produtos[0]->modelo_produto;
                         });
                         break;
+                    default:
+                        session()->flash('mensagem', 'Informe um campo de filtro válido.');
+                        session()->flash('color', 'warning');
+                        break;
                 }
                 break;
             default:
+                session()->flash('mensagem', 'Informe um item de busca válido.');
+                session()->flash('color', 'warning');
+                return redirect()->route('relatorios.index');
                 break;
         }
 
@@ -317,7 +357,21 @@ class RelatorioController extends Controller
             return redirect()->route('relatorios.index');
         }
 
-        dd($dados);
+        $dataAtual = date('d/m/Y');
+        $dataAtualFile = date('d-m-Y');
+        $horaAtual = date('H:i:s');
+        $horaAtualFile = date('His');
+
+        switch($formato) {
+            case 'pdf':
+                $pdf = Pdf::loadView('relatorio.pdf', ['dados' =>$dados, 'nome' => $nome, 'filtro' => $filtro, 'dataAtual' => $dataAtual, 'horaAtual' => $horaAtual])->setPaper('a4', $request->orientacao);
+                return $pdf->download('relatorio_'.$nomeFile.'_'.$dataAtualFile.'_'.$horaAtualFile.'.pdf');
+                break;
+            case 'xslx':
+                break;
+            case 'csv':
+                break;
+        }
     }
 
     public function filtroData(Request $request, $dados) {

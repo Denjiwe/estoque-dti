@@ -1,9 +1,11 @@
 import { urlBase } from './urlBase.js';
 
 $("#item").on('change', function() {
+    $('#tipo').empty();
+    $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
+    $('#tipo').attr('disabled', false);
+
     if ($(this).val() == 'solicitacoes') {
-        $('#tipo').empty();
-        $('#tipo').attr('disabled', false);
         $("#tipo").append(new Option('Órgão', 'Orgao'));
         $("#tipo").append(new Option('Diretoria', 'Diretoria'));
         $("#tipo").append(new Option('Divisão', 'Divisao'));
@@ -12,8 +14,6 @@ $("#item").on('change', function() {
     } 
 
     if($(this).val() == 'entregas') {
-        $('#tipo').empty();
-        $('#tipo').attr('disabled', false);
         $("#tipo").append(new Option('Órgão', 'Orgao'));
         $("#tipo").append(new Option('Diretoria', 'Diretoria'));
         $("#tipo").append(new Option('Divisão', 'Divisao'));
@@ -22,8 +22,6 @@ $("#item").on('change', function() {
     } 
 
     if($(this).val() == 'usuarios' || $(this).val() == 'impressoras') {
-        $('#tipo').empty();
-        $('#tipo').attr('disabled', false);
         $("#tipo").append(new Option('Órgão', 'Orgao'));
         $("#tipo").append(new Option('Diretoria', 'Diretoria'));
         $("#tipo").append(new Option('Divisão', 'Divisao'));
@@ -62,6 +60,7 @@ if($('#campo').val() != 'todos') {
 if ($('#item').val() == 'solicitacoes') {
     $('#tipo').empty();
     $('#tipo').attr('disabled', false);
+    $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
     $("#tipo").append(new Option('Órgão', 'Orgao'));
     $("#tipo").append(new Option('Diretoria', 'Diretoria'));
     $("#tipo").append(new Option('Divisão', 'Divisao'));
@@ -70,6 +69,7 @@ if ($('#item').val() == 'solicitacoes') {
 } else if($('#item').val() == 'entregas') {
     $('#tipo').empty();
     $('#tipo').attr('disabled', false);
+    $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
     $("#tipo").append(new Option('Órgão', 'Orgao'));
     $("#tipo").append(new Option('Diretoria', 'Diretoria'));
     $("#tipo").append(new Option('Divisão', 'Divisao'));
@@ -78,6 +78,7 @@ if ($('#item').val() == 'solicitacoes') {
 } else if($('#item').val() == 'usuarios' || $('#item').val() == 'impressoras') {
     $('#tipo').empty();
     $('#tipo').attr('disabled', false);
+    $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
     $("#tipo").append(new Option('Órgão', 'Orgao'));
     $("#tipo").append(new Option('Diretoria', 'Diretoria'));
     $("#tipo").append(new Option('Divisão', 'Divisao'));
@@ -183,3 +184,17 @@ $(document).on('change', '#data_inicio', function() {
 $(document).on('change', '#data_final', function() {
     $('#data_inicio').attr('max', $(this).val());
 });
+
+$('#formato').on('change', function() {
+    if($(this).val() == 'pdf') {
+        var orientacao = $('<div id="orientacaoDiv" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Orientação</label><select id="orientacao" name="orientacao" class="form-select"><option value="portrait" selected>Retrato</option><option value="landscape">Paisagem</option></select></div>');
+        orientacao.insertAfter($('#formato').parent());
+    } else {
+        $('#orientacaoDiv').remove();
+    }
+});
+
+if($('#formato').val() == 'pdf') {
+    var orientacao = $('<div id="orientacaoDiv"  class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Orientação</label><select id="orientacao" name="orientacao" class="form-select"><option value="portrait" selected>Retrato</option><option value="landscape">Paisagem</option></select></div>');
+    orientacao.insertAfter($('#formato').parent());
+}

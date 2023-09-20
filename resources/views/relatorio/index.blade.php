@@ -67,7 +67,7 @@
                         <option value="personalizado">Personalizado</option>
                     </select>
                 </div>
-                <div id="formato" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0">
+                <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0">
                     <label for="formato">Formato</label>
                     <select id="formato" name="formato" class="form-select">
                         <option value="pdf" selected>PDF</option>
