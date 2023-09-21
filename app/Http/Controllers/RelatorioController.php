@@ -3,15 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
-use App\Models\Diretoria;
-use App\Models\Divisao;
 use App\Models\Entrega;
 use App\Models\LocalImpressora;
-use App\Models\Produto;
-use App\Models\Orgao;
-use App\Models\Suprimento;
 use App\Models\Solicitacao;
-use Barryvdh\DomPDF\Facade\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 // use Maatwebsite\Excel\Facades\Excel;
 // use App\Exports\RelatorioExport;
 
@@ -32,14 +27,6 @@ class RelatorioController extends Controller
         } else {
             $valor = null;
         }
-        $data = $request->data;
-        if($data == 'personalizado') {
-            $data_inicial = $request->data_inicial;
-            $data_final = $request->data_final;
-        } else {
-            $data_inicial = null;
-            $data_final = null;
-        }
         $formato = $request->formato;
 
         switch ($item) {
@@ -58,8 +45,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('solicitacao.orgao', function ($query) use ($campo, $valor) {
                                 $query->where('orgaos.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
 
                         $dados = $dados->groupBy(function ($entrega) {
                             return $entrega->solicitacao->orgao->nome;
@@ -72,8 +59,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('solicitacao.diretoria', function ($query) use ($campo, $valor) {
                                 $query->where('diretorias.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
 
                         $dados = $dados->groupBy(function ($entrega) {
                             return $entrega->solicitacao->diretoria->nome;
@@ -88,8 +75,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('solicitacao.divisao', function ($query) use ($campo, $valor) {
                                 $query->where('divisoes.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
 
                         $dados = $dados->groupBy(function ($entrega) {
                             if ($entrega->solicitacao->divisao_id != null) {
@@ -106,8 +93,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('solicitacao.usuario', function ($query) use ($campo, $valor) {
                                 $query->where('usuario.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
 
                         $dados = $dados->groupBy(function ($entrega) {
                             return $entrega->solicitacao->usuario->nome;
@@ -120,8 +107,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('solicitacao', function ($query) use ($campo, $valor) {
                                 $query->where('solicitacoes.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
 
                         $dados = $dados->groupBy(function ($entrega) {
                             return '#'.$entrega->solicitacao->id;
@@ -134,8 +121,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('produto', function ($query) use ($campo, $valor) {
                                 $query->where('produtos.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
 
                         $dados = $dados->groupBy(function ($entrega) {
                             return $entrega->produto->modelo_produto;
@@ -153,8 +140,8 @@ class RelatorioController extends Controller
                 })->with('produto', 'divisao', 'diretoria');
 
                 $dados = $this->filtroData($request, $dados);
-                $nome = 'Impressoras';                    
-                $nomeFile = 'impressoras';                    
+                $nome = 'Impressoras';
+                $nomeFile = 'impressoras';
 
                 switch ($tipo) {
                     case 'Orgao':
@@ -164,8 +151,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('diretoria.orgao', function ($query) use ($campo, $valor) {
                                 $query->where('orgaos.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
 
                         $dados = $dados->groupBy(function ($impressora) {
                             return $impressora->diretoria->orgao->nome;
@@ -178,8 +165,8 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('diretoria', function ($query) use ($campo, $valor) {
                                 $query->where('diretorias.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
                         $dados = $dados->groupBy(function ($impressora) {
                             return $impressora->diretoria->nome;
                         });
@@ -189,12 +176,12 @@ class RelatorioController extends Controller
                         if ($campo == 'todos') {
                             $dados = $dados->whereHas('divisao', function ($query) {
                                 $query->where('divisoes.id', '!=', null);
-                            })->get();                        
+                            })->get();
                         } else {
                             $dados = $dados->whereHas('divisao', function ($query) use ($campo, $valor) {
                                 $query->where('divisoes.'.$campo, $valor);
-                            })->get();                        
-                        } 
+                            })->get();
+                        }
                         $dados = $dados->groupBy(function ($impressora) {
                             return $impressora->divisao->nome;
                         });
@@ -220,7 +207,7 @@ class RelatorioController extends Controller
                         } else {
                             $dados = $dados->whereHas('diretoria.orgao', function ($query) use ($campo, $valor) {
                                 $query->where('orgaos.'.$campo, $valor);
-                            })->get();                        
+                            })->get();
                         }
                         $dados = $dados->groupBy(function ($usuario) {
                             return $usuario->diretoria->orgao->nome;
@@ -394,6 +381,12 @@ class RelatorioController extends Controller
                 $dados = $dados->whereMonth('created_at', date('m'));
                 break;
             case 'personalizado':
+                if (!isset($request->data_inicio) || !isset($request->data_final)) {
+                    session()->flash('mensagem', 'Informe uma data válida.');
+                    session()->flash('color', 'danger');
+                    return redirect()->route('relatorios.index');
+                }
+
                 if($request->data_inicio > $request->data_final) {
                     session()->flash('mensagem', 'A data inicial deve ser menor que a data final!');
                     session()->flash('color', 'danger');
