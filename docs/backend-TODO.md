@@ -4,7 +4,7 @@
 - [X] Validar se está trocando de suprimento para ser atendido caso possua mais de um suprimento em uso, inicialmente trazendo o primeiro que está registrado com sim no campo em uso
 - [X] Quantidade solicitada deve desconsiderar produtos entregues
 - [X] Caso solicitação estivesse em aguardando, mandar email para o usuário e diretoria quando estoque for reabastecido, alterando o status do pedido para liberado
-- Verificar relatórios para pdf e excel com laravelExcel
+- [X] Verificar relatórios para pdf e excel com laravelExcel 
 - [X] Verificar auditoria com laravel auditoring
     - Verificar se é possível fazer algo em relação a exclusão direta de uma auditoria no banco de dados
 - [X] Criar um campo de senha provisória, para reset de senhas
@@ -14,6 +14,7 @@
     - [X] Instalar phpmyadmin
 - [X] Permitir pesquisas por cpf e email de usuários
 - [X] Fazer dump do banco e refaze-lo, com lower_case_table_names=0 para ser compatível com ambiente de desenvolvimento linux
+- Refatorar relatórios
 - Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
 - Alterar autenticação para o sanctum (pesquisar como funciona para ser o mais automático possível)
 
