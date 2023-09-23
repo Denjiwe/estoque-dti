@@ -26,7 +26,7 @@ class OrgaoController extends Controller
             'Status',
             'Data de Criação',
             'Data de Edição',
-            ['label' => 'Ações', 'no-export' => true, 'width' => '10'],
+            ['label' => 'Ações', 'width' => '10'],
         ];
 
         foreach ($orgaos as $orgao)

@@ -43,7 +43,22 @@
     $(() => {
         $('#{{ $id }}').DataTable( @json($config) );
     })
-
+    
+    $('.adminlte-darkmode-widget').on('click', () => {
+        if ($('.sidebar-mini').hasClass('dark-mode')) {
+            $('.dataTable').removeClass('table-dark');
+        } else {
+            $('.dataTable').addClass('table-dark');
+        }
+    })
+    
+    $(document).ready(() => {
+        if ($('.sidebar-mini').hasClass('dark-mode')) {
+            $('.dataTable').addClass('table-dark');
+        } else {
+            $('.dataTable').removeClass('table-dark');
+        }
+    })
 </script>
 @endpush
 
