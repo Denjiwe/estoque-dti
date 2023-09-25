@@ -106,6 +106,7 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
+    <script src="{{asset('js/handleDarkMode.js')}}"></script>
 
 </body>
 

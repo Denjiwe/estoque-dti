@@ -40,7 +40,7 @@
         <div class="col-6 col-md-4">
             <label for="impressora" class="fom-label">Modelo da impressora</label>
             <select id="impressora" class="form-select">
-                <option value="0" selected hidden>-- Impressora --</option>
+                <option value="" selected hidden>-- Impressora --</option>
                 @foreach ($impressoras as $impressora)
                     <option value="{{$impressora->id}}">{{$impressora->modelo_produto}}</option>
                 @endforeach
@@ -51,7 +51,7 @@
         <div class="col-6 col-md-3">
             <label for="suprimento" class="fom-label">Tipo do suprimento</label>
             <select id="suprimento" class="form-select">
-                <option value="0" selected hidden>-- Suprimento --</option>
+                <option value="" selected hidden>-- Suprimento --</option>
                 <option value="TONER">Toner</option>
                 <option value="CILINDRO">Cilindro</option>
                 <option value="CONJUNTO">Conjunto</option>

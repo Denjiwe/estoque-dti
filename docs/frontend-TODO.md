@@ -33,6 +33,7 @@
     - [X] Fazer arquivo js para somente importar, realizando a limpeza da url e setInterval da remoção do toast
 - [X] Responsividade 🫣
 - [X] Usar Session::flash para transmitir infromações do toast, tirando nessecidade de manipular url
+- [X] Alterar campos do sistema para serem os do adminlte, que fornecem melhor compatibilidade com o dark mode
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 
@@ -50,4 +51,4 @@
     - [X] Erro ao salvar a diretoria
 - [X] Em pesquisa de relatórios, caso um dois tipos removam o mesmo filtro,  fitro que deveria ser removido por ambos continua
     - [X] Também ao recarregar a página, a seleção de campos fica toda bugada
-- De md para baixo o menu bar não funciona
+- [X] De md para baixo o menu bar não funciona

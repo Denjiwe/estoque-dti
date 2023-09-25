@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="campo">Filtro</label>
-                    <select id="campo" name="campo" class="form-control form-select" disabled>
+                    <select id="campo" name="campo" class="form-select" disabled>
                         <option value="todos" selected>Todos</option>
                         <option value="id">ID</option>
                         <option value="nome">Nome</option>

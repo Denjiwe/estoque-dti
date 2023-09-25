@@ -34,7 +34,7 @@
             @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO'))
                 <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
                     <div class="form-floating">
-                        <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" readonly>
+                        <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" disabled>
                         <label for="qntde_solicitada">Quantidade Solicitada</label>
                         {{ $errors->has('qntde_solicitada') ? $errors->first('qntde_solicitada') : '' }}
                     </div>
@@ -99,5 +99,4 @@
 
 @section('js')
     <script src="{{ asset('js/produtos.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @stop

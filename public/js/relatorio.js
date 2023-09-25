@@ -4,6 +4,7 @@ $("#item").on('change', function() {
     $('#tipo').empty();
     $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
     $('#tipo').attr('disabled', false);
+    $('#tipo').removeClass('border-dark');
 
     if ($(this).val() == 'solicitacoes') {
         $("#tipo").append(new Option('Órgão', 'Orgao'));
@@ -30,6 +31,7 @@ $("#item").on('change', function() {
 
 $(document).on('change', '#tipo', function() {
     $('#campo').attr('disabled', false);
+    $('#campo').removeClass('border-dark');
     if ($(this).val() == 'Solicitacao') {
         $('#campo').append(new Option('Status', 'status'));
         if($('#campo').find('option[value="nome"]').length) {
@@ -60,6 +62,7 @@ if($('#campo').val() != 'todos') {
 if ($('#item').val() == 'solicitacoes') {
     $('#tipo').empty();
     $('#tipo').attr('disabled', false);
+    $('#tipo').removeClass('border-dark');
     $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
     $("#tipo").append(new Option('Órgão', 'Orgao'));
     $("#tipo").append(new Option('Diretoria', 'Diretoria'));
@@ -69,6 +72,7 @@ if ($('#item').val() == 'solicitacoes') {
 } else if($('#item').val() == 'entregas') {
     $('#tipo').empty();
     $('#tipo').attr('disabled', false);
+    $('#tipo').removeClass('border-dark');
     $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
     $("#tipo").append(new Option('Órgão', 'Orgao'));
     $("#tipo").append(new Option('Diretoria', 'Diretoria'));
@@ -78,6 +82,7 @@ if ($('#item').val() == 'solicitacoes') {
 } else if($('#item').val() == 'usuarios' || $('#item').val() == 'impressoras') {
     $('#tipo').empty();
     $('#tipo').attr('disabled', false);
+    $('#tipo').removeClass('border-dark');
     $("#tipo").append($('<option value="" selected hidden>-- Selecione --</option>'));
     $("#tipo").append(new Option('Órgão', 'Orgao'));
     $("#tipo").append(new Option('Diretoria', 'Diretoria'));

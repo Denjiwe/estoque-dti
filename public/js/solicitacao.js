@@ -2,6 +2,7 @@ import { urlBase } from './urlBase.js';
 
 $(document).ready(function() {
     var usuario = $('#usuario option:first');
+    var url = '';
 
     async function criaTrToner(impressoraId, impressoraModelo, quantidade) {
         var row = $('<tr>');
@@ -188,6 +189,24 @@ $(document).ready(function() {
         var impressoraModelo = $('#impressora').find(':selected').text();
         var quantidade = $('#quantidade').val();
 
+        if(impressoraId == '' && !$('#impressora').hasClass('is-invalid')) {
+            $('#impressora').addClass('is-invalid');
+            $('#impressora').after($('<div>').addClass('invalid-feedback').text('Informe a impressora.'));
+
+            return;
+        } else if(impressoraId == '' && $('#impressora').hasClass('is-invalid')) {
+            return;
+        }
+
+        if(tipoProduto == '' && !$('#suprimento').hasClass('is-invalid')) {
+            $('#suprimento').addClass('is-invalid');
+            $('#suprimento').after($('<div>').addClass('invalid-feedback').text('Informe o suprimento.'));
+
+            return;
+        } else if(tipoProduto == '' && $('#suprimento').hasClass('is-invalid')) {
+            return;
+        }
+
         if(quantidade == '' && !$('#quantidade').hasClass('is-invalid')) {
             $('#quantidade').addClass('is-invalid');
             $('#quantidade').after($('<div>').addClass('invalid-feedback').text('Informe a quantidade.'));
@@ -211,16 +230,16 @@ $(document).ready(function() {
         }
 
         if(!$('#quantidade').hasClass('is-invalid') && !$('#suprimento').hasClass('is-invalid')) {
-            $('#impressora').val('0');
-            $('#suprimento').val('0');
+            $('#impressora').val('');
+            $('#suprimento').val('');
             $('#quantidade').val('');
         }
     });
 
     $('#impressora').on('change', function(){
-        if ($('#suprimento').hasClass('is-invalid')) {
-            $('#suprimento').removeClass('is-invalid');
-            $('#suprimento').next().remove();
+        if ($('#impressora').hasClass('is-invalid')) {
+            $('#impressora').removeClass('is-invalid');
+            $('#impressora').next().remove();
         }
     });
 
