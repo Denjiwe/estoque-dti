@@ -85,7 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
 // rotas autenticação
 Route::get('/login', function () {
     if (Auth::check()) {
-        return redirect()->route('minhas-solicitacoes.abertas');
+        return redirect()->route('minhas-solicitacoes.index');
     } else {
         return view('auth.login');
     }

@@ -67,7 +67,7 @@ class LoginController extends Controller
         if ($user->user_interno == 'SIM') {
             return redirect()->route('home');
         } else {
-            return redirect()->route('minhas-solicitacoes.abertas');
+            return redirect()->route('minhas-solicitacoes.index');
         }
     }
 

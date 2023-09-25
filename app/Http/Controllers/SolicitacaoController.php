@@ -61,6 +61,10 @@ class SolicitacaoController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
             $rota = 'minhas';
+
+            if(auth()->user()->user_interno == 'NAO') {
+                return view('solicitacao.vue.minhas-solicitacoes', compact('solicitacoesAbertas', 'solicitacoesAguardando', 'solicitacoesEncerradas', 'rota'));
+            }
         }
 
         $solicitacoes = array('abertas' => $solicitacoesAbertas, 'aguardando' => $solicitacoesAguardando, 'encerradas' => $solicitacoesEncerradas);
@@ -172,17 +176,6 @@ class SolicitacaoController extends Controller
         return view('solicitacao.index', $itens);
     }
 
-    public function aguardando() {
-        
-
-        return view('solicitacao.index', ['solicitacoes' => $solicitacoesAguardando, 'titulo' => 'Solicitações Aguardando', 'ativo' => 'aguardando', 'rota' => $rota]);
-    }
-
-    public function encerradas() {
-
-        return view('solicitacao.index', ['solicitacoes' => $solicitacoesEncerradas, 'titulo' => 'Solicitações Encerradas', 'ativo' => 'encerradas', 'rota' => $rota]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -196,6 +189,10 @@ class SolicitacaoController extends Controller
         $usuario->diretoria_id = auth()->user()->diretoria_id;
         $usuario->divisao_id = auth()->user()->divisao_id;
 
+        $divisoes = Divisao::where([['status', 'ATIVO'],['diretoria_id', $usuario->diretoria_id]])->orderBy('nome')->get();
+        $diretorias = Diretoria::where('status', 'ATIVO')->orderBy('nome')->get();
+        $usuarios = Usuario::where('status', 'ATIVO')->orderBy('nome')->get();
+
         if(auth()->user()->user_interno == 'NAO') {
             $impressoras = $this->produto
                 ->select('produtos.id', 'modelo_produto')
@@ -205,21 +202,17 @@ class SolicitacaoController extends Controller
             if(auth()->user()->divisao_id != null)
             {
                 $impressoras = $impressoras->where('divisao_id', $usuario->divisao_id)->get();
-                
             } else {
-
                 $impressoras = $impressoras->where('diretoria_id', $usuario->diretoria_id)->get();
             }
+
+            return view('solicitacao.vue.create', ['impressoras' => $impressoras, 'usuario' => $usuario, 'usuarios' => $usuarios, 'diretorias' => $diretorias, 'divisoes' => $divisoes]);
         } else {
             $impressoras = $this->produto
                 ->select('produtos.id', 'modelo_produto')
                 ->where([['tipo_produto', 'IMPRESSORA'],['status', 'ATIVO']])
                 ->get();
         }
-
-        $divisoes = Divisao::where([['status', 'ATIVO'],['diretoria_id', $usuario->diretoria_id]])->orderBy('nome')->get();
-        $diretorias = Diretoria::where('status', 'ATIVO')->orderBy('nome')->get();
-        $usuarios = Usuario::where('status', 'ATIVO')->orderBy('nome')->get();
 
         return view('solicitacao.create', ['impressoras' => $impressoras, 'usuario' => $usuario, 'usuarios' => $usuarios, 'diretorias' => $diretorias, 'divisoes' => $divisoes]);
     }
