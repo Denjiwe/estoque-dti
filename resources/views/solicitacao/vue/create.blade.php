@@ -9,7 +9,9 @@
 </head>
 <body>
     <div id="app">
-        <solicitar></solicitar>
+        <layout nome="{{ auth()->user()->nome }}">
+            <solicitar></solicitar>
+        </layout>
     </div>
 </body>
 </html>

@@ -9,7 +9,13 @@
 </head>
 <body>
     <div id="app">
-        <minhas-solicitacoes></minhas-solicitacoes>
+        <layout nome="{{ auth()->user()->nome }}">
+            <minhas-solicitacoes 
+                :solicitacoesAbertas="{{ json_encode($solicitacoesAbertas) }}"
+                :solicitacoesAguardando="{{ json_encode($solicitacoesAguardando) }}"
+                :solicitacoesEncerradas="{{ json_encode($solicitacoesEncerradas) }}"
+            />
+        </layout>
     </div>
 </body>
 </html>

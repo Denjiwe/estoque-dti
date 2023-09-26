@@ -1,6 +1,16 @@
-<script setup>
+<script>
+// import { urlBase } from '../../../public/js/urlBase.js';
+
+export default {
+    setup() {
+        return {
+        };
+    }
+};
 </script>
 
 <template>
-    <h1>Solicitar</h1>
+    <div class="card-box">
+        <h1>Solicitar</h1>
+    </div>
 </template>

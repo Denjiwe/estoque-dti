@@ -20,7 +20,7 @@
 
         {{-- Logo --}}
         <div class="{{ $auth_type ?? 'login' }}-logo">
-            <a href="{{ $dashboard_url }}">
+            <a href="{{ $dashboard_url }}" class="text-decoration-none">
 
                 {{-- Logo Image --}}
                 @if (config('adminlte.auth_logo.enabled', false))
