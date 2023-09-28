@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-sm-6 col-md-4 mt-3 mt-sm-0">
                 <label for="diretoria">Diretoria</label>
-                <select name="diretoria_id" id="diretoria" class="form-select">
+                <select name="diretoria_id" id="diretoria" class="form-control">
                     @foreach($diretorias as $diretoria)
                         <option value="{{$diretoria->id}}" @if($usuario->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>
                     @endforeach
@@ -14,7 +14,7 @@
 
             <div class="col-12 col-sm-6 col-md-4 mt-3 mt-sm-0">
                 <label for="divisao">Divisão</label>
-                <select name="divisao_id" id="divisao" class="form-select">
+                <select name="divisao_id" id="divisao" class="form-control">
                     <option value="">Nenhuma</option>
                     @foreach($divisoes as $divisao)
                         <option value="{{$divisao->id}}" @if(isset($usuario->divisao_id) && $usuario->divisao_id == $divisao->id) selected @endif>{{$divisao->nome}}</option>
@@ -24,7 +24,7 @@
 
             <div class="col-12 col-md-4 mt-3 mt-md-0">
                 <label for="usuario">Usuario</label>
-                <select name="usuario_id" id="usuario" class="form-select">
+                <select name="usuario_id" id="usuario" class="form-control">
                     <option value="{{$usuario->id}}">{{$usuario->nome}}</option>
                     @foreach($usuarios as $usuarioSelect)
                         @if($usuarioSelect->id != $usuario->id)
@@ -39,7 +39,7 @@
     <div class="row justify-content-center mt-3">
         <div class="col-6 col-md-4">
             <label for="impressora" class="fom-label">Modelo da impressora</label>
-            <select id="impressora" class="form-select">
+            <select id="impressora" class="form-control">
                 <option value="" selected hidden>-- Impressora --</option>
                 @foreach ($impressoras as $impressora)
                     <option value="{{$impressora->id}}">{{$impressora->modelo_produto}}</option>
@@ -50,7 +50,7 @@
 
         <div class="col-6 col-md-3">
             <label for="suprimento" class="fom-label">Tipo do suprimento</label>
-            <select id="suprimento" class="form-select">
+            <select id="suprimento" class="form-control">
                 <option value="" selected hidden>-- Suprimento --</option>
                 <option value="TONER">Toner</option>
                 <option value="CILINDRO">Cilindro</option>

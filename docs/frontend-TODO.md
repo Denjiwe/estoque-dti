@@ -34,6 +34,9 @@
 - [X] Responsividade 🫣
 - [X] Usar Session::flash para transmitir infromações do toast, tirando nessecidade de manipular url
 - [X] Alterar campos do sistema para serem os do adminlte, que fornecem melhor compatibilidade com o dark mode
+- Tirado importação do scss, usando somente css do adminlte que melhora muito a performance do site
+    - form-select não será usado, mudar para form-control e ver como trazer elementos em telas de suprimentos e afins
+    - toasts também não funcionam corretamente
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
 - Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
 
