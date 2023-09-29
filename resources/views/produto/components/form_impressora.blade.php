@@ -33,7 +33,7 @@
                                             <td style="width:15%;"><input type="text" name="tipo[]" value="{{ucfirst(strtolower($produto->tipo_produto))}}" disabled class="form-control w-auto"></td>
                                             <td style="width:15%;"><input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto"></td>
                                             <td>
-                                                <select name="impressora[]" id="impressora" class="form-select w-auto">
+                                                <select name="impressora[]" id="impressora" class="form-control w-auto">
                                                     <option value="">Selecione a impressora</option>
                                                     @foreach ($impressoras as $impressora)
                                                         <option value="{{$impressora->id}}" @php if($suprimento->produto_id == $impressora->id) echo 'selected'@endphp>{{$impressora->modelo_produto}}</option>
@@ -41,7 +41,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="em_uso[]" id="em_uso" class="form-select w-auto">
+                                                <select name="em_uso[]" id="em_uso" class="form-control w-auto">
                                                     <option value="SIM" @php if($suprimento->em_uso == 'SIM') echo 'selected'@endphp>Sim</option>
                                                     <option value="NAO" @php if($suprimento->em_uso == 'NAO') echo 'selected'@endphp>Não</option>
                                                 </select>
@@ -54,7 +54,7 @@
                                         <td style="width:15%;"><input type="text" name="tipo[]" value="{{ucfirst(strtolower($produto->tipo_produto))}}" disabled class="form-control w-auto"></td>
                                         <td style="width:15%;"><input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto"></td>
                                         <td>
-                                            <select name="impressora[]" id="impressora" class="form-select w-auto">
+                                            <select name="impressora[]" id="impressora" class="form-control w-auto">
                                                 <option value="">Selecione a impressora</option>
                                                 @foreach ($impressoras as $impressora)
                                                     <option value="{{$impressora->id}}">{{$impressora->modelo_produto}}</option>
@@ -62,7 +62,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="em_uso[]" id="em_uso" class="form-select w-auto">
+                                            <select name="em_uso[]" id="em_uso" class="form-control w-auto">
                                                 <option value="SIM">Sim</option>
                                                 <option value="NAO" selected>Não</option>
                                             </select>

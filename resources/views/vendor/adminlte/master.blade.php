@@ -74,7 +74,6 @@
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
 
-    @vite(['resources/js/app.js'])
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
@@ -85,7 +84,7 @@
     {{-- Base Scripts --}}
     @if(!config('adminlte.enabled_laravel_mix'))
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-        {{-- <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         {{-- <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script> --}}
         <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
     @else
@@ -106,7 +105,6 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-    <script src="{{asset('js/handleDarkMode.js')}}"></script>
 
 </body>
 

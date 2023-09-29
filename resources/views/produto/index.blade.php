@@ -27,7 +27,7 @@
             <div class="row ">
                 <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
                     <label for="campo">Campo de pesquisa</label>
-                    <select id="campo" class="form-select">
+                    <select id="campo" class="form-control">
                         <option value="id" selected>ID</option>
                         <option value="tipo">Tipo</option>
                         <option value="modelo">Modelo</option>
@@ -53,7 +53,7 @@
         <h3>Produtos Cadastrados</h3>
 
         @if (count($produtos) > 0)
-            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" compressed/>
+            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" bordered beautify compressed/>
         @endif
 
         <div class="row mt-3 mb-3">

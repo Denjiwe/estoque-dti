@@ -27,7 +27,7 @@
             <div class="row">
                     <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
                         <label for="campo">Campo de pesquisa</label>
-                        <select id="campo" class="form-select">
+                        <select id="campo" class="form-control">
                             <option value="id" selected>ID</option>
                             <option value="solicitacao">Código da Solicitação</option>
                             <option value="interno">Usuário Interno</option>
@@ -54,7 +54,7 @@
         <h3>{{ $titulo }}</h3>
 
         @if (count($entregas) > 0)
-            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" compressed/>
+            <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" bordered beautify compressed/>
         @endif
     </x-adminlte-card>
 @stop
@@ -70,8 +70,6 @@
     <script src="{{asset('js/handleToasts.js')}}"></script>
     <script src="{{asset('js/pesquisaEntrega.js')}}"></script>
 @stop
-@section('plugins.Datatables', true)
-@section('plugins.DatatablesPlugin', true)
 
 @section('css')
     <link rel="stylesheet" href="{{asset('css/index.css')}}">

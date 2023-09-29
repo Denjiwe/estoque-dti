@@ -67,6 +67,12 @@ class AuditoriaController extends Controller
 
         $auditorias = $auditorias->with('usuario')->orderBy('created_at', 'desc')->get();
 
+        if ($auditorias->count() == 0) {
+            session()->flash('mensagem', 'Nenhuma auditoria encontrada!');
+            session()->flash('color', 'warning');
+            return redirect()->route('auditorias.index');
+        }
+
         $mensagens = array();
 
         foreach ($auditorias as $key => $auditoria) {

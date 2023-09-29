@@ -24,7 +24,7 @@
                     @if(count($mensagens) == 0)
                         <p>Não há registros de auditoria.</p>
                     @else
-                        <x-adminlte-datatable id="table" :heads="$heads" :config="$config" compressed/>
+                        <x-adminlte-datatable id="table" :heads="$heads" :config="$config" bordered beautify compressed/>
                     @endif
                 </div>
             </x-slot:body>
@@ -60,8 +60,6 @@
         }
     </script>
 @endsection
-@section('plugins.Datatables', true)
-@section('plugins.DatatablesPlugin', true)
 
 @section('css')
     <style scoped>

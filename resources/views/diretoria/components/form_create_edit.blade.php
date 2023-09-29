@@ -13,7 +13,7 @@
         </div>
 
         <div class="col-6">
-            <select name="orgao_id" class="form-select">
+            <select name="orgao_id" class="form-control">
                 <option selected hidden>-- Selecione um Órgão --</option>
                 @foreach ($orgaos as $chave => $orgao)
                     <option value="{{$orgao->id}}" <?php if(isset($diretoria->orgao_id) && $diretoria->orgao_id == $orgao->id) echo 'selected'?> >{{$orgao->nome}}</option>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="col-4">
-            <select name="status" class="form-select">
+            <select name="status" class="form-control">
                 <option selected hidden>-- Status --</option>
                 <option value="ATIVO" <?php if(isset($diretoria->status) && $diretoria->status == 'ATIVO') echo 'selected'?> >Ativo</option> {{-- {{ $diretoria->status ? old('status') == $diretoria->id ? 'selected' : '' }}   --}}
                 <option value="INATIVO" <?php if(isset($diretoria->status) && $diretoria->status == 'INATIVO') echo 'selected'?> >Inativo</option>

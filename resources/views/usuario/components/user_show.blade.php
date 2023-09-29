@@ -51,7 +51,7 @@
     @if ($config['data'] == [])
         <h3>O usuário não criou nenhuma solicitação!</h3>
     @else
-        <x-adminlte-datatable id="table" :heads="$heads" :config="$config" compressed/>
+        <x-adminlte-datatable id="table" :heads="$heads" :config="$config" bordered beautify compressed/>
     @endif
     </div>
 

@@ -1,15 +1,11 @@
 $('.adminlte-darkmode-widget').on('click', () => {
     if ($('.sidebar-mini').hasClass('dark-mode')) {
         $('.form-control').removeClass('bg-dark');
-        $('.form-select').removeClass('bg-dark');
-        $('.form-select').removeClass('border-dark');
         $('.form-control').removeClass('border-dark');
         $('table').removeClass('bg-dark');
     } else {
         $('.form-control').addClass('bg-dark');
-        $('.form-select').addClass('bg-dark');
         $('table').addClass('bg-dark');
-        $('.form-select:disabled').addClass('border-dark');
         $('.form-control:disabled').addClass('border-dark');
     }
 })
@@ -17,14 +13,10 @@ $('.adminlte-darkmode-widget').on('click', () => {
 $(document).ready(() => {
     if ($('.sidebar-mini').hasClass('dark-mode')) {
         $('.form-control').addClass('bg-dark');
-        $('.form-select').addClass('bg-dark');
-        $('.form-select:disabled').addClass('border-dark');
         $('.form-control:disabled').addClass('border-dark');
         $('table').addClass('bg-dark');
     } else {
         $('.form-control').removeClass('bg-dark');
-        $('.form-select').removeClass('bg-dark');
-        $('.form-select').removeClass('border-dark');
         $('.form-control').removeClass('border-dark');
         $('table').removeClass('bg-dark');
     }

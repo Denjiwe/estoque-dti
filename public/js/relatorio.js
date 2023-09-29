@@ -105,7 +105,7 @@ $(document).on('change', '#campo', function() {
             $('#dataDiv').removeClass('mt-xl-0').addClass('mt-md-0');
         }
         var div = $('<div>').addClass('col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0');
-        var select = $('<select>').addClass('form-select');
+        var select = $('<select>').addClass('form-control');
         var label = $('<label for="status">Valor</label>');
         select.attr('name', 'valor');
         select.attr('id', 'valor');
@@ -192,7 +192,7 @@ $(document).on('change', '#data_final', function() {
 
 $('#formato').on('change', function() {
     if($(this).val() == 'pdf') {
-        var orientacao = $('<div id="orientacaoDiv" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Orientação</label><select id="orientacao" name="orientacao" class="form-select"><option value="portrait" selected>Retrato</option><option value="landscape">Paisagem</option></select></div>');
+        var orientacao = $('<div id="orientacaoDiv" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Orientação</label><select id="orientacao" name="orientacao" class="form-control"><option value="portrait" selected>Retrato</option><option value="landscape">Paisagem</option></select></div>');
         orientacao.insertAfter($('#formato').parent());
     } else {
         $('#orientacaoDiv').remove();
@@ -200,6 +200,6 @@ $('#formato').on('change', function() {
 });
 
 if($('#formato').val() == 'pdf') {
-    var orientacao = $('<div id="orientacaoDiv"  class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Orientação</label><select id="orientacao" name="orientacao" class="form-select"><option value="portrait" selected>Retrato</option><option value="landscape">Paisagem</option></select></div>');
+    var orientacao = $('<div id="orientacaoDiv"  class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0"><label>Orientação</label><select id="orientacao" name="orientacao" class="form-control"><option value="portrait" selected>Retrato</option><option value="landscape">Paisagem</option></select></div>');
     orientacao.insertAfter($('#formato').parent());
 }

@@ -40,7 +40,7 @@ $('#campo').on('change', function() {
                 $('#pesquisa').removeClass('col-6').addClass('col-2');
             }
 
-            var select = $('<select>').attr('class', 'form-select');
+            var select = $('<select>').attr('class', 'form-control');
             select.attr('name', 'tipo');
 
             select.append(new Option('Impressora', 'IMPRESSORA'));
@@ -76,7 +76,7 @@ $('#campo').on('change', function() {
                 $('#pesquisa').removeClass('col-6').addClass('col-2');
             }
 
-            var select = $('<select>').attr('class', 'form-select');
+            var select = $('<select>').attr('class', 'form-control');
             select.attr('name', 'status');
 
             select.append(new Option('Ativo', 'ATIVO'));

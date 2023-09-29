@@ -56,7 +56,7 @@
                                                 <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                             </td>
                                             <td>
-                                                <select name="diretoria[]" id="diretoria" class="form-select w-auto" required>
+                                                <select name="diretoria[]" id="diretoria" class="form-control w-auto" required>
                                                     <option value="" selected hidden>Selecione a Diretoria</option>
                                                     @foreach($diretorias as $diretoria)
                                                         <option value="{{$diretoria->id}}">{{$diretoria->nome}}</option>
@@ -64,7 +64,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="divisao[]" id="divisao" class="form-select w-auto">
+                                                <select name="divisao[]" id="divisao" class="form-control w-auto">
                                                     <option value="" selected>Nenhuma</option>
                                                     @foreach($divisoes as $divisao)
                                                         <option value="{{$divisao->id}}">{{$divisao->nome}}</option>

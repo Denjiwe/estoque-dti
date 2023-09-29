@@ -32,14 +32,14 @@
                                             <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                         </td>
                                         <td>
-                                            <select name="tipo[]" id="tipo" class="form-select w-auto" required>
+                                            <select name="tipo[]" id="tipo" class="form-control w-auto" required>
                                                 <option value="" selected hidden>Selecione o Tipo do Suprimento</option>
                                                 <option value="TONER" @php if($suprimento->tipo_suprimento == 'TONER') echo 'selected'@endphp >Toner</option>
                                                 <option value="CILINDRO" @php if($suprimento->tipo_suprimento == 'CILINDRO') echo 'selected'@endphp >Cilíndro</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="suprimento[]" id="suprimento" class="form-select w-auto" required>
+                                            <select name="suprimento[]" id="suprimento" class="form-control w-auto" required>
                                                 <option value="">Selecione o suprimento</option>
                                                 @if ($suprimento->tipo_suprimento == 'TONER')
                                                     @foreach ($toners as $toner)
@@ -53,7 +53,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="em_uso[]" id="em_uso" class="form-select w-auto">
+                                            <select name="em_uso[]" id="em_uso" class="form-control w-auto">
                                                 <option value="SIM" @php if($suprimento->em_uso == 'SIM') echo 'selected'@endphp>Sim</option>
                                                 <option value="NAO" @php if($suprimento->em_uso == 'NAO') echo 'selected'@endphp>Não</option>
                                             </select>
@@ -67,19 +67,19 @@
                                             <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                         </td>
                                         <td>
-                                            <select name="tipo[]" id="tipo" class="form-select w-auto" required>
+                                            <select name="tipo[]" id="tipo" class="form-control w-auto" required>
                                                 <option value="" selected hidden>Selecione o Tipo do Suprimento</option>
                                                 <option value="TONER">Toner</option>
                                                 <option value="CILINDRO">Cilíndro</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="suprimento[]" id="suprimento" class="form-select w-auto" required>
+                                            <select name="suprimento[]" id="suprimento" class="form-control w-auto" required>
                                                 <option value="">Selecione o suprimento</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="em_uso[]" id="em_uso" class="form-select w-auto">
+                                            <select name="em_uso[]" id="em_uso" class="form-control w-auto">
                                                 <option value="SIM">Sim</option>
                                                 <option value="NAO" selected>Não</option>
                                             </select>

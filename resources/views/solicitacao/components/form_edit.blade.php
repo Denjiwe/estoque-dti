@@ -113,7 +113,7 @@
         <div class="col-6 col-sm-4 col-md-3">
             <div class="form-group">
                 <label for="status">Status</label>
-                <select class="form-select" id="status" name="status" >
+                <select class="form-control" id="status" name="status" >
                     <option value="{{ $solicitacao->status }}">{{ ucfirst(strtolower($solicitacao->status)) }}</option>
                     @if($solicitacao->status != 'ABERTO')<option value="ABERTO">Aberto</option>@endif
                     @if($solicitacao->status != 'AGUARDANDO') <option value="AGUARDANDO">Aguardando</option>@endif

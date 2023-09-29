@@ -27,7 +27,7 @@
             <div class="row ">
                 <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="item">Item do Relatório</label>
-                    <select id="item" name="item" class="form-select" required>
+                    <select id="item" name="item" class="form-control" required>
                         <option value="" selected hidden>-- Selecione --</option>
                         <option value="entregas">Entregas</option>
                         <option value="impressoras">Impressoras</option>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="tipo">Por</label>
-                    <select id="tipo" name="tipo" class="form-select" disabled required>
+                    <select id="tipo" name="tipo" class="form-control" disabled required>
                         <option value="" selected hidden>-- Selecione --</option>
                         <option value="Orgao">Órgão</option>
                         <option value="Diretoria">Diretoria</option>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-sm-0">
                     <label for="campo">Filtro</label>
-                    <select id="campo" name="campo" class="form-select" disabled>
+                    <select id="campo" name="campo" class="form-control" disabled>
                         <option value="todos" selected>Todos</option>
                         <option value="id">ID</option>
                         <option value="nome">Nome</option>
@@ -57,7 +57,7 @@
                 </div>
                 <div id="dataDiv" class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-md-0">
                     <label for="data">Data</label>
-                    <select id="data" name="data" class="form-select">
+                    <select id="data" name="data" class="form-control">
                         <option value="qualquer" selected>Qualquer</option>
                         <option value="hoje">Hoje</option>
                         <option value="ontem">Ontem</option>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-12 col-sm-4 col-md-3 col-xl-2 mt-3 mt-xl-0">
                     <label for="formato">Formato</label>
-                    <select id="formato" name="formato" class="form-select">
+                    <select id="formato" name="formato" class="form-control">
                         <option value="pdf" selected>PDF</option>
                         <option value="xslx">XSLX</option>
                         <option value="csv">CSV</option>

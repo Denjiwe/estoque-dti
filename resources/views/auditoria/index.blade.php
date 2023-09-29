@@ -13,7 +13,7 @@
             <div class="row ">
                 <div class="col-6 col-sm-4 col-md-2">
                     <label for="tipo">Tipo</label>
-                    <select id="tipo" name="tipo" class="form-select">
+                    <select id="tipo" name="tipo" class="form-control">
                         <option value="Todos" selected>Todos</option>
                         <option value="Orgao">Órgão</option>
                         <option value="Diretoria">Diretoria</option>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-6 col-sm-4 col-md-2">
                     <label for="acao">Ação</label>
-                    <select id="acao" name="acao" class="form-select">
+                    <select id="acao" name="acao" class="form-control">
                         <option value="Todos" selected>Todos</option>
                         <option value="created">Criação</option>
                         <option value="updated">Atualização</option>
@@ -35,7 +35,7 @@
                 </div>
                 <div id="dataDiv" class="col-6 col-sm-4 col-md-2 mt-3 mt-sm-0">
                     <label for="data">Data</label>
-                    <select id="data" name="data" class="form-select">
+                    <select id="data" name="data" class="form-control">
                         <option value="hoje" selected>Hoje</option>
                         <option value="ontem">Ontem</option>
                         <option value="semana">Última Semana</option>
@@ -54,5 +54,4 @@
 
 @section('js')
     <script src="{{ asset('js/auditoria.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @stop

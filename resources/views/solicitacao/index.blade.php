@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-12 col-sm-7 col-xl-3 col-lg-4 col-xxl-2">
                     <label for="campo">Campo de pesquisa</label>
-                    <select id="campo" class="form-select">
+                    <select id="campo" class="form-control">
                         <option value="id" selected>ID</option>
                         <option value="nome">Nome do Usuário</option>
                         <option value="diretoria">Nome da Diretoria</option>
@@ -110,15 +110,15 @@
 
         <div class="tab-content" id="TabContent">
             <div class="tab-pane fade show active mt-2" id="abertas-tab-pane" role="tabpanel" aria-labelledby="abertas-tab" tabindex="0">
-                <x-adminlte-datatable id="tableAbertas" :heads="$heads" :config="$configAbertas" compressed beautify/>
+                <x-adminlte-datatable id="tableAbertas" :heads="$heads" :config="$configAbertas" bordered beautify compressed beautify/>
             </div>
 
             <div class="tab-pane fade mt-2" id="aguardando-tab-pane" role="tabpanel" aria-labelledby="aguardando-tab" tabindex="0">
-                <x-adminlte-datatable id="tableAguardando" :heads="$heads" :config="$configAguardando" compressed beautify/>
+                <x-adminlte-datatable id="tableAguardando" :heads="$heads" :config="$configAguardando" bordered beautify compressed beautify/>
             </div>
 
             <div class="tab-pane fade mt-2" id="encerradas-tab-pane" role="tabpanel" aria-labelledby="encerradas-tab" tabindex="0">
-                <x-adminlte-datatable id="tableEncerradas" :heads="$heads" :config="$configEncerradas" compressed beautify/>
+                <x-adminlte-datatable id="tableEncerradas" :heads="$heads" :config="$configEncerradas" bordered beautify compressed beautify/>
             </div>
         </div>
 

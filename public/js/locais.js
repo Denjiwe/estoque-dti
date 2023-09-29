@@ -4,8 +4,8 @@ let form = document.querySelector('#form');
 
 $('#adicionar').click(function() {
     var novaLinha = $(trLocal).clone(true);
-    novaLinha.find('select[id="divisao"]').val('').removeAttr('disabled').addClass('form-select w-auto').removeClass('form-control');
-    novaLinha.find('select[id="diretoria"]').val('').removeAttr('disabled').addClass('form-select w-auto').removeClass('form-control').attr('required');
+    novaLinha.find('select[id="divisao"]').val('').removeAttr('disabled');
+    novaLinha.find('select[id="diretoria"]').val('').removeAttr('disabled').attr('required');
     novaLinha.appendTo('#tbody');
 
 });
