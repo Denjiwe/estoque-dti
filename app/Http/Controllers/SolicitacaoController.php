@@ -91,7 +91,7 @@ class SolicitacaoController extends Controller
                 $btnDelete = '<form action="'.route("solicitacoes.destroy", ["id" => $solicitacao->id]).'" method="POST" id="form_'.$solicitacao->id.'" style="display:inline">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="'.csrf_token().'">
-                                <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$solicitacao->id.')" title="Excluir">
+                                <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir('.$solicitacao->id.')" title="Excluir">
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                 </button>
                                 </form>';
@@ -135,7 +135,7 @@ class SolicitacaoController extends Controller
         }
 
         $config = [
-            'dom' => '<"row">t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
+            'dom' => '<"row" <"col-sm-12 d-flex justify-content-start" f>>t<"row" <"col-sm-6 d-flex justify-content-start" i> <"col-sm-6 d-flex justify-content-end" p>>',
             'order' => [[0, 'asc']],
             'columns' => [null, null, null, null, null, null, ['orderable' => false]],
             "bLengthChange" => false,
@@ -275,7 +275,7 @@ class SolicitacaoController extends Controller
             session()->flash('mensagem', 'Erro ao cadastrar solicitação!');
             session()->flash('color', 'danger');
             if (auth()->user()->user_interno == 'NAO') {
-                return redirect()->route('minhas-solicitacoes.abertas');
+                return redirect()->route('minhas-solicitacoes.index');
             } else {
                 return redirect()->route('solicitacoes.abertas');
             }
@@ -285,7 +285,7 @@ class SolicitacaoController extends Controller
         session()->flash('mensagem', $mensagem);
         session()->flash('color', 'success');
         if (auth()->user()->user_interno == 'NAO') {
-            return redirect()->route('minhas-solicitacoes.abertas');
+            return redirect()->route('minhas-solicitacoes.index');
         } else {
             return redirect()->route('solicitacoes.abertas');
         }

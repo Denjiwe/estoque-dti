@@ -304,47 +304,6 @@ return [
             'type'         => 'darkmode-widget',
             'topnav_right' => true, // Or "topnav => true" to place on the left.
         ],
-
-        // Sidebar items:
-        // [
-        //     'type' => 'sidebar-menu-search',
-        //     'text' => 'search',
-        // ],
-        // [
-        //     'text' => 'blog',
-        //     'url'  => 'admin/blog',
-        //     'can'  => 'manage-blog',
-        // ],
-        // [
-        //     'text'        => 'pages',
-        //     'url'         => 'admin/pages',
-        //     'icon'        => 'far fa-fw fa-file',
-        //     'label'       => 4,
-        //     'label_color' => 'success',
-        // ],
-        // ['header' => 'Operações'],
-        // [
-        //     'text' => 'profile',
-        //     'icon' => 'fas fa-fw fa-user',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Editar',
-        //             'url' => 'usuarios/',
-        //             'icon' => 'fas fa-fw fa-user-edit',
-        //             'can' => 'user_interno'
-        //         ],
-        //         [
-        //             'text' => 'Logout',
-        //             'url' => 'logout',
-        //             'icon' => 'fas fa-fw fa-share'
-        //         ]
-        //     ]
-        // ],
-        // [
-        //     'text' => 'change_password',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
         [
             'text'    => 'Cadastros',
             'icon'    => 'fas fa-fw fa-table',
@@ -353,105 +312,75 @@ return [
                 [
                     'text' => 'Produtos',
                     'url'  => 'produtos',
+                    'key' => 'Produtos',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Órgãos',
                     'url'  => 'orgaos',
+                    'key' => 'Orgãos',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Diretorias',
                     'url'  => 'diretorias',
+                    'key' => 'Diretorias',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Divisões',
                     'url'  => 'divisao',
+                    'key' => 'Divisões',
                     'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Usuários',
                     'url'  => 'usuarios',
+                    'key' => 'Usuários',
                     'icon' => 'fas fa-fw fa-list'
                 ],
-                // [
-                //     'text'    => 'level_one',
-                //     'url'     => '#',
-                //     'submenu' => [
-                //         [
-                //             'text' => 'level_two',
-                //             'url'  => '#',
-                //         ],
-                //         [
-                //             'text'    => 'level_two',
-                //             'url'     => '#',
-                //             'submenu' => [
-                //                 [
-                //                     'text' => 'level_three',
-                //                     'url'  => '#',
-                //                 ],
-                //                 [
-                //                     'text' => 'level_three',
-                //                     'url'  => '#',
-                //                 ],
-                //             ],
-                //         ],
-                //     ],
-                // ],
             ],
         ],
         [
             'text' => 'Solicitações',
             'url' => 'solicitacoes',
             'icon' => 'fas fa-fw fa-clipboard-list',
+            'key' => 'Solicitações',
             'can' => 'user_interno'
         ],
         [
             'text' => 'Entregas',
             'url' => 'entregas',
             'icon' => 'fas fa-fw fa-clipboard-check',
+            'key' => 'Entregas',
             'can' => 'user_interno'
         ],
         [
             'text' => 'Solicitar',
             'url' => 'solicitar',
+            'key' => 'Solicitar',
             'icon' => 'fas fa-fw fa-clipboard'
         ],
         [
             'text' => 'Minhas Solicitações',
             'url' => 'minhas-solicitacoes',
+            'key' => 'Minhas Solicitações',
             'icon' => 'fas fa-fw fa-folder'
         ],
         [
             'text' => 'Relatórios',
             'url' => 'relatorios',
+            'key' => 'Relatórios',
             'icon' => 'fas fa-fw fa-download',
             'can' => 'user_interno'
         ],
         [
             'text' => 'Auditoria',
             'url' => 'auditoria',
+            'key' => 'Auditoria',
             'icon' => 'fas fa-fw fa-suitcase',
             'can' => 'user_interno'
         ],
-        
-        // ['header' => 'labels'],
-        // [
-        //     'text'       => 'important',
-        //     'icon_color' => 'red',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'warning',
-        //     'icon_color' => 'yellow',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'information',
-        //     'icon_color' => 'cyan',
-        //     'url'        => '#',
-        // ],
     ],
 
     /*

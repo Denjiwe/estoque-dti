@@ -91,6 +91,7 @@
         </div>
     @endforeach
 
+    @if($solicitacao->observacao != null)
     <div class="row">
         <div class="col-12">
             <label>Observação da Solicitação</label>
@@ -99,6 +100,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div class="row">
         <div class="col-12">

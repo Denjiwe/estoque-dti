@@ -71,20 +71,17 @@
             </select>
             {{ $errors->has('divisao_id') ? $errors->first('divisao_id') : '' }}
         </div>
+    </div>
 
-        <div class="row justify-content-end mt-3">
-            <div class="col-auto mx-n4">
-                <a href="{{url()->previous() == route('usuarios.create') ? route('usuarios.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
-                @if (isset($usuario->id))
-                    <button type="submit" class="btn btn-primary">Aplicar</button>
-                @else
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                @endif
-            </div>
-        </div>
+    <div class="float-right mt-3">
+        <a href="{{url()->previous() == route('usuarios.create') ? route('usuarios.index') : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
+        @if (isset($usuario->id))
+            <button type="submit" class="btn btn-primary">Aplicar</button>
+        @else
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        @endif
     </div>
 
 @section('js')
-    <script src="{{asset('js/solicitacao.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{asset('js/solicitacao.js')}}" type="module"></script>
 @stop

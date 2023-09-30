@@ -2,7 +2,7 @@
 
     <a class="nav-link {{ $item['class'] }} @isset($item['shift']) {{ $item['shift'] }} @endisset"
        href="{{ $item['href'] }}" @isset($item['target']) target="{{ $item['target'] }}" @endisset
-       {!! $item['data-compiled'] ?? '' !!}>
+       {!! $item['data-compiled'] ?? '' !!} aria-label="{{ $item['text'] }}">
 
         <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{
             isset($item['icon_color']) ? 'text-'.$item['icon_color'] : ''

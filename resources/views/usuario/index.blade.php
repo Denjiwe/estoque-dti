@@ -9,13 +9,12 @@
 @section('content')
 
     @if(session()->get('mensagem'))
-        <div class="position-fixed top-0 pt-5 mt-3 pe-2 end-0" style="z-index: 11">
-            <div class="toast fade show align-items-center bg-{{ session()->get('color') }}" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="position-fixed top-0 pt-5 mt-3 right-3" style="z-index: 11; top: 0; right: 10px">
+            <div class="toast fade show align-items-center bg-{{ session()->get('color') }}" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
                 <div class="d-flex">
                     <div class="toast-body">
                         {{ session()->get('mensagem') }}
                     </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
         </div>
@@ -58,8 +57,8 @@
             <x-adminlte-datatable id="table" :heads="$heads" :config="$config" head-theme="dark" bordered beautify compressed/>
         @endif
 
-        <div class="row mt-3 mb-3">
-            <div class="col-12">
+        <div class="row justify-content-end mt-3">
+            <div class="col-auto">
                 <a href="{{route('usuarios.create')}}"><button type="button" class="btn btn-primary float-end">Adicionar</button></a>
             </div>
         </div>
@@ -77,8 +76,6 @@
     <script src="{{asset('js/handleToasts.js')}}"></script>
     <script src="{{asset('js/pesquisaUsuario.js')}}"></script>
 @stop
-@section('plugins.Datatables', true)
-@section('plugins.DatatablesPlugin', true)
 
 @section('css')
     <link href="{{asset('css/index.css')}}" rel="stylesheet">

@@ -11,7 +11,7 @@
         <h4>{{ $errors->has('diretoria_id') ? $errors->first('diretoria_id') : '' }}</h4>
         <h4>{{ $errors->has('divisao_id') ? $errors->first('divisao_id') : '' }}</h4>
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-xl-10 col-xxl-7" id="locais">
+            <div class="col-12 col-xl-8 col-xxl-5" id="locais">
                 <x-box-input>
                     <x-slot:body>
                         <div class="table-responsive">
@@ -88,13 +88,11 @@
                     </x-slot:footer>
                 </x-box-input>
             </div>
+        </div>
 
-            <div class="mt-3 ms-2 row justify-content-end">
-                <div class="col-auto ">
-                    <a href="{{route('produtos.edit', ['produto' => $produto->id])}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
-                    <button class="btn btn-primary handle_aba" type="submit">Próximo</button>
-                </div>
-            </div>
+        <div class="float-right mt-3">
+            <a href="{{route('produtos.edit', ['produto' => $produto->id])}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
+            <button class="btn btn-primary handle_aba" type="submit">Próximo</button>
         </div>
     </div>
 </form>

@@ -55,28 +55,8 @@
     @endif
     </div>
 
-    <div class="mt-3 row">
-        <div class="col-12" id='voltarDiv'>
-            <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}"><button class="btn btn-primary float-end" id="btnSubmit" type="submit">Editar</button></a>
-            <a href="{{ route('usuarios.index') }}"><button type="button" class="btn btn-secondary float-end me-2">Voltar</button></a>
-        </div>
+    <div class="mt-3 float-right">
+        <a href="{{ route('usuarios.index') }}"><button type="button" class="btn btn-secondary float-end me-2">Voltar</button></a>
+        <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}"><button class="btn btn-primary float-end" id="btnSubmit" type="submit">Editar</button></a>
     </div>
 </div>
-
-@section('js')
-    <script>
-        let paginate = document.getElementById('paginate');
-        $('#solicitacoes-tab').on('click', function(){
-            paginate.style.display = '';
-            $('#voltarDiv').removeClass('col-12').addClass('col-6');
-        });
-
-        $('#dados-gerais-tab').on('click', function(){
-            paginate.style.display = 'none';
-            $('#voltarDiv').removeClass('col-6').addClass('col-12');
-        });
-    </script>
-@stop
-
-@section('plugins.Datatables', true)
-@section('plugins.DatatablesPlugin', true)

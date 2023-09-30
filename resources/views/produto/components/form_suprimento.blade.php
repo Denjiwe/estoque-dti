@@ -101,13 +101,11 @@
                 </x-slot:footer>
             </x-box-input>
         </div>
+    </div>
 
-        <div class="mt-3 ms-2 row justify-content-end">
-            <div class="col-auto">
-                <a href="{{url()->previous() == route('suprimentos.create', ['id' => $produto->id]) ? route('locais.store', ['id' => $produto->id]) : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
-                <button type="submit" class="btn btn-primary">Finalizar</button>
-            </div>
-        </div>
+    <div class="float-right mt-3">
+        <a href="{{url()->previous() == route('suprimentos.create', ['id' => $produto->id]) ? route('locais.store', ['id' => $produto->id]) : url()->previous()}}"><button type="button" class="btn btn-secondary me-2">Voltar</button></a>
+        <button type="submit" class="btn btn-primary">Finalizar</button>
     </div>
 </div>
 

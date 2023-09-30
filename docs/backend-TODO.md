@@ -36,3 +36,4 @@
         - https://github.com/joseluisq/alpine-php-fpm/blob/master/8.2-fpm/Dockerfile
 - [X] Verificar a existência do nome da divisão na hora de mandar email
 - [X] Remoção de elementos de locais impressoras está bugando, não excluíndo corretamente
+- Chart de entregas não soma a quantidade de produtos entregues, somente a soma dos registros em si

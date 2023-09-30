@@ -47,7 +47,7 @@ class UsuarioController extends Controller
             $btnDelete = '<form action="'.route("usuarios.destroy", ["usuario" => $usuario->id]).'" method="POST" id="form_'.$usuario->id.'" style="display:inline">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="'.csrf_token().'">
-                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$usuario->id.')" title="Excluir">
+                            <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir('.$usuario->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>
                             </form>';

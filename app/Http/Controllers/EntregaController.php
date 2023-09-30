@@ -55,7 +55,7 @@ class EntregaController extends Controller
             $btnDelete = '<form action="'.route("entregas.destroy", ["entrega" => $entrega->id]).'" method="POST" id="form_'.$entrega->id.'" style="display:inline">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="'.csrf_token().'">
-                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$entrega->id.')" title="Excluir">
+                            <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir('.$entrega->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>
                             </form>';

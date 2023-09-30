@@ -24,9 +24,9 @@
                 @endisset
 
                 @if($collapsible === 'collapsed')
-                    <x-adminlte-button theme="tool" data-card-widget="collapse" icon="fas fa-lg fa-plus"/>
-                @elseif(isset($collapsible))
-                    <x-adminlte-button theme="tool" data-card-widget="collapse" icon="fas fa-lg fa-minus"/>
+                    <x-adminlte-button theme="tool" data-card-widget="collapse" aria-label="Abrir" icon="fas fa-lg fa-plus"/>
+                @elseif(isset($collapsible)) 
+                    <x-adminlte-button theme="tool" data-card-widget="collapse" aria-label="Abrir" icon="fas fa-lg fa-minus"/>
                 @endif
 
                 @isset($removable)

@@ -184,6 +184,10 @@ $(document).ready(function() {
     });
 
     $('#adicionar').click(async function() {
+        removeInvalid('#impressora');
+        removeInvalid('#suprimento');
+        removeInvalid('#quantidade');
+
         var tipoProduto = $('#suprimento').val();
         var impressoraId = $('#impressora').val();
         var impressoraModelo = $('#impressora').find(':selected').text();
@@ -237,28 +241,25 @@ $(document).ready(function() {
     });
 
     $('#impressora').on('change', function(){
-        if ($('#impressora').hasClass('is-invalid')) {
-            $('#impressora').removeClass('is-invalid');
-            $('#impressora').next().remove();
-        }
+        removeInvalid('#impressora');
     });
 
     $('#suprimento').on('change', function(){
-        if ($('#suprimento').hasClass('is-invalid')) {
-            $('#suprimento').removeClass('is-invalid');
-            $('#suprimento').next().remove();
-        }
+        removeInvalid('#suprimento');
     });
 
     $('#quantidade').on('change', function(){
-        if ($('#quantidade').hasClass('is-invalid')) {
-            $('#quantidade').removeClass('is-invalid');
-            $('#quantidade').next().remove();
-        }
+        removeInvalid('#quantidade');
     });
 
     $(document).on('click', '.remover',function(e) {
         e.preventDefault();
         $(this).closest('tr').remove();
     });
+    function removeInvalid(id) {
+        if ($(id).hasClass('is-invalid')) {
+            $(id).removeClass('is-invalid');
+            $(id).next().remove();
+        }
+    }
 });

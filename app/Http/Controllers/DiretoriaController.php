@@ -38,13 +38,13 @@ class DiretoriaController extends Controller
             $dataCriacao = date('d/m/Y',strtotime($diretoria->created_at));
             $dataEdicao = date('d/m/Y',strtotime($diretoria->updated_at));
 
-            $btnEdit = '<button data-bs-toggle="modal" data-bs-target="#editarModal'.$diretoria->id.'" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
+            $btnEdit = '<button data-toggle="modal" data-target="#editarModal'.$diretoria->id.'" class="btn btn-sm btn-default text-primary mx-1 shadow" type="button" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </button>';
             $btnDelete = '<form action="'.route("diretorias.destroy", ["diretoria" => $diretoria->id]).'" method="POST" id="form_'.$diretoria->id.'" style="display:inline">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="'.csrf_token().'">
-                            <button class="btn btn-sm btn-default text-danger mx-1 shadow" type="button" onclick="excluir('.$diretoria->id.')" title="Excluir">
+                            <button class="btn btn-sm btn-default text-danger shadow" type="button" onclick="excluir('.$diretoria->id.')" title="Excluir">
                                 <i class="fa fa-lg fa-fw fa-trash"></i>
                             </button>
                             </form>'

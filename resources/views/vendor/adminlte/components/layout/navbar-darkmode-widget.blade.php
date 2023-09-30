@@ -2,7 +2,7 @@
 
 <li class="nav-item adminlte-darkmode-widget">
 
-    <a class="nav-link" href="#" role="button">
+    <a class="nav-link" href="#" role="button" aria-label="Alterar Tema">
         <i class="{{ $makeIconClass() }}"></i>
     </a>
 
