@@ -63,48 +63,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <ul class="nav nav-pills nav-justified mt-3 mb-3" id="Tab" role="tablist">
-            <li class="nav-item me-0 me-sm-3" role="presentation">
-                <button
-                    class="nav-link active solicitacao"
+        <ul class="nav nav-pills flex-column flex-sm-row" id="Tab" role="tablist">
+            <li class="flex-sm-fill text-sm-center nav-item border-bottom-0" role="presentation">
+                <a
+                    class="nav-link text-center nav-item active solicitacao"
                     id='abertas'
-                    data-bs-toggle="tab"
-                    data-bs-target="#abertas-tab-pane"
+                    data-toggle="tab"
+                    data-target="#abertas-tab-pane"
                     type="button"
                     role="tab"
                     aria-controls="abertas-tab-pane"
                     aria-selected="true"
-                >
-                    Abertos/Liberados
-                </button>
+                >Abertos/Liberados</a>
             </li>
-            <li class="nav-item me-0 me-sm-3" role="presentation">
-                <button
+            <li class="flex-sm-fill text-center nav-item border-bottom-0" role="presentation">
+                <a
                     class="nav-link solicitacao"
                     id='aguardando'
-                    data-bs-toggle="tab"
-                    data-bs-target="#aguardando-tab-pane"
+                    data-toggle="tab"
+                    data-target="#aguardando-tab-pane"
                     type="button"
                     role="tab"
                     aria-controls="aguardando-tab-pane"
                     aria-selected="true"
-                >
-                    Aguardando
-                </button>
+                >Aguardando</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button
+            <li class="flex-sm-fill text-center nav-item border-bottom-0" role="presentation">
+                <a
                     class="nav-link solicitacao"
                     id='encerradas'
-                    data-bs-toggle="tab"
-                    data-bs-target="#encerradas-tab-pane"
+                    data-toggle="tab"
+                    data-target="#encerradas-tab-pane"
                     type="button"
                     role="tab"
                     aria-controls="encerradas-tab-pane"
                     aria-selected="true"
-                >
-                    Encerradas
-                </button>
+                >Encerradas</a>
             </li>
         </ul>
 

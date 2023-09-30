@@ -1,9 +1,9 @@
 <ul class="nav nav-tabs" id="Tab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="dados-gerais-tab" data-bs-toggle="tab" data-bs-target="#dados-gerais-tab-pane" type="button" role="tab" aria-controls="dados-gerais-tab-pane" aria-selected="true">Dados Gerais</button>
+        <button class="nav-link active" id="dados-gerais-tab" data-toggle="tab" data-target="#dados-gerais-tab-pane" type="button" role="tab" aria-controls="dados-gerais-tab-pane" aria-selected="true">Dados Gerais</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="diretorias-tab" data-bs-toggle="tab" data-bs-target="#diretorias-tab-pane" type="button" role="tab" aria-controls="diretorias-tab-pane" aria-selected="false">Diretorias</button>
+        <button class="nav-link" id="diretorias-tab" data-toggle="tab" data-target="#diretorias-tab-pane" type="button" role="tab" aria-controls="diretorias-tab-pane" aria-selected="false">Diretorias</button>
     </li>
 </ul>
 

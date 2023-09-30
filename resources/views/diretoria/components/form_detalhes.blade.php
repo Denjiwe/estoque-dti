@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs" id="Tab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="dados-gerais-tab" data-bs-toggle="tab" data-bs-target="#dados-gerais-tab-pane" type="button" role="tab" aria-controls="dados-gerais-tab-pane" aria-selected="true">Dados Gerais</button>
+        <button class="nav-link active" id="dados-gerais-tab" data-toggle="tab" data-target="#dados-gerais-tab-pane" type="button" role="tab" aria-controls="dados-gerais-tab-pane" aria-selected="true">Dados Gerais</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="divisoes-tab" data-bs-toggle="tab" data-bs-target="#divisoes-tab-pane" type="button" role="tab" aria-controls="divisoes-tab-pane" aria-selected="false">Divisões</button>
+        <button class="nav-link" id="divisoes-tab" data-toggle="tab" data-target="#divisoes-tab-pane" type="button" role="tab" aria-controls="divisoes-tab-pane" aria-selected="false">Divisões</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios-tab-pane" type="button" role="tab" aria-controls="usuarios-tab-pane" aria-selected="false">Usuários</button>
+        <button class="nav-link" id="usuarios-tab" data-toggle="tab" data-target="#usuarios-tab-pane" type="button" role="tab" aria-controls="usuarios-tab-pane" aria-selected="false">Usuários</button>
     </li>
 </ul>
 

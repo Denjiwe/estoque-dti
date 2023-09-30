@@ -2,64 +2,52 @@
     <input type="hidden" name="proximo" id="proximoInput" value="nenhum">
     <div class="row">
         <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-sm-0">
-            <div class="form-floating">
-                <input type="text" value="{{ucfirst(strtolower($produto->tipo_produto))}}" class="form-control" disabled>
-                <label for="tipo_produto">Tipo do Produto</label>
-                {{ $errors->has('tipo_produto') ? $errors->first('tipo_produto') : '' }}
-            </div>
+            <label for="tipo_produto">Tipo do Produto</label>
+            <input type="text" value="{{ucfirst(strtolower($produto->tipo_produto))}}" class="form-control" disabled>
+            {{ $errors->has('tipo_produto') ? $errors->first('tipo_produto') : '' }}
         </div>
 
         <div class="col-12 col-sm-6 col-md-3 mt-3 mt-sm-0">
-            <div class="form-floating">
-                <input type="text" id="modelo_produto" name="modelo_produto" value="{{ $produto->modelo_produto }}" class="form-control" disabled>
-                <label for="modelo_produto">Modelo do Produto</label>
-                {{ $errors->has('modelo_produto') ? $errors->first('modelo_produto') : '' }}
-            </div>
+            <label for="modelo_produto">Modelo do Produto</label>
+            <input type="text" id="modelo_produto" name="modelo_produto" value="{{ $produto->modelo_produto }}" class="form-control" disabled>
+            {{ $errors->has('modelo_produto') ? $errors->first('modelo_produto') : '' }}
         </div>
 
         @if($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')
             <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
-                <div class="form-floating">
-                    <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" readonly>
-                    <label for="qntde_solicitada">Quantidade Solicitada</label>
-                    {{ $errors->has('qntde_solicitada') ? $errors->first('qntde_solicitada') : '' }}
-                </div>
+                <label for="qntde_solicitada">Quantidade Solicitada</label>
+                <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" readonly>
+                {{ $errors->has('qntde_solicitada') ? $errors->first('qntde_solicitada') : '' }}
             </div>
         @endif
 
         <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
             <div class="row">
                 <div class="col-12" id="divTipoProduto">
-                    <div class="form-floating">
-                        <input type="text" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque }}" class="form-control" disabled/>
-                        <label for="qntde_estoque">Quantidade</label>
-                    </div>
+                    <label for="qntde_estoque">Quantidade</label>
+                    <input type="text" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque }}" class="form-control" disabled/>
                 </div>
                 <div class="col-3 mt-4" id="tooltip" style="display: none">
-                        <p class="fa fa-lg fa-info-circle align-middle" data-bs-toggle="tooltip" data-bs-placement="right" title="A quantidade é 0 pois na próxima tela serão cadastrados os locais da impressora"></p>
+                    <p class="fa fa-lg fa-info-circle align-middle" data-bs-toggle="tooltip" data-bs-placement="right" title="A quantidade é 0 pois na próxima tela serão cadastrados os locais da impressora"></p>
                 </div>
             </div>
         </div>
 
         <div class="col-12 col-sm-6 col-md-3 col-xxl-2 mt-3 mt-md-0 @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')) mt-md-3 mt-xl-0 @endif">
-            <div class="form-floating">
-                <select name="status" id="status" class="form-control" disabled>
-                    <option selected hidden>Selecione o Status</option>
-                    <option value="ATIVO" @php if(isset($produto->status) && $produto->status == 'ATIVO') echo 'selected'@endphp >Ativo</option>
-                    <option value="INATIVO" @php if(isset($produto->status) && $produto->status == 'INATIVO') echo 'selected'@endphp >Inativo</option>
-                </select>
-                <label for="status">Status</label>
-            </div>
+            <label for="status">Status</label>
+            <select name="status" id="status" class="form-control" disabled>
+                <option selected hidden>Selecione o Status</option>
+                <option value="ATIVO" @php if(isset($produto->status) && $produto->status == 'ATIVO') echo 'selected'@endphp >Ativo</option>
+                <option value="INATIVO" @php if(isset($produto->status) && $produto->status == 'INATIVO') echo 'selected'@endphp >Inativo</option>
+            </select>
         </div>
     </div>
 
     <div class="row mt-3">
         <div class="col-12 col-sm-8 col-md-6" id="divDescricao">
-            <div class="form-floating">
-                <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px" disabled>{{ $produto->descricao ?? old('descricao') }}</textarea>
-                <label for="descricao">Descrição (opcional)</label>
-                {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
-            </div>
+            <label for="descricao">Descrição (opcional)</label>
+            <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px" disabled>{{ $produto->descricao ?? old('descricao') }}</textarea>
+            {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
         </div>
     </div>
 
