@@ -37,33 +37,11 @@ class AuditoriaController extends Controller
             $auditorias = $auditorias->where('event', $request->acao);	
         }
 
-        switch ($request->data) {
-            case 'hoje':
-                $auditorias = $auditorias->whereDate('created_at', date('Y-m-d'));
-                break;
-            case 'ontem':
-                $auditorias = $auditorias->whereDate('created_at', date('Y-m-d', strtotime('-1 days')));
-                break;
-            case 'semana':
-                $auditorias = $auditorias->whereDate('created_at', '>=', date('Y-m-d', strtotime('-7 days')));
-                break;
-            case 'mes':
-                $auditorias = $auditorias->whereDate('created_at', '>=', date('Y-m-d', strtotime('-30 days')));
-                break;
-            case 'ultimo_mes':
-                $auditorias = $auditorias->whereMonth('created_at', date('m'));
-                break;
-            case 'personalizado':
-                if($request->data_inicio > $request->data_final) {
-                    return redirect()->route('auditorias.index')->with('error', 'A data inicial deve ser menor que a data final!');
-                }
+        $classeFiltro = config('filtro.'.$request->data);
 
-                $auditorias = $auditorias->whereBetween('created_at', [$request->data_inicio, $request->data_final]);
-                break;
-            default:
-                return redirect()->route('auditorias.index')->with('error', 'Selecione uma data válida!');
-                break;
-        }
+        $filtroData = new $classeFiltro;
+
+        $auditorias = $filtroData->filtroData($request, $auditorias);
 
         $auditorias = $auditorias->with('usuario')->orderBy('created_at', 'desc')->get();
 
@@ -129,33 +107,30 @@ class AuditoriaController extends Controller
                     $acao = 'criou';
                     $campos = '';
                     foreach ($auditoria->new_values as $campo => $valor) {
-                        if($valor != end($auditoria->new_values)) {
+                        if($valor != end($auditoria->new_values)) 
                             $campos .= $campo. ' com o valor "' .$valor. '", ';
-                        } else {
+                        else 
                             $campos .= $campo. ' com o valor "' .$valor.'"';
-                        }
                     }
                     break;
                 case 'updated':
                     $acao = 'alterou';
                     $campos = '';
                     foreach ($auditoria->old_values as $campo => $valor) {
-                        if($valor != end($auditoria->old_values)) {
+                        if($valor != end($auditoria->old_values)) 
                             $campos .= $campo. ' de "' .$valor. '" para "' .$auditoria->new_values->$campo.'", ';
-                        } else {
+                        else 
                             $campos .= $campo. ' de "' .$valor. '" para "' .$auditoria->new_values->$campo.'"';
-                        }
                     }
                     break;
                 case 'deleted':
                     $acao = 'excluiu';
                     $campos = '';
                     foreach ($auditoria->old_values as $campo => $valor) {
-                        if($valor != end($auditoria->old_values)) {
+                        if($valor != end($auditoria->old_values)) 
                             $campos .= $campo. ' com o valor "' .$valor. '", ';
-                        } else {
+                        else 
                             $campos .= $campo. ' com o valor "' .$valor.'"';
-                        }
                     }
                     break;
             }
@@ -172,11 +147,11 @@ class AuditoriaController extends Controller
             $oldValues = [];
             $newValues = [];
 
-            foreach($auditoria->old_values as $key => $value){
+            foreach($auditoria->old_values as $key => $value) {
                 $oldValues[] = '<br>'.$key.': '.$value;
             }
 
-            foreach($auditoria->new_values as $key => $value){
+            foreach($auditoria->new_values as $key => $value) {
                 $newValues[] = '<br>'.$key.': '.$value;
             }
 
@@ -204,6 +179,8 @@ class AuditoriaController extends Controller
             $mensagem = str_replace('SIM', 'Sim', $mensagem);
             $mensagem = str_replace('NAO', 'Não', $mensagem);
             $mensagem = str_replace('Usuario', 'usuário', $mensagem);
+            $mensagem = str_replace('ItensSolicitacao', 'item de solicitação', $mensagem);
+            $mensagem = str_replace('LocalImpressora', 'local de impressora', $mensagem);
         
             $mensagensFormatadas[] = $mensagem;
         }

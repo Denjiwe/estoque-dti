@@ -456,46 +456,10 @@ class RelatorioController extends Controller
     }
 
     public function filtroData(Request $request, $dados) {
-        switch ($request->data) {
-            case 'qualquer':
-                break;
-            case 'hoje':
-                $dados = $dados->whereDate('created_at', date('Y-m-d'));
-                break;
-            case 'ontem':
-                $dados = $dados->whereDate('created_at', date('Y-m-d', strtotime('-1 days')));
-                break;
-            case 'semana':
-                $dados = $dados->whereDate('created_at', '>=', date('Y-m-d', strtotime('-7 days')));
-                break;
-            case 'mes':
-                $dados = $dados->whereDate('created_at', '>=', date('Y-m-d', strtotime('-30 days')));
-                break;
-            case 'ultimo_mes':
-                $dados = $dados->whereMonth('created_at', date('m'));
-                break;
-            case 'personalizado':
-                if (!isset($request->data_inicio) || !isset($request->data_final)) {
-                    session()->flash('mensagem', 'Informe uma data válida.');
-                    session()->flash('color', 'danger');
-                    return redirect()->route('relatorios.index');
-                }
+        $classe = config('filtro.'.$request->data);
 
-                if($request->data_inicio > $request->data_final) {
-                    session()->flash('mensagem', 'A data inicial deve ser menor que a data final!');
-                    session()->flash('color', 'danger');
-                    return redirect()->route('relatorios.index');
-                }
+        $filtro = new $classe;
 
-                $dados = $dados->whereBetween('created_at', [$request->data_inicio, $request->data_final]);
-                break;
-            default:
-                session()->flash('mensagem', 'Informe uma data válida.');
-                session()->flash('color', 'danger');
-                return redirect()->route('relatorios.index');
-                break;
-        }
-
-        return $dados;
+        return $filtro->filtroData($request, $dados);
     }
 }
