@@ -2,7 +2,6 @@
 
 namespace App\Services\FiltrosData;
 
-use App\Interfaces\FiltroDataInterface;
 use Illuminate\Http\Request;
 
 class FiltroMes implements FiltroDataInterface

@@ -9,6 +9,7 @@ use App\Models\Solicitacao;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RelatorioExport;
+use App\Services\FiltrosData\FiltroDataContext;
 
 use Illuminate\Http\Request;
 
@@ -87,7 +88,7 @@ class RelatorioController extends Controller
                         });
                         break;
                     case 'Usuario':
-                        $filtro = '';
+                        $filtro = 'Usuário';
                         if ($campo == 'todos') {
                             $dados = $dados->get();
                         } else {
@@ -456,9 +457,7 @@ class RelatorioController extends Controller
     }
 
     public function filtroData(Request $request, $dados) {
-        $classe = config('filtro.'.$request->data);
-
-        $filtro = new $classe;
+        $filtro = new FiltroDataContext($request->data);
 
         return $filtro->filtroData($request, $dados);
     }

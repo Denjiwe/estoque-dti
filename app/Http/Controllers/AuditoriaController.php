@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Auditoria;
 use App\Models\Usuario;
 use App\Models\Produto;
+use App\Services\FiltrosData\FiltroDataContext;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -37,11 +38,13 @@ class AuditoriaController extends Controller
             $auditorias = $auditorias->where('event', $request->acao);	
         }
 
-        $classeFiltro = config('filtro.'.$request->data);
-
-        $filtroData = new $classeFiltro;
+        $filtroData = new FiltroDataContext($request->data);
 
         $auditorias = $filtroData->filtroData($request, $auditorias);
+
+        if ($auditorias instanceof \Illuminate\Http\RedirectResponse) {
+            return $auditorias;
+        }
 
         $auditorias = $auditorias->with('usuario')->orderBy('created_at', 'desc')->get();
 
