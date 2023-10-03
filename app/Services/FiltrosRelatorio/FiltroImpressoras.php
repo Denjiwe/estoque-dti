@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\FiltrosData\FiltroDataContext;
 use App\Services\FiltrosRelatorio\FiltroEntregas\FiltrosImpressoraContext;
 
-class FiltroImpressoras implements FiltroDataInterface
+class FiltroImpressoras implements FiltroRelatorioInterface
 {
     public function filtroItem(string $item, string $tipo, string $campo, $valor, $dados, Request $request) {
         $dados = LocalImpressora::whereHas('produto', function ($query) {

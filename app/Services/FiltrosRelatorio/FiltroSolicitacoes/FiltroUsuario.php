@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\FiltrosRelatorio\FiltroEntregas;
+namespace App\Services\FiltrosRelatorio\FiltroSolicitacoes;
 
-class FiltroUsuario implements FiltroEntregasInterface
+class FiltroUsuario implements FiltroSolicitacaoInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
@@ -10,13 +10,12 @@ class FiltroUsuario implements FiltroEntregasInterface
         if ($campo == 'todos') {
             $dados = $dados->get();
         } else {
-            $dados = $dados->whereHas('solicitacao.usuario', function ($query) use ($campo, $valor) {
+            $dados = $dados->whereHas('usuario', function ($query) use ($campo, $valor) {
                 $query->where('usuario.'.$campo, $valor);
             })->get();
         }
-
-        $dadosAgrupados = $dados->groupBy(function ($entrega) {
-            return $entrega->solicitacao->usuario->nome;
+        $dadosAgrupados = $dados->groupBy(function ($solicitacao) {
+            return $solicitacao->usuario->nome;
         });
 
         return new \stdClass([

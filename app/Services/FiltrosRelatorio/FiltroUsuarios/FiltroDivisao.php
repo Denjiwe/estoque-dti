@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Services\FiltrosRelatorio\FiltroEntregas;
+namespace App\Services\FiltrosRelatorio\FiltroUsuarios;
 
-class FiltroDivisao implements FiltroEntregasInterface
+class FiltroDivisao implements FiltroUsuarioInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
         $filtro = 'Divisão';
         if ($campo == 'todos') {
-            $dados = $dados->whereHas('solicitacao.divisao', function ($query) {
+            $dados = $dados->whereHas('divisao', function ($query) {
                 $query->where('divisoes.id', '!=', null);
             })->get();
         } else {
-            $dados = $dados->whereHas('solicitacao.divisao', function ($query) use ($campo, $valor) {
+            $dados = $dados->whereHas('divisao', function ($query) use ($campo, $valor) {
                 $query->where('divisoes.'.$campo, $valor);
             })->get();
         }
-
-        $dadosAgrupados = $dados->groupBy(function ($entrega) {
-            if ($entrega->solicitacao->divisao_id == null) return 'N/D';
-            return $entrega->solicitacao->divisao->nome;
+        $dadosAgrupados = $dados->groupBy(function ($impressora) {
+            if($impressora->divisao->id == null) return 'N/D';
+            return $impressora->divisao->nome;
         });
 
         return new \stdClass([

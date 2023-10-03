@@ -2,8 +2,6 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroEntregas;
 
-use App\Models\Entrega;
-
 class FiltroSolicitacao implements FiltroEntregasInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 

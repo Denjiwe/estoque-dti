@@ -9,7 +9,7 @@ use App\Models\Solicitacao;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RelatorioExport;
-use App\Services\FiltrosData\FiltroDataContext;
+use App\Services\FiltrosRelatorio\FiltroRelatorioContext;
 
 use Illuminate\Http\Request;
 

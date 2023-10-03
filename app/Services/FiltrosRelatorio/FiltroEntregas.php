@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\FiltrosData\FiltroDataContext;
 use App\Services\FiltrosRelatorio\FiltroEntregas\FiltrosEntregaContext;
 
-class FiltroEntregas implements FiltroDataInterface
+class FiltroEntregas implements FiltroRelatorioInterface
 {
     public function filtroItem(string $item, string $tipo, string $campo, $valor, $dados, Request $request) {
         $dados = Entrega::with('produto', 'usuario', 'solicitacao.usuario', 'solicitacao.diretoria', 'solicitacao.divisao');
