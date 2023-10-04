@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Services\FiltrosData\FiltroDataContext;
 use App\Services\FiltrosRelatorio\FiltroSolicitacoes\FiltrosSolicitacaoContext;
 
-class FiltroImpressoras implements FiltroRelatorioInterface
+class FiltroSolicitacoes implements FiltroRelatorioInterface
 {
-    public function filtroItem(string $item, string $tipo, string $campo, $valor, $dados, Request $request) {
+    public function filtroItem(string $item, string $tipo, string $campo, $valor, Request $request) {
         $dados = Solicitacao::with(['diretoria', 'divisao', 'usuario', 'produtos']);
 
         $filtroData = new FiltroDataContext($request->data);
@@ -23,7 +23,7 @@ class FiltroImpressoras implements FiltroRelatorioInterface
 
         $filtroTipo = new FiltrosSolicitacaoContext($tipo);
 
-        $filtroTipo->filtroTipo($campo, $valor, $dados);
+        $filtroTipo = $filtroTipo->filtroTipo($campo, $valor, $dados);
 
         if ($filtroTipo instanceof \Illuminate\Http\RedirectResponse) {
             return $filtroTipo;
@@ -61,12 +61,14 @@ class FiltroImpressoras implements FiltroRelatorioInterface
             ];
         }
 
-        return new \stdClass([
-            'nome' => $nome,
-            'nomeFile' => $nomeFile,
-            'headers' => $headers,
-            'dadosExcel' => $dadosExcel,
-            'filtro' => $filtro
-        ]);
+        $resposta = new \stdClass();
+        $resposta->nome = $nome;
+        $resposta->nomeFile = $nomeFile;
+        $resposta->headers = $headers;
+        $resposta->dadosExcel = $dadosExcel;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->filtro = $filtro;
+
+        return $resposta;
     }
 }

@@ -5,11 +5,11 @@ namespace App\Services\FiltrosRelatorio;
 use App\Models\LocalImpressora;
 use Illuminate\Http\Request;
 use App\Services\FiltrosData\FiltroDataContext;
-use App\Services\FiltrosRelatorio\FiltroEntregas\FiltrosImpressoraContext;
+use App\Services\FiltrosRelatorio\FiltroImpressoras\FiltrosImpressoraContext;
 
 class FiltroImpressoras implements FiltroRelatorioInterface
 {
-    public function filtroItem(string $item, string $tipo, string $campo, $valor, $dados, Request $request) {
+    public function filtroItem(string $item, string $tipo, string $campo, $valor, Request $request) {
         $dados = LocalImpressora::whereHas('produto', function ($query) {
             $query->where('tipo_produto', 'IMPRESSORA');
         })->with('produto', 'divisao', 'diretoria');
@@ -20,18 +20,15 @@ class FiltroImpressoras implements FiltroRelatorioInterface
         $nome = 'Impressoras';
         $nomeFile = 'impressoras';
 
-        if ($dados instanceof \Illuminate\Http\RedirectResponse) {
-            return $dados;
-        }
+        if ($dados instanceof \Illuminate\Http\RedirectResponse) return $dados;
+        
 
         $filtroTipo = new FiltrosImpressoraContext($tipo);
 
-        $filtroTipo->filtroTipo($campo, $valor, $dados);
+        $filtroTipo = $filtroTipo->filtroTipo($campo, $valor, $dados);
 
-        if ($filtroTipo instanceof \Illuminate\Http\RedirectResponse) {
-            return $filtroTipo;
-        }
-
+        if ($filtroTipo instanceof \Illuminate\Http\RedirectResponse) return $filtroTipo;
+        
         $dados = $filtroTipo->dados;
         $dadosAgrupados = $filtroTipo->dadosAgrupados;
         $filtro = $filtroTipo->filtro;
@@ -54,12 +51,14 @@ class FiltroImpressoras implements FiltroRelatorioInterface
             ];
         }
 
-        return new \stdClass([
-            'nome' => $nome,
-            'nomeFile' => $nomeFile,
-            'headers' => $headers,
-            'dadosExcel' => $dadosExcel,
-            'filtro' => $filtro
-        ]);
+        $resposta = new \stdClass();
+        $resposta->nome = $nome;
+        $resposta->nomeFile = $nomeFile;
+        $resposta->headers = $headers;
+        $resposta->dadosExcel = $dadosExcel;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->filtro = $filtro;
+
+        return $resposta;
     }
 }

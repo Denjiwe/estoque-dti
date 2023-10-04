@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroSolicitacoes;
 
-class FiltroDefault implements FiltroSolicitacaoInterface
+class FiltroDefault implements FiltrosSolicitacaoInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {

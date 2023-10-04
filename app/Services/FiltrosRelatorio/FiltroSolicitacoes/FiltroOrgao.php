@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroSolicitacoes;
 
-class FiltroOrgao implements FiltroSolicitacaoInterface
+class FiltroOrgao implements FiltrosSolicitacaoInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
@@ -18,10 +18,11 @@ class FiltroOrgao implements FiltroSolicitacaoInterface
             return $solicitacao->diretoria->orgao->nome;
         });
 
-        return new \stdClass([
-            'filtro' => $filtro,
-            'dadosAgrupados' => $dadosAgrupados,
-            'dados' => $dados
-        ]);
+        $resposta = new \stdClass();
+        $resposta->filtro = $filtro;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->dados = $dados;
+
+        return $resposta;
     }
 }

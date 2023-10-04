@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroEntregas;
 
-class FiltrosEntregasContext
+class FiltrosEntregaContext
 {
     private FiltrosEntregaInterface $strategy;
 

@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroImpressoras;
 
-interface FiltroImpressoraInterface
+interface FiltrosImpressoraInterface
 {
     public function filtroTipo(string $campo, $valor, $dados);
 }

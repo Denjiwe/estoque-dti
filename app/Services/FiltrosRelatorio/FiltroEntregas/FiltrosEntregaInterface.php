@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroEntregas;
 
-interface FiltroEntregaInterface
+interface FiltrosEntregaInterface
 {
     public function filtroTipo(string $campo, $valor, $dados);
 }

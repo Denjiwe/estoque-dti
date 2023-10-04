@@ -9,7 +9,7 @@ use App\Services\FiltrosRelatorio\FiltroEntregas\FiltrosEntregaContext;
 
 class FiltroEntregas implements FiltroRelatorioInterface
 {
-    public function filtroItem(string $item, string $tipo, string $campo, $valor, $dados, Request $request) {
+    public function filtroItem(string $item, string $tipo, string $campo, $valor, Request $request) {
         $dados = Entrega::with('produto', 'usuario', 'solicitacao.usuario', 'solicitacao.diretoria', 'solicitacao.divisao');
         $filtroData = new FiltroDataContext($request->data);
 
@@ -17,17 +17,12 @@ class FiltroEntregas implements FiltroRelatorioInterface
         $nome = 'Entregas';
         $nomeFile = 'entregas';
 
-        if ($dados instanceof \Illuminate\Http\RedirectResponse) {
-            return $dados;
-        }
+        if ($dados instanceof \Illuminate\Http\RedirectResponse) return $dados;
 
         $filtroTipo = new FiltrosEntregaContext($tipo);
 
-        $filtroTipo->filtroTipo($campo, $valor, $dados);
-
-        if ($filtroTipo instanceof \Illuminate\Http\RedirectResponse) {
-            return $filtroTipo;
-        }
+        $filtroTipo = $filtroTipo->filtroTipo($campo, $valor, $dados);
+        if ($filtroTipo instanceof \Illuminate\Http\RedirectResponse) return $filtroTipo;
 
         $dados = $filtroTipo->dados;
         $dadosAgrupados = $filtroTipo->dadosAgrupados;
@@ -60,12 +55,14 @@ class FiltroEntregas implements FiltroRelatorioInterface
             ];
         }
 
-        return new \stdClass([
-            'nome' => $nome,
-            'nomeFile' => $nomeFile,
-            'headers' => $headers,
-            'dadosExcel' => $dadosExcel,
-            'filtro' => $filtro
-        ]);
+        $resposta = new \stdClass();
+        $resposta->nome = $nome;
+        $resposta->nomeFile = $nomeFile;
+        $resposta->headers = $headers;
+        $resposta->dadosExcel = $dadosExcel;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->filtro = $filtro;
+
+        return $resposta;
     }
 }

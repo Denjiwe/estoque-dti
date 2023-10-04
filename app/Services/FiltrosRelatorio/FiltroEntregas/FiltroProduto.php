@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroEntregas;
 
-class FiltroProduto implements FiltroEntregasInterface
+class FiltroProduto implements FiltrosEntregaInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
@@ -19,10 +19,11 @@ class FiltroProduto implements FiltroEntregasInterface
             return $entrega->produto->modelo_produto;
         });
 
-        return new \stdClass([
-            'filtro' => $filtro,
-            'dadosAgrupados' => $dadosAgrupados,
-            'dados' => $dados
-        ]);
+        $resposta = new \stdClass();
+        $resposta->filtro = $filtro;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->dados = $dados;
+
+        return $resposta;
     }
 }

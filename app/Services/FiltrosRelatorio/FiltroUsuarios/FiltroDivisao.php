@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroUsuarios;
 
-class FiltroDivisao implements FiltroUsuarioInterface
+class FiltroDivisao implements FiltrosUsuarioInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
@@ -21,10 +21,11 @@ class FiltroDivisao implements FiltroUsuarioInterface
             return $impressora->divisao->nome;
         });
 
-        return new \stdClass([
-            'filtro' => $filtro,
-            'dadosAgrupados' => $dadosAgrupados,
-            'dados' => $dados
-        ]);
+        $resposta = new \stdClass();
+        $resposta->filtro = $filtro;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->dados = $dados;
+
+        return $resposta;
     }
 }

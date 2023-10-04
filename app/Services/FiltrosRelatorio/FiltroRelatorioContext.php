@@ -2,23 +2,25 @@
 
 namespace App\Services\FiltrosRelatorio;
 
+use Illuminate\Http\Request;
+
 class FiltroRelatorioContext
 {
-    private FiltrosRelatorioInterface $strategy;
+    private FiltroRelatorioInterface $strategy;
 
-    public function __construct(string $tipo)
+    public function __construct(string $item)
     {
-        $this->strategy = match($tipo) {
-            'entregas'       => new FiltroEntregas(),
-            'impressoras'   => new FiltroImpressoras(),
-            'solicitacoes'     => new FiltroSolicitacoes(),
+        $this->strategy = match($item) {
+            'entregas'     => new FiltroEntregas(),
+            'impressoras'  => new FiltroImpressoras(),
+            'solicitacoes' => new FiltroSolicitacoes(),
             'usuarios'     => new FiltroUsuarios(),
-            default       => new FiltroDefault(),
+            default        => new FiltroDefault(),
         };
     }
 
-    public function filtroItem(string $item, string $tipo, string $campo, $valor, $dados) 
+    public function filtroItem(string $item, string $tipo, string $campo, $valor, Request $request) 
     {
-        return $this->strategy->filtroItem($item, $tipo, $campo, $valor, $dados);
+        return $this->strategy->filtroItem($item, $tipo, $campo, $valor, $request);
     }
 }

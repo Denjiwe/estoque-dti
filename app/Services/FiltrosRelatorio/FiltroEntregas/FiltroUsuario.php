@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroEntregas;
 
-class FiltroUsuario implements FiltroEntregasInterface
+class FiltroUsuario implements FiltrosEntregaInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
@@ -11,7 +11,7 @@ class FiltroUsuario implements FiltroEntregasInterface
             $dados = $dados->get();
         } else {
             $dados = $dados->whereHas('solicitacao.usuario', function ($query) use ($campo, $valor) {
-                $query->where('usuario.'.$campo, $valor);
+                $query->where('usuarios.'.$campo, $valor);
             })->get();
         }
 
@@ -19,10 +19,11 @@ class FiltroUsuario implements FiltroEntregasInterface
             return $entrega->solicitacao->usuario->nome;
         });
 
-        return new \stdClass([
-            'filtro' => $filtro,
-            'dadosAgrupados' => $dadosAgrupados,
-            'dados' => $dados
-        ]);
+        $resposta = new \stdClass();
+        $resposta->filtro = $filtro;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->dados = $dados;
+
+        return $resposta;
     }
 }

@@ -9,7 +9,7 @@ use App\Services\FiltrosRelatorio\FiltroUsuarios\FiltrosUsuarioContext;
 
 class FiltroUsuarios implements FiltroRelatorioInterface
 {
-    public function filtroItem(string $item, string $tipo, string $campo, $valor, $dados, Request $request) {
+    public function filtroItem(string $item, string $tipo, string $campo, $valor, Request $request) {
         $dados = Usuario::with(['diretoria.orgao', 'divisao']);
 
         $filtroData = new FiltroDataContext($request->data);
@@ -23,7 +23,7 @@ class FiltroUsuarios implements FiltroRelatorioInterface
 
         $filtroTipo = new FiltrosUsuarioContext($tipo);
 
-        $filtroTipo->filtroTipo($campo, $valor, $dados);
+        $filtroTipo = $filtroTipo->filtroTipo($campo, $valor, $dados);
 
         if ($filtroTipo instanceof \Illuminate\Http\RedirectResponse) {
             return $filtroTipo;
@@ -57,12 +57,14 @@ class FiltroUsuarios implements FiltroRelatorioInterface
             ];
         }
 
-        return new \stdClass([
-            'nome' => $nome,
-            'nomeFile' => $nomeFile,
-            'headers' => $headers,
-            'dadosExcel' => $dadosExcel,
-            'filtro' => $filtro
-        ]);
+        $resposta = new \stdClass();
+        $resposta->nome = $nome;
+        $resposta->nomeFile = $nomeFile;
+        $resposta->headers = $headers;
+        $resposta->dadosExcel = $dadosExcel;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->filtro = $filtro;
+
+        return $resposta;
     }
 }

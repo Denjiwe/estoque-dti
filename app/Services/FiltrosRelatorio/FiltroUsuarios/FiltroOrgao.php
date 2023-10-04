@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\FiltrosRelatorio\FiltroSolicitacoes;
+namespace App\Services\FiltrosRelatorio\FiltroUsuarios;
 
-class FiltroOrgao implements FiltroUsuarioInterface
+class FiltroOrgao implements FiltrosUsuarioInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
@@ -18,10 +18,11 @@ class FiltroOrgao implements FiltroUsuarioInterface
             return $usuario->diretoria->orgao->nome;
         });
 
-        return new \stdClass([
-            'filtro' => $filtro,
-            'dadosAgrupados' => $dadosAgrupados,
-            'dados' => $dados
-        ]);
+        $resposta = new \stdClass();
+        $resposta->filtro = $filtro;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->dados = $dados;
+
+        return $resposta;
     }
 }

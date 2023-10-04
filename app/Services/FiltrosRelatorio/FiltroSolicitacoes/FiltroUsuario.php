@@ -2,7 +2,7 @@
 
 namespace App\Services\FiltrosRelatorio\FiltroSolicitacoes;
 
-class FiltroUsuario implements FiltroSolicitacaoInterface
+class FiltroUsuario implements FiltrosSolicitacaoInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
@@ -11,17 +11,18 @@ class FiltroUsuario implements FiltroSolicitacaoInterface
             $dados = $dados->get();
         } else {
             $dados = $dados->whereHas('usuario', function ($query) use ($campo, $valor) {
-                $query->where('usuario.'.$campo, $valor);
+                $query->where('usuarios.'.$campo, $valor);
             })->get();
         }
         $dadosAgrupados = $dados->groupBy(function ($solicitacao) {
             return $solicitacao->usuario->nome;
         });
 
-        return new \stdClass([
-            'filtro' => $filtro,
-            'dadosAgrupados' => $dadosAgrupados,
-            'dados' => $dados
-        ]);
+        $resposta = new \stdClass();
+        $resposta->filtro = $filtro;
+        $resposta->dadosAgrupados = $dadosAgrupados;
+        $resposta->dados = $dados;
+
+        return $resposta;
     }
 }

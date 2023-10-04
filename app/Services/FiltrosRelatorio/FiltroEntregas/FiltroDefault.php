@@ -4,7 +4,7 @@ namespace App\Services\FiltrosRelatorio\FiltroEntregas;
 
 use App\Models\Entrega;
 
-class FiltroDefault implements FiltroEntregasInterface
+class FiltroDefault implements FiltrosEntregaInterface
 {
     public function filtroTipo(string $campo, $valor, $dados) 
     {
