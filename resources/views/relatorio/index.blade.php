@@ -103,6 +103,7 @@
         #nome {
             position: absolute;
             width: 92%;
+            z-index: 99;
         }
     </style>
 @stop

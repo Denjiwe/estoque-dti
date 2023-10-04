@@ -34,7 +34,7 @@
 - [X] Responsividade 🫣
 - [X] Usar Session::flash para transmitir infromações do toast, tirando nessecidade de manipular url
 - [X] Alterar campos do sistema para serem os do adminlte, que fornecem melhor compatibilidade com o dark mode
-- Tirado importação do scss, usando somente css do adminlte que melhora muito a performance do site
+- [X] Tirado importação do scss, usando somente css do adminlte que melhora muito a performance do site
     - [X] form-select não será usado, mudar para form-control e ver como trazer elementos em telas de suprimentos e afins
     - [X] toasts também não funcionam corretamente
     - [X] modais não funcionam
