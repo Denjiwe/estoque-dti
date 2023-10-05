@@ -41,7 +41,8 @@
     - [X] tabs não funcionam
     - [X] Arrumar botões, que em diversas páginas estão fora do lugar
 - Fazer tela para usuários em vue, com estilização diferente da de um sistema
-- Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
+- [X] Muito talvez procurar como colocar leitor de tela para libras, nomear botões de ações com alt
+- Adicionar badges no README.md
 
 ## Bugs
 

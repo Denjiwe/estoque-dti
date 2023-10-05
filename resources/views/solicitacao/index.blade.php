@@ -122,11 +122,12 @@
     </x-adminlte-card>
 
     <style scoped>
-        button.nav-link.solicitacao {
+        a.nav-link.solicitacao {
             background-color: #c2c2c2 !important;
             color: #2c2c2c !important;
+            margin: 5px;
         }
-        button.nav-link.active.solicitacao {
+        a.nav-link.active.solicitacao {
             background-color: #0d6efd !important;
         }
     </style>

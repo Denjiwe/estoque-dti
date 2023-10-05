@@ -8,7 +8,7 @@
             </button>
             <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Links</h5>
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Rotas</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -20,7 +20,7 @@
                                 <a class="nav-link text-light fs-3" :href="url+'solicitar'">Solicitar</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-light fs-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Olá, {{ nome }} 
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">

@@ -25,7 +25,7 @@ class SolicitacaoController extends Controller
     }
     
     public function index() {
-        if (!Route::currentRouteNamed('minhas-solicitacoes.index')) {
+        if (Route::currentRouteNamed('solicitacoes.abertas')) {
             $solicitacoesAbertas = $this->solicitacao
                 ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
                 ->where('status', 'ABERTO')
@@ -44,6 +44,35 @@ class SolicitacaoController extends Controller
                 ->get();
             $rota = 'todas';
         } else {
+            $rota = 'minhas';
+            if(auth()->user()->user_interno == 'NAO') {
+                $busca = $this->solicitacao
+                    ->with('produtos')
+                    ->where('usuario_id', auth()->user()->id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                    
+                $solicitacoes = [];
+                foreach ($busca as $solicitacao) {
+                    $solicitacaoResposta = new \stdClass();
+                    $solicitacaoResposta->id = '#'.$solicitacao->id;
+                    $solicitacaoResposta->produtos = '';
+                    foreach($solicitacao->produtos as $index => $produto) {
+                        $tipoProduto = $produto->tipo_produto == 'CILINDRO' ? 'Cilindro' : 'Toner';
+                        if ($solicitacao->produtos->count() == $index + 1) {
+                            $solicitacaoResposta->produtos .= $tipoProduto.' '.$produto->modelo_produto.': '.$produto->pivot->qntde;
+                        } else {
+                            $solicitacaoResposta->produtos .= $tipoProduto.' '.$produto->modelo_produto.': '.$produto->pivot->qntde.', ';
+                        }
+                    }
+                    $solicitacaoResposta->status = ucfirst(strtolower($solicitacao->status));
+                    $solicitacaoResposta->created_at = date('d/m/Y H:i', strtotime($solicitacao->created_at));
+                    array_push($solicitacoes, $solicitacaoResposta);
+                }
+                
+                return view('solicitacao.vue.minhas-solicitacoes', compact('solicitacoes','rota'));
+            }
+
             $solicitacoesAbertas = $this->solicitacao
                 ->with(['produtos', 'usuario', 'divisao', 'diretoria'])
                 ->where([['status', 'ABERTO'], ['usuario_id', auth()->user()->id]])
@@ -60,11 +89,6 @@ class SolicitacaoController extends Controller
                 ->where([['status', 'ENCERRADO'], ['usuario_id', auth()->user()->id]])
                 ->orderBy('created_at', 'desc')
                 ->get();
-            $rota = 'minhas';
-
-            if(auth()->user()->user_interno == 'NAO') {
-                return view('solicitacao.vue.minhas-solicitacoes', compact('solicitacoesAbertas', 'solicitacoesAguardando', 'solicitacoesEncerradas', 'rota'));
-            }
         }
 
         $solicitacoes = array('abertas' => $solicitacoesAbertas, 'aguardando' => $solicitacoesAguardando, 'encerradas' => $solicitacoesEncerradas);
@@ -75,7 +99,7 @@ class SolicitacaoController extends Controller
             'Divisão',
             'Status',
             'Data de Criação',
-            auth()->user()->user_interno == 'SIM' ? 'Ações' : null
+            'Ações'
         ];
 
         foreach ($solicitacoes as $index => $tipoSolicitacoes)
