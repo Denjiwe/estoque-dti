@@ -4,6 +4,9 @@
 
 @section('content')
     <layout nome="{{ auth()->user()->nome }}">
-        <solicitar></solicitar>
+        <solicitar
+            :usuario-id="{{ auth()->user()->id }}"
+            :impressoras="{{ $impressoras }}"
+        ></solicitar>
     </layout>
 @stop

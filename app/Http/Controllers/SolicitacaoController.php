@@ -221,7 +221,8 @@ class SolicitacaoController extends Controller
             $impressoras = $this->produto
                 ->select('produtos.id', 'modelo_produto')
                 ->where([['tipo_produto', 'IMPRESSORA'],['status', 'ATIVO']])
-                ->join('local_impressoras','produtos.id', '=', 'produto_id');
+                ->join('local_impressoras','produtos.id', '=', 'produto_id')
+                ->distinct('produtos.id');
 
             if(auth()->user()->divisao_id != null)
             {
@@ -230,7 +231,7 @@ class SolicitacaoController extends Controller
                 $impressoras = $impressoras->where('diretoria_id', $usuario->diretoria_id)->get();
             }
 
-            return view('solicitacao.vue.create', ['impressoras' => $impressoras, 'usuario' => $usuario, 'usuarios' => $usuarios, 'diretorias' => $diretorias, 'divisoes' => $divisoes]);
+            return view('solicitacao.vue.create', ['impressoras' => $impressoras]);
         } else {
             $impressoras = $this->produto
                 ->select('produtos.id', 'modelo_produto')

@@ -377,6 +377,13 @@ class ProdutoController extends Controller
         return response()->json($cilindro, 200);
     }
 
+    public function conjuntoPorImpressora($impressoraId) {
+        $cilindro = $this->cilindroPorImpressora($impressoraId);
+        $toner = $this->tonerPorImpressora($impressoraId);
+
+        return response()->json([$toner, $cilindro], 200);
+    }
+
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):

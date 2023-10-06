@@ -27,6 +27,7 @@ Route::get('/toners', [ProdutoController::class, 'toners']);
 Route::get('/toner-por-impressora/{impressoraId}', [ProdutoController::class, 'tonerPorImpressora']);
 Route::get('/cilindros', [ProdutoController::class, 'cilindros']);
 Route::get('/cilindro-por-impressora/{impressoraId}', [ProdutoController::class, 'cilindroPorImpressora']);
+Route::get('/conjunto-por-impressora/{impressoraId}', [ProdutoController::class, 'conjuntoPorImpressora']);
 Route::get('/diretorias', [DiretoriaController::class, 'diretorias']);
 Route::get('/divisoes', [DivisaoController::class, 'divisoes']);
 Route::get('/dados-por-diretoria/{diretoriaId}', [DiretoriaController::class, 'dadosPorDiretoria']);

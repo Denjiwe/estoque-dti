@@ -69,5 +69,6 @@ header {
     padding: 1.5rem;
     border-radius: .25rem;
     background-color: #fff;
+    margin-bottom: 1.5rem;
 }
 </style>
