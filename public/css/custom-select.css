@@ -1,0 +1,17 @@
+.custom-select {
+    background: none !important;
+    background-color: #e9ecef !important;
+    color: black !important;
+}
+
+input.custom-select {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+    -moz-appearance: textfield !important;
+}
+
+.dark-mode .custom-select {
+    background: none !important;
+    background-color: #343a40 !important;
+    color: white !important;
+}

@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-sm-0">
                 <label for="tipo_produto">Tipo do Produto</label>
-                <select name="tipo_produto" id="tipo_produto" class="form-control @if(isset($produto->tipo_produto)) form-control @endif @error('tipo_produto') is-invalid @enderror" @if(isset($produto->tipo_produto)) disabled @endif>
+                <select name="tipo_produto" id="tipo_produto" class="form-control @if(isset($produto->tipo_produto)) custom-select @endif @error('tipo_produto') is-invalid @enderror" @if(isset($produto->tipo_produto)) disabled @endif>
                     <option selected hidden>Selecione o Tipo</option>
                     <option value="IMPRESSORA" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'IMPRESSORA') selected @endif >Impressora</option>
                     <option value="TONER" @if(isset($produto->tipo_produto) && $produto->tipo_produto == 'TONER') selected @endif >Toner</option>
@@ -30,7 +30,7 @@
             @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO'))
                 <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
                     <label for="qntde_solicitada">Quantidade Solicitada</label>
-                    <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="form-control" disabled>
+                    <input type="text" id="qntde_solicitada" name="qntde_solicitada" value="{{ $produto->qntde_solicitada }}" placeholder="Quantidade solicitada" class="custom-select" disabled>
                     {{ $errors->has('qntde_solicitada') ? $errors->first('qntde_solicitada') : '' }}
                 </div>
             @endif
@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-12" id="divTipoProduto">
                         <label for="qntde_estoque">Quantidade</label>
-                        <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') disabled @endif placeholder="Quantidade em estoque" class="form-control @error('qntde_estoque') is-invalid @enderror">
+                        <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') disabled @endif placeholder="Quantidade em estoque" class="form-control @if(isset($produto->qntde_estoque)) custom-select @endif @error('qntde_estoque') is-invalid @enderror">
                         {{ $errors->has('qntde_estoque') ? $errors->first('qntde_estoque') : '' }}
                     </div>
                     <div class="col-3 mt-4" id="tooltip" style="display: none">
@@ -62,8 +62,8 @@
         <div class="row mt-3">
             <div class="col-12 col-sm-8 col-md-6" id="divDescricao">
                 <div class="form-floating">
-                    <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px">{{ $produto->descricao ?? old('descricao') }}</textarea>
                     <label for="descricao">Descrição (opcional)</label>
+                    <textarea maxlength="150" name="descricao" id="descricao" placeholder="Descrição" class="form-control @error('Descrição') is-invalid @enderror" style="resize:none; height:100px">{{ $produto->descricao ?? old('descricao') }}</textarea>
                     {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
                 </div>
             </div>
@@ -72,9 +72,7 @@
 
         <div class="mt-3 row justify-content-end">
             <div class="col-auto">
-
                 <a href="{{url()->previous() == route('produtos.create') || (isset($produto) && route('produtos.edit', ['produto' => $produto->id])) ? route('produtos.index') : url()->previous()}}" class="btn btn-secondary me-2">Voltar</a>
-
                 <button class="btn btn-primary handle_aba me-2" id="primeiro-handle" type="button" @php if(!isset($produto->id) || $produto->tipo_produto == 'OUTROS') echo 'style="display: none;"' @endphp>Próximo</button>
             @if (isset($produto->id))
                 <button type="submit" id="btnSubmit" class="btn btn-primary">Editar</button>
@@ -86,6 +84,10 @@
     </div>
 </div>
 </form>
+
+@section('css')
+    <link href="{{asset('css/custom-select.css')}}" rel="stylesheet">
+@stop
 
 @section('js')
     <script src="{{ asset('js/produtos.js')}}"></script>

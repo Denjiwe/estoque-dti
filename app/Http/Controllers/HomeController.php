@@ -68,26 +68,28 @@ class HomeController extends Controller
             
         }
 
-        $produtosEntregues = ItensSolicitacao::withCount(['entregas' => function ($query) {
-            $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+        $produtosEntregues = ItensSolicitacao::withCount(['entregas as total_qntde' => function ($query) {
+            $query->select(DB::raw('sum(qntde)'))
+                ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
         }])
         ->with('produto')
-        ->orderBy('entregas_count', 'desc')
+        ->orderBy('total_qntde', 'desc')
         ->take(10)
         ->get();
 
         $entregasChart = array();
-        foreach($produtosEntregues as $key => $produto) {;
+        foreach ($produtosEntregues as $key => $produto) {
             if (array_key_exists($produto->produto->modelo_produto, $entregasChart)) {
-                $entregasChart[$produto->produto->modelo_produto] += $produto->entregas_count;
+                $entregasChart[$produto->produto->modelo_produto] += $produto->total_qntde;
             } else {
-                $entregasChart[$produto->produto->modelo_produto] = $produto->entregas_count;
+                $entregasChart[$produto->produto->modelo_produto] = $produto->total_qntde;
             }
         }
 
         $entregasFormatadas = "";
 
         foreach ($entregasChart as $key => $entrega) {
+            if ($entrega == null) $entrega = 0;
             $entregasFormatadas .= "['".$key."', ".$entrega."],";
         }
 

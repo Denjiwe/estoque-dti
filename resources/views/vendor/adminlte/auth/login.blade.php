@@ -32,10 +32,10 @@
         @endif
 
         {{-- CPF field --}}
+        <label for="cpf" class="form-label">CPF</label>
         <div class="input-group mb-3">
-            
             <input type="text" id="cpf" name="cpf" maxlength="14" class="form-control @error('cpf') is-invalid @enderror"
-            value="{{ old('cpf') }}" placeholder="CPF" autofocus>
+            value="{{ old('cpf') }}" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -51,9 +51,9 @@
         </div>
 
         {{-- Password field --}}
+        <label for="password" class="form-label">Senha</label>
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-            placeholder="{{ __('adminlte::adminlte.password') }}">
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
 
             <div class="input-group-append">
                 <div class="input-group-text">

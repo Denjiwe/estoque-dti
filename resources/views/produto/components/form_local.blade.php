@@ -32,7 +32,7 @@
                                                     <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                                 </td>
                                                 <td>
-                                                    <select name="diretoria[]" id="diretoria" disabled class="form-control w-auto diretoria" required>
+                                                    <select name="diretoria[]" id="diretoria" disabled class="custom-select w-auto diretoria" required>
                                                         <option value="" selected hidden>Selecione a Diretoria</option>
                                                         @foreach($diretorias as $diretoria)
                                                             <option value="{{$diretoria->id}}" @if($local->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>
@@ -40,7 +40,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="divisao[]" id="divisao" disabled class="form-control w-auto divisao">
+                                                    <select name="divisao[]" id="divisao" disabled class="custom-select w-auto divisao">
                                                         <option value="" selected>Nenhuma</option>
                                                         @foreach($divisoes as $divisao)
                                                             <option value="{{$divisao->id}}" @if($local->divisao_id == $divisao->id)selected @endif>{{$divisao->nome}}</option>
@@ -56,7 +56,7 @@
                                                 <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
                                             </td>
                                             <td>
-                                                <select name="diretoria[]" id="diretoria" class="form-control w-auto" required>
+                                                <select name="diretoria[]" id="diretoria" class="custom-select w-auto" required>
                                                     <option value="" selected hidden>Selecione a Diretoria</option>
                                                     @foreach($diretorias as $diretoria)
                                                         <option value="{{$diretoria->id}}">{{$diretoria->nome}}</option>
@@ -64,7 +64,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="divisao[]" id="divisao" class="form-control w-auto">
+                                                <select name="divisao[]" id="divisao" class="custom-select w-auto">
                                                     <option value="" selected>Nenhuma</option>
                                                     @foreach($divisoes as $divisao)
                                                         <option value="{{$divisao->id}}">{{$divisao->nome}}</option>
@@ -96,6 +96,10 @@
         </div>
     </div>
 </form>
+
+@section('css')
+    <link href="{{asset('css/custom-select.css')}}" rel="stylesheet">
+@stop
 
 @section('js')
     <script src="{{ asset('js/locais.js')}}" type="module"></script>

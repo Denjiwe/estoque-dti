@@ -35,7 +35,7 @@
 
         <div class="col-12 col-sm-6 col-md-3 col-xxl-2 mt-3 mt-md-0 @if(isset($produto) && ($produto->tipo_produto == 'TONER' || $produto->tipo_produto == 'CILINDRO')) mt-md-3 mt-xl-0 @endif">
             <label for="status">Status</label>
-            <select name="status" id="status" class="form-control" disabled>
+            <select name="status" id="status" class="custom-select" disabled>
                 <option selected hidden>Selecione o Status</option>
                 <option value="ATIVO" @php if(isset($produto->status) && $produto->status == 'ATIVO') echo 'selected'@endphp >Ativo</option>
                 <option value="INATIVO" @php if(isset($produto->status) && $produto->status == 'INATIVO') echo 'selected'@endphp >Inativo</option>
@@ -71,14 +71,14 @@
                                         @foreach ($suprimentos as $i => $suprimento)
                                             <tr class="linha">
                                                 <td>
-                                                    <select name="impressora[]" id="impressora" class="form-control w-auto" disabled>
+                                                    <select name="impressora[]" id="impressora" class="custom-select w-auto" disabled>
                                                         @foreach ($impressoras as $impressora)
                                                             <option value="{{$impressora->id}}" @php if($suprimento->produto_id == $impressora->id) echo 'selected'@endphp>{{$impressora->modelo_produto}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="em_uso[]" id="em_uso" class="form-control w-auto" disabled>
+                                                    <select name="em_uso[]" id="em_uso" class="custom-select w-auto" disabled>
                                                         <option value="SIM" @php if($suprimento->em_uso == 'SIM') echo 'selected'@endphp>Sim</option>
                                                         <option value="NAO" @php if($suprimento->em_uso == 'NAO') echo 'selected'@endphp>Não</option>
                                                     </select>
@@ -113,14 +113,14 @@
                                         @foreach ($produto->locais as $i => $local)
                                             <tr class="linha">
                                                 <td>
-                                                    <select name="diretoria[]" id="diretoria" class="form-control w-auto" disabled>
+                                                    <select name="diretoria[]" id="diretoria" class="custom-select w-auto" disabled>
                                                         @foreach($diretorias as $diretoria)
                                                             <option value="{{$diretoria->id}}" @if($local->diretoria_id == $diretoria->id) selected @endif>{{$diretoria->nome}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="divisao[]" id="divisao" class="form-control w-auto" disabled>
+                                                    <select name="divisao[]" id="divisao" class="custom-select w-auto" disabled>
                                                         @foreach($divisoes as $divisao)
                                                             <option value="{{$divisao->id}}" @if($local->divisao_id == $divisao->id)selected @endif>{{$divisao->nome}}</option>
                                                         @endforeach
@@ -153,14 +153,14 @@
                                         @foreach ($produto->suprimentos as $i => $suprimento)
                                         <tr class="linha">
                                             <td>
-                                                <select name="tipo[]" id="tipo" class="form-control w-auto" disabled>
+                                                <select name="tipo[]" id="tipo" class="custom-select w-auto" disabled>
                                                     <option value="" selected hidden>Selecione o Tipo do Suprimento</option>
                                                     <option value="TONER" @php if($suprimento->tipo_suprimento == 'TONER') echo 'selected'@endphp >Toner</option>
                                                     <option value="CILINDRO" @php if($suprimento->tipo_suprimento == 'CILINDRO') echo 'selected'@endphp >Cilíndro</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="suprimento[]" id="suprimento" class="form-control w-auto" disabled>
+                                                <select name="suprimento[]" id="suprimento" class="custom-select w-auto" disabled>
                                                     <option value="">Selecione o suprimento</option>
                                                     @if ($suprimento->tipo_suprimento == 'TONER')
                                                         @foreach ($toners as $toner)
@@ -174,7 +174,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="em_uso[]" id="em_uso" class="form-control w-auto" disabled>
+                                                <select name="em_uso[]" id="em_uso" class="custom-select w-auto" disabled>
                                                     <option value="SIM" @php if($suprimento->em_uso == 'SIM') echo 'selected'@endphp>Sim</option>
                                                     <option value="NAO" @php if($suprimento->em_uso == 'NAO') echo 'selected'@endphp>Não</option>
                                                 </select>
@@ -197,3 +197,7 @@
         </div>
     </div>
 </div>
+
+@section('css')
+    <link href="{{asset('css/custom-select.css')}}" rel="stylesheet">
+@stop
