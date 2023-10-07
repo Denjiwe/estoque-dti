@@ -73,8 +73,7 @@
                 max: 10,
             },
         },
-        height: 620,
-        
+        height: 610,
     };
 
         var chart = new google.charts.Line(document.getElementById('solicitacoes_chart'));
@@ -95,7 +94,7 @@
 
         var options = {
             title: "Produtos mais entregues neste mês",
-            height: 412.5,
+            height: 402.5,
             legend: { position: "none" },
             hAxis: {
                 viewWindow: {
@@ -112,8 +111,4 @@
         chart.draw(view, options);
     }
 </script>
-@endsection
-
-@section('css')
-    <link rel="stylesheet" href="{{asset('css/index.css')}}">
 @endsection

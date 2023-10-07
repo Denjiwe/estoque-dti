@@ -424,17 +424,17 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => asset('vendor/datatables/js/jquery.dataTables.min.js'),
+                    'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => asset('vendor/datatables/js/dataTables.bootstrap4.min.js'),
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => asset('vendor/datatables/css/dataTables.bootstrap4.min.css'),
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
         ],
         ],

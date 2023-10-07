@@ -69,7 +69,3 @@
     <script src="{{asset('js/handleToasts.js')}}"></script>
     <script src="{{asset('js/pesquisaEntrega.js')}}"></script>
 @stop
-
-@section('css')
-    <link rel="stylesheet" href="{{asset('css/index.css')}}">
-@stop

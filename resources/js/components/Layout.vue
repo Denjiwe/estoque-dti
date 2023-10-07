@@ -14,10 +14,10 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link text-light fs-3" :href="url+'minhas-solicitacoes'">Minhas Solicitações</a>
+                                <a class="nav-link text-light fs-3" :href="url+'/minhas-solicitacoes'">Minhas Solicitações</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link text-light fs-3" :href="url+'solicitar'">Solicitar</a>
+                                <a class="nav-link text-light fs-3" :href="url+'/solicitar'">Solicitar</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light fs-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,16 +39,14 @@
 </template>
 
 <script>
-import { urlBase } from '../../../public/js/urlBase.js';
 
 export default {
     props: {
         nome: String
     },
     setup() {
-        const url = urlBase.slice(0, -4);
         return {
-            url,
+            url: window.location.origin
         };
     }
 };

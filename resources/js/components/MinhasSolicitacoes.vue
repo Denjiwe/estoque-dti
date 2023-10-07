@@ -3,7 +3,7 @@
         <div id="card-header">
             <h1>Minhas Solicitações</h1>
             <div>
-                <a class="btn btn-dark" :href="url+'solicitar'">Solicitar</a>
+                <a class="btn btn-dark" :href="url+'/solicitar'">Solicitar</a>
             </div>
         </div>
         <vue-good-table
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { urlBase } from '../../../public/js/urlBase.js';
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next';
 
@@ -39,7 +38,6 @@ export default {
         solicitacoes: Array
     },
     setup(props) {
-        const url = urlBase.slice(0, -4);
         return {
             VueGoodTable,
             columns: [
@@ -61,7 +59,7 @@ export default {
                 } 
             ],
             rows: props.solicitacoes,
-            url
+            url: window.location.origin
         };
     }
 };
