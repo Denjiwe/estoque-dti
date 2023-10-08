@@ -7,6 +7,7 @@ use App\Http\Controllers\DivisaoController;
 use App\Http\Controllers\DiretoriaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\BuscaController;
+use App\Http\Controllers\SolicitacaoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('/toner-por-impressora/{impressoraId}', [ProdutoController::class, 't
 Route::get('/cilindros', [ProdutoController::class, 'cilindros']);
 Route::get('/cilindro-por-impressora/{impressoraId}', [ProdutoController::class, 'cilindroPorImpressora']);
 Route::get('/conjunto-por-impressora/{impressoraId}', [ProdutoController::class, 'conjuntoPorImpressora']);
+Route::post('/solicitar', [SolicitacaoController::class, 'apiStore']);
 Route::get('/diretorias', [DiretoriaController::class, 'diretorias']);
 Route::get('/divisoes', [DivisaoController::class, 'divisoes']);
 Route::get('/dados-por-diretoria/{diretoriaId}', [DiretoriaController::class, 'dadosPorDiretoria']);

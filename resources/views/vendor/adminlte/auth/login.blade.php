@@ -19,17 +19,19 @@
 @section('auth_body')
     <form action="{{ $login_url }}" id="form" method="post">
         @csrf
-        @if(isset($_GET['sucesso']))
-        <span class="text-success" role="alert">
-            <strong>{{ $_GET['sucesso'] }}</strong>
-        </span>
-        @endif
-        
-        @if($errors->has('error'))
-        <span class="text-red" role="alert">
-            <strong>{{$errors->first('error')}}</strong>
-        </span>
-        @endif
+        <div>
+            @if(isset($_GET['sucesso']))
+            <span class="text-success" role="alert">
+                <strong>{{ $_GET['sucesso'] }}</strong>
+            </span>
+            @endif
+            
+            @if($errors->has('error'))
+            <span class="text-red" role="alert">
+                <strong>{{$errors->first('error')}}</strong>
+            </span>
+            @endif
+        </div>
 
         {{-- CPF field --}}
         <label for="cpf" class="form-label">CPF</label>

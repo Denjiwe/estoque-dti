@@ -489,6 +489,64 @@ class SolicitacaoController extends Controller
         return redirect()->route('solicitacoes.abertas');
     }
 
+    public function apiStore(Request $request) {
+        $request->validate([
+            'produtos.*.id' => 'required|exists:produtos,id',
+            'produtos.*.quantidade' => 'required|integer|min:1',
+            'usuario_id' => 'required|exists:usuarios,id',
+        ], [
+            'required' => 'O campo :attribute deve ser preenchido.',
+            'integer' => 'O campo :attribute deve ser um número inteiro.',
+            'min' => 'O campo :attribute deve ter pelo menos :min.',
+            'exists' => 'O campo :attribute não foi encontrado.',
+        ]);
+        
+        DB::beginTransaction();
+
+        try {
+            $usuario = Usuario::with('divisao', 'diretoria')->find($request->usuario_id);
+
+            $solicitacao = $this->solicitacao->create([
+                'usuario_id' => $request->usuario_id,
+                'divisao_id' => $usuario->divisao != null ? $usuario->divisao->id : null,
+                'diretoria_id' => $usuario->diretoria->id,
+                'status' => 'ABERTO',
+                'observacao' => $request->observacao,
+            ]);
+
+            $produtosEmEstoque = [];
+            $produtosEmFalta = [];
+            foreach($request->produtos as $key => $item) {
+                $itemSolicitacao = $this->itemSolicitacao->create([
+                    'solicitacao_id' => $solicitacao->id,
+                    'produto_id' => $item['id'],
+                    'qntde' => $item['quantidade'],
+                ]);
+
+                $produto = $this->produto->find($item['id']);
+
+                if ($produto->qntde_estoque < $item['quantidade']) {
+                    $solicitacao->status = 'AGUARDANDO';
+                    $solicitacao->save();
+                    $produtosEmFalta[] = $item['nome'];
+                } else {
+                    $produtosEmEstoque[] = $item['nome'];
+                }
+            }
+
+            DB::commit();
+            return response()->json([
+                'id' => $solicitacao->id,
+                'status' => $solicitacao->status,
+                'produtosEmEstoque' => $produtosEmEstoque,
+                'produtosEmFalta' => $produtosEmFalta
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json($e, 422);
+        }
+    }
+
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):

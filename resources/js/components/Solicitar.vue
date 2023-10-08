@@ -51,6 +51,45 @@
                     <button type="button" class="quantidade mx-2" @click="diminuiQuantidade(produto.id)">-</button>
                     <span>{{ produto.quantidade }}</span>
                     <button type="button" class="quantidade mx-2" @click="addQuantidade(produto.id)" :disabled="produto.quantidade >= 2">+</button>
+                    <button type="button" class="remover mx-2" @click="remove(produto.id)">Remover</button>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <button type="button" class="btn btn-dark float-end" @click="enviar()" v-if="produtosCart.length > 0">Solicitar</button>
+                <a :href="url+'/minhas-solicitacoes'" class="btn btn-secondary float-end me-2">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade show" tabindex="-1" style="display: block;" aria-modal="true" role="dialog" v-if="showModal === true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Solicitação #{{ solicitacaoId }} criada!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" @click="fecharModal"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Status do Pedido: <span :class="status === 'ABERTO' ? 'text-success' : 'text-warning'">{{ status }}</span></h5>
+                    <div v-if="produtosEmEstoque.length > 0">
+                        <h5 class="text-success">Produtos em Estoque:</h5>
+                        <ul>
+                            <li v-for="produto in produtosEmEstoque" :key="produto">{{ produto }}</li>
+                        </ul>
+                    </div>
+
+                    <div v-if="produtosEmFalta.length > 0">
+                        <h5 class="text-danger">Produtos em Falta:</h5>
+                        <ul>
+                            <li v-for="produto in produtosEmFalta" :key="produto">{{ produto }}</li>
+                        </ul>
+                    </div>
+
+                    <p v-if="status === 'AGUARDANDO'">Um ou mais pedidos estão fora de estoque, pedimos que aguarde até que eles estejam disponíveis. Assim que estiverem, a solicitação será alterada para o status de <span class="text-info">Liberado</span> e um email de aviso será enviado.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="fecharModal">Fechar</button>
+                    <a :href="url+'/minhas-solicitacoes'" class="btn btn-primary">Minhas Solicitações</a>
                 </div>
             </div>
         </div>
@@ -68,6 +107,11 @@ export default {
             produto: '',
             quantidade: null,
             produtosCart: [],
+            showModal: false,
+            produtosEmEstoque: [],
+            produtosEmFalta: [],
+            solicitacaoId: null,
+            status: ''
         }
     },
     props: {
@@ -133,8 +177,48 @@ export default {
                     return;
                 }
             });
+        },
+        remove(id) {
+            this.produtosCart.map((prod, index) => {
+                if(this.produtosCart[index].id == id) {
+                    this.produtosCart.splice(index, 1);
+                }
+            })
+        },
+        async enviar() {
+            await axios.post(urlBase + 'solicitar', {
+                produtos: this.produtosCart,
+                usuario_id: this.usuarioId
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            }).then((response) => {
+                this.solicitacaoId = response.data.id;
+                this.status = response.data.status;
+                this.produtosEmEstoque = response.data.produtosEmEstoque;
+                this.produtosEmFalta = response.data.produtosEmFalta;
+                this.produtosCart = [];
+                this.impressora = '';
+                this.produto = '';
+                this.quantidade = null;
+                this.showModal = true;
+            })
+        },
+        fecharModal() {
+            this.showModal = false;
+            this.produtosEmEstoque = [];
+            this.produtosEmFalta = [];
+            this.status = '';
+            this.solicitacaoId = null;
         }
     },
+    setup() {
+        return {
+            url: window.location.origin
+        }
+    }
 };
 </script>
 
@@ -156,5 +240,13 @@ export default {
     .quantidade:disabled{
         background-color: #f1f1f1;
         border: none;
+    }
+    .remover {
+        padding-inline: 7px;
+        padding-block: 0;
+        background-color: #e40000;
+        border-radius: .25rem;
+        border: 1px solid #747474;
+        color: white;
     }
 </style>
