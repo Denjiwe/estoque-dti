@@ -3,11 +3,19 @@
         <h1>Solicitar</h1>
         <div class="row">
             <div class="col-3">
-                <label class="form-label">Impressora</label>
+                <div style="display: flex; flex-direction: row;">
+                    <label class="form-label">Impressora</label>
+                    <div class="tooltips">
+                        <p class="fa fa-question-circle"></p>
+                        <span class="tooltiptext">Selecione o modelo da impressora. O modelo geralmente está escrito na parte frontal da impressora, Ex: HP 1102W.</span>
+                    </div>
+                </div>
                 <select 
                     class="form-select" 
                     aria-label="Impressoras"
                     v-model="impressora"
+                    id="impressoras"
+                    @focus="limpaCampo($event.target)"
                 >
                     <option value="" selected hidden>-- Selecione uma Impressora --</option>
                     <option 
@@ -19,8 +27,14 @@
             </div>
 
             <div class="col-3">
-                <label class="form-label">Produtos</label>
-                <select class="form-select" aria-label="Produtos" v-model="produto">
+                <div style="display: flex; flex-direction: row;">
+                    <label class="form-label">Produtos</label>
+                    <div class="tooltips">
+                        <p class="fa fa-question-circle"></p>
+                        <span class="tooltiptext">Selecione o tipo de produto a ser trocado.</span>
+                    </div>
+                </div>
+                <select class="form-select" aria-label="Produtos" v-model="produto" id="produtosInput" @focus="limpaCampo($event.target)">
                     <option value="" selected hidden>-- Selecione um tipo de produto --</option>
                     <option value="toner">Toner</option>
                     <option value="cilindro">Cilindro</option>
@@ -29,15 +43,22 @@
             </div>
 
             <div class="col-3">
-                <label class="form-label">Quantidade</label>
+                <div style="display: flex; flex-direction: row;">
+                    <label class="form-label">Quantidade</label>
+                    <div class="tooltips">
+                        <p class="fa fa-question-circle"></p>
+                        <span class="tooltiptext">Informe a quantidade de produtos a serem trocados.</span>
+                    </div>
+                </div>
                 <input 
                     type="number" 
                     class="form-control" 
                     aria-label="Quantidade" 
-                    placeholder="Informe a quantidade" 
-                    min="1" 
-                    max="2" 
+                    placeholder="Informe a quantidade"
                     v-model="quantidade"
+                    id="quantidade"
+                    @input="verificaQuantidade"
+                    @focus="limpaCampo($event.target)"
                 >
             </div>
 
@@ -45,15 +66,19 @@
                 <button type="button" class="btn btn-dark mt-5" @click="addSuprimento()">Adicionar</button>
             </div>
 
+            <h4 class="mt-3">Produtos:</h4>
             <div id="card-produtos" v-if="produtosCart.length > 0">
-                <div v-for="produto in produtosCart" :key="produto.id">
-                    <span>{{ produto.nome }}</span>
-                    <button type="button" class="quantidade mx-2" @click="diminuiQuantidade(produto.id)">-</button>
-                    <span>{{ produto.quantidade }}</span>
-                    <button type="button" class="quantidade mx-2" @click="addQuantidade(produto.id)" :disabled="produto.quantidade >= 2">+</button>
-                    <button type="button" class="remover mx-2" @click="remove(produto.id)">Remover</button>
+                <div id="produtos">
+                    <div v-for="produto in produtosCart" :key="produto.id" class="produto">
+                        <span>{{ produto.nome }}</span>
+                        <button type="button" class="quantidade mx-2" @click="diminuiQuantidade(produto.id)">-</button>
+                        <span>{{ produto.quantidade }}</span>
+                        <button type="button" class="quantidade mx-2" @click="addQuantidade(produto.id)" :disabled="produto.quantidade >= 2">+</button>
+                        <button type="button" class="remover mx-2" @click="remove(produto.id)">Remover</button>
+                    </div>
                 </div>
             </div>
+            <p v-else>Nenhum produto adicionado.</p>
 
             <div class="col-12 mt-4">
                 <button type="button" class="btn btn-dark float-end" @click="enviar()" v-if="produtosCart.length > 0">Solicitar</button>
@@ -119,8 +144,24 @@ export default {
         impressoras: {type: Array, required: true}
     },
     methods: {
+        verificaQuantidade() {
+            if (this.quantidade !== 1 && this.quantidade !== 2) {
+                this.quantidade = null;
+            }
+        },
         async addSuprimento() {
-            if (this.impressora == '' || this.produto == '' || this.quantidade == null) return alert('Preencha todos os campos');
+            if (this.impressora == '' || this.produto == '' || this.quantidade == null) {
+                if (this.impressora == '') {
+                    this.invalidaCampo('#impressoras', 'Selecione uma impressora.');
+                }
+                if (this.produto == '') {
+                    this.invalidaCampo('#produtosInput', 'Selecione um tipo de produto.');
+                }
+                if (this.quantidade == null) {
+                    this.invalidaCampo('#quantidade', 'Selecione uma quantidade.');
+                }
+                return;
+            }
 
             const cases = {toner: this.buscaToner, cilindro: this.buscaCilindro, conjunto: this.buscaConjunto};
             await cases[this.produto](this.impressora);
@@ -129,31 +170,68 @@ export default {
             this.produto = '';
             this.quantidade = null;
         },
+        invalidaCampo(id, texto) {
+            var input = document.querySelector(id);
+            var div = input.parentNode;
+            if(!input.classList.contains('is-invalid')) {
+                input.classList.add('is-invalid');
+                var span = document.createElement('span');
+                span.style.color = 'red';
+                span.classList.add("erro");
+                span.textContent = texto;
+                div.appendChild(span);
+            }
+        },
+        limpaCampo(elemento) {
+            if (elemento.classList.contains('is-invalid')) {
+                elemento.classList.remove('is-invalid');
+                elemento.parentNode.querySelector('.erro').remove();
+            }
+        },
         async buscaToner(id) {
             await axios.get(urlBase + 'toner-por-impressora/' + id).then((response) => {
-                if (this.verificaDuplicado(response.data.id)) return;
+                if (this.verificaQuantidade(response.data.id)) return;
+                if (response.data == []) {
+                    this.invalidaCampo('#produtosInput', 'A impressora não possui toner cadastrado');
+                    return;
+                }
                 this.produtosCart.push({id: response.data.id, nome: response.data.modelo_produto, quantidade: this.quantidade});
             });
         },
         async buscaCilindro(id) {
             await axios.get(urlBase + 'cilindro-por-impressora/' + id).then((response) => {
-                if (this.verificaDuplicado(response.data.id)) return;
+                if (this.verificaQuantidade(response.data.id)) return;
+                if (response.data == []) {
+                    this.invalidaCampo('#produtosInput', 'A impressora não possui cilindro cadastrado');
+                    return;
+                }
                 this.produtosCart.push({id: response.data.id, nome: response.data.modelo_produto, quantidade: this.quantidade});
             })
         },
         async buscaConjunto(id) {
             await axios.get(urlBase + 'conjunto-por-impressora/' + id).then((response) => {
                 for (let i = 0; i < response.data.length; i++) {
-                    if (!this.verificaDuplicado(response.data[i].original.id))
+                    if (!this.verificaQuantidade(response.data[i].original.id))
+                    if (response.data[0] == {}) {
+                        this.invalidaCampo('#produtosInput', 'A impressora não possui toner cadastrado');
+                        return;
+                    }
+                    if (response.data[1] == {}) {
+                        this.invalidaCampo('#produtosInput', 'A impressora não possui cilindro cadastrado');
+                        return;
+                    }
                     this.produtosCart.push({id: response.data[i].original.id, nome: response.data[i].original.modelo_produto, quantidade: this.quantidade});
                 }
             })
         },
-        verificaDuplicado(id) {
+        verificaQuantidade(id) {
             var duplicado = false;
             this.produtosCart.map((prod, index) => {
                 if (this.produtosCart[index].id == id) {
                     this.produtosCart[index].quantidade += this.quantidade; 
+                    if (this.produtosCart[index].quantidade > 2) {
+                        this.produtosCart[index].quantidade = 2;
+                    }
                     return duplicado = true;
                 }
             });
@@ -224,11 +302,48 @@ export default {
 
 <style scoped>
     #card-produtos {
-        margin-top: 1rem;
         background-color: #bcbdc0;
         border-radius: .5rem;
         border: 1px solid #747474;
-        padding: 1rem;
+        padding: .5rem;
+        width: max-content;
+        color: #000;
+        font-size: large;
+        margin-left: 1rem;
+    }
+    #produtos {
+        border-radius: .5rem;
+        border: 2px solid #000;
+        background-color: #ffffff;
+    }
+    .tooltips {
+        position: relative;
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: -1.5px;
+    }
+    .tooltips .tooltiptext {
+        visibility: hidden;
+        width: 230px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 5px 5px;
+        border-radius: 6px;
+        font-size: 12px;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -60px;
+    }
+
+    .tooltips:hover .tooltiptext {
+        visibility: visible;
+    }
+    .produto {
+        border-bottom: 1px solid #000;
+        border-top: 1px solid #000;
+        padding: 10px;
     }
     .quantidade {
         padding-inline: 7px;
@@ -246,7 +361,7 @@ export default {
         padding-block: 0;
         background-color: #e40000;
         border-radius: .25rem;
-        border: 1px solid #747474;
+        border: 1px solid #000;
         color: white;
     }
 </style>

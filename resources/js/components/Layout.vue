@@ -68,5 +68,6 @@ header {
     border-radius: .25rem;
     background-color: #fff;
     margin-bottom: 1.5rem;
+    box-shadow: 0px 0px 28px 0px rgba(0,0,0,0.1);
 }
 </style>

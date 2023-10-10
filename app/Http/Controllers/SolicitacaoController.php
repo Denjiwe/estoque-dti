@@ -59,10 +59,11 @@ class SolicitacaoController extends Controller
                     $solicitacaoResposta->produtos = '';
                     foreach($solicitacao->produtos as $index => $produto) {
                         $tipoProduto = $produto->tipo_produto == 'CILINDRO' ? 'Cilindro' : 'Toner';
+                        $modelo = explode(' ', $produto->modelo_produto)[0];
                         if ($solicitacao->produtos->count() == $index + 1) {
-                            $solicitacaoResposta->produtos .= $tipoProduto.' '.$produto->modelo_produto.': '.$produto->pivot->qntde;
+                            $solicitacaoResposta->produtos .= $tipoProduto.' '.$modelo.': '.$produto->pivot->qntde;
                         } else {
-                            $solicitacaoResposta->produtos .= $tipoProduto.' '.$produto->modelo_produto.': '.$produto->pivot->qntde.', ';
+                            $solicitacaoResposta->produtos .= $tipoProduto.' '.$modelo.': '.$produto->pivot->qntde.', ';
                         }
                     }
                     $solicitacaoResposta->status = ucfirst(strtolower($solicitacao->status));
