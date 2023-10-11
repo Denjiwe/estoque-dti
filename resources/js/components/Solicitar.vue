@@ -34,7 +34,13 @@
                         <span class="tooltiptext">Selecione o tipo de produto a ser trocado.</span>
                     </div>
                 </div>
-                <select class="form-select" aria-label="Produtos" v-model="produto" id="produtosInput" @focus="limpaCampo($event.target)">
+                <select 
+                    class="form-select" 
+                    aria-label="Produtos" 
+                    v-model="produto" 
+                    id="produtosInput" 
+                    @focus="limpaCampo($event.target)"
+                >
                     <option value="" selected hidden>-- Selecione um tipo de produto --</option>
                     <option value="toner">Toner</option>
                     <option value="cilindro">Cilindro</option>
@@ -51,15 +57,13 @@
                     </div>
                 </div>
                 <input 
-                    type="number" 
                     class="form-control" 
-                    aria-label="Quantidade" 
                     placeholder="Informe a quantidade"
-                    v-model="quantidade"
                     id="quantidade"
-                    @input="verificaQuantidade"
+                    v-model="quantidade"
+                    @input="validaQuantidade"
                     @focus="limpaCampo($event.target)"
-                >
+                />
             </div>
 
             <div class="col-3 mt-n3">
@@ -130,7 +134,7 @@ export default {
         return {
             impressora: '',
             produto: '',
-            quantidade: null,
+            quantidade: '',
             produtosCart: [],
             showModal: false,
             produtosEmEstoque: [],
@@ -144,10 +148,14 @@ export default {
         impressoras: {type: Array, required: true}
     },
     methods: {
-        verificaQuantidade() {
-            if (this.quantidade !== 1 && this.quantidade !== 2) {
-                this.quantidade = null;
+        validaQuantidade() {
+            if (this.quantidade != null && this.quantidade.length == 2) {
+                this.quantidade = 2;
+                return;
             }
+            if (this.quantidade != 1 && this.quantidade != 2) {
+                this.quantidade = null;
+            } 
         },
         async addSuprimento() {
             if (this.impressora == '' || this.produto == '' || this.quantidade == null) {

@@ -259,20 +259,21 @@ class ProdutoController extends Controller
                             $usuarioEmail = Usuario::find($solicitacao->usuario_id)->email;
                             Mail::to($usuarioEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $primeiroNome, $saudacao));
 
-                            $diretoriaEmail = Diretoria::find($solicitacao->diretoria_id)->email;
-                            if ($diretoriaEmail != null && $diretoriaEmail != $usuarioEmail) {
-                                Mail::to($diretoriaEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDir, $saudacao));
-                            }
-
                             if ($solicitacao->divisao_id != null) {
                                 $nomeDiv = $solicitacao->divisao->nome;
                                 $divisaoEmail = Divisao::find($solicitacao->divisao_id)->email;
-                                if ($divisaoEmail != null && $divisaoEmail != $diretoriaEmail && $divisaoEmail != $usuarioEmail) {
+                                if ($divisaoEmail != null && $divisaoEmail != $usuarioEmail) {
                                     Mail::to($divisaoEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDiv, $saudacao));
                                 }
                             }
+
+                            $diretoriaEmail = Diretoria::find($solicitacao->diretoria_id)->email;
+                            if ($diretoriaEmail != null && $diretoriaEmail != $usuarioEmail && ($divisaoEmail == null || $divisaoEmail != null && $divisaoEmail != $diretoriaEmail)) {
+                                Mail::to($diretoriaEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $nomeDir, $saudacao));
+                            }
+
                         } catch (\Exception $e) {
-                            session()->flash('mensagem', 'Erro ao enviar e-mail.');
+                            session()->flash('mensagem', 'Erro ao enviar e-mails.');
                             session()->flash('color', 'danger');
                             return redirect()->route('produtos.index');
                         }

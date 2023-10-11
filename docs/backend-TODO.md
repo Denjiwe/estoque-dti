@@ -18,6 +18,7 @@
     - [X] Utilizar padrão de projeto strategy
 - [X] Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
 - [-] Alterar autenticação para o sanctum (pesquisar como funciona para ser o mais automático possível)
+- Criar tabela de erros e passar erros que não vão a lugar algum para a tabela
 
 ## Bugs
 
