@@ -22,7 +22,27 @@
                 infoFn: (params) => `Mostrando de ${params.firstRecordOnPage} até ${params.lastRecordOnPage} da página ${params.currentPage}`,
                 allLabel: 'Todos',
             }">
-        ></vue-good-table>
+        >
+            <template #emptystate>
+                <div class="text-center">
+                    Nenhuma Solicitação Encontrada.
+                </div>
+            </template>
+            <template #table-row="props">
+                <span v-if="props.column.field == 'status' && props.row.status == 'Aberto'">
+                    <span class="text-success">{{props.row.status}}</span> 
+                </span>
+                <span v-else-if="props.column.field == 'status' && props.row.status == 'Liberado'">
+                    <span class="text-info">{{props.row.status}}</span> 
+                </span>
+                <span v-else-if="props.column.field == 'status' && props.row.status == 'Aguardando'">
+                    <span class="text-warning">{{props.row.status}}</span> 
+                </span>
+                <span v-else-if="props.column.field == 'status' && props.row.status == 'Encerrado'">
+                    <span class="text-primary">{{props.row.status}}</span> 
+                </span>
+            </template>
+        </vue-good-table>
     </div>
 </template>
 

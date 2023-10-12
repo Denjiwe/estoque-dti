@@ -18,6 +18,7 @@
     - [X] Utilizar padrão de projeto strategy
 - [X] Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
 - [-] Alterar autenticação para o sanctum (pesquisar como funciona para ser o mais automático possível)
+- Fazer autenticação com sanctum no login também para requisições
 - Criar tabela de erros e passar erros que não vão a lugar algum para a tabela
 
 ## Bugs
@@ -38,4 +39,4 @@
 - [X] Verificar a existência do nome da divisão na hora de mandar email
 - [X] Remoção de elementos de locais impressoras está bugando, não excluíndo corretamente
 - [X] Chart de entregas não soma a quantidade de produtos entregues, somente a soma dos registros em si
-- Caso uma impressora tenha o mesmo local mais de uma vez, os registros dos locais não estão sendo excluídos
+- [X] Caso uma impressora tenha o mesmo local mais de uma vez, os registros dos locais não estão sendo excluídos

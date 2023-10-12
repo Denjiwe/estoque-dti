@@ -2,7 +2,7 @@
     <div class="card-box">
         <h1>Solicitar</h1>
         <div class="row">
-            <div class="col-3">
+            <div class="col-md-4 col-xl-3 mt-2 mt-md-0">
                 <div style="display: flex; flex-direction: row;">
                     <label class="form-label">Impressora</label>
                     <div class="tooltips">
@@ -26,7 +26,7 @@
                 </select>
             </div>
 
-            <div class="col-3">
+            <div class="col-md-4 col-xl-3 mt-2 mt-md-0">
                 <div style="display: flex; flex-direction: row;">
                     <label class="form-label">Produtos</label>
                     <div class="tooltips">
@@ -48,7 +48,7 @@
                 </select>
             </div>
 
-            <div class="col-3">
+            <div class="col-md-2 col-xl-3 mt-2 mt-md-0">
                 <div style="display: flex; flex-direction: row;">
                     <label class="form-label">Quantidade</label>
                     <div class="tooltips">
@@ -66,7 +66,7 @@
                 />
             </div>
 
-            <div class="col-3 mt-n3">
+            <div class="col-md-1 col-xl-3 mt-n3">
                 <button type="button" class="btn btn-dark mt-5" @click="addSuprimento()">Adicionar</button>
             </div>
 
@@ -128,6 +128,7 @@
 <script>
 import { urlBase } from "../../../public/js/urlBase.js";
 import axios from "axios";
+import { isEmpty } from 'lodash';
 
 export default {
     data() {
@@ -145,7 +146,8 @@ export default {
     },
     props: {
         usuarioId: {type: Number, required: true},
-        impressoras: {type: Array, required: true}
+        impressoras: {type: Array, required: true},
+        token: {type: String, required: true}
     },
     methods: {
         validaQuantidade() {
@@ -156,6 +158,7 @@ export default {
             if (this.quantidade != 1 && this.quantidade != 2) {
                 this.quantidade = null;
             } 
+            this.quantidade = parseInt(this.quantidade);
         },
         async addSuprimento() {
             if (this.impressora == '' || this.produto == '' || this.quantidade == null) {
@@ -199,7 +202,7 @@ export default {
         async buscaToner(id) {
             await axios.get(urlBase + 'toner-por-impressora/' + id).then((response) => {
                 if (this.verificaQuantidade(response.data.id)) return;
-                if (response.data == []) {
+                if (isEmpty(response.data)) {
                     this.invalidaCampo('#produtosInput', 'A impressora não possui toner cadastrado');
                     return;
                 }
@@ -209,7 +212,7 @@ export default {
         async buscaCilindro(id) {
             await axios.get(urlBase + 'cilindro-por-impressora/' + id).then((response) => {
                 if (this.verificaQuantidade(response.data.id)) return;
-                if (response.data == []) {
+                if (isEmpty(response.data)) {
                     this.invalidaCampo('#produtosInput', 'A impressora não possui cilindro cadastrado');
                     return;
                 }
@@ -220,12 +223,9 @@ export default {
             await axios.get(urlBase + 'conjunto-por-impressora/' + id).then((response) => {
                 for (let i = 0; i < response.data.length; i++) {
                     if (!this.verificaQuantidade(response.data[i].original.id))
-                    if (response.data[0] == {}) {
-                        this.invalidaCampo('#produtosInput', 'A impressora não possui toner cadastrado');
-                        return;
-                    }
-                    if (response.data[1] == {}) {
-                        this.invalidaCampo('#produtosInput', 'A impressora não possui cilindro cadastrado');
+                    if (isEmpty(response.data[i].original)) {
+                        var erros = ['toner', 'cilindro']
+                        this.invalidaCampo('#produtosInput', 'A impressora não possui '+erros[i]+' cadastrado');
                         return;
                     }
                     this.produtosCart.push({id: response.data[i].original.id, nome: response.data[i].original.modelo_produto, quantidade: this.quantidade});
@@ -323,6 +323,7 @@ export default {
         border-radius: .5rem;
         border: 2px solid #000;
         background-color: #ffffff;
+        font-size: 11pt;
     }
     .tooltips {
         position: relative;

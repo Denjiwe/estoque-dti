@@ -112,20 +112,28 @@ class LocalImpressoraController extends Controller
             array_push($pDiretorias,$local['diretoria_id']);
         }
 
-        $divisoesExcluidas = array_diff_assoc($pDivisoes, $divisoes); // verifica quais elementos não estão mais presentes comparando as divs do produto com o que veio na request e os remove
-        $divisoesNovas = array_diff_assoc($divisoes, $pDivisoes); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
+        $divisoesExcluidas = array_diff_assoc($pDivisoes, $divisoes);
+        $divisoesNovas = array_diff_assoc($divisoes, $pDivisoes);
 
-        $diretoriasExcluidas = array_diff($pDiretorias, $diretorias); // verifica quais elementos não estão mais presentes comparando as dirs do produto com o que veio na request e os remove
-        $diretoriasNovas = array_diff($diretorias, $pDiretorias); // verifica quais elementos são novos comparando as divs do produto com o que veio na request e os adiciona
+        $diretoriasExcluidas = array_diff_assoc($pDiretorias, $diretorias);
+        $diretoriasNovas = array_diff_assoc($diretorias, $pDiretorias);
 
         if($diretoriasExcluidas != [])
         {
-            foreach($diretoriasExcluidas as $index => $diretoriaExcluida)
-            {
-                if($diretoriaExcluida != null)
-                {
+            foreach($diretoriasExcluidas as $index => $diretoriaExcluida) {
+                if($diretoriaExcluida != null) {
                     $local = $this->local->where([['diretoria_id', $diretoriaExcluida],['divisao_id', $divisoesExcluidas[$index]],['produto_id', $produto->id]])->first();
                     $local->delete();
+                }
+            }
+        }
+
+        if ($divisoesExcluidas != []) {
+            foreach ($divisoesExcluidas as $index => $divisaoExcluida) {
+                if ($divisoesNovas[$index] != null) {
+                    $local = $this->local->where([['divisao_id', $divisaoExcluida],['produto_id', $produto->id]])->first();
+                    $local->divisao_id = $divisoesNovas[$index];
+                    $local->save();
                 }
             }
         }

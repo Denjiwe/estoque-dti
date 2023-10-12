@@ -24,7 +24,7 @@
                             Olá, {{ nome }} 
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" :href="url+'logout'">Sair</a></li>
+                            <li><a class="dropdown-item" :href="url+'/logout'">Sair</a></li>
                             </ul>
                         </li>
                     </ul>
