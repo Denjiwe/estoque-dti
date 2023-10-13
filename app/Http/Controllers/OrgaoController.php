@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Orgao;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class OrgaoController extends Controller
@@ -101,6 +102,7 @@ class OrgaoController extends Controller
         try {
             $orgao = $this->orgao->create($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem',  'Erro ao cadastrar o órgão.');
             session()->flash('color',  'danger');
             return redirect()->route('orgaos.index');
@@ -145,6 +147,7 @@ class OrgaoController extends Controller
         try {
             $orgao->update($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem',  'Erro ao atualizar o órgão.');
             session()->flash('color',  'danger');
             return redirect()->route('orgaos.index');
@@ -174,6 +177,7 @@ class OrgaoController extends Controller
         try {
             $orgao->delete();
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem',  'Erro ao excluir o órgão.');
             session()->flash('color',  'danger');
             return redirect()->route('orgaos.index');

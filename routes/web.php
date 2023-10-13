@@ -68,6 +68,7 @@ Route::middleware(['auth', 'user_interno'])->group(function () {
     Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditorias.index');
     Route::post('/auditoria/pesquisa', [AuditoriaController::class, 'pesquisa'])->name('auditorias.pesquisa');
     Route::get('/auditoria/pesquisa', [AuditoriaController::class, 'pesquisa'])->name('auditorias.show');
+    Route::get('/auditoria/erros', [AuditoriaController::class, 'erros'])->name('auditorias.erros');
 });
 
 // rotas clientes

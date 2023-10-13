@@ -12,6 +12,7 @@ use App\Models\Diretoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class SolicitacaoController extends Controller
@@ -298,23 +299,16 @@ class SolicitacaoController extends Controller
                 }
             }
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao cadastrar solicitação!');
             session()->flash('color', 'danger');
-            if (auth()->user()->user_interno == 'NAO') {
-                return redirect()->route('minhas-solicitacoes.index');
-            } else {
-                return redirect()->route('solicitacoes.abertas');
-            }
+            return redirect()->route('solicitacoes.abertas');
         }
 
         $mensagem = 'Solicitação #'.$solicitacao->id.' cadastrada com sucesso!';
         session()->flash('mensagem', $mensagem);
         session()->flash('color', 'success');
-        if (auth()->user()->user_interno == 'NAO') {
-            return redirect()->route('minhas-solicitacoes.index');
-        } else {
-            return redirect()->route('solicitacoes.abertas');
-        }
+        return redirect()->route('solicitacoes.abertas');
     }
 
     /**
@@ -433,7 +427,10 @@ class SolicitacaoController extends Controller
             return redirect()->route('solicitacoes.abertas');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withErrors($e->getMessage());
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
+            session()->flash('mensagem', 'Erro ao atualizar a solicitação.');
+            session()->flash('color', 'danger');
+            return redirect()->route('solicitacoes.abertas');
         }
     }
 
@@ -478,6 +475,7 @@ class SolicitacaoController extends Controller
             $solicitacao->delete();
         } catch (\Exception $e) {
             DB::rollback();
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao excluir a solicitação.');
             session()->flash('color', 'danger');
             return redirect()->route('solicitacoes.abertas');
@@ -544,7 +542,8 @@ class SolicitacaoController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json($e, 422);
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
+            return response()->json('Erro ao cadastrar solicitação', 422);
         }
     }
 

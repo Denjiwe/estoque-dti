@@ -6,6 +6,7 @@ use App\Models\Diretoria;
 use App\Models\Divisao;
 use App\Models\Usuario;
 use App\Models\Orgao;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class DiretoriaController extends Controller
@@ -107,6 +108,7 @@ class DiretoriaController extends Controller
         try {
             $diretoria = $this->diretoria->create($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem',  'Erro ao cadastrar Diretoria.');
             session()->flash('color',  'danger');
             return redirect()->route('diretorias.index');
@@ -157,6 +159,7 @@ class DiretoriaController extends Controller
         try {
             $diretoria->update($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem',  'Erro ao atualizar a diretoria.');
             session()->flash('color',  'danger');
             return redirect()->route('diretorias.index');
@@ -186,6 +189,7 @@ class DiretoriaController extends Controller
         try {
             $diretoria->delete();
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao excluir a diretoria.');
             session()->flash('color', 'danger');
             return redirect()->route('diretorias.index');

@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-12" id="divTipoProduto">
                         <label for="qntde_estoque">Quantidade</label>
-                        <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') disabled @endif placeholder="Quantidade em estoque" class="form-control @if(isset($produto->qntde_estoque)) custom-select @endif @error('qntde_estoque') is-invalid @enderror">
+                        <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') disabled @endif placeholder="Quantidade em estoque" class="form-control @if($produto->tipo_produto == 'IMPRESSORA') custom-select @endif @error('qntde_estoque') is-invalid @enderror">
                         {{ $errors->has('qntde_estoque') ? $errors->first('qntde_estoque') : '' }}
                     </div>
                     <div class="col-3 mt-4" id="tooltip" style="display: none">

@@ -17,9 +17,10 @@
 - [X] Refatorar relatórios
     - [X] Utilizar padrão de projeto strategy
 - [X] Atualizar laravel para 10 (primeiro em uma branch, dando tudo certo dar merge com main)
-- [-] Alterar autenticação para o sanctum (pesquisar como funciona para ser o mais automático possível)
-- Fazer autenticação com sanctum no login também para requisições
-- Criar tabela de erros e passar erros que não vão a lugar algum para a tabela
+- [-] Alterar autenticação para o sanctum (inviável)
+- [-] Fazer autenticação com sanctum no login também para requisições (todas as rotas possuem tratamento e não trazem nenhum tipo de dado sensível ao cliente)
+- Adicionar campo de ip da impressora em locais
+- [X] Criar tabela de erros e passar erros que não vão a lugar algum para a tabela (criado log de erros que poderá ser baixado)
 
 ## Bugs
 

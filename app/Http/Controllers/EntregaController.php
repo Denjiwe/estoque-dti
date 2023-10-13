@@ -10,6 +10,7 @@ use App\Models\Divisao;
 use App\Models\Produto;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -174,11 +175,18 @@ class EntregaController extends Controller
     {
         $entrega = $this->entrega->with('produto')->find($id);
 
-        $produtoEstoque = $this->produto->find($entrega->produto->id);
-        $produtoEstoque->qntde_estoque += $entrega->qntde;
-        $produtoEstoque->save();
+        try {
+            $produtoEstoque = $this->produto->find($entrega->produto->id);
+            $produtoEstoque->qntde_estoque += $entrega->qntde;
+            $produtoEstoque->save();
 
-        $entrega->delete();
+            $entrega->delete();
+        } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
+            session::flash('mensagem', 'Erro ao excluir a Entrega.');
+            session::flash('color', 'danger');
+            return redirect()->route('entregas.index');
+        }
 
         session::flash('mensagem', 'Entrega excluída com sucesso!');
         session::flash('color', 'success');

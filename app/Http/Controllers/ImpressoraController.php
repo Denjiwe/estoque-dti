@@ -6,6 +6,7 @@ use App\Models\Suprimento;
 use App\Models\Produto;
 use App\Models\Divisao;
 use App\Models\Diretoria;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class ImpressoraController extends Controller
@@ -66,6 +67,7 @@ class ImpressoraController extends Controller
                 }
             }
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao cadastrar impressora.');
             session()->flash('color', 'danger');
             return redirect()->route('produtos.index');
@@ -156,6 +158,7 @@ class ImpressoraController extends Controller
                 }
             }
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao atualizar impressora.');
             session()->flash('color', 'danger');
             return redirect()->route('produtos.index');

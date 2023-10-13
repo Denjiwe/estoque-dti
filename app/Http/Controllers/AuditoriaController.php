@@ -26,6 +26,16 @@ class AuditoriaController extends Controller
         return view('auditoria.index');
     }
 
+    public function erros() 
+    {
+        if (!file_exists(storage_path('app/public/erros.log'))) {
+            session()->flash('mensagem', 'Não há erros!');
+            session()->flash('color', 'warning');
+            return redirect()->route('auditorias.index');
+        }
+        return response()->download(storage_path('app/public/erros.log'), 'erros.log');
+    }
+
     public function pesquisa(Request $request)
     {
         $auditorias = $this->auditoria;

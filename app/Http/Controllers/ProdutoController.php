@@ -11,6 +11,7 @@ use App\Models\ItensSolicitacao;
 use App\Models\Solicitacao;
 use App\Mail\SolicitacaoLiberadaMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -125,6 +126,7 @@ class ProdutoController extends Controller
         try{
             $produto = $this->produto->create($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao cadastrar o produto.');
             session()->flash('color', 'danger');
             return redirect()->route('produtos.index');
@@ -256,7 +258,7 @@ class ProdutoController extends Controller
                                     break;
                             }
 
-                            $usuarioEmail = Usuario::find($solicitacao->usuario_id)->email;
+                            $usuarioEmail = $solicitacao->usuario->email;
                             Mail::to($usuarioEmail)->send(new SolicitacaoLiberadaMail($solicitacao, $primeiroNome, $saudacao));
 
                             if ($solicitacao->divisao_id != null) {
@@ -273,6 +275,7 @@ class ProdutoController extends Controller
                             }
 
                         } catch (\Exception $e) {
+                            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
                             session()->flash('mensagem', 'Erro ao enviar e-mails.');
                             session()->flash('color', 'danger');
                             return redirect()->route('produtos.index');
@@ -285,6 +288,7 @@ class ProdutoController extends Controller
         try {
             $produto->update($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao atualizar o produto.');
             session()->flash('color', 'danger');
             return redirect()->route('produtos.index');
@@ -328,6 +332,7 @@ class ProdutoController extends Controller
         try {
             $produto->delete();
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             $mensagem = 'Erro ao excluir o produto. Provavelmente este produto está vinculado a uma solicitação ou entrega. Por favor, inative o produto ou exclua a(s) solicitação(ões) ou entrega(s).';
             session()->flash('mensagem', $mensagem);
             session()->flash('color', 'danger');

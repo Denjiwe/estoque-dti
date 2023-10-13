@@ -6,6 +6,7 @@ use App\Models\Divisao;
 use App\Models\Usuario;
 use App\Models\Diretoria;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class DivisaoController extends Controller
@@ -106,6 +107,7 @@ class DivisaoController extends Controller
         try {
             $divisao = $this->divisao->create($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao cadastrar a Divisão');
             session()->flash('color', 'danger');
             return redirect()->route('divisao.index');
@@ -156,6 +158,7 @@ class DivisaoController extends Controller
         try {
             $divisao->update($request->all());
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao atualizar a Divisão.');
             session()->flash('color', 'danger');
             return redirect()->route('divisao.index');
@@ -185,6 +188,7 @@ class DivisaoController extends Controller
         try {
             $divisao->delete();
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao excluir a Divisão.');
             session()->flash('color', 'danger');
             return redirect()->route('divisao.index');

@@ -63,6 +63,9 @@
             </div>
         </form>
     </x-adminlte-card>
+    <x-adminlte-card title="Erros" theme-mode="outline">
+        <a href="{{ route('auditorias.erros') }}" class="btn btn-primary">Baixar Log de Erros</a>
+    </x-adminlte-card>
 @stop
 
 @section('js')

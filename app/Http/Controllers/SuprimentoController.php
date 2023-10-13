@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Suprimento;
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SuprimentoController extends Controller
 {
@@ -68,6 +69,7 @@ class SuprimentoController extends Controller
                 }
             }
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao cadastrar suprimento.');
             session()->flash('color', 'danger');
             return redirect()->route('produtos.index');
@@ -154,6 +156,7 @@ class SuprimentoController extends Controller
                 }
             }
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao atualizar suprimento.');
             session()->flash('color', 'danger');
             return redirect()->route('produtos.index');

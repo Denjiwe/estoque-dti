@@ -8,6 +8,7 @@ use App\Models\Divisao;
 use App\Models\Solicitacao;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -146,8 +147,9 @@ class UsuarioController extends Controller
             session()->flash('color', 'success');
             return redirect()->route('usuarios.index');
         } catch (\Exception $e) {
-            session()->flash('mensagem', $e->getMessage());
-            session()->flash('color', 'success');
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
+            session()->flash('mensagem', 'Erro ao cadastrar o usuário.');
+            session()->flash('color', 'danger');
             return redirect()->route('usuarios.index');
         }
     }
@@ -291,6 +293,7 @@ class UsuarioController extends Controller
             session()->flash('color', 'success');
             return redirect()->route('usuarios.index');
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao alterar o usuário.');
             session()->flash('color', 'danger');
             return redirect()->route('usuarios.index');
@@ -325,6 +328,7 @@ class UsuarioController extends Controller
             session()->flash('color', 'success');
             return redirect()->route('usuarios.index');
         } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
             session()->flash('mensagem', 'Erro ao excluir o usuário.');
             session()->flash('color', 'danger');
             return redirect()->route('usuarios.index');
@@ -356,10 +360,15 @@ class UsuarioController extends Controller
             return redirect()->back()->withErrors(['error' => 'As senhas não conferem!']);
         }
 
-        $usuario->update([
-            'senha' => bcrypt($request->password),
-            'senha_provisoria' => null
-        ]);
+        try {
+            $usuario->update([
+                'senha' => bcrypt($request->password),
+                'senha_provisoria' => null
+            ]);
+        } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
+            return redirect()->back()->withErrors(['error' => 'Erro ao alterar a senha!']);
+        }
 
         return redirect()->route('login', ['sucesso' => 'Senha alterada com sucesso!']);
     }
