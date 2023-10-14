@@ -65,7 +65,8 @@ class LocalImpressoraController extends Controller
                         [
                             'produto_id' => $produto->id,
                             'diretoria_id' => $request->diretoria[$i],
-                            'divisao_id' => $request->divisao[$i]
+                            'divisao_id' => $request->divisao[$i],
+                            'ip' => $request->ip[$i]
                         ]
                     );
                 }
@@ -103,35 +104,46 @@ class LocalImpressoraController extends Controller
         try {
             for($i = 0;$i < count($request->divisao); $i++)
             {
-                $request->validate($this->local->rules($request->divisao[$i], $request->diretoria[$i]), $this->local->feedback($i));
+                $request->validate($this->local->rules($request->divisao[$i], $request->diretoria[$i], $request->ip[$i]), $this->local->feedback($i));
             }
 
             $divisoes = $request->divisao;
-            $pDivisoes = array(); // recebe as divisões atualmente cadastradas no produto
+            $pDivisoes = array();
 
             $diretorias = $request->diretoria;
-            $pDiretorias = array(); // recebe as diretorias atualmente cadastradas no produto
+            $pDiretorias = array();
 
-            foreach($produto->locais->toArray() as $local) // faz com que as divisões e diretorias sejam um array para serem comparados
+            $ips = $request->ip;
+            $pIps = array();
+
+            foreach($produto->locais->toArray() as $local)
             {
                 if($local['divisao_id'] != null) $local['divisao_id'] = strval($local['divisao_id']); else $local['divisao_id'] = null;
-                array_push($pDivisoes,$local['divisao_id']);
+                $pDivisoes['divisao_id'][] = $local['divisao_id'];
+                $pDivisoes['id'][] = $local['id'];
 
                 if($local['diretoria_id'] != null) $local['diretoria_id'] = strval($local['diretoria_id']);
-                array_push($pDiretorias,$local['diretoria_id']);
+                $pDiretorias['diretoria_id'][] = $local['diretoria_id'];
+                $pDiretorias['id'][] = $local['id'];
+
+                $pIps['id'][] = $local['id'];
+                $pIps['ip'][] = $local['ip'];
             }
 
-            $divisoesExcluidas = array_diff_assoc($pDivisoes, $divisoes);
-            $divisoesNovas = array_diff_assoc($divisoes, $pDivisoes);
+            $divisoesExcluidas = array_diff_assoc($pDivisoes['divisao_id'], $divisoes);
+            $divisoesNovas = array_diff_assoc($divisoes, $pDivisoes['divisao_id']);
 
-            $diretoriasExcluidas = array_diff_assoc($pDiretorias, $diretorias);
-            $diretoriasNovas = array_diff_assoc($diretorias, $pDiretorias);
+            $diretoriasExcluidas = array_diff_assoc($pDiretorias['diretoria_id'], $diretorias);
+            $diretoriasNovas = array_diff_assoc($diretorias, $pDiretorias['diretoria_id']);
+
+            $ipsAlterados = array_diff_assoc($pIps['ip'], $ips);
+            $ipsNovos = array_diff_assoc($ips, $pIps['ip']);
 
             if($diretoriasExcluidas != [])
             {
                 foreach($diretoriasExcluidas as $index => $diretoriaExcluida) {
                     if($diretoriaExcluida != null) {
-                        $local = $this->local->where([['diretoria_id', $diretoriaExcluida],['divisao_id', $divisoesExcluidas[$index]],['produto_id', $produto->id]])->first();
+                        $local = $this->local->find($pDiretorias['id'][$index]);
                         $local->delete();
                     }
                 }
@@ -139,10 +151,12 @@ class LocalImpressoraController extends Controller
 
             if ($divisoesExcluidas != []) {
                 foreach ($divisoesExcluidas as $index => $divisaoExcluida) {
-                    if ($divisoesNovas[$index] != null) {
-                        $local = $this->local->where([['divisao_id', $divisaoExcluida],['produto_id', $produto->id]])->first();
-                        $local->divisao_id = $divisoesNovas[$index];
-                        $local->save();
+                    if (isset($divisoesNovas[$index]) && $divisoesNovas[$index] !== null) {
+                        $local = $this->local->find($pDivisoes['id'][$index]);
+                        if ($local != null) {
+                            $local->divisao_id = $divisoesNovas[$index];
+                            $local->save();
+                        }
                     }
                 }
             }
@@ -156,8 +170,37 @@ class LocalImpressoraController extends Controller
                         $this->local->create([
                             'produto_id' => $produto->id,
                             'diretoria_id' => $diretoriaNova,
-                            'divisao_id' => $divisoesNovas[$index]
+                            'divisao_id' => $divisoesNovas[$index],
+                            'ip' => $ipsNovos[$index] != null ? $ipsNovos[$index] : null
                         ]);
+                    }
+                }
+            }
+
+            if($ipsAlterados != [])
+            {
+                foreach($ipsAlterados as $index => $ipAlterado)
+                {
+                    if(isset($pIps['id'][$index])) {
+                        $local = $this->local->find($pIps['id'][$index]);
+                        if($local != null) {
+                            $local->ip = $ipAlterado;
+                            $local->save();
+                        }
+                    }
+                }
+            }
+
+            if($ipsNovos != [])
+            {
+                foreach($ipsNovos as $index => $ipNovo)
+                {
+                    if(isset($pIps['id'][$index])) {
+                        $local = $this->local->find($pIps['id'][$index]);
+                        if($local != null) {
+                            $local->ip = $ipNovo;
+                            $local->save();
+                        }
                     }
                 }
             }

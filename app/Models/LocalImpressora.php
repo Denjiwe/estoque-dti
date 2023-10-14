@@ -11,13 +11,14 @@ class LocalImpressora extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
-    protected $fillable = ['produto_id', 'diretoria_id', 'divisao_id'];
+    protected $fillable = ['produto_id', 'diretoria_id', 'divisao_id', 'ip'];
 
     public function rules()
     {
         return [
-        'diretoria_id' => 'exists:diretorias,id',
-        'divisao_id' => 'exists:divisoes,id'
+            'diretoria_id' => 'exists:diretorias,id',
+            'divisao_id' => 'exists:divisoes,id',
+            'ip' => 'nullable|max:30',
         ];
     }
 

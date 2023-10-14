@@ -11,16 +11,16 @@
         <h4>{{ $errors->has('diretoria_id') ? $errors->first('diretoria_id') : '' }}</h4>
         <h4>{{ $errors->has('divisao_id') ? $errors->first('divisao_id') : '' }}</h4>
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-xl-8 col-xxl-5" id="locais">
+            <div class="col-12 col-xl-8" id="locais">
                 <x-box-input>
                     <x-slot:body>
                         <div class="table-responsive">
                             <table class="table text-center table-bordered w-auto" id="table">
                                 <thead>
                                     <tr>
-                                        <th>Impressora</th>
                                         <th>Divisão</th>
                                         <th>Diretoria</th>
+                                        <th>IP</th>
                                         <th>Ação</th>
                                     </tr>
                                 </thead>
@@ -28,9 +28,6 @@
                                     @if (count($produto->locais) != 0)
                                         @foreach ($produto->locais as $i => $local)
                                             <tr class="linha">
-                                                <td>
-                                                    <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
-                                                </td>
                                                 <td>
                                                     <select name="diretoria[]" id="diretoria" disabled class="custom-select w-auto diretoria" required>
                                                         <option value="" selected hidden>Selecione a Diretoria</option>
@@ -47,16 +44,16 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
+                                                <td>
+                                                    <input type="text" name="ip[]" id="ip" value="{{$local->ip != null ? $local->ip : ''}}" class="form-control w-auto">
+                                                </td>
                                                 <td><a class="btn btn-danger remover">Remover</a></td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr class="linha">
                                             <td>
-                                                <input type="text" value="{{$produto->modelo_produto}}" disabled class="form-control w-auto">
-                                            </td>
-                                            <td>
-                                                <select name="diretoria[]" id="diretoria" class="custom-select w-auto" required>
+                                                <select name="diretoria[]" id="diretoria" class="form-control w-auto diretoria" required>
                                                     <option value="" selected hidden>Selecione a Diretoria</option>
                                                     @foreach($diretorias as $diretoria)
                                                         <option value="{{$diretoria->id}}">{{$diretoria->nome}}</option>
@@ -64,12 +61,15 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="divisao[]" id="divisao" class="custom-select w-auto">
+                                                <select name="divisao[]" id="divisao" class="form-control w-auto divisao">
                                                     <option value="" selected>Nenhuma</option>
                                                     @foreach($divisoes as $divisao)
                                                         <option value="{{$divisao->id}}">{{$divisao->nome}}</option>
                                                     @endforeach
                                                 </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="ip[]" id="ip" class="form-control w-auto">
                                             </td>
                                             <td><a class="btn btn-danger remover">Remover</a></td>
                                         </tr>
@@ -103,4 +103,5 @@
 
 @section('js')
     <script src="{{ asset('js/locais.js')}}" type="module"></script>
+    <script src="{{asset('js/handleToasts.js')}}"></script>
 @stop

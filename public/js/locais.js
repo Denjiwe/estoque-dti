@@ -6,6 +6,7 @@ $('#adicionar').click(function() {
     var novaLinha = $(trLocal).clone(true);
     novaLinha.find('select[id="divisao"]').val('').removeClass('custom-select').addClass('form-control').removeAttr('disabled');
     novaLinha.find('select[id="diretoria"]').val('').removeClass('custom-select').addClass('form-control').removeAttr('disabled').attr('required');
+    novaLinha.find('input[id="ip"]').val('').removeClass('custom-select').addClass('form-control').removeAttr('disabled').attr('required');
     novaLinha.appendTo('#tbody');
 
 });

@@ -7,6 +7,19 @@
 @endsection
 
 @section('content')
+
+    @if(session()->get('mensagem'))
+        <div class="position-fixed top-0 pt-5 mt-3 right-3" style="z-index: 11; top: 0; right: 10px">
+            <div id="toast" class="toast fade show align-items-center bg-{{ session()->get('color') }}" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ session()->get('mensagem') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <x-adminlte-card theme="primary" theme-mode="outline">
         <ul class="nav nav-tabs" id="Tab" role="tablist">
             <li class="nav-item" role="presentation">
