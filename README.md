@@ -98,6 +98,15 @@ com gráficos de quantas solicitações estavam em qual status por período, con
  ### Alterar Solicitação
   <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/alterar_solicitacao.png?raw=true" width="100%">
 
+ ### Criar Solicitação (Usuários Não Internos)
+  <img alt="Criar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/criar_solicitacao_cliente.png?raw=true" width="100%">
+
+ ### Minhas Solicitações (Usuários Não Internos)
+  <img alt="Minhas Solicitações" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/minhas_solicitacoes.png?raw=true" width="100%">
+
+ ### Solicitação Criada (Usuários Não Internos)
+  <img alt="Solicitação Criada" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/solicitacao_criada.png?raw=true" width="100%">
+
  ### Busca de Auditoria
   <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/auditoria_index.png?raw=true" width="100%">
   
