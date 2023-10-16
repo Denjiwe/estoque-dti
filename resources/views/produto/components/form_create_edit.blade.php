@@ -38,12 +38,14 @@
             <div class="col-12 col-sm-6 col-md-3 col-xl-2 mt-3 mt-md-0">
                 <div class="row">
                     <div class="col-12" id="divTipoProduto">
-                        <label for="qntde_estoque">Quantidade</label>
-                        <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') disabled @endif placeholder="Quantidade em estoque" class="form-control @if($produto->tipo_produto == 'IMPRESSORA') custom-select @endif @error('qntde_estoque') is-invalid @enderror">
+                        <div class="d-flex flex-row">
+                            <label for="qntde_estoque">Quantidade</label>
+                            <div class="ml-2" id="tooltip" style="display: none; margin-top: 2.9px">
+                                <p class="fa fa-sm fa-info-circle align-middle" data-bs-toggle="tooltip" data-bs-placement="right" title="A quantidade é 0 pois na próxima tela serão cadastrados os locais da impressora"></p>
+                            </div>
+                        </div>
+                        <input type="number" id="qntde_estoque" name="qntde_estoque" min="0" value="{{ $produto->qntde_estoque ?? old('qntde_estoque') }}" @if(isset($produto->status) && $produto->tipo_produto == 'IMPRESSORA') disabled @endif placeholder="Quantidade em estoque" class="form-control @if(isset($produto) && $produto->tipo_produto == 'IMPRESSORA') custom-select @endif @error('qntde_estoque') is-invalid @enderror">
                         {{ $errors->has('qntde_estoque') ? $errors->first('qntde_estoque') : '' }}
-                    </div>
-                    <div class="col-3 mt-4" id="tooltip" style="display: none">
-                            <p class="fa fa-lg fa-info-circle align-middle" data-bs-toggle="tooltip" data-bs-placement="right" title="A quantidade é 0 pois na próxima tela serão cadastrados os locais da impressora"></p>
                     </div>
                 </div>
             </div>

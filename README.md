@@ -1,5 +1,4 @@
-
-<h1 align="center"> Estoque DTI </h1>
+<h1 align="center" id="inicio"> Estoque DTI </h1>
 
 <p align="center">
   <a href="#tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -7,20 +6,22 @@
   <a href="#telas">Telas</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </p>
 
-<h2 align="center" id="tecnologias"> 🚀Tecnologias</h2>
+<h2 align="center" id="tecnologias"><a href="#inicio" style="text-decoration:none; color:#ccc"> 🚀Tecnologias</a></h2>
 
 O projeto foi desenvovido com as seguintes tecnologias:
 
 - [PHP](https://www.php.net/manual/pt_BR/)
-- [Laravel](https://laravel.com/docs/9.x)
+- [Laravel](https://laravel.com/docs/10.x)
 - [Javascript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+- [VueJs](https://vuejs.org/)
 - [Jquery](https://api.jquery.com/)
 - [MySQL](https://dev.mysql.com/doc/)
 - [MySQL Workbench](https://www.mysql.com/products/workbench/)
 - [Docker](https://www.docker.com/products/docker-desktop/)
+- [VLibras](https://vlibras.gov.br/doc/widget/installation/webpageintegration.html)
 - [Insomnia](https://docs.insomnia.rest/) 
 
-<h2 align="center" id="projeto"> 📓Projeto </h2>
+<h2 align="center" id="projeto"><a href="#inicio" style="text-decoration:none; color:#ccc">📓Projeto </a></h2>
 
 <p>Primeiramente, o sistema desenvolvido contará com a participação dos funcionários da organização de informática, ao qual serão chamados de ‘clientes’. 
   O software também terá a participação de indivíduos que recebem o suporte pelos clientes, ao qual serão chamados de ‘usuários’. </p>
@@ -41,7 +42,7 @@ momento em que o status da solicitação será automaticamente alterado para ‘
 </p>O cliente também terá relatórios por período, modelo do produto ou usuário, compreendendo como foi o fluxo de entregas realizadas. Também haverá uma tela específica de estatísticas, 
 com gráficos de quantas solicitações estavam em qual status por período, contendo gráficos para melhor visualização. Além disso, o software contará com um sistema de auditoria, onde todos os eventos realizados serão persistidos em um log para consulta.</p>
 
-<h2 align="center" id="telas"> 🖥️Telas </h2>
+<h2 align="center" id="telas"><a href="#inicio" style="text-decoration:none; color:#ccc">🖥️Telas</a> </h2>
 
  ### Login
  <img alt="Login" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/login.png?raw=true" width="100%">
@@ -99,6 +100,9 @@ com gráficos de quantas solicitações estavam em qual status por período, con
 
  ### Busca de Auditoria
   <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/auditoria_index.png?raw=true" width="100%">
+  
+ ### Relatórios
+  <img alt="Relatórios" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/relatorio_index.png?raw=true" width="100%">
 
  ### Auditoria em Log
   <img alt="Alterar Solicitação" src="https://github.com/Denjiwe/estoque-dti/blob/main/docs/telas/auditoria_log.png?raw=true" width="100%">

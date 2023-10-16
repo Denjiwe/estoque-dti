@@ -16,11 +16,10 @@ tipoProduto.addEventListener('change', () => {
             // inputs
             quantidade.value = 0;
             quantidade.disabled = true;
-            divTipoProduto.classList.replace('col-12', 'col-9');
-            tooltip.style.display = 'flex';
+            tooltip.style.display = '';
 
             // tabs e afins
-            locaisLi.style.display = 'flex';
+            locaisLi.style.display = '';
             impressorasLi.style.display = 'none';
             suprimentosLi.style.display = '';
             primeiroHandle.style.display = '';
