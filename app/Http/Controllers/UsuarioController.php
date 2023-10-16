@@ -378,9 +378,7 @@ class UsuarioController extends Controller
         $usuario = $this->usuario->select('diretoria_id', 'divisao_id')->find($usuarioId);
 
         if($usuario === null)
-        {
             return response()->json(['erro' => 'Usuário não encontrado!'], 422);
-        }
 
         $usuario->divisoes = Divisao::select('id', 'nome')->where('diretoria_id', $usuario->diretoria_id)->get();
 

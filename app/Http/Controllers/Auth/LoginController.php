@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 // use App\Providers\RouteServiceProvider;
 // use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,34 +41,39 @@ class LoginController extends Controller
 
         $cpf = str_replace(['.', '-'], '', $request->cpf);
 
-        $user = Usuario::where('cpf', $cpf)->first();
+        try {
+            $user = Usuario::where('cpf', $cpf)->first();
 
-        if(!$user) {
-            return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
-        }
-
-        if($user->senha_provisoria != null) {
-            if(!Hash::check($request->password, $user->senha_provisoria)) {
-                return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
+            if(!$user) {
+                return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos.']);
             }
 
-            return redirect()->route('alterar-senha', ['usuarioId' => $user->id]);
-        }
+            if($user->senha_provisoria != null) {
+                if(!Hash::check($request->password, $user->senha_provisoria)) {
+                    return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos.']);
+                }
 
-        if(!Hash::check($request->password, $user->senha)) {
-            return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos']);
-        }
+                return redirect()->route('alterar-senha', ['usuarioId' => $user->id]);
+            }
 
-        if($user->status == 'INATIVO') {
-            return redirect()->route('login')->withErrors(['error' => 'Usuário inativo']);
-        }
-        
-        Auth::loginUsingId($user->id);
+            if(!Hash::check($request->password, $user->senha)) {
+                return redirect()->route('login')->withErrors(['error' => 'CPF ou senha incorretos.']);
+            }
 
-        if ($user->user_interno == 'SIM') {
-            return redirect()->route('home');
-        } else {
-            return redirect()->route('minhas-solicitacoes.index');
+            if($user->status == 'INATIVO') {
+                return redirect()->route('login')->withErrors(['error' => 'Usuário inativo.']);
+            }
+            
+            Auth::loginUsingId($user->id);
+
+            if ($user->user_interno == 'SIM') {
+                return redirect()->route('home');
+            } else {
+                return redirect()->route('minhas-solicitacoes.index');
+            }
+        } catch (\Exception $e) {
+            Log::channel('erros')->error($e->getMessage().' - Na linha: '.$e->getLine().' - No arquivo: '.$e->getFile());
+            return redirect()->route('login')->withErrors(['error' => 'Erro ao realizar login.']);
         }
     }
 

@@ -95,10 +95,10 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Solicitação #{{ solicitacaoId }} criada!</h5>
+                    <h5 class="modal-title">{{ tituloModal }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" @click="fecharModal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" v-if="this.tituloModal != 'Erro ao criar solicitação.'">
                     <h5>Status do Pedido: <span :class="status === 'ABERTO' ? 'text-success' : 'text-warning'">{{ status }}</span></h5>
                     <div v-if="produtosEmEstoque.length > 0">
                         <h5 class="text-success">Produtos em Estoque:</h5>
@@ -115,6 +115,9 @@
                     </div>
 
                     <p v-if="status === 'AGUARDANDO'">Um ou mais pedidos estão fora de estoque, pedimos que aguarde até que eles estejam disponíveis. Assim que estiverem, a solicitação será alterada para o status de <span class="text-info">Liberado</span> e um email de aviso será enviado.</p>
+                </div>
+                <div v-else>
+                    <p>Por favor entre em contato com o suporte e informe a falha.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="fecharModal">Fechar</button>
@@ -140,7 +143,7 @@ export default {
             showModal: false,
             produtosEmEstoque: [],
             produtosEmFalta: [],
-            solicitacaoId: null,
+            tituloModal: null,
             status: ''
         }
     },
@@ -281,7 +284,7 @@ export default {
                     'Accept': 'application/json',
                 }
             }).then((response) => {
-                this.solicitacaoId = response.data.id;
+                this.tituloModal = 'Solicitação #'+response.data.id+' criada!';
                 this.status = response.data.status;
                 this.produtosEmEstoque = response.data.produtosEmEstoque;
                 this.produtosEmFalta = response.data.produtosEmFalta;
@@ -290,14 +293,17 @@ export default {
                 this.produto = '';
                 this.quantidade = null;
                 this.showModal = true;
-            })
+            }).catch((error) => {
+                this.tituloModal = 'Erro ao criar solicitação.';
+                this.showModal = true;
+            });
         },
         fecharModal() {
             this.showModal = false;
             this.produtosEmEstoque = [];
             this.produtosEmFalta = [];
             this.status = '';
-            this.solicitacaoId = null;
+            this.tituloModal = null;
         }
     },
     setup() {
