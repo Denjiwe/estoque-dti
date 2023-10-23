@@ -13,13 +13,15 @@ use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Usuario $usuario) {
         $this->usuario = $usuario;
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Realiza a listagem dos usuários em uma view
      */
     public function index()
     {
@@ -106,9 +108,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Mostra o formulário para cadastrar um novo usuário
      */
     public function create()
     {
@@ -124,10 +124,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento de um novo usuário
      */
     public function store(Request $request)
     {
@@ -155,9 +152,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     *
-     * @param  \App\Models\Usuario  $usuario
-     * @return \Illuminate\Http\Response
+     * Exibe os dados de um usuário
      */
     public function show($id)
     {
@@ -232,9 +227,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     *
-     * @param  \App\Models\Usuario  $usuario
-     * @return \Illuminate\Http\Response
+     * Exibe um formuláro de atualização de um usuário
      */
     public function edit($id)
     {
@@ -259,11 +252,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Usuario  $usuario
-     * @return \Illuminate\Http\Response
+     * Realiza a atualização de um usuário
      */
     public function update(Request $request, $id)
     {
@@ -301,10 +290,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Usuario  $usuario
-     * @return \Illuminate\Http\Response
+     * Remove um usuário
      */
     public function destroy($id)
     {
@@ -335,6 +321,9 @@ class UsuarioController extends Controller
         }
     }
 
+    /**
+     * Exibe a página de alteração de senha
+     */
     public function senhaEdit($usuarioId) {
         $usuario = $this->usuario->find($usuarioId);
 
@@ -349,6 +338,9 @@ class UsuarioController extends Controller
         return view('auth.alterar-senha', ['usuario' => $usuario]);
     }
 
+    /**
+     * Realiza a atualização da senha
+     */
     public function senhaUpdate(Request $request, $usuarioId) {
         $usuario = $this->usuario->find($usuarioId);
 
@@ -373,6 +365,9 @@ class UsuarioController extends Controller
         return redirect()->route('login', ['sucesso' => 'Senha alterada com sucesso!']);
     }
 
+    /**
+     * Recupera os dados de um usuário
+     */
     public function dadosPorUsuario($usuarioId)
     {
         $usuario = $this->usuario->select('diretoria_id', 'divisao_id')->find($usuarioId);
@@ -385,6 +380,9 @@ class UsuarioController extends Controller
         return response()->json($usuario);
     }
 
+    /**
+     * Realiza a pesquisa por usuário de acordo com os dados passados
+     */
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):

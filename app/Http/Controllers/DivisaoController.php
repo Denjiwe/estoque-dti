@@ -11,13 +11,15 @@ use Illuminate\Http\Request;
 
 class DivisaoController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Divisao $divisao) {
         $this->divisao = $divisao;
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Realiza a listagem das divisões em uma view
      */
     public function index()
     {
@@ -94,10 +96,7 @@ class DivisaoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento de uma nova divisão
      */
     public function store(Request $request)
     {
@@ -119,10 +118,7 @@ class DivisaoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Divisao  $divisao
-     * @return \Illuminate\Http\Response
+     * Exibe os dados de uma divisão
      */
     public function show($id) {
         $divisao = $this->divisao->with(['diretoria','usuarios'])->find($id);
@@ -137,11 +133,7 @@ class DivisaoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Divisao  $divisao
-     * @return \Illuminate\Http\Response
+     * Atualiza os dados de uma divisão
      */
     public function update(Request $request, $id)
     {
@@ -170,10 +162,7 @@ class DivisaoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Divisao  $divisao
-     * @return \Illuminate\Http\Response
+     * Remove uma divisão
      */
     public function destroy($id)
     {
@@ -199,6 +188,9 @@ class DivisaoController extends Controller
         return redirect()->route('divisao.index');
     }
 
+    /**
+     * Realiza a pesquisa por divisão de acordo com os dados passados
+     */
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):

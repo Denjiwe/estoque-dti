@@ -41,3 +41,6 @@
 - [X] Remoção de elementos de locais impressoras está bugando, não excluíndo corretamente
 - [X] Chart de entregas não soma a quantidade de produtos entregues, somente a soma dos registros em si
 - [X] Caso uma impressora tenha o mesmo local mais de uma vez, os registros dos locais não estão sendo excluídos
+- Alteração de solicitações está muito instável, causando alguns problemas
+    - Substituição de quantidade solicitada
+    - Alterar somente o status de uma solicitação tenta realizar uma nova entrega

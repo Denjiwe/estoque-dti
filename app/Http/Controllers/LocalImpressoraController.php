@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Log;
 
 class LocalImpressoraController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(LocalImpressora $local, Produto $produto, Divisao $divisao, Diretoria $diretoria)
     {
         $this->local = $local;
@@ -20,9 +23,7 @@ class LocalImpressoraController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Exibe um formulário para cadastrar os locais
      */
     public function create($id)
     {
@@ -39,10 +40,7 @@ class LocalImpressoraController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento dos locais
      */
     public function store(Request $request, $id)
     {
@@ -85,11 +83,7 @@ class LocalImpressoraController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Local  $local
-     * @return \Illuminate\Http\Response
+     * Atualiza os locais, adicionando novos ou removendo
      */
     public function update(Request $request, $id)
     {

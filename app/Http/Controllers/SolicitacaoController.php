@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 class SolicitacaoController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Solicitacao $solicitacao, Produto $produto, ItensSolicitacao $itemSolicitacao, Entrega $entrega)
     {
         $this->solicitacao = $solicitacao;
@@ -25,6 +28,9 @@ class SolicitacaoController extends Controller
         $this->entrega = $entrega;
     }
     
+    /**
+     * Mostra a listagem de solicitações
+     */
     public function index() {
         if (Route::currentRouteNamed('solicitacoes.abertas')) {
             $solicitacoesAbertas = $this->solicitacao
@@ -203,9 +209,7 @@ class SolicitacaoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Mostra o formulário de criação de uma nova solicitação
      */
     public function create()
     {
@@ -245,10 +249,7 @@ class SolicitacaoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento de uma nova solicitação
      */
     public function store(Request $request)
     {
@@ -312,21 +313,7 @@ class SolicitacaoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Solicitacao  $solicitacao
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Solicitacao $solicitacao)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Solicitacao  $solicitacao
-     * @return \Illuminate\Http\Response
+     * Mostra o formulário de atendimento de uma solicitação
      */
     public function edit($id)
     {
@@ -347,11 +334,7 @@ class SolicitacaoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Solicitacao  $solicitacao
-     * @return \Illuminate\Http\Response
+     * Realiza a atualização dos dados de uma solicitação
      */
     public function update(Request $request, $id)
     {
@@ -435,10 +418,7 @@ class SolicitacaoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Solicitacao  $solicitacao
-     * @return \Illuminate\Http\Response
+     * Remove uma solicitação e atualiza o estoque
      */
     public function destroy($id)
     {
@@ -488,6 +468,9 @@ class SolicitacaoController extends Controller
         return redirect()->route('solicitacoes.abertas');
     }
 
+    /**
+     * Realiza o cadastro de uma nova solicitação por meio da api
+     */
     public function apiStore(Request $request) {
         $request->validate([
             'produtos.*.id' => 'required|exists:produtos,id',
@@ -547,6 +530,9 @@ class SolicitacaoController extends Controller
         }
     }
 
+    /**
+     * Realiza a pesquisa por solicitação de acordo com os dados passados
+     */
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):

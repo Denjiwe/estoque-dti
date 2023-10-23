@@ -15,10 +15,16 @@ use Illuminate\Http\Request;
 
 class RelatorioController extends Controller
 {
+    /**
+     * Realiza a exibição de uma view
+     */
     public function index() {
         return view('relatorio.index');
     }
 
+    /**
+     * Realiza o filtro dos relatórios e retorna o devido formato
+     */
     public function pesquisa(Request $request) {
         $item = $request->item;
         $tipo = $request->tipo;

@@ -16,14 +16,16 @@ use Carbon\Carbon;
 
 class EntregaController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Entrega $entrega, Produto $produto) {
         $this->entrega = $entrega;
         $this->produto = $produto;
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Realiza a listagem das entregas em uma view
      */
     public function index()
     {
@@ -103,31 +105,7 @@ class EntregaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create($id)
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Entrega  $entrega
-     * @return \Illuminate\Http\Response
+     * Exibe os dados de uma entrega
      */
     public function show($id)
     {
@@ -143,33 +121,7 @@ class EntregaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Entrega  $entrega
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Entrega $entrega)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Entrega  $entrega
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Entrega $entrega)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Entrega  $entrega
-     * @return \Illuminate\Http\Response
+     * Remove uma entrega
      */
     public function destroy($id)
     {
@@ -193,6 +145,9 @@ class EntregaController extends Controller
         return redirect()->route('entregas.index');
     }
 
+    /**
+     * Realiza a pesquisa por entrega de acordo com os dados passados
+     */
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id): // id

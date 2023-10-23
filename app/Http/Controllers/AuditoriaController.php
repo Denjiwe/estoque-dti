@@ -11,21 +11,26 @@ use Carbon\Carbon;
 
 class AuditoriaController extends Controller
 {
+
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Auditoria $auditoria)
     {
         $this->auditoria = $auditoria;
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Mostra a view de auditoria
      */
     public function index()
     {
         return view('auditoria.index');
     }
 
+    /**
+     * Realiza o download do log de erros
+     */
     public function erros() 
     {
         if (!file_exists(storage_path('app/public/erros.log'))) {
@@ -36,6 +41,9 @@ class AuditoriaController extends Controller
         return response()->download(storage_path('app/public/erros.log'), 'erros.log');
     }
 
+    /**
+     * Realiza o filtro de auditorias e retorna as informações
+     */
     public function pesquisa(Request $request)
     {
         $auditorias = $this->auditoria;

@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 
 class OrgaoController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Orgao $orgao) {
         $this->orgao = $orgao;
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Realiza a listagem dos órgãos em uma view
      */
     public function index()
     {
@@ -89,10 +91,7 @@ class OrgaoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento de um novo órgão
      */
     public function store(Request $request)
     {
@@ -113,6 +112,9 @@ class OrgaoController extends Controller
         return redirect()->route('orgaos.index');
     }
 
+    /**
+     * Exibe os dados de um órgão
+     */
     public function show($id) {
         $orgao = $this->orgao->with('diretorias')->find($id);
 
@@ -126,11 +128,7 @@ class OrgaoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  IlluminateHttp\Request  $request
-     * @param  \App\Models\Orgao  $orgao
-     * @return \Illuminate\Http\Response
+     * Atualiza os dados de um órgão
      */
     public function update(Request $request, $id)
     {
@@ -159,10 +157,7 @@ class OrgaoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Orgao  $orgao
-     * @return \Illuminate\Http\Response
+     * Remove um órgão
      */
     public function destroy($id)
     {
@@ -188,6 +183,9 @@ class OrgaoController extends Controller
         return redirect()->route('orgaos.index');
     }
 
+    /**
+     * Realiza a pesquisa por órgão de acordo com os dados passados
+     */
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):

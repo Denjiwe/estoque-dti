@@ -9,15 +9,17 @@ use Illuminate\Support\Facades\Log;
 
 class SuprimentoController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Suprimento $suprimento, Produto $produto)
     {
         $this->suprimento = $suprimento;
         $this->produto = $produto;
     }
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Exibe o formulário de criação de novos suprimentos
      */
     public function create($id)
     {
@@ -41,10 +43,7 @@ class SuprimentoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza a criação de suprimentos
      */
     public function store(Request $request, $id)
     {
@@ -81,11 +80,7 @@ class SuprimentoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Suprimento  $suprimento
-     * @return \Illuminate\Http\Response
+     * Realiza a atualização dos dados de um suprimento, adicionando ou excluindo
      */
     public function update(Request $request, $id)
     {

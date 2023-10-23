@@ -17,16 +17,15 @@ use Carbon\Carbon;
 
 class ProdutoController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Produto $produto) {
         $this->produto = $produto;
     }
 
-    // /======================================== Funções Resource ========================================/
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Realiza a listagem dos produtos em uma view
      */
     public function index()
     {
@@ -104,9 +103,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Mostra o formulário para cadastrar um novo produto
      */
     public function create()
     {
@@ -114,10 +111,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento do novo produto
      */
     public function store(Request $request)
     {
@@ -132,18 +126,14 @@ class ProdutoController extends Controller
             return redirect()->route('produtos.index');
         }
 
-        // return response()->json($produto, 201);
         switch ($request->proximo) {
             case 'locais':
-                // caso seja uma impressora
                 return redirect()->route('locais.create', ['id' => $produto->id]);
                 break;
             case 'impressoras':
-                // caso seja um toner ou cilíndro
                 return redirect()->route('impressoras.create', ['id' => $produto->id]);
                 break;
             case 'nenhum':
-                // caso seja outros
                 session()->flash('mensagem', 'Produto cadastrado com sucesso!');
                 session()->flash('color', 'success');
                 return redirect()->route('produtos.index');
@@ -152,10 +142,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Produto  $produto
-     * @return \Illuminate\Http\Response
+     * Exibe os dados de um produto
      */
     public function show($id)
     {
@@ -194,10 +181,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Produto  $produto
-     * @return \Illuminate\Http\Response
+     * Mostra o formulário para editar um produto
      */
     public function edit($id)
     {
@@ -213,11 +197,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Produto  $produto
-     * @return \Illuminate\Http\Response
+     * Realiza a atualização de um produto
      */
     public function update(Request $request, $id)
     {
@@ -314,10 +294,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Produto  $produto
-     * @return \Illuminate\Http\Response
+     * Remove o produto
      */
     public function destroy($id)
     {
@@ -344,8 +321,9 @@ class ProdutoController extends Controller
         return redirect()->route('produtos.index');
     }
 
-    // /======================================== Funções Manuais ========================================/
-
+    /**
+     * Retorna os toners cadastrados
+     */
     public function toners()
     {
         $toners = $this->produto->select('id','modelo_produto', 'qntde_estoque')->where([['tipo_produto', 'TONER'], ['status', 'ATIVO']])->get();
@@ -353,6 +331,9 @@ class ProdutoController extends Controller
         return response()->json($toners, 200);
     }
 
+    /**
+     * Retorna os cilindros cadastrados
+     */
     public function cilindros()
     {
         $cilindros = $this->produto->select('id','modelo_produto', 'qntde_estoque')->where([['tipo_produto', 'CILINDRO'], ['status', 'ATIVO']])->get();
@@ -360,6 +341,9 @@ class ProdutoController extends Controller
         return response()->json($cilindros, 200);
     }
 
+    /**
+     * Retorna um toner de acordo com o id da impressora
+     */
     public function tonerPorImpressora($impressoraId) {
 
         $toner = $this->produto
@@ -372,6 +356,9 @@ class ProdutoController extends Controller
         return response()->json($toner, 200);
     }
 
+    /**
+     * Retorna um cilindro de acordo com o id da impressora
+     */
     public function cilindroPorImpressora($impressoraId) {
         $cilindro = $this->produto
             ->select('produtos.id', 'modelo_produto', 'qntde_estoque')
@@ -383,6 +370,9 @@ class ProdutoController extends Controller
         return response()->json($cilindro, 200);
     }
 
+    /**
+     * Retorna um toner e um cilindro de acordo com o id da impressora
+     */
     public function conjuntoPorImpressora($impressoraId) {
         $cilindro = $this->cilindroPorImpressora($impressoraId);
         $toner = $this->tonerPorImpressora($impressoraId);
@@ -390,6 +380,9 @@ class ProdutoController extends Controller
         return response()->json([$toner, $cilindro], 200);
     }
 
+    /**
+     * Realiza a pesquisa por produto de acordo com os dados passados
+     */
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):

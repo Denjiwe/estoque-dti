@@ -13,6 +13,9 @@ use App\Models\Entrega;
 
 class BuscaController extends Controller
 {
+    /**
+     * Realiza a busca de vários dados
+     */
     public function busca($item, $valor)
     {
         $tabelas = ['Orgao', 'Diretoria', 'Divisao', 'Usuario', 'Produto'];

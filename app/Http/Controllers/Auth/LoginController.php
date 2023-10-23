@@ -24,6 +24,9 @@ class LoginController extends Controller
     |
     */
 
+    /**
+     * Realiza o login
+     */
     public function login(Request $request) {
         $rules = [
             'cpf' => 'required|max:14',
@@ -77,6 +80,9 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     * Realiza o logout
+     */
     public function logout() {
         Auth::logout();
 
@@ -84,16 +90,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    // protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Método de construção do controlador
      */
     public function __construct()
     {

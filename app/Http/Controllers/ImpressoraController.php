@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class ImpressoraController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Produto $produto, Suprimento $suprimento) 
     {
         $this->suprimento = $suprimento;
@@ -18,9 +21,7 @@ class ImpressoraController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Exibe a view para realizar o cadastro das impressoras
      */
     public function create($id)
     {
@@ -39,10 +40,7 @@ class ImpressoraController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento das impressoras
      */
     public function store(Request $request, $id)
     {
@@ -79,11 +77,7 @@ class ImpressoraController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ItensProduto  $itensProduto
-     * @return \Illuminate\Http\Response
+     * Atualiza os dados das impressoras, adicionando novas ou removendo
      */
     public function update(Request $request, $id)
     {

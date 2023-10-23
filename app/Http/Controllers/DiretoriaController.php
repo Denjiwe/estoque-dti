@@ -11,13 +11,15 @@ use Illuminate\Http\Request;
 
 class DiretoriaController extends Controller
 {
+    /**
+     * Método construtor da classe
+     */
     public function __construct(Diretoria $diretoria) {
         $this->diretoria = $diretoria;
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Realiza a listagem das diretorias em uma view
      */
     public function index()
     {
@@ -95,10 +97,7 @@ class DiretoriaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Realiza o armazenamento de uma nova diretoria
      */
     public function store(Request $request)
     {
@@ -119,6 +118,9 @@ class DiretoriaController extends Controller
         return redirect()->route('diretorias.index');
     }
 
+    /**
+     * Exibe os dados de uma diretoria
+     */
     public function show($id) {
         $diretoria = $this->diretoria->with(['divisoes', 'usuarios'])->find($id);
 
@@ -138,11 +140,7 @@ class DiretoriaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Diretoria  $diretoria
-     * @return \Illuminate\Http\Response
+     * Atualiza os dados de uma diretoria
      */
     public function update(Request $request, $id)
     {
@@ -171,10 +169,7 @@ class DiretoriaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Diretoria  $diretoria
-     * @return \Illuminate\Http\Response
+     * Remove uma diretoria
      */
     public function destroy($id)
     {
@@ -200,6 +195,9 @@ class DiretoriaController extends Controller
         return redirect()->route('diretorias.index');
     }
 
+    /**
+     * Traz as divisões e usuários de uma diretoria
+     */
     public function dadosPorDiretoria($diretoriaId)
     {
         $divisoes = Divisao::select('id','nome')->where([['status', 'ATIVO'],['diretoria_id', $diretoriaId]])->get();
@@ -213,6 +211,9 @@ class DiretoriaController extends Controller
         return response()->json([$divisoes,$usuariosDivisao,$usuarios], 200);
     }
 
+    /**
+     * Realiza a pesquisa por diretoria de acordo com os dados passados
+     */
     public function pesquisa(Request $request) {
         switch (true) {
             case isset($request->id):
