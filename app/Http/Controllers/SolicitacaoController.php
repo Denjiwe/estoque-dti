@@ -356,32 +356,36 @@ class SolicitacaoController extends Controller
             foreach ($request->produto as $key => $produto) {
                 $produtoEstoque = $this->produto->find($produto);
 
-                if($produtoEstoque->qntde_estoque < $request->qntde_atendida[$key]) {
-                    $ordem = $key + 1;
-                    DB::rollBack();
-                    return redirect()->back()->withErrors("Não é possível atender a solicitação pois o ".$ordem."º produto não possui estoque suficiente.");
-                }
+                
                 
                 if(isset($solicitacao->entregas[$key])) {
                     $entrega = $this->entrega->find($solicitacao->entregas[$key]->id);
 
-                    if($request->qntde_atendida[$key] == 0) {
-                        $produtoEstoque->qntde_estoque += $entrega->qntde;
+                    if($request->qntde_atendida[$key] != $solicitacao->entregas[$key]->qntde) {
+                        if($request->qntde_atendida[$key] == 0) {
+                            $produtoEstoque->qntde_estoque += $entrega->qntde;
 
-                        $entrega->delete();
-                    } else {
-                        if($entrega->qntde > $request->qntde_atendida[$key]) {
-                            $produtoEstoque->qntde_estoque += $entrega->qntde - $request->qntde_atendida[$key];
-                            $produtoEstoque->qntde_solicitada += $entrega->qntde - $request->qntde_atendida[$key];
+                            $entrega->delete();
                         } else {
-                            $produtoEstoque->qntde_estoque -= $request->qntde_atendida[$key] - $entrega->qntde;
-                            $produtoEstoque->qntde_solicitada -= $request->qntde_atendida[$key] - $entrega->qntde;
+                            if($produtoEstoque->qntde_estoque < $request->qntde_atendida[$key]) {
+                                $ordem = $key + 1;
+                                DB::rollBack();
+                                return redirect()->back()->withErrors("Não é possível atender a solicitação pois o ".$ordem."º produto não possui estoque suficiente.");
+                            }
+
+                            if($entrega->qntde > $request->qntde_atendida[$key]) {
+                                $produtoEstoque->qntde_estoque += $entrega->qntde - $request->qntde_atendida[$key];
+                                $produtoEstoque->qntde_solicitada += $entrega->qntde - $request->qntde_atendida[$key];
+                            } else {
+                                $produtoEstoque->qntde_estoque -= $request->qntde_atendida[$key] - $entrega->qntde;
+                                $produtoEstoque->qntde_solicitada -= $request->qntde_atendida[$key] - $entrega->qntde;
+                            }
+
+                            $entrega->qntde = $request->qntde_atendida[$key];
+                            $entrega->observacao = $request->observacao;
+
+                            $entrega->save();
                         }
-
-                        $entrega->qntde = $request->qntde_atendida[$key];
-                        $entrega->observacao = $request->observacao;
-
-                        $entrega->save();
                     }
                 } else {
                     if($request->qntde_atendida[$key] != 0) {
@@ -432,7 +436,7 @@ class SolicitacaoController extends Controller
 
         DB::beginTransaction();
         try {
-            if(count($solicitacao->entregas) != 0) {
+            if(count($solicitacao->entregas) > 0) {
                 foreach($solicitacao->entregas as $entrega) {
                     $itemSolicitacao = ItensSolicitacao::with('produto')->find($entrega->itens_solicitacao_id);
                     $produto = $itemSolicitacao->produto;
