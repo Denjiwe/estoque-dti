@@ -110,10 +110,12 @@ class SolicitacaoController extends Controller
             'Ações'
         ];
 
-        foreach ($solicitacoes as $index => $tipoSolicitacoes)
-        {
-            foreach ($tipoSolicitacoes as $solicitacao) 
-            {
+        $dataAbertas = [];
+        $dataAguardando = [];
+        $dataEncerradas = [];
+
+        foreach ($solicitacoes as $index => $tipoSolicitacoes) {
+            foreach ($tipoSolicitacoes as $solicitacao) {
                 $dataCriacao = date('d/m/Y',strtotime($solicitacao->created_at));
                 $primeiroNome = explode(' ', $solicitacao->usuario->nome)[0];
 
